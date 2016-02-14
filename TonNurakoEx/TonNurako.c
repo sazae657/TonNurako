@@ -147,8 +147,6 @@ TNK_LoadPixmapFromBuffer(Display* display, Widget widget, TNK_PIXMAX* pix, char*
     pix->mask = 0L;
     pix->attr = NULL;
 
-    dumpbin((const void*)buffer, strlen(buffer), "dump.xpm");
-
     if((ret = XpmCreatePixmapFromBuffer(display,
 				  RootWindowOfScreen(XtScreen(widget)),
 				  buffer, &pix->pix,

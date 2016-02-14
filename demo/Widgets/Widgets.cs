@@ -11,8 +11,6 @@ using TonNurako.Widgets.Xm;
 namespace Widgets {
     class Widgets : TonNurako.Widgets.LayoutWindow<TonNurako.Widgets.Xm.MainWindow> {
 
-
-
         RowColumn rightPane;
         Form leftPane;
         Label widgetty;
@@ -27,7 +25,7 @@ namespace Widgets {
         /// Shellができた
         /// </summary>
         public override void ShellCreated()
-        {
+        {            
             this.Layout.MenuBar = CreateMenu();
 
             var pw = new Paned();
@@ -75,6 +73,10 @@ namespace Widgets {
             sb.ClipWindow = rightPane;
 
             SetWidget(new PushButton(), false);
+            
+            this.RealizedEvent += (sender,ev) => {
+                this.IconPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);
+            };            
         }
 
         #region Reflection
@@ -199,7 +201,7 @@ namespace Widgets {
             cb1.Name = "CB";
             cb1.LabelString = "メニュー(M)";
             cb1.Mnemonic = TonNurako.Data.KeySym.FromName("M");
-            cb1.ToolkitResources.Add(TonNurako.Native.Motif.ResourceId.XmNsubMenuId, pdm.NativeHandle);
+            cb1.SubMenuId = pdm;
             smbar.Children.Add(cb1);
 
             pdm.Children.Add(
@@ -254,6 +256,9 @@ namespace Widgets {
                          d.Items.Cancel.Visible = false;
                          d.Items.Help.Visible = false;
                      };
+                     d.WidgetManagedEvent += (x, y) => {
+                        d.SymbolPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);                         
+                     };
                      StringBuilder str = new StringBuilder();
                      foreach (var asp in AppDomain.CurrentDomain.GetAssemblies()) {
                          if (asp.FullName.StartsWith("TonNurako")) {
@@ -269,8 +274,7 @@ namespace Widgets {
                              break;
                          }
                      }
-                     d.DialogTitle = "ﾄﾝﾇﾗｺ";
-                     d.SymbolPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);
+                     d.DialogTitle = "トンヌラコ";
                      d.DialogStyle = DialogStyle.ApplicationModal;
                      d.MessageString = str.ToString();
                      d.OkLabelString = "わかった";
