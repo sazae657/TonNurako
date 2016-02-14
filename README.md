@@ -2,9 +2,9 @@
 
 .NetでMotifが使えればいいな・・・
 
-ﾄﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺ
-
 ﾗｲｾﾝｽはOpenMotifに従いLGPLとします
+
+ﾄﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺ
 
 ![VSS](https://raw.githubusercontent.com/sazae657/TonNurako/master/ScreenShot.png)
 
@@ -17,6 +17,8 @@
 * OpenMotif 2.3
 * libXpmのﾍｯﾀﾞー
 * Python2
+
+*Mac OSXで動かす場合は32bit版のﾗｲﾌﾞﾗﾘーを用意するかmono64のｲﾝｽﾄーﾙが必要な模様です
 
 ## ｿーｽを取ってくる
 ```
