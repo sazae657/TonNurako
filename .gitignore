@@ -1,0 +1,7 @@
+.DS_*
+.swp
+a.out
+bin/
+.vs/
+obj/
+doc/*/

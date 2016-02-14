@@ -1,0 +1,21 @@
+# Motifのﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
+MOTF_HEADER_PATH=/usr/dt/include
+MOTF_LIBRARY_PATH=/usr/dt/lib
+
+# X11のﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
+X11_HEADER_PATH=/usr/X11R6/include
+X11_LIBRARY_PATH=/usr/X11R6/lib
+
+# Motifのﾗｲﾌﾞﾗﾘー
+MOTIF_LIBS=-lXm -lXmu
+
+# X11のﾗｲﾌﾞﾗﾘー
+X11_LIBS=-lXpm -lXt -lX11
+
+# Cｺﾝﾊﾟｲﾗー
+CC :=cc
+WARN_OPT := -Wall -Werror
+
+# python ｲﾝﾀーﾌﾟﾘﾀー
+PYTHON := python
+

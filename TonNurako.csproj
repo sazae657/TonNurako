@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TonNurako</RootNamespace>
+    <AssemblyName>TonNurako</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<WarningsAsErrors>0114</WarningsAsErrors>
+    <!-- DocumentationFile>bin\Debug\TonNurako.XML</DocumentationFile -->
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+
+
+    <ItemGroup>
+        <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="TonNurako\Core\Application.cs" />
+        <Compile Include="TonNurako\Core\ApplicationContext.cs" />
+        <Compile Include="TonNurako\Core\ConstraintResource.cs" />
+        <Compile Include="TonNurako\Core\Event.cs" />
+        <Compile Include="TonNurako\Core\EventId.cs" />
+        <Compile Include="TonNurako\Data\Color.cs" />
+        <Compile Include="TonNurako\Data\CompoundString.cs" />
+        <Compile Include="TonNurako\Data\ExtremeResourceAttribute.cs" />
+        <Compile Include="TonNurako\Data\ExtremeResourceSports.cs" />
+        <Compile Include="TonNurako\Data\KeySym.cs" />
+        <Compile Include="TonNurako\Data\RenderTable.cs" />
+        <Compile Include="TonNurako\Data\Rendition.cs" />
+        <Compile Include="TonNurako\Data\SportyFontList.cs" />
+        <Compile Include="TonNurako\Data\TabStop.cs" />
+        <Compile Include="TonNurako\Data\XResource.cs" />
+        <Compile Include="TonNurako\GC\GraphicsContext.cs" />
+        <Compile Include="TonNurako\GC\Pixmap.cs" />
+        <Compile Include="TonNurako\Native\Attribute.cs" />
+        <Compile Include="TonNurako\Native\CallbackQueue.cs" />
+        <Compile Include="TonNurako\Native\DlSym.cs" />
+        <Compile Include="TonNurako\Native\ExtremeSports.cs" />
+        <Compile Include="TonNurako\Native\GEN\Xm.Constant.cs" />
+        <Compile Include="TonNurako\Native\GEN\Xm.ResourceId.cs" />
+        <Compile Include="TonNurako\Native\GEN\Xm.StringConstant.cs" />
+        <Compile Include="TonNurako\Native\Types.cs" />
+        <Compile Include="TonNurako\Native\X11\GC.cs" />
+        <Compile Include="TonNurako\Native\X11\Mask.cs" />
+        <Compile Include="TonNurako\Native\X11\Struct.cs" />
+        <Compile Include="TonNurako\Native\X11\X11Call.cs" />
+        <Compile Include="TonNurako\Native\XEventQueue.cs" />
+        <Compile Include="TonNurako\Native\Xm\EventId.cs" />
+        <Compile Include="TonNurako\Native\Xm\Symbol.cs" />
+        <Compile Include="TonNurako\Native\Xm\Types.cs" />
+        <Compile Include="TonNurako\Native\Xm\WidgetClass.cs" />
+        <Compile Include="TonNurako\Native\Xm\Xm.cs" />
+        <Compile Include="TonNurako\Native\Xm\XmCall.cs" />
+        <Compile Include="TonNurako\Native\Xm\XmCall.gen.cs" />
+        <Compile Include="TonNurako\Native\Xt\Symbol.cs" />
+        <Compile Include="TonNurako\Native\Xt\Xt.cs" />
+        <Compile Include="TonNurako\Native\Xt\XtCall.cs" />
+        <Compile Include="TonNurako\Native\Xt\XtTypes.cs" />
+        <Compile Include="TonNurako\Types\Constant.cs" />
+        <Compile Include="TonNurako\Types\EventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\IWidget.cs" />
+        <Compile Include="TonNurako\Widgets\Shell\ApplicationShell.Properties.cs" />
+        <Compile Include="TonNurako\Widgets\Shell\ApplicationShell.cs" />
+        <Compile Include="TonNurako\Widgets\Shell\LayoutForm.cs" />
+        <Compile Include="TonNurako\Widgets\Shell\ShellBase.cs" />
+        <Compile Include="TonNurako\Widgets\Shell\Window.cs" />
+        <Compile Include="TonNurako\Widgets\WidgetBase.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\Gadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\GadgetEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\IconGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\Label\ArrowButtonGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\Label\CascadeButtonGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\Label\LabelGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\Label\PushButtonGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\Label\ToggleButtonGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\SeparatorGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Gadget\TNKGadget.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\WidgetConstants.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Composite.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Constraint.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\BulletinBoard.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\BulletinBoardDialog.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\Form.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\MessageBox\MessageBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\MessageBox\MessageDialog.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\FileSelectionBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\FileSelectionBoxEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\FileSelectionDialog.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\SelectionBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\SelectionDialog.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\TabStack.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\TabStackEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ButtonBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ComboBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\DropDown.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Events\SimpleSpinBoxEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Frame.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\Hierarchy.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\Outline.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Manager.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ManagerEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\MenuBar\MenuBar.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\MenuBar\SimpleMenuBar.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\Menu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\MenuEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\OptionMenu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\PopupMenu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\PulldownMenu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimpleMenuBase.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimpleOptionMenu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimplePopupMenu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimplePulldownMenu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Paned.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\PanedWindow.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumnBase.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\RadioBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\SimpleCheckBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\SimpleRadioBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\WorkArea.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Scale.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ScrolledWindow.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ScrolledWindow\MainWindow.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\SimpleSpinBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\SpinBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Shell\MenuShell.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Shell\Shell.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Shell\WMShell\VendorShell\TransientShell\DialogShell.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Shell\WMShell\VendorShell\TransientShell\TransientShell.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Shell\WMShell\VendorShell\VendorShell.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Shell\WMShell\WMShell.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Core.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Event\CallReason.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Event\EventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Event\ServerEvent.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Event\ServerEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Label\ButtonEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Label\CascadeButton.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Label\DrawnButton.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Label\Label.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Label\LabelBase.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Label\PushButton.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Label\ToggleButton.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Misc\ArrowButton.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Misc\List.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Misc\ListEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Misc\ScrollBar.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Misc\ScrollBarEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Misc\Separator.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Primitive.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Text\ScrolledText.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Text\Text.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Text\TextBase.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Text\TextEventArgs.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Text\TextField.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Widget.cs" />
+    </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
