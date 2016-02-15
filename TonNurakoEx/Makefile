@@ -2,6 +2,7 @@ include Config.mp3
 
 BUILD := Debug
 LINKER := $(CC)
+BINDIR := ../bin/$(BUILD)/
 
 CFLAGS :=-fPIC -I$(MOTF_HEADER_PATH) -I$(X11_HEADER_PATH) 
 LINK_LIBS := -L$(MOTF_LIBRARY_PATH) $(MOTIF_LIBS) -L$(X11_LIBRARY_PATH) $(X11_LIBS)
@@ -46,8 +47,7 @@ OBJ=DlSym.o	\
     TonNurako.o \
 	XmCreateFuncs.o
 
-OUTDIR = ../bin/$(BUILD)
-TARGET = $(OUTDIR)/libTonNurako.extremesports
+TARGET = $(BINDIR)libTonNurako.extremesports
 
 .c.o:
 	$(CC) $(OPT) $(CFLAGS) $(WARN_OPT) -c  $< -o $@

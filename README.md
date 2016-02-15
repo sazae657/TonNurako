@@ -46,6 +46,7 @@ X11_LIBRARY_PATH=/usr/X11R6/lib
 
 ```
 
+ﾋﾞﾙﾄﾞ出来る事の確認
 ```
 % make clean all
 ```

@@ -184,17 +184,13 @@
         <Compile Include="TonNurako\Widgets\Xm\Widget\Primitive\Text\TextField.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Widget.cs" />
     </ItemGroup>
-	
-	<!--
-  <ItemGroup Condition="'$(OS)' == 'Unix'">
-    <ProjectReference Include="TonNurakoEx\TonNurako.extremesports.iso">
-      <Project>{5C7AFF4D-3917-4423-A03B-7A07BC4957C7}</Project>
-      <Name>TonNurakoEx</Name>
-    </ProjectReference>
-  </ItemGroup>
-  -->
-
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+         <PreBuildEvent Condition="'$(OS)' == 'Unix'">
+                 cd $(ProjectDir)/TonNurakoEx
+                 make BUILD=$(ConfigurationName) BINDIR=../$(OutputPath)
+               </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
