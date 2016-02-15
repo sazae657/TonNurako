@@ -24,6 +24,7 @@ namespace TonNurako.GC
             public IntPtr attr;
         };
         internal TNK_PIXMAX PixMax = new TNK_PIXMAX();
+        Drawable drawable = null;
 
         internal static class NativeMethods {
 
@@ -40,69 +41,72 @@ namespace TonNurako.GC
 
         }
 
-        public Pixmap(Widgets.IWidget w, uint width, uint height, uint depth) {
+        public Pixmap(Widgets.IWidget w, int width, int height, int depth) {
+            
+            drawable = new Drawable();
             //Display取得
-			DisplayHandle = XtSports.XtDisplay( w );
+			drawable.Display = XtSports.XtDisplay( w );
 
 			//Window取得
 			IntPtr window = XtSports.XtWindow( w );
 
             System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.NativeHandle.Widget:x}> width={width} height={height} depth={depth}");
 
-            DrawableHandle =
-                X11Sports.XCreatePixmap(DisplayHandle, window, width, height, depth);
+            drawable.Target =
+                X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
 
             DestroyPixmapFunc = () => {
-                X11Sports.XFreePixmap(DisplayHandle, DrawableHandle);
+                X11Sports.XFreePixmap(drawable.Display, drawable.Target);
             };
         }
         internal Pixmap() {
+            drawable = new Drawable();
         }
 
         public static Pixmap FromFile(Widgets.Xm.Primitive w, string path) {
             Pixmap pm = new Pixmap();
-            pm.DisplayHandle = XtSports.XtDisplay(w);
+            pm.drawable.Display = XtSports.XtDisplay(w);
             pm.ScreenHandle = XtSports.XtScreen(w);
-            pm.DrawableHandle = (IntPtr)Native.Motif.XmSports.XmGetPixmap(pm.ScreenHandle, path,
+            pm.drawable.Target = (IntPtr)Native.Motif.XmSports.XmGetPixmap(pm.ScreenHandle, path,
                 w.BackgroundColor.Pixel,
                 w.ForegroundColor.Pixel
             );
             pm.DestroyPixmapFunc = () => {
-                Native.Motif.XmSports.XmDestroyPixmap(pm.DisplayHandle, pm.DrawableHandle);
+                Native.Motif.XmSports.XmDestroyPixmap(pm.drawable.Display, pm.drawable.Target);
             };
             return pm;
         }
 
         public static Pixmap FromFile(Widgets.Xm.Manager w, string path) {
             Pixmap pm = new Pixmap();
-            pm.DisplayHandle = XtSports.XtDisplay(w);
+            pm.drawable.Display = XtSports.XtDisplay(w);
             pm.ScreenHandle = XtSports.XtScreen(w);
             var xpm = Native.Motif.XmSports.XmGetPixmap(pm.ScreenHandle, path,
                 w.BackgroundColor.Pixel,
                 w.ForegroundColor.Pixel
             );
-            pm.DrawableHandle = (IntPtr)xpm;
+            pm.drawable.Target = (IntPtr)xpm;
             pm.DestroyPixmapFunc = () => {
-                Native.Motif.XmSports.XmDestroyPixmap(pm.ScreenHandle, pm.DrawableHandle);
+                Native.Motif.XmSports.XmDestroyPixmap(pm.ScreenHandle, pm.drawable.Target);
             };
             return pm;
         }
 
         public static Pixmap FromBuffer(Widgets.IWidget w, byte[] buffer) {
             Pixmap pm = new Pixmap();
-            pm.DisplayHandle = XtSports.XtDisplay(w);
+            pm.drawable.Display = XtSports.XtDisplay(w);
             pm.ScreenHandle = XtSports.XtScreen(w);
             pm.PixMax = new TNK_PIXMAX();
 
             IntPtr buf = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buffer.Length+1));
             Marshal.Copy(buffer, 0, buf, buffer.Length);
-	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.DisplayHandle, w.NativeHandle.Widget, ref pm.PixMax, buf);
+	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display, w.NativeHandle.Widget, ref pm.PixMax, buf);
             Marshal.FreeCoTaskMem(buf);
             if ( 0 != r) {
                 return null;
             }
 
-	        pm.DrawableHandle = pm.PixMax.pix;
+	        pm.drawable.Target = pm.PixMax.pix;
             pm.DestroyPixmapFunc = () => {
                 NativeMethods.TNK_FreePixmapBuffer(ref pm.PixMax);
             };
@@ -110,19 +114,17 @@ namespace TonNurako.GC
             return pm;
         }
 
-        public IntPtr DisplayHandle
-        {
-            get; internal set;
-        }
-
-        public IntPtr DrawableHandle
-        {
-            get; internal set;
-        }
 
         public IntPtr ScreenHandle
         {
             get; internal set;
+        }
+
+        public Drawable Drawable
+        {
+            get {
+                return drawable;
+            }
         }
 
         public void Dispose()
@@ -137,12 +139,12 @@ namespace TonNurako.GC
 
         internal virtual void Dispose(bool disposing)
         {
-            if (IntPtr.Zero != DrawableHandle) {
+            if (IntPtr.Zero != drawable.Target) {
                 if (null != DestroyPixmapFunc) {
                     DestroyPixmapFunc();
                 }
-                DisplayHandle = IntPtr.Zero;
-                DrawableHandle = IntPtr.Zero;
+                drawable.Display = IntPtr.Zero;
+                drawable.Target = IntPtr.Zero;
             }
         }
     }

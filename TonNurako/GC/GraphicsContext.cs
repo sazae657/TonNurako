@@ -9,12 +9,17 @@ using TonNurako.Native.Xt;
 namespace TonNurako.GC
 {
     public interface IDrawable {
-        IntPtr DrawableHandle {
-            get;
-        }
-        IntPtr DisplayHandle {
-            get;
-        }
+        Drawable Drawable{get;}
+    }
+    
+    public class Drawable {
+        internal IntPtr Target { get; set; }
+        internal IntPtr Display { get; set; }
+        
+        public Drawable() {
+            Target = IntPtr.Zero;
+            Display = IntPtr.Zero;
+        }       
     }
 
 	/// <summary>
@@ -33,7 +38,7 @@ namespace TonNurako.GC
 		//Windowが入る
 		private IntPtr gcTarget = IntPtr.Zero;
 
-        private bool isDisposed;
+        private bool disposed;
 
 		#endregion
 
@@ -66,13 +71,14 @@ namespace TonNurako.GC
 		/// <param name="w">GCの基礎になるWidget</param>
 		public GraphicsContext(IDrawable w )
 		{
-            isDisposed = false;
+            Console.WriteLine($"GraphicsContext: {w.Drawable.Display} {w.Drawable.Target}");
+            disposed = false;
 
             //Display取得
-            gcDisplay = w.DisplayHandle;
+            gcDisplay = w.Drawable.Display;
 
 			//Window取得
-			gcTarget = w.DrawableHandle;
+			gcTarget = w.Drawable.Target;
 
 			//
 			// 単純なGCを生成
@@ -98,7 +104,7 @@ namespace TonNurako.GC
 
         protected virtual void Dispose(bool disposing)
         {
-            if(isDisposed) {
+            if(disposed) {
                 return;
             }
 
@@ -107,12 +113,9 @@ namespace TonNurako.GC
                 Native.X11.X11Sports.XFreeGC(gcDisplay, gcContext);
 
                 gcContext = IntPtr.Zero;
-
-#if _DEBUG
 				System.Diagnostics.Debug.WriteLine("GC : Dispose");
-#endif
             }
-            isDisposed = true;
+            disposed = true;
         }
 
         #endregion
@@ -136,13 +139,20 @@ namespace TonNurako.GC
             }
             Native.X11.X11Sports.XSetForeground(gcDisplay, gcContext, color.pixel);
         }
+        
+        public void SetForeground(TonNurako.Data.Color color) {
+            if (gcContext == IntPtr.Zero) {
+                return;
+            }
+            Native.X11.X11Sports.XSetForeground(gcDisplay, gcContext, color.Pixel);
+        }        
 
         public void CopyArea(IDrawable dest, int x, int y, int w, int h, int dx, int dy) {
             if (gcContext == IntPtr.Zero) {
                 return;
             }
             Native.X11.X11Sports.XCopyArea(gcDisplay,
-                gcTarget, dest.DrawableHandle,
+                gcTarget, dest.Drawable.Target,
                 this.gcContext,
                 x, y, (uint)w, (uint)h,
                 dx, dy);

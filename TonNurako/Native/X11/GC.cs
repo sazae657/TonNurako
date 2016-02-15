@@ -22,6 +22,11 @@ namespace TonNurako.Native.X11
 		/// Y座標
 		/// </summary>
 		public short y;
+        
+        public XPoint(short X, short Y) {
+            x = X;
+            y = Y;
+        }
 	}
 
     [StructLayout(LayoutKind.Sequential, Pack=4)]

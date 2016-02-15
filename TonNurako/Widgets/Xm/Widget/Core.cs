@@ -42,7 +42,8 @@ namespace TonNurako.Widgets.Xm
             NativeHandle = new Native.WidgetHandle(w);
             if (null != res) {
                 res.Clear();
-            }
+            }     
+            
         }
 
         /*

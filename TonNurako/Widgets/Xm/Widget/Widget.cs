@@ -16,7 +16,7 @@ namespace TonNurako.Widgets.Xm
     /// <summary>
     /// RectObj相当
     /// </summary>
-    public abstract class Widget : WidgetBase, Widgets.IChild
+    public abstract class Widget : WidgetBase, Widgets.IChild, GC.IDrawable
     {
 
 		//親Widget
@@ -24,9 +24,13 @@ namespace TonNurako.Widgets.Xm
 
 		//ﾌﾟﾛﾊﾟﾃｨの値
 		private WidgetProperties prop = null;
+        
+        // ﾄﾞﾛﾜﾎﾞー
+        protected Drawable drawable;
 
 		public Widget() : base() {
 			prop = new WidgetProperties();
+            drawable = new Drawable();
             InitializeConstraint();
             InitializeBase();
         }
@@ -56,14 +60,14 @@ namespace TonNurako.Widgets.Xm
 
 			//作成用ﾘｿーｽのｸﾘｱ
 			ToolkitResources.Clear();
-
+            
 			//ｺーﾙﾊﾞｯｸを追加
             CallbackQueue.Apply();
             XEventQueue.Apply();
 
 			//Loadｲﾍﾞﾝﾄを通知
 			UIeventTable.CallHandler(TonNuraEventId.WidgetCreated, this);
-
+            
             // 名前解決ﾃーﾌﾞﾙに追加
             if (null != AppContext) {
                 AppContext.RegisterWidget(this);
@@ -537,21 +541,7 @@ namespace TonNurako.Widgets.Xm
 			}
 
 		}
-/*
-        IntPtr IDrawable.DrawableHandle
-        {
-            get {
-                 return XtSports.XtWindow(this);
-            }
-        }
 
-        IntPtr IDrawable.DisplayHandle
-        {
-            get {
-                return XtSports.XtDisplay(this);
-            }
-        }
-        */
         #endregion
 
 		#region Constraint
@@ -611,6 +601,17 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         public RowColumnConstraint RowColumnConstraint {
             get; private set;
+        }
+
+        public Drawable Drawable
+        {
+            get
+            {
+                // ﾄﾞﾛﾜﾎﾞー
+                this.drawable.Display = NativeHandle.Display;
+                this.drawable.Target = NativeHandle.Window;                
+                return this.drawable;
+            }
         }
 
         #endregion

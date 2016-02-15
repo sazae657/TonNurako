@@ -133,7 +133,7 @@ namespace TonNurako.Data
         }
 
         internal void SetPixmap(Enum key, GC.Pixmap pixmap, Resource.Access accessa = Resource.Access.CSG) {
-            widget.ToolkitResources.Add(key, (ulong)pixmap.DrawableHandle);
+            widget.ToolkitResources.Add(key, (ulong)pixmap.Drawable.Target);
             widget.ToolkitResources.SetWidget(true);
         }
 

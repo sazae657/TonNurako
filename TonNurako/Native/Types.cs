@@ -22,6 +22,14 @@ namespace TonNurako.Native {
         internal IntPtr Display {
             get { return Native.Xt.XtSports.XtDisplay(Widget);}
         }
+        
+        internal IntPtr Window {
+            get { return Native.Xt.XtSports.XtWindow(Widget);}
+        }
+        
+        internal IntPtr Screen {
+            get { return Native.Xt.XtSports.XtScreen(Widget);}
+        }
 
         internal string XtName {
             get { return Native.Xt.XtSports.XtName(Widget);}
