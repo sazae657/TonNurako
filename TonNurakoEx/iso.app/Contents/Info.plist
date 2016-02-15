@@ -9,7 +9,7 @@
     <key>CFBundleDisplayName</key>
     <string>いそ</string>
     <key>CFBundleExecutable</key>
-    <string>gen</string>
+    <string>iso</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>

@@ -9,7 +9,7 @@
     <key>CFBundleDisplayName</key>
     <string>ｽｸﾘﾌﾟﾂ</string>
     <key>CFBundleExecutable</key>
-    <string>gen</string>
+    <string>scripts</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>

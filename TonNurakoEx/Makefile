@@ -3,10 +3,18 @@ include Config.mp3
 BUILD := Debug
 LINKER := $(CC)
 
-CFLAGS := -fPIC -I$(MOTF_HEADER_PATH) -I$(X11_HEADER_PATH) 
+CFLAGS :=-fPIC -I$(MOTF_HEADER_PATH) -I$(X11_HEADER_PATH) 
 LINK_LIBS := -L$(MOTF_LIBRARY_PATH) $(MOTIF_LIBS) -L$(X11_LIBRARY_PATH) $(X11_LIBS)
 LINK_FLAGS := -fPIC -g -shared
 OPT := -g -D_DEBUG
+
+# チェック
+MOTIF_CHECK_C=iso.app/Contents/Resources/MotifCheck.c
+MOTIF_CHECK_E=iso.app/Contents/MacOS/iso
+
+LIB_CHECK_C=scripts.app/Contents/Resources/LibCheck.c
+LIB_CHECK_E=scripts.app/Contents/MacOS/scripts
+
 
 # 自動生成用
 GEN_EXE := tmpfile.app/Contents/MacOS/gen
@@ -46,7 +54,7 @@ TARGET = $(OUTDIR)/libTonNurako.extremesports
 
 all: ExtremeSports GenSrc
 
-ExtremeSports: $(TARGET)
+ExtremeSports: Check $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(LINKER) $(OBJ) $(LINK_LIBS) $(LINK_FLAGS) -o $(TARGET)
@@ -56,9 +64,24 @@ $(OBJ): $(OUTDIR)
 $(OUTDIR):
 	mkdir -p $(OUTDIR)
 
+# ﾁｪｯｸ
+Check: MotifCheck LibCheck
+
+MotifCheck:
+	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C)
+	$(MOTIF_CHECK_E)
+
+LibCheck:
+	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(LIB_CHECK_E) $(LIB_CHECK_C)
+	$(LIB_CHECK_E)
+
+
 # ほほほ
 
 GenSrc: $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
+
+$(TEMP_BIN): 
+	mkdir -p $(TEMP_BIN)
 
 $(XM_CONSTANT_CS): $(XM_CONSTANT_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/const.py $(XM_CONSTANT_CS_TPL) >$(GEN_C)
@@ -81,6 +104,7 @@ clean:
 	- rm -rf $(TARGET)
 	- rm -rf dep
 	- rm -rf core
+	- rm $(MOTIF_CHECK_E) $(LIB_CHECK_E)
 	- rm $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
 
 
