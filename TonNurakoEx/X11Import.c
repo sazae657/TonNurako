@@ -1,4 +1,4 @@
-﻿#include "TonNurako.h"
+#include "TonNurako.h"
 
 TNK_EXPORT GC XCreateGC_TNK(Display* display, Drawable d, unsigned long valuemask, XGCValues* values) {
     return XCreateGC(display,d,valuemask,values);

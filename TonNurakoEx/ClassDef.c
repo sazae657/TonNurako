@@ -1,4 +1,4 @@
-﻿#include "TonNurako.h"
+#include "TonNurako.h"
 #include "ClassDef.h"
 
 #include <Xm/XmAll.h>

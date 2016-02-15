@@ -1,4 +1,4 @@
-﻿#include "TonNurako.h"
+#include "TonNurako.h"
 
 TNK_DECLARE_BEGIN
 

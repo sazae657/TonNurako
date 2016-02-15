@@ -1,4 +1,4 @@
-﻿#ifdef __TNK_PORT_WINDOWS__
+#ifdef __TNK_PORT_WINDOWS__
 #   include <stdio.h>
 #	include <windows.h>
 #   include <stdarg.h>

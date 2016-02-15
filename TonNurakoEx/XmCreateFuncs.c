@@ -1,4 +1,4 @@
-﻿#include "TonNurako.h"
+#include "TonNurako.h"
 
 Widget XmCreateArrowButton_TNK(Widget parent, String name, ArgList arglist,Cardinal argcount) { return XmCreateArrowButton(parent, name, arglist, argcount);}
 Widget XmCreateArrowButtonGadget_TNK(Widget parent, String name, ArgList arglist,Cardinal argcount) { return XmCreateArrowButtonGadget(parent, name, arglist, argcount);}
