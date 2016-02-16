@@ -8,18 +8,40 @@ using TonNurako.Native.Xt;
 
 namespace TonNurako.GC
 {
+    /// <summary>
+    /// ﾄﾞﾛﾜﾎﾞー
+    /// </summary>
     public interface IDrawable {
+        /// <summary>
+        /// ﾄﾞﾛﾜﾎﾞー
+        /// </summary>
         Drawable Drawable{get;}
     }
-    
+
+    /// <summary>
+    /// ﾄﾞﾛﾜﾎﾞー
+    /// </summary>
     public class Drawable {
+        /// <summary>
+        /// ﾀーｹﾞｯﾄ(Window or Pixmap)
+        /// </summary>
         internal IntPtr Target { get; set; }
+
+        /// <summary>
+        /// ﾃﾞｽﾌﾟﾚー
+        /// </summary>
         internal IntPtr Display { get; set; }
-        
+
+        /// <summary>
+        /// ｽｸﾘーﾝ
+        /// </summary>
+        internal IntPtr Screen { get; set; }
+
         public Drawable() {
             Target = IntPtr.Zero;
             Display = IntPtr.Zero;
-        }       
+            Screen = IntPtr.Zero;
+        }
     }
 
 	/// <summary>
@@ -30,63 +52,72 @@ namespace TonNurako.GC
 		#region ｲﾝｽﾀﾝｽ変数
 
 		//作成したGCが入る
-		private IntPtr gcContext = IntPtr.Zero;
+		private IntPtr gc = IntPtr.Zero;
 
 		//Displayが入る
-		private IntPtr gcDisplay = IntPtr.Zero;
+		private IntPtr display = IntPtr.Zero;
 
 		//Windowが入る
-		private IntPtr gcTarget = IntPtr.Zero;
+		private IntPtr target = IntPtr.Zero;
 
         private bool disposed;
+        
+        internal delegate void SysDestroyGC();
+        internal SysDestroyGC DestroyGcFunc = null;        
 
 		#endregion
 
 		#region ｺﾝｽﾄﾗｸﾀー
-        /*
-		/// <summary>
-		/// Widgetに従ったGCの作成
-		/// </summary>
-		/// <param name="w">GCの基礎になるWidget</param>
-		public GraphicsContext(IWidget w )
-		{
-			//Display取得
-			gcDisplay = XtCall.XtDisplay( w );
-
-			//Window取得
-			gcTarget = XtCall.XtWindow( w );
-
-			//
-			// 単純なGCを生成
-			// 属性は後でｾｯﾄさせる
-			//
-            gcContext = Native.X11.X11Call.XCreateGC( gcDisplay ,
-				gcTarget, IntPtr.Zero, IntPtr.Zero );
-		}*/
-
-
-		/// <summary>
-		/// Widgetに従ったGCの作成
-		/// </summary>
-		/// <param name="w">GCの基礎になるWidget</param>
-		public GraphicsContext(IDrawable w )
-		{
-            Console.WriteLine($"GraphicsContext: {w.Drawable.Display} {w.Drawable.Target}");
+        
+        private GraphicsContext() {
             disposed = false;
+        }
+        
+		/// <summary>
+		/// 共有GC取得
+		/// </summary>
+		/// <param name="w">Widget</param>
+		public static GraphicsContext FromSharedGC(Widgets.IWidget w)
+		{
+            var gc = new GraphicsContext();
+            
+            gc.gc = Native.Xt.XtSports.XtGetGC(w);
+            gc.display = w.NativeHandle.Display;
+			gc.target = w.NativeHandle.Window;
+            gc.DestroyGcFunc = () => {
+                //GC解放
+                if (gc.gc != IntPtr.Zero) {
+                    Native.Xt.XtSports.XtReleaseGC(w, gc.gc);
+                    gc.gc = IntPtr.Zero;
+                }    
+            };            
+            return gc;       
+		}
 
-            //Display取得
-            gcDisplay = w.Drawable.Display;
 
-			//Window取得
-			gcTarget = w.Drawable.Target;
-
+		/// <summary>
+		/// GCの作成
+		/// </summary>
+		/// <param name="w">ﾄﾞﾛﾜﾎﾞー</param>
+		public GraphicsContext(IDrawable w)
+		{
+            disposed = false;
+            display = w.Drawable.Display;
+			target = w.Drawable.Target;
 			//
 			// 単純なGCを生成
 			// 属性は後でｾｯﾄさせる
 			//
-            IntPtr ow;
-            gcContext = Native.X11.X11Sports.XCreateGC( gcDisplay ,
-				gcTarget, 0, out ow );
+            gc = Native.X11.X11Sports.XCreateGC( display , target);
+            
+            DestroyGcFunc = () => {
+                //GC解放
+                if (gc != IntPtr.Zero) {
+                    Native.X11.X11Sports.XFreeGC(display, gc);
+                    gc = IntPtr.Zero;
+                    System.Diagnostics.Debug.WriteLine("GC : Dispose");
+                }          
+            };
 		}
 
 		#endregion
@@ -102,18 +133,18 @@ namespace TonNurako.GC
             System.GC.SuppressFinalize(this);
         }
 
+        ~GraphicsContext() {
+            Dispose(false);
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if(disposed) {
                 return;
             }
-
-            //GC解放
-            if (gcContext != IntPtr.Zero) {
-                Native.X11.X11Sports.XFreeGC(gcDisplay, gcContext);
-
-                gcContext = IntPtr.Zero;
-				System.Diagnostics.Debug.WriteLine("GC : Dispose");
+            
+            if (null != DestroyGcFunc) {
+                DestroyGcFunc();
             }
             disposed = true;
         }
@@ -127,33 +158,33 @@ namespace TonNurako.GC
         /// </summary>
         public void Clear()
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				Native.X11.X11Sports.XClearWindow(gcDisplay, gcTarget );
+				Native.X11.X11Sports.XClearWindow(display, target );
 			}
 		}
 
         public void SetForeground(XColor color) {
-            if (gcContext == IntPtr.Zero) {
+            if (gc == IntPtr.Zero) {
                 return;
             }
-            Native.X11.X11Sports.XSetForeground(gcDisplay, gcContext, color.pixel);
+            Native.X11.X11Sports.XSetForeground(display, gc, color.pixel);
+        }
+
+        public void SetForeground(TonNurako.Data.Color color) {
+            if (gc == IntPtr.Zero) {
+                return;
+            }
+            Native.X11.X11Sports.XSetForeground(display, gc, color.Pixel);
         }
         
-        public void SetForeground(TonNurako.Data.Color color) {
-            if (gcContext == IntPtr.Zero) {
-                return;
-            }
-            Native.X11.X11Sports.XSetForeground(gcDisplay, gcContext, color.Pixel);
-        }        
-
         public void CopyArea(IDrawable dest, int x, int y, int w, int h, int dx, int dy) {
-            if (gcContext == IntPtr.Zero) {
+            if (gc == IntPtr.Zero) {
                 return;
             }
-            Native.X11.X11Sports.XCopyArea(gcDisplay,
-                gcTarget, dest.Drawable.Target,
-                this.gcContext,
+            Native.X11.X11Sports.XCopyArea(display,
+                target, dest.Drawable.Target,
+                this.gc,
                 x, y, (uint)w, (uint)h,
                 dx, dy);
         }
@@ -169,9 +200,9 @@ namespace TonNurako.GC
 		/// <param name="y">Y座標</param>
 		public void DrawPoint( int x, int y )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				Native.X11.X11Sports.XDrawPoint( gcDisplay, gcTarget, gcContext, x, y );
+				Native.X11.X11Sports.XDrawPoint( display, target, gc, x, y );
 			}
 		}
 		/// <summary>
@@ -181,9 +212,9 @@ namespace TonNurako.GC
 		/// <param name="mode">点の座標指定ﾓーﾄﾞ</param>
 		public void DrawPoints( TonNurako.Native.X11.XPoint [] points, TonNurako.Native.X11.CoordMode mode )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				Native.X11.X11Sports.XDrawPoints( gcDisplay, gcTarget, gcContext, points, points.Length, (int)mode );
+				Native.X11.X11Sports.XDrawPoints( display, target, gc, points, points.Length, (int)mode );
 			}
 
 		}
@@ -197,9 +228,9 @@ namespace TonNurako.GC
 		/// <param name="fy">終点Y座標</param>
 		public void DrawLine( int ax, int ay, int fx, int fy )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawLine( gcDisplay, gcTarget, gcContext, ax, ay, fx, fy );
+				TonNurako.Native.X11.X11Sports.XDrawLine( display, target, gc, ax, ay, fx, fy );
 			}
 		}
 
@@ -210,9 +241,9 @@ namespace TonNurako.GC
 		/// <param name="mode">折れ線の座標指定ﾓーﾄﾞ</param>
 		public void DrawLines( TonNurako.Native.X11.XPoint [] points, TonNurako.Native.X11.CoordMode mode )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawLines( gcDisplay, gcTarget, gcContext, points, points.Length, (int)mode );
+				TonNurako.Native.X11.X11Sports.XDrawLines( display, target, gc, points, points.Length, (int)mode );
 			}
 
 		}
@@ -226,9 +257,9 @@ namespace TonNurako.GC
 		/// <param name="h">高さ</param>
 		public void DrawRectangle( int x, int y, int w, int h )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawRectangle( gcDisplay, gcTarget, gcContext, x, y, (uint)w, (uint)h );
+				TonNurako.Native.X11.X11Sports.XDrawRectangle( display, target, gc, x, y, (uint)w, (uint)h );
 			}
 		}
 
@@ -238,9 +269,9 @@ namespace TonNurako.GC
 		/// <param name="rects">矩形の定義</param>
 		public void DrawRectangle( TonNurako.Native.X11.XRectangle [] rects )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawRectangles( gcDisplay, gcTarget, gcContext, rects, rects.Length );
+				TonNurako.Native.X11.X11Sports.XDrawRectangles( display, target, gc, rects, rects.Length );
 			}
 
 		}
@@ -254,9 +285,9 @@ namespace TonNurako.GC
 		/// <param name="h">高さ</param>
 		public void FillRectangle( int x, int y, int w, int h )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillRectangle( gcDisplay, gcTarget, gcContext, x, y, (uint)w, (uint)h );
+				TonNurako.Native.X11.X11Sports.XFillRectangle( display, target, gc, x, y, (uint)w, (uint)h );
 			}
 		}
 
@@ -266,9 +297,9 @@ namespace TonNurako.GC
 		/// <param name="rects">矩形の定義</param>
 		public void FillRectangles( TonNurako.Native.X11.XRectangle [] rects )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillRectangles( gcDisplay, gcTarget, gcContext, rects, rects.Length );
+				TonNurako.Native.X11.X11Sports.XFillRectangles( display, target, gc, rects, rects.Length );
 			}
 
 		}
@@ -284,9 +315,9 @@ namespace TonNurako.GC
 		/// <param name="sweepAngle">角度(度数*64)</param>
 		public void DrawArc( int x, int y, int w, int h, int startAngle, int sweepAngle )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawArc( gcDisplay, gcTarget, gcContext,
+				TonNurako.Native.X11.X11Sports.XDrawArc( display, target, gc,
 					x, y, (uint)w, (uint)h, startAngle, sweepAngle );
 			}
 		}
@@ -297,9 +328,9 @@ namespace TonNurako.GC
 		/// <param name="arcs">円弧の定義</param>
 		public void DrawArcs( TonNurako.Native.X11.XArc [] arcs )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawArcs( gcDisplay, gcTarget, gcContext,
+				TonNurako.Native.X11.X11Sports.XDrawArcs( display, target, gc,
 					arcs, arcs.Length );
 			}
 		}
@@ -315,9 +346,9 @@ namespace TonNurako.GC
 		/// <param name="sweepAngle">角度(度数*64)</param>
 		public void FillArc( int x, int y, int w, int h, int startAngle, int sweepAngle )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillArc( gcDisplay, gcTarget, gcContext,
+				TonNurako.Native.X11.X11Sports.XFillArc( display, target, gc,
 					x, y, (uint)w, (uint)h, startAngle, sweepAngle );
 			}
 		}
@@ -328,9 +359,9 @@ namespace TonNurako.GC
 		/// <param name="arcs">円弧の定義</param>
 		public void FillArcs( TonNurako.Native.X11.XArc [] arcs )
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillArcs( gcDisplay, gcTarget, gcContext,
+				TonNurako.Native.X11.X11Sports.XFillArcs( display, target, gc,
 					arcs, arcs.Length );
 			}
 		}
@@ -349,9 +380,9 @@ namespace TonNurako.GC
                 TonNurako.Native.X11.CapStyle cap,
                 TonNurako.Native.X11.JoinStyle join)
 		{
-			if( gcContext != IntPtr.Zero )
+			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XSetLineAttributes( gcDisplay, gcContext,
+				TonNurako.Native.X11.X11Sports.XSetLineAttributes( display, gc,
 					w, (int)line, (int)cap, (int)join );
 			}
 		}

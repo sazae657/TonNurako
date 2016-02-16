@@ -67,40 +67,48 @@ namespace TonNurako.Native.Motif
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XmMenuPosition_TNK", CharSet=CharSet.Auto)]
             internal static extern void XmMenuPosition(IntPtr menu, [In]TonNurako.Native.Xt.XEventStruct.XButtonEvent xevent);
+            
+            
+            [ DllImport(ExtremeSports.Lib, EntryPoint="XmRedisplayWidget_TNK", CharSet=CharSet.Auto) ]
+            public static extern void XmRedisplayWidget(IntPtr widget);            
         }
 
-            public static IntPtr XmGetPixmap(IntPtr screen,
-                    string image_name,
-                    ulong foreground, ulong background)
-            {
-                return NativeMethods.XmGetPixmap(screen, image_name, foreground, background);
+        public static IntPtr XmGetPixmap(IntPtr screen,
+                string image_name,
+                ulong foreground, ulong background)
+        {
+            return NativeMethods.XmGetPixmap(screen, image_name, foreground, background);
+        }
+
+
+        public static void XmDestroyPixmap(IntPtr screen, IntPtr pixmap) {
+            NativeMethods.XmDestroyPixmap(screen, pixmap);
+        }
+
+        public static void XmStringFree( IntPtr str ) {
+            NativeMethods.XmStringFree(str);
+        }
+
+        public static IntPtr XmStringCreateLocalized(string str) {
+            return NativeMethods.XmStringCreateLocalized(str);
+        }
+
+        public static IntPtr XmStringUnparse(
+            IntPtr str,
+            int tag_type,
+            int output_type,
+            int parse_model
+            ) {
+                return NativeMethods.XmStringUnparse(str, 0, tag_type, output_type, IntPtr.Zero, 0, parse_model);
             }
-
-
-            public static void XmDestroyPixmap(IntPtr screen, IntPtr pixmap) {
-                NativeMethods.XmDestroyPixmap(screen, pixmap);
-            }
-
-            public static void XmStringFree( IntPtr str ) {
-                NativeMethods.XmStringFree(str);
-            }
-
-            public static IntPtr XmStringCreateLocalized(string str) {
-                return NativeMethods.XmStringCreateLocalized(str);
-            }
-
-            public static IntPtr XmStringUnparse(
-                IntPtr str,
-                int tag_type,
-                int output_type,
-                int parse_model
-                ) {
-                    return NativeMethods.XmStringUnparse(str, 0, tag_type, output_type, IntPtr.Zero, 0, parse_model);
-                }
 
         public static void XmMenuPosition(Widgets.IWidget menu, TonNurako.Native.Xt.XEventStruct.XButtonEvent xevent) {
             NativeMethods.XmMenuPosition(menu.NativeHandle.Widget, xevent);
         }
+        
+        public static void XmRedisplayWidget(Widgets.IWidget widget) {
+            NativeMethods.XmRedisplayWidget(widget.NativeHandle.Widget);
+        }        
 
 
         private XmSports(string lib) : base(lib) {

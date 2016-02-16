@@ -16,7 +16,6 @@ namespace TonNurako.Widgets
     /// </summary>
     public abstract class WidgetBase : Widgets.IWidget, System.IDisposable
     {
-        //#region ｲﾝｽﾀﾝｽ変数
 
         //自身のｳｲｼﾞｪｯﾄ
         internal Native.WidgetHandle selfWidget = null;

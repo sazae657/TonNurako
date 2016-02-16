@@ -6,6 +6,11 @@ TNK_EXPORT GC XCreateGC_TNK(Display* display, Drawable d, unsigned long valuemas
 TNK_EXPORT int XFreeGC_TNK(Display* display, GC gc) {
     return XFreeGC(display,gc);
 }
+
+TNK_EXPORT Status XGetGCValues_TNK(Display* display, GC gc, unsigned long valuemask, XGCValues* values_return) {
+    return XGetGCValues(display,gc,valuemask,values_return);
+}
+
 TNK_EXPORT Pixmap XCreatePixmap_TNK(Display* display, Drawable d, unsigned int width, unsigned int height, unsigned int depth) {
     return XCreatePixmap(display,d,width,height,depth);
 }

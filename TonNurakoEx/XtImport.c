@@ -102,6 +102,13 @@ TNK_IMP_TnkAssignColorMap(LPTNK_APP_CONTEXT pCtx, int cmap)
     pCtx->colormap = cmap;
 }
 
+TNK_EXPORT GC XtGetGC_TNK(Widget w, XtGCMask value_mask, XGCValues* values) {
+    return XtGetGC(w,value_mask,values);
+}
+
+TNK_EXPORT void XtReleaseGC_TNK(Widget w, GC gc) {
+    XtReleaseGC(w,gc);
+}
 
 #define MAX_STACK_ARG 25
 

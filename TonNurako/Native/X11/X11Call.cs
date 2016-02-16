@@ -39,10 +39,16 @@ namespace TonNurako.Native.X11
 
         internal static class NativeMethods {
             [DllImport(ExtremeSports.Lib, EntryPoint="XCreateGC_TNK", CharSet=CharSet.Auto)]
-            public static extern IntPtr XCreateGC(IntPtr display, IntPtr d, ulong valuemask, out IntPtr values);
+            public static extern IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, [In,Out]ref XGCValues values);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint="XCreateGC_TNK", CharSet=CharSet.Auto)]
+            public static extern IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, IntPtr values);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XFreeGC_TNK", CharSet=CharSet.Auto)]
             public static extern int XFreeGC(IntPtr display, IntPtr gc);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint="XGetGCValues_TNK", CharSet=CharSet.Auto)]
+            internal static extern int XGetGCValues(IntPtr display, IntPtr gc, GCMask valuemask, out XGCValues values_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XCreatePixmap_TNK", CharSet=CharSet.Auto)]
             public static extern IntPtr XCreatePixmap(IntPtr display, IntPtr d, uint width, uint height, uint depth);
@@ -132,12 +138,20 @@ namespace TonNurako.Native.X11
             public static extern IntPtr XKeysymToString(int keysym);
 
         }
-        public static IntPtr XCreateGC(IntPtr display, IntPtr d, ulong valuemask, out IntPtr values) {
-            return NativeMethods.XCreateGC(display,d,valuemask,out values);
+        public static IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, ref XGCValues values) {
+            return NativeMethods.XCreateGC(display,d,valuemask,ref values);
         }
+        
+        public static IntPtr XCreateGC(IntPtr display, IntPtr d) {
+            return NativeMethods.XCreateGC(display, d, 0, IntPtr.Zero);
+        }        
 
         public static int XFreeGC(IntPtr display, IntPtr gc) {
             return NativeMethods.XFreeGC(display,gc);
+        }
+
+        public static int XGetGCValues(IntPtr display, IntPtr gc, GCMask valuemask, out XGCValues values_return) {
+            return NativeMethods.XGetGCValues(display, gc, valuemask, out values_return);
         }
 
         public static IntPtr XCreatePixmap(IntPtr display, IntPtr d, uint width, uint height, uint depth) {

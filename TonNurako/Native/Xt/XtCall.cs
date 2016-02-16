@@ -135,14 +135,20 @@ namespace TonNurako.Native.Xt
             [DllImport(ExtremeSports.Lib, EntryPoint="TNK_GetWidgetClass", CharSet=CharSet.Auto)]
             internal static extern IntPtr TNK_GetWidgetClass(Motif.WidgetClass glass);
 
+            [DllImport(ExtremeSports.Lib, EntryPoint="XtGetGC_TNK", CharSet=CharSet.Auto)]
+            internal static extern IntPtr XtGetGC(IntPtr w, X11.GCMask value_mask, [In,Out]ref X11.XGCValues values);
 
+            [DllImport(ExtremeSports.Lib, EntryPoint="XtGetGC_TNK", CharSet=CharSet.Auto)]
+            internal static extern IntPtr XtGetGC(IntPtr w, X11.GCMask value_mask, IntPtr values);
 
+            [DllImport(ExtremeSports.Lib, EntryPoint="XtReleaseGC_TNK", CharSet=CharSet.Auto)]
+            internal static extern void XtReleaseGC(IntPtr w, [In]IntPtr gc);
         }
 
         public static void XtFree(IntPtr str) {
             NativeMethods.XtFree(str);
         }
-
+        
         public static Widgets.IWidget XtNameToWidget(Widgets.IWidget parent, string name)
         {
             var handle = NativeMethods.XtNameToWidget(parent.NativeHandle.Widget, name);
@@ -153,10 +159,8 @@ namespace TonNurako.Native.Xt
             if (null != widget) {
                 return widget;
             }
-
             return (new Widgets.ﾄﾝﾇﾗｼﾞｪｯﾄ(handle, parent));
         }
-
 
         public static void  XtDestroyWidget(Widgets.IWidget wgt) {
             NativeMethods.XtDestroyWidget(wgt.NativeHandle.Widget);
@@ -270,6 +274,18 @@ namespace TonNurako.Native.Xt
             TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data) {
             NativeMethods.XtRemoveEventHandler(w.NativeHandle.Widget,event_mask,nonmaskable,proc,client_data);
         }
+        
+        public static IntPtr XtGetGC(Widgets.IWidget w, X11.GCMask value_mask, ref X11.XGCValues values) {
+            return NativeMethods.XtGetGC(w.NativeHandle.Widget, value_mask, ref values);    
+        }
+        
+        public static IntPtr XtGetGC(Widgets.IWidget w) {
+            return NativeMethods.XtGetGC(w.NativeHandle.Widget, 0, IntPtr.Zero);    
+        }        
+        
+        internal static void XtReleaseGC(Widgets.IWidget w, IntPtr gc) {
+            NativeMethods.XtReleaseGC(w.NativeHandle.Widget, gc);
+        }    
 
         // 一時的
         public static void XtInitializeWidgetClass(Native.Motif.WidgetClass glass) {

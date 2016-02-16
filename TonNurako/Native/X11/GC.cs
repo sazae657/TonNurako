@@ -1,6 +1,6 @@
 ﻿//
 // ﾄﾝﾇﾗｺ
-// 
+//
 // Xlibﾗｯﾊﾟー
 //
 
@@ -9,9 +9,72 @@ using System.Runtime.InteropServices;
 namespace TonNurako.Native.X11
 {
 	/// <summary>
+	/// GCのﾏｽｸ
+	/// </summary>
+    [System.Flags]
+    public enum GCMask : ulong {
+        GCFunction   =  (1<<0),
+        GCPlaneMask  =  (1<<1),
+        GCForeground = (1<<2),
+        GCBackground = (1<<3),
+        GCLineWidth  = (1<<4),
+        GCLineStyle  = (1<<5),
+        GCCapStyle   = (1<<6),
+        GCJoinStyle  = (1<<7),
+        GCFillStyle  = (1<<8),
+        GCFillRule   = (1<<9),
+        GCTile       = (1<<10),
+        GCStipple    = (1<<11),
+        GCTileStipXOrigin   =  (1<<12),
+        GCTileStipYOrigin   =  (1<<13),
+        GCFont              = (1<<14),
+        GCSubwindowMode     =  (1<<15),
+        GCGraphicsExposures = (1<<16),
+        GCClipXOrigin       =  (1<<17),
+        GCClipYOrigin       =  (1<<18),
+        GCClipMask          = (1<<19),
+        GCDashOffset        =  (1<<20),
+        GCDashList          = (1<<21),
+        GCArcMode           = (1<<22),
+        GCLastBit           = 22
+    }
+
+
+	/// <summary>
+	/// XGCValues
+	/// </summary>
+	[StructLayout(LayoutKind.Sequential)]
+    public struct XGCValues {
+        public int function; // int
+        public ulong plane_mask; // unsigned long
+        public ulong foreground; // unsigned long
+        public ulong background; // unsigned long
+        public int line_width; // int
+        public int line_style; // int
+        public int cap_style; // int
+        public int join_style; // int
+        public int fill_style; // int
+        public int fill_rule; // int
+        public int arc_mode; // int
+        public System.IntPtr tile; // Pixmap
+        public System.IntPtr stipple; // Pixmap
+        public int ts_x_origin; // int
+        public int ts_y_origin; // int
+        public int font; // Font
+        public int subwindow_mode; // int
+        public bool graphics_exposures; // Bool
+        public int clip_x_origin; // int
+        public int clip_y_origin; // int
+        public System.IntPtr clip_mask; // Pixmap
+        public int dash_offset; // int
+        public byte dashes; // char
+    }
+
+
+	/// <summary>
 	/// 点の定義(XPointに対応)
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential, Pack=4)]
+	[StructLayout(LayoutKind.Sequential)]
 	public struct XPoint
 	{
 		/// <summary>
@@ -22,14 +85,13 @@ namespace TonNurako.Native.X11
 		/// Y座標
 		/// </summary>
 		public short y;
-        
         public XPoint(short X, short Y) {
             x = X;
             y = Y;
         }
 	}
 
-    [StructLayout(LayoutKind.Sequential, Pack=4)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct XSegment {
         int noop;
     }
@@ -37,7 +99,7 @@ namespace TonNurako.Native.X11
 	/// <summary>
 	/// 矩形の定義(XRectangleに対応)
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential, Pack=4)]
+	[StructLayout(LayoutKind.Sequential)]
 	public struct XRectangle
 	{
 		/// <summary>
@@ -61,7 +123,7 @@ namespace TonNurako.Native.X11
 	/// <summary>
 	/// 円弧の定義(XArcに対応)
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential, Pack=4)]
+	[StructLayout(LayoutKind.Sequential)]
 	public struct XArc
 	{
 		/// <summary>

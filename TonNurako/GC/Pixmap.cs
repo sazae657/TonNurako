@@ -9,6 +9,9 @@ using TonNurako.Native.X11;
 using TonNurako.Native.Xt;
 namespace TonNurako.GC
 {
+    /// <summary>
+    /// Pixmap
+    /// </summary>
     public class Pixmap : IDrawable, IDisposable {
 
         internal delegate void SysDestroyPixmap();
@@ -41,6 +44,18 @@ namespace TonNurako.GC
 
         }
 
+        internal Pixmap() {
+            drawable = new Drawable();
+        }
+
+
+        /// <summary>
+        /// 新規生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <param name="depth">色深度</param>
         public Pixmap(Widgets.IWidget w, int width, int height, int depth) {
             
             drawable = new Drawable();
@@ -59,15 +74,18 @@ namespace TonNurako.GC
                 X11Sports.XFreePixmap(drawable.Display, drawable.Target);
             };
         }
-        internal Pixmap() {
-            drawable = new Drawable();
-        }
 
+        /// <summary>
+        /// ﾌｧｲﾙから生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="path">ﾌｧｲﾙ</param>
+        /// <returns></returns>
         public static Pixmap FromFile(Widgets.Xm.Primitive w, string path) {
             Pixmap pm = new Pixmap();
             pm.drawable.Display = XtSports.XtDisplay(w);
-            pm.ScreenHandle = XtSports.XtScreen(w);
-            pm.drawable.Target = (IntPtr)Native.Motif.XmSports.XmGetPixmap(pm.ScreenHandle, path,
+            pm.drawable.Screen = XtSports.XtScreen(w);
+            pm.drawable.Target = (IntPtr)Native.Motif.XmSports.XmGetPixmap(pm.drawable.Screen, path,
                 w.BackgroundColor.Pixel,
                 w.ForegroundColor.Pixel
             );
@@ -77,25 +95,37 @@ namespace TonNurako.GC
             return pm;
         }
 
+        /// <summary>
+        /// ﾌｧｲﾙから生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="path">ﾌｧｲﾙ</param>
+        /// <returns></returns>
         public static Pixmap FromFile(Widgets.Xm.Manager w, string path) {
             Pixmap pm = new Pixmap();
             pm.drawable.Display = XtSports.XtDisplay(w);
-            pm.ScreenHandle = XtSports.XtScreen(w);
-            var xpm = Native.Motif.XmSports.XmGetPixmap(pm.ScreenHandle, path,
+            pm.drawable.Screen = XtSports.XtScreen(w);
+            var xpm = Native.Motif.XmSports.XmGetPixmap(pm.drawable.Screen, path,
                 w.BackgroundColor.Pixel,
                 w.ForegroundColor.Pixel
             );
             pm.drawable.Target = (IntPtr)xpm;
             pm.DestroyPixmapFunc = () => {
-                Native.Motif.XmSports.XmDestroyPixmap(pm.ScreenHandle, pm.drawable.Target);
+                Native.Motif.XmSports.XmDestroyPixmap(pm.drawable.Screen, pm.drawable.Target);
             };
             return pm;
         }
 
+        /// <summary>
+        /// ﾊﾞｯﾌｧーから生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="buffer">ﾊﾞｯﾌｧー</param>
+        /// <returns></returns>
         public static Pixmap FromBuffer(Widgets.IWidget w, byte[] buffer) {
             Pixmap pm = new Pixmap();
             pm.drawable.Display = XtSports.XtDisplay(w);
-            pm.ScreenHandle = XtSports.XtScreen(w);
+            pm.drawable.Screen = XtSports.XtScreen(w);
             pm.PixMax = new TNK_PIXMAX();
 
             IntPtr buf = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buffer.Length+1));
@@ -103,6 +133,7 @@ namespace TonNurako.GC
 	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display, w.NativeHandle.Widget, ref pm.PixMax, buf);
             Marshal.FreeCoTaskMem(buf);
             if ( 0 != r) {
+                pm = null;
                 return null;
             }
 
@@ -114,12 +145,6 @@ namespace TonNurako.GC
             return pm;
         }
 
-
-        public IntPtr ScreenHandle
-        {
-            get; internal set;
-        }
-
         public Drawable Drawable
         {
             get {
@@ -127,6 +152,8 @@ namespace TonNurako.GC
             }
         }
 
+        #region IDisposable
+        
         public void Dispose()
         {
             Dispose(true);
@@ -137,7 +164,7 @@ namespace TonNurako.GC
             Dispose(false);
         }
 
-        internal virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (IntPtr.Zero != drawable.Target) {
                 if (null != DestroyPixmapFunc) {
@@ -145,7 +172,9 @@ namespace TonNurako.GC
                 }
                 drawable.Display = IntPtr.Zero;
                 drawable.Target = IntPtr.Zero;
+                drawable.Screen = IntPtr.Zero;
             }
         }
+        #endregion
     }
 }

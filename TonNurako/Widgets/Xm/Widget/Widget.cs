@@ -543,6 +543,31 @@ namespace TonNurako.Widgets.Xm
 		}
 
         #endregion
+        
+        #region ﾄﾞﾛﾜﾎﾞー
+		/// <summary>
+		/// ﾃﾞﾌｫﾙﾄｺﾝｽﾄﾗｸﾀ
+		/// </summary>
+        public Drawable Drawable
+        {
+            get {
+                // ﾄﾞﾛﾜﾎﾞー
+                this.drawable.Display = NativeHandle.Display;
+                this.drawable.Target = NativeHandle.Window;                
+                return this.drawable;
+            }
+        }
+        
+        /// <summary>
+		/// 強制再描画
+		/// </summary>
+        public void Redisplay() {
+            if (IsAvailable) {
+                Native.Motif.XmSports.XmRedisplayWidget(this);
+            }
+        }
+                    
+        #endregion
 
 		#region Constraint
 
@@ -602,18 +627,6 @@ namespace TonNurako.Widgets.Xm
         public RowColumnConstraint RowColumnConstraint {
             get; private set;
         }
-
-        public Drawable Drawable
-        {
-            get
-            {
-                // ﾄﾞﾛﾜﾎﾞー
-                this.drawable.Display = NativeHandle.Display;
-                this.drawable.Target = NativeHandle.Window;                
-                return this.drawable;
-            }
-        }
-
         #endregion
 
         #region ｲﾍﾞﾝﾄ
