@@ -99,11 +99,13 @@ $(XM_STRINGCONSTANT_CS): $(XM_STRINGCONSTANT_CS_TPL)
 	$(GEN_EXE) >$(XM_STRINGCONSTANT_CS)
 
 
-clean:
+clean.lib:
 	- rm -rf *.o
 	- rm -rf $(TARGET)
 	- rm -rf dep
 	- rm -rf core
+
+clean: clean.lib
 	- rm $(MOTIF_CHECK_E) $(LIB_CHECK_E)
 	- rm $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
 

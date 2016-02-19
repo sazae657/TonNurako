@@ -17,11 +17,12 @@
 #include <Xm/Tree.h>
 #include <X11/Xmu/Editres.h>
 #include <X11/xpm.h>
+#include <X11/Intrinsic.h>
 
 #define TONNURAKO_EX_MAJOR_VERSION 1
 #define TONNURAKO_EX_MINOR_VERSION 0
 
-//エディタのオートインデントが邪魔
+//ｴﾃﾞｨﾀのｵーﾄｲﾝﾃﾞﾝﾄが邪魔
 #ifdef __cplusplus
 #   define TNK_DECLARE_BEGIN extern "C" {
 #   define TNK_DECLARE_END }
@@ -52,7 +53,7 @@ tagTNK_CODE {
 }TNK_CODE;
 
 /*----------------------------------------------------------------------------
-ダサいプリプロセッサ
+ﾀﾞｻいﾌﾟﾘﾌﾟﾛｾｯｻ
 -----------------------------------------------------------------------------*/
 #ifndef XM_CREATE_ARG_IN
 #define XM_CREATE_ARG_IN Widget parent, String name, ArgList arg , Cardinal argc
@@ -63,7 +64,7 @@ tagTNK_CODE {
 #endif
 
 /*----------------------------------------------------------------------------
-"C"スタイルのダサい関数群
+"C"ｽﾀｲﾙのﾀﾞｻい関数群
 -----------------------------------------------------------------------------*/
 typedef struct
 tagTNK_PIXMAX
@@ -79,7 +80,8 @@ typedef struct
 _tagTNK_APP_CONTEXT{
 	XtAppContext context;
 	Display      *display;
-    Colormap    colormap; // int
+    XtPointer      comm; // long
+    Colormap    colormap; //int
 } TNK_APP_CONTEXT, *LPTNK_APP_CONTEXT;
 
 typedef enum

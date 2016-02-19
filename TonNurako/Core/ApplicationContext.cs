@@ -1,11 +1,14 @@
-﻿//
+//
 // ﾄﾝﾇﾗｺ
 //
 //　ﾄﾝﾇﾗｹーｼｮﾝｺﾝﾃｷｽﾄ
 //
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using TonNurako.Native;
 using TonNurako.Widgets;
 
@@ -34,6 +37,10 @@ namespace TonNurako {
 
         // ﾄﾝﾇﾗｺﾝﾃｷｽﾄ
         public ExtremeSports.TnkAppContext NativeContext;
+
+        internal Application.SingleThreadSynchronizationContext SyncContext {
+            get; set;
+        }
 
         Dictionary<string, string> fallbackResource;
 
@@ -67,11 +74,40 @@ namespace TonNurako {
         }
 
         /// <summary>
+        /// まだ怪しい
+        /// </summary>
+        public void RunAsMainThread(Action delegaty) {
+            var c = SynchronizationContext.Current;
+            try {
+                SynchronizationContext.SetSynchronizationContext(SyncContext);
+                lock(Shell) {
+                    if(null != Shell && Shell.IsAvailable) {
+                        ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                    }
+                }
+                Task t = new Task(()=>{
+                        if(null != Shell && Shell.IsAvailable) {
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                        }
+                        delegaty();
+                        if(null != Shell && Shell.IsAvailable) {
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                        }
+                    }
+                );
+                t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+
+            }finally {
+                SynchronizationContext.SetSynchronizationContext(c);
+            }
+
+        }
+
+        /// <summary>
         /// 名無しのｳｲｼﾞｪｯﾄ用にそれっぽい名前を払い出す
         /// </summary>
         /// <param name="key">ｷー</param>
         /// <returns>ｷー+連番</returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
 		public string CreateTempName(string key)
 		{
             return $"{Name}{key}{widgetCounter++:d4}";

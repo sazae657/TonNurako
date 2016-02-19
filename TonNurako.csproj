@@ -189,7 +189,7 @@
   <PropertyGroup>
          <PreBuildEvent Condition="'$(OS)' == 'Unix'">
                  cd $(ProjectDir)/TonNurakoEx
-                 make BUILD=$(ConfigurationName) BINDIR=../$(OutputPath)
+                 make BUILD=$(ConfigurationName) BINDIR=../$(OutputPath) clean.lib all
                </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

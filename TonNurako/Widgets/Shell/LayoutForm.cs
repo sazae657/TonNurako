@@ -1,4 +1,4 @@
-﻿using TonNurako.Events;
+using TonNurako.Events;
 
 namespace TonNurako.Widgets {
 

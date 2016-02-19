@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using TonNurako.Native;
 using TonNurako.Native.Xt;

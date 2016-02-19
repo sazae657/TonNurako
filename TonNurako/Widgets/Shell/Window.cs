@@ -1,4 +1,4 @@
-﻿namespace TonNurako.Widgets {
+namespace TonNurako.Widgets {
 
 	/// <summary>
 	/// 最下層ｳｲｼﾞｪｯﾄ

@@ -1,14 +1,18 @@
-﻿//
+//
 // ﾄﾝﾇﾗｺ
 //
 //　ﾄﾝﾇﾗｹーｼｮﾝ
 //
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using TonNurako.Data;
 using TonNurako.Native;
+using TaskItem = System.Tuple<System.Threading.SendOrPostCallback, object>;
 
 namespace TonNurako {
     /// <summary>
@@ -16,11 +20,28 @@ namespace TonNurako {
     /// </summary>
     sealed public class Application
     {
+        internal class SingleThreadSynchronizationContext : SynchronizationContext
+        {
+            ConcurrentQueue<TaskItem> continuations = new ConcurrentQueue<TaskItem>();
+
+            public override void Post(SendOrPostCallback d, object state) {
+                continuations.Enqueue(new TaskItem(d, state));
+            }
+
+            public void Update() {
+                TaskItem cont;
+                while(continuations.TryDequeue(out cont))
+                {
+                    cont.Item1(cont.Item2);
+                }
+            }
+        }
+
 		/// <summary>
         /// ｸﾞﾛーﾊﾞﾙｺﾝﾃｷｽﾄ(使わない)
         /// </summary>
 		private static ApplicationContext GlobalContext {
-            [MethodImpl(MethodImplOptions.Synchronized)] get;
+            get;
             set;
         }
 
@@ -29,6 +50,7 @@ namespace TonNurako {
 
 		//"名前"払い出し用ｶｳﾝﾀ
 		private static int widgetCount = 0;
+
 
         /// <summary>
         /// 実行
@@ -40,6 +62,8 @@ namespace TonNurako {
             return Run(_Ctx, _Shell, new string[]{});
         }
 
+        public delegate void Delegaty();
+
         /// <summary>
         /// 実行
         /// </summary>
@@ -49,6 +73,8 @@ namespace TonNurako {
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static int Run(ApplicationContext _Ctx, Widgets.IShell _Shell, string[] _Args) {
+            _Ctx.SyncContext =  new SingleThreadSynchronizationContext();
+
             GlobalContext = _Ctx;
 
             Native.Xt.XtSports.Register("Xt");
@@ -73,18 +99,26 @@ namespace TonNurako {
                 throw new Exception(code.ToString());
             }
 
+            _Ctx.NativeContext.comm = () => {
+                _Ctx.SyncContext.Update();
+            };
+
             //名前ｶｳﾝﾀーの初期化
 			widgetCount = 0;
-
-            _Ctx.Shell = _Shell;
-            _Shell.Create(_Ctx, _Args);
-            _Shell.Realize();
-
-            ExtremeSports.AppMainLoop(_Ctx.NativeContext.context);
+            using(_Shell) {
+                _Ctx.Shell = _Shell;
+                _Shell.Create(_Ctx, _Args);
+                _Shell.Realize();
+                ExtremeSports.TriggerPrivateEvent(_Ctx.NativeContext, _Shell);
+                ExtremeSports.AppMainLoop(_Ctx.NativeContext.context, () => {
+                    _Ctx.SyncContext.Update();
+                });
+            }
 
             Native.Motif.XmSports.Unregister();
             Native.Xt.XtSports.Unregister();
             Native.X11.X11Sports.Unregister();
+
 
             return retVal;
         }
@@ -93,7 +127,6 @@ namespace TonNurako {
 		/// それなりにﾕﾆーｸな"名前"を払い出す
 		/// </summary>
 		/// <returns>それなりにﾕﾆーｸな"名前"</returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
 		public static string CreateTempName( string key )
 		{
             if (null != GlobalContext) {

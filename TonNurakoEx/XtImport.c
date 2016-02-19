@@ -2,11 +2,15 @@
 
 TNK_DECLARE_BEGIN
 
+typedef void(*process_cb)(void);
+
+
 TNK_EXPORT void
-TNK_IMP_Xt_XtAppMainLoop( XtAppContext a )
+TNK_IMP_Xt_XtAppMainLoop(XtAppContext app, process_cb cb)
 {
-	return XtAppMainLoop( a );
+    XtAppMainLoop(app);
 }
+
 TNK_EXPORT void
 TNK_IMP_Xt_XtAppSetExitFlag(  XtAppContext a )
 {

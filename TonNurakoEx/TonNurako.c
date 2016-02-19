@@ -2,6 +2,9 @@
 
 TNK_DECLARE_BEGIN
 
+#define TNK_INTERNAL_EVENT "_TNK_INTERNAL_EVENT"
+
+
 TNK_EXPORT
 unsigned int TNK_GetVersion()
 {
@@ -16,6 +19,19 @@ unsigned int TNK_GetMotifVersion() {
 TNK_EXPORT
 const char* TNK_GetMotifVersionString() {
     return XmVERSION_STRING;
+}
+
+// ﾄﾝﾇﾗﾌﾟﾗｲﾍﾞーﾄﾊﾝﾄﾞﾗー
+typedef void(*TonnuraCB)(void);
+void TonnuaInternalHandler(Widget w, XtPointer client_data, XEvent *ev, Boolean* bo)
+{
+    Atom atm = XInternAtom(XtDisplay(w), TNK_INTERNAL_EVENT, False);
+
+    if ((ev->type != ClientMessage) ||
+      (ev->xclient.message_type != atm)) {
+           return;
+    }
+    ((TonnuraCB)(client_data))();
 }
 
 TNK_EXPORT Widget
@@ -35,7 +51,11 @@ TNK_XtAppCreateShell(
 		applicationShellWidgetClass, pContext->display,
 		arglist, argcount);
 
+    // EditRes
 	XtAddEventHandler(w, 0, True, _XEditResCheckMessages, NULL);
+
+    // ﾄﾝﾇﾗﾊﾝﾄﾞﾗー
+    XtAddEventHandler(w, NoEventMask, True, TonnuaInternalHandler, (XtPointer)pContext->comm);
 
 	#ifdef _DEBUG
 	CONS25W( stderr, "XtAppCreateShell a=%p d=%p w=%p n=%s cm=%ld\n"
@@ -60,6 +80,8 @@ TNK_XtInitialize(
     size_t len;
 
     CONS25W(stderr, "TNK_XtInitialize call\n");
+
+    XInitThreads();
 
     copyArgv = NULL;
     copyArgc = 0;
@@ -125,6 +147,28 @@ TNK_XtInitialize(
     XmRepTypeInstallTearOffModelConverter();
 
 	return 0;
+}
+
+void TNK_IMP_TriggerPrivateEvent(LPTNK_APP_CONTEXT app, Widget widget) {
+    XtAppLock(app->context);
+    XFlush(XtDisplay(widget));
+
+    XClientMessageEvent ev;
+    memset(&ev, 0, sizeof(XClientMessageEvent));
+
+    ev.display = XtDisplay(widget);
+    ev.window = XtWindow(widget);
+    ev.type = ClientMessage;
+    ev.message_type = XInternAtom(ev.display, TNK_INTERNAL_EVENT, False);
+    ev.format = 32;
+    XSendEvent(ev.display, ev.window, False, NoEventMask, (XEvent *)&ev);
+    XFlush(XtDisplay(widget));
+    XtAppUnlock(app->context);
+}
+
+
+void TNK_IMP_Flush(LPTNK_APP_CONTEXT app, Widget widget) {
+    XFlush(XtDisplay(widget));
 }
 
 void

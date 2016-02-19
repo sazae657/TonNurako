@@ -6,7 +6,7 @@
 
 #include <Xm/XmAll.h>
 
-/* WidgetClass <-> TNK 苦しいマッピング*/
+/* WidgetClass <-> TNK 苦しいﾏｯﾋﾟﾝｸﾞ*/
 typedef enum
 _tagTNK_WIDGET_CLASS {
     TNK_WIDGET_CLASS_INVALID = 0,

@@ -1,4 +1,4 @@
-﻿
+
 namespace TonNurako.Widgets.Xm {
 
 	/// <summary>

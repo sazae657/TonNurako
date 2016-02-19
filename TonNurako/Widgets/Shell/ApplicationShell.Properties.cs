@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using TonNurako.Data;
 using TonNurako.Events;
 using TonNurako.Native;

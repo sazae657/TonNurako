@@ -1,4 +1,4 @@
-﻿//
+//
 // ﾄﾝﾇﾗｺ
 //
 // ｴｸｽﾄﾘーﾑｽﾎﾟーﾂ
@@ -30,6 +30,8 @@ namespace TonNurako.Native {
 
 		#region ﾌﾟﾛｾｽ関連
 
+        public delegate void AppMainLoopCalback();
+
         internal static class NativeMethods
         {
             // ﾊﾞーｼﾞｮﾝ
@@ -46,7 +48,7 @@ namespace TonNurako.Native {
 
             //ﾒｲﾝﾙーﾌﾟ
 		    [ DllImport(ExtremeSports.Lib, CharSet=CharSet.Auto) ]
-		    public static extern void TNK_IMP_Xt_XtAppMainLoop( IntPtr appcontext );
+		    public static extern void TNK_IMP_Xt_XtAppMainLoop( IntPtr appcontext, AppMainLoopCalback callback);
 
 		    // ﾒｲﾝﾙーﾌﾟを抜ける
 		    [ DllImport (ExtremeSports.Lib, CharSet=CharSet.Auto) ]
@@ -88,6 +90,14 @@ namespace TonNurako.Native {
 		    public static extern IntPtr TNK_XtAppCreateShell(
 			[In]ref TnkAppContext context,
             [MarshalAs(UnmanagedType.LPStr)] string title,  ref string[] argv, int argc , Native.Xt.NativeXtArg[] res, int resc);
+
+            [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
+            public static extern void TNK_IMP_TriggerPrivateEvent([In]ref TnkAppContext context,[In] IntPtr widget);
+
+            [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
+            public static extern void TNK_IMP_Flush([In]ref TnkAppContext context,[In] IntPtr widget);
+
+
 
             [ DllImport(Lib, CharSet=CharSet.Auto) ]
             public static extern int TNK_IMP_Xt_XCreateColormap(IntPtr w);
@@ -171,10 +181,25 @@ namespace TonNurako.Native {
 		/// ﾒｲﾝﾙーﾌﾟ
 		/// </summary>
 		/// <param name="app">XtAppContext</param>
-		public static void AppMainLoop( IntPtr app )
+		public static void AppMainLoop( IntPtr app, AppMainLoopCalback callback )
 		{
-            NativeMethods.TNK_IMP_Xt_XtAppMainLoop( app );
+            NativeMethods.TNK_IMP_Xt_XtAppMainLoop( app,callback );
 		}
+
+		/// <summary>
+		/// ﾌﾟﾗｲﾍﾞーﾄｲﾍﾞﾝﾄ発行
+		/// </summary>
+        public static void TriggerPrivateEvent(TnkAppContext context, IWidget w) {
+            NativeMethods.TNK_IMP_TriggerPrivateEvent(ref context, w.NativeHandle.Widget);
+        }
+
+		/// <summary>
+		/// XFlushを呼ぶ
+		/// </summary>
+        public static void Flush(TnkAppContext context, IWidget w) {
+            NativeMethods.TNK_IMP_Flush(ref context, w.NativeHandle.Widget);
+        }
+
 
 
 		/// <summary>
@@ -232,6 +257,8 @@ namespace TonNurako.Native {
         }
 		#endregion
 
+        public delegate void TnkAppRefreshHandler();
+
 		/// <summary>
 		/// ｱﾌﾟﾘｹーｼｮﾝの情報の保持
 		/// </summary>
@@ -240,7 +267,10 @@ namespace TonNurako.Native {
 		{
             internal IntPtr context;
             internal IntPtr display;
-            //public int   colormap;
+
+            internal TnkAppRefreshHandler comm;
+
+            internal int   colormap;
 		}
 
 
@@ -264,9 +294,6 @@ namespace TonNurako.Native {
 
             ExtremeSports.TnkFreeDeepCopyArg(au);
 
-            foreach(Native.Xt.NativeXtArg k in au) {
-                System.Diagnostics.Debug.WriteLine($"NA<F>: {k.Name} : {k.Value}");
-            }
             return result;
 
 		}
