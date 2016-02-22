@@ -32,18 +32,24 @@ extern "C"{
 #   define TNK_DECLARE_END
 #endif
 
+#ifdef __APPLE__
+#   define GARBAGE_PLATFORM 1
+#endif
+
 #ifdef __TNK_PORT_WINDOWS__
     extern void XTRACE(FILE*, const char *format, ...);
 #   define CONS25W XTRACE
 #else
-#   ifdef __APPLE__
+#   ifdef _DEBUG
 #       define CONS25W fprintf
 #   else
 #       define CONS25W(...)
 #   endif
 #endif
-
-#define TNK_EXPORT
+#ifndef TNK_EXPORT
+#   define TNK_EXPORT_NR
+#   define TNK_EXPORT
+#endif
 typedef enum
 tagTNK_CODE {
     TNK_OK          = 0,

@@ -76,7 +76,37 @@ namespace TonNurako {
         /// <summary>
         /// まだ怪しい
         /// </summary>
-        public void RunAsMainThread(Action delegaty) {
+        public void Invoke(Delegate delegaty, params object[] args) {
+            var c = SynchronizationContext.Current;
+            try {
+                SynchronizationContext.SetSynchronizationContext(SyncContext);
+                lock(Shell) {
+                    if(null != Shell && Shell.IsAvailable) {
+                        ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                    }
+                }
+                Task t = new Task(()=>{
+                        if(null != Shell && Shell.IsAvailable) {
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                        }
+                        delegaty.DynamicInvoke(args);
+                        if(null != Shell && Shell.IsAvailable) {
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                        }
+                    }
+                );
+                t.Start(TaskScheduler.FromCurrentSynchronizationContext());
+
+            }finally {
+                SynchronizationContext.SetSynchronizationContext(c);
+            }
+        }
+
+
+        /// <summary>
+        /// まだ怪しい(2)
+        /// </summary>
+        public void Invoke(Action delegaty) {
             var c = SynchronizationContext.Current;
             try {
                 SynchronizationContext.SetSynchronizationContext(SyncContext);
@@ -100,7 +130,6 @@ namespace TonNurako {
             }finally {
                 SynchronizationContext.SetSynchronizationContext(c);
             }
-
         }
 
         /// <summary>
