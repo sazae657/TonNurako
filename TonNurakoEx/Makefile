@@ -4,8 +4,8 @@ BUILD := Debug
 LINKER := $(CC)
 BINDIR := ../bin/$(BUILD)/
 
-CFLAGS :=-fPIC -I$(MOTF_HEADER_PATH) -I$(X11_HEADER_PATH) 
-LINK_LIBS := -L$(MOTF_LIBRARY_PATH) $(MOTIF_LIBS) -L$(X11_LIBRARY_PATH) $(X11_LIBS)
+CFLAGS :=-fPIC -Iimport.app -I$(MOTF_HEADER_PATH) -I$(X11_HEADER_PATH) 
+LINK_LIBS := -Limport.app/lib -L$(MOTF_LIBRARY_PATH) $(MOTIF_LIBS) -L$(X11_LIBRARY_PATH) $(X11_LIBS)
 LINK_FLAGS := -fPIC -g -shared
 OPT := -g -D_DEBUG
 
@@ -16,6 +16,8 @@ MOTIF_CHECK_E=iso.app/Contents/MacOS/iso
 LIB_CHECK_C=scripts.app/Contents/Resources/LibCheck.c
 LIB_CHECK_E=scripts.app/Contents/MacOS/scripts
 
+IMP_CHECK_C=import.app/Contents/Resources/ImpCheck.c
+IMP_CHECK_E=import.app/Contents/MacOS/import
 
 # 自動生成用
 GEN_EXE := tmpfile.app/Contents/MacOS/gen
@@ -65,7 +67,7 @@ $(OUTDIR):
 	mkdir -p $(OUTDIR)
 
 # ﾁｪｯｸ
-Check: MotifCheck LibCheck
+Check: MotifCheck LibCheck ImportCheck
 
 MotifCheck:
 	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C)
@@ -74,6 +76,11 @@ MotifCheck:
 LibCheck:
 	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(LIB_CHECK_E) $(LIB_CHECK_C)
 	$(LIB_CHECK_E)
+
+ImportCheck:
+	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(IMP_CHECK_E) $(IMP_CHECK_C)
+	$(IMP_CHECK_E)
+
 
 
 # ほほほ

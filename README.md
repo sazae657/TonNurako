@@ -31,24 +31,34 @@
 % cd TonNurako
 ```
 
-## TonNurako.extremesportsのﾋﾞﾙﾄﾞ
+## TonNurako.extremesportsのﾋﾞﾙﾄﾞ準備
 
-必要に応じてConfig.mp3のﾊﾟｽを調整してください
+以下のｼｽﾃﾑでは事前に準備が必要です
+
+* X11やMotifが一般的でない場所にｲﾝｽﾄーﾙされている場合
+* 一部の不自由ｼｽﾃﾑで検疫ﾌｫﾙﾀﾞーにMotifが移動されてしまっている場合
+
+該当しない場合はこの手順をすっ飛ばして構いません
+
+#### 1. ﾊﾟｽを直指定する場合
+ 
+TonNurako/TonNurakoEx/Config.mp3のﾊﾟｽを調整してください
 ```
 % cd TonNurakoEx
 % dtpad Config.mp3
 ```
 
-この辺を環境に合わせて調整してください
+#### 2. Config.mp3編集するのが面倒くさい場合
+
+TonNurako/TonNurakoEx/import.app フォルダー直下にX11とXmへのｼﾝﾎﾞﾘｯｸﾘﾝｸを作成してください
+
 ```
-# Motifのﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
-MOTF_HEADER_PATH=/usr/dt/include
-MOTF_LIBRARY_PATH=/usr/dt/lib
+# 例: Motifがｳｲﾙｽ並の扱いを受けて検疫ﾌｫﾙﾀﾞーに移動されてしまっている不自由ｼｽﾃﾑの場合
 
-# X11のﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
-X11_HEADER_PATH=/usr/X11R6/include
-X11_LIBRARY_PATH=/usr/X11R6/lib
-
+% cd TonNurako/TonNurakoEx/import.app
+% ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/include/X11 .
+% ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/include/Xm .
+% ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/lib .
 ```
 
 ﾋﾞﾙﾄﾞ出来る事の確認

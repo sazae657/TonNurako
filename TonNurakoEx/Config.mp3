@@ -1,10 +1,11 @@
 # Motifのﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
-MOTF_HEADER_PATH= /usr/dt/include
+
+MOTF_HEADER_PATH=/usr/dt/include
 MOTF_LIBRARY_PATH=/usr/dt/lib
 
 # X11のﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
-X11_HEADER_PATH=/usr/X11R6/include
-X11_LIBRARY_PATH=/usr/X11R6/lib
+X11_HEADER_PATH=/usr/openwin/include
+X11_LIBRARY_PATH=/usr/openwin/lib
 
 # Motifのﾗｲﾌﾞﾗﾘー
 MOTIF_LIBS=-lXm -lXmu
