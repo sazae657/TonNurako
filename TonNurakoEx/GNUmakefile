@@ -4,8 +4,8 @@ BUILD := Debug
 LINKER := $(CC)
 BINDIR := ../bin/$(BUILD)/
 
-CFLAGS :=-fPIC -Iimport.app -I$(MOTF_HEADER_PATH) -I$(X11_HEADER_PATH) 
-LINK_LIBS := -Limport.app/lib -L$(MOTF_LIBRARY_PATH) $(MOTIF_LIBS) -L$(X11_LIBRARY_PATH) $(X11_LIBS)
+CFLAGS :=-fPIC -Iimport.app $(MOTF_HEADER_ARGS) $(X11_HEADER_ARGS) 
+LINK_LIBS := -Limport.app/lib $(MOTF_LIBRARY_ARGS) $(MOTIF_LIBS) $(X11_LIBRARY_ARGS) $(X11_LIBS)
 LINK_FLAGS := -fPIC -g -shared
 OPT := -g -D_DEBUG
 
