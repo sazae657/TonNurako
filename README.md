@@ -70,8 +70,14 @@ TonNurako/TonNurakoEx/import.app フォルダー直下にX11とXmへのｼﾝﾎ
 ```
 % cd ..
 % xbuild
-% ls mono bin/Debug/Widgets.exe
- mono bin/Debug/Widgets.exe
+---
+% ls bin/Debug/*Ton*
+ bin/Debug/TonNurako.dll
+ bin/Debug/TonNurako.dll.mdb		
+ bin/Debug/libTonNurako.extremesports
+% ls bin/Debug/*.exe
+ bin/Debug/Simple.exe	
+ bin/Debug/Widgets.exe
 %
 ```
 
