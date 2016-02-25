@@ -10,18 +10,25 @@ LINK_FLAGS := -fPIC -g -shared
 OPT := -g -D_DEBUG
 
 # チェック
-MOTIF_CHECK_C=iso.app/Contents/Resources/MotifCheck.c
+CHECK_ARGS=Check Args
+COMMON_C=iso.app/Contents/Resources/Shop.c
+COMMON_I=-Iiso.app/Contents/Resources
+
+MOTIF_CHECK_C=iso.app/Contents/Resources/MotifCheck.c $(COMMON_C)
 MOTIF_CHECK_E=iso.app/Contents/MacOS/iso
 
-LIB_CHECK_C=scripts.app/Contents/Resources/LibCheck.c
+LIB_CHECK_C=scripts.app/Contents/Resources/LibCheck.c $(COMMON_C)
 LIB_CHECK_E=scripts.app/Contents/MacOS/scripts
 
-IMP_CHECK_C=import.app/Contents/Resources/ImpCheck.c
+IMP_CHECK_C=import.app/Contents/Resources/ImpCheck.c $(COMMON_C)
 IMP_CHECK_E=import.app/Contents/MacOS/import
+
+RULES_OK_DIR=tmpfile.app/Contents/_CodeSignature
+RULES_OK_FILE=tmpfile.app/Contents/_CodeSignature/Zakefile
 
 # 自動生成用
 GEN_EXE := tmpfile.app/Contents/MacOS/gen
-GEN_C := tmpfile.app/Contents/Resources/gen.c
+GEN_C := tmpfile.app/Contents/Resources/gen.c 
 GEN_SRC_DIR := ../TonNurako/Native/GEN
 TEMPLATE_DIR := iso.app
 SCRIPT_DIR := scripts.app
@@ -56,7 +63,7 @@ TARGET = $(BINDIR)libTonNurako.extremesports
 
 all: ExtremeSports GenSrc
 
-ExtremeSports: Check $(TARGET)
+ExtremeSports: check $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(LINKER) $(OBJ) $(LINK_LIBS) $(LINK_FLAGS) -o $(TARGET)
@@ -67,20 +74,27 @@ $(OUTDIR):
 	mkdir -p $(OUTDIR)
 
 # ﾁｪｯｸ
-Check: MotifCheck LibCheck ImportCheck
+check: $(RULES_OK_FILE) 
 
-MotifCheck:
-	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C)
-	$(MOTIF_CHECK_E)
+speaker: $(LIB_CHECK_E)  $(MOTIF_CHECK_E) $(IMP_CHECK_E)
+	@ $(LIB_CHECK_E) $(CHECK_ARGS)
+	@ $(MOTIF_CHECK_E) $(CHECK_ARGS)
+	@ $(IMP_CHECK_E) $(CHECK_ARGS)
 
-LibCheck:
-	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(LIB_CHECK_E) $(LIB_CHECK_C)
-	$(LIB_CHECK_E)
+$(RULES_OK_FILE): $(LIB_CHECK_E)  $(MOTIF_CHECK_E) $(IMP_CHECK_E)
+	@ $(LIB_CHECK_E) $(CHECK_ARGS)
+	@ $(MOTIF_CHECK_E) $(CHECK_ARGS)
+	@ $(IMP_CHECK_E) $(CHECK_ARGS)
 
-ImportCheck:
-	$(CC) $(CFLAGS)  $(LINK_LIBS) -o $(IMP_CHECK_E) $(IMP_CHECK_C)
-	$(IMP_CHECK_E)
 
+$(LIB_CHECK_E): $(LIB_CHECK_C) $(MOTIF_CHECK_E) $(IMP_CHECK_E)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(LIB_CHECK_E) $(LIB_CHECK_C)
+
+$(MOTIF_CHECK_E): $(MOTIF_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I)  $(LINK_LIBS) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C)
+
+$(IMP_CHECK_E): $(IMP_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(IMP_CHECK_E) $(IMP_CHECK_C)
 
 
 # ほほほ
@@ -92,18 +106,21 @@ $(TEMP_BIN):
 
 $(XM_CONSTANT_CS): $(XM_CONSTANT_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/const.py $(XM_CONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)
 	$(GEN_EXE) >$(XM_CONSTANT_CS)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(LIB_CHECK_C)
 
 $(XM_RESOURCEID_CS): $(XM_RESOURCEID_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/resource.py $(XM_RESOURCEID_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)
 	$(GEN_EXE) >$(XM_RESOURCEID_CS)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(LIB_CHECK_C)
 
 $(XM_STRINGCONSTANT_CS): $(XM_STRINGCONSTANT_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/str_const.py $(XM_STRINGCONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)
 	$(GEN_EXE) >$(XM_STRINGCONSTANT_CS)
+	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(LIB_CHECK_C)
 
 
 clean.lib:
@@ -113,7 +130,7 @@ clean.lib:
 	- rm -rf core
 
 clean: clean.lib
-	- rm $(MOTIF_CHECK_E) $(LIB_CHECK_E)
+	- rm $(MOTIF_CHECK_E) $(LIB_CHECK_E) $(IMP_CHECK_E) $(RULES_OK_DIR)/*file
 	- rm $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
 
 
