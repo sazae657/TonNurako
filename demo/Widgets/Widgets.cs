@@ -27,8 +27,8 @@ namespace Widgets {
         public override void ShellCreated()
         {            
             this.Layout.MenuBar = CreateMenu();
-            this.Title = "トンヌラコ";
-            this.IconName = "トンヌラコ";
+            this.Title = Properties.Resources.Title;
+            this.IconName = Properties.Resources.IconTitle;
             
 
             var pw = new Paned();
