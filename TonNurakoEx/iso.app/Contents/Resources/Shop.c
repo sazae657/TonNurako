@@ -19,8 +19,16 @@ XtTest(int argc, char** argv)
     Widget toplevel;
     Display* display;
     XtAppContext context;
-    Widget form, label1, label2, button;
+    Widget form, label, label1, label2, button;
+    Screen* screen;
+    String swap;
 
+    if (NULL == (swap = strrchr(argv[0], '/'))) {
+        swap = argv[0];
+    }
+    else {
+        swap++;
+    }
 
     context = XtCreateApplicationContext();
 
@@ -29,10 +37,13 @@ XtTest(int argc, char** argv)
     if (NULL == display) {
         return 0;
     }
+    screen = XDefaultScreenOfDisplay(display);
 
     toplevel = XtVaAppCreateShell("k",
                     "XtTest", applicationShellWidgetClass, display,
-                    XtNtitle, argv[0],
+                    XtNtitle, swap,
+                    XtNx, (screen->width /3),
+                    XtNy, (screen->height /3),
                     NULL
                     );
     if (NULL == toplevel) {
@@ -41,22 +52,34 @@ XtTest(int argc, char** argv)
 
     if (3 != argc) {
         form = XtVaCreateManagedWidget("form", xmFormWidgetClass, toplevel,
-        XmNhorizontalSpacing, 10,
-        XmNverticalSpacing, 10,
-        NULL
+            XmNhorizontalSpacing, 5,
+            XmNmarginHeight, 10,
+            XmNmarginWidth, 10,
+            NULL
         );
 
-        label1 = XtVaCreateManagedWidget("label1", xmLabelWidgetClass, form,
-            XmNlabelString, XmStringCreateLocalized("usage: "),
+        label = XtVaCreateManagedWidget("label", xmLabelGadgetClass, form,
+            XmNlabelString, XmStringCreateLocalized("Usage"),
+            XmNalignment, XmALIGNMENT_BEGINNING,
             XmNtopAttachment, XmATTACH_FORM,
+            XmNleftAttachment, XmATTACH_FORM,
+            XmNrightAttachment, XmATTACH_FORM,
+            NULL
+        );
+
+        label1 = XtVaCreateManagedWidget("label1", xmLabelGadgetClass, form,
+            XmNlabelString, XmStringCreateLocalized(swap),
+            XmNtopAttachment, XmATTACH_WIDGET,
+            XmNtopWidget, label,
             XmNleftAttachment, XmATTACH_FORM,
             XmNbottomAttachment, XmATTACH_FORM,
             NULL
         );
 
-        label2 = XtVaCreateManagedWidget("label2", xmLabelWidgetClass, form,
-            XmNlabelString, XmStringCreateLocalized("arg1 arg2"),
-            XmNtopAttachment, XmATTACH_FORM,
+        label2 = XtVaCreateManagedWidget("label2", xmLabelGadgetClass, form,
+            XmNlabelString, XmStringCreateLocalized(": arg1 arg2"),
+            XmNtopAttachment, XmATTACH_WIDGET,
+            XmNtopWidget, label,
             XmNleftAttachment, XmATTACH_WIDGET,
             XmNleftWidget, label1,
             XmNbottomAttachment, XmATTACH_FORM,
@@ -64,7 +87,8 @@ XtTest(int argc, char** argv)
 
         button = XtVaCreateManagedWidget("button", xmPushButtonWidgetClass, form,
             XmNlabelString, XmStringCreateLocalized("Close"),
-            XmNtopAttachment, XmATTACH_FORM,
+            XmNtopAttachment, XmATTACH_WIDGET,
+            XmNtopWidget, label,
             XmNleftAttachment, XmATTACH_WIDGET,
             XmNleftWidget, label2,
             XmNbottomAttachment, XmATTACH_FORM,

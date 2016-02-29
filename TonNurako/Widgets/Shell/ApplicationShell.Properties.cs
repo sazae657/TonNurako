@@ -24,6 +24,7 @@ namespace TonNurako.Widgets.Xm {
         // XmNinsertPosition XmCInsertPosition XtOrderProc NULL CSG
         // XmNcreatePopupChildProc XmCCreatePopupChildProc XtCreatePopupChildProc NULL CSG
         // ### XmNtitleEncoding XmCTitleEncoding Atom dynamic CSG ←たぶんやらない(Titleで吸収)
+        // ## XmNiconNameEncoding XmCIconNameEncoding	Atom	dynamic	CSG ←たぶんやらない(IconNameで吸収)
 
         internal void SetCompoundStr(
             Native.Motif.ResourceId idStr, Native.Motif.ResourceId idEnc, string text) {
@@ -507,6 +508,36 @@ namespace TonNurako.Widgets.Xm {
             set {
             XSports.SetInt(
                 Native.Motif.ResourceId.XmNiconY, value, Data.Resource.Access.CSG);
+            }
+        }
+
+        /// <summary>
+        /// XmNiconic
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual bool Iconic {
+            get {
+                return XSports.GetBool(
+                Native.Motif.ResourceId.XmNiconic, false, Data.Resource.Access.CSG);
+            }
+            set {
+                XSports.SetBool(
+                    Native.Motif.ResourceId.XmNiconic, value, Data.Resource.Access.CSG);
+            }
+        }
+
+        /// <summary>
+        /// XmNiconName
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual string IconName {
+            set {
+                this.SetCompoundStr(
+                    Native.Motif.ResourceId.XmNiconName, Native.Motif.ResourceId.XmNiconNameEncoding, value);
+            }
+            get {
+                return XSports.GetAnsiString(
+                	Native.Motif.ResourceId.XmNiconName, "", Data.Resource.Access.CSG);
             }
         }
 
