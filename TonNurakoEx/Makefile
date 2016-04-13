@@ -48,13 +48,13 @@ OPT = -O2 -DNDEBUG
 .endif
 
 
-OBJ=DlSym.o	\
- 	ClassDef.o \
- 	XmImport.o \
-	XtImport.o  \
-	X11Import.o \
-    TonNurako.o \
-	XmCreateFuncs.o
+OBJ=DlSym.o  \
+ ClassDef.o  \
+ XmImport.o  \
+ XtImport.o  \
+ X11Import.o \
+ TonNurako.o \
+ XmCreateFuncs.o
 
 TARGET = $(BINDIR)libTonNurako.extremesports
 
@@ -66,7 +66,7 @@ all: ExtremeSports GenSrc
 ExtremeSports: check $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(LINKER) $(OBJ) $(LINK_LIBS) $(LINK_FLAGS) -o $(TARGET)
+	$(LINKER) $(OBJ)  -o $(TARGET) $(LINK_FLAGS) $(LINK_LIBS) 
 
 $(OBJ): $(OUTDIR)
 
@@ -88,13 +88,13 @@ $(RULES_OK_FILE): $(LIB_CHECK_E)  $(MOTIF_CHECK_E) $(IMP_CHECK_E)
 
 
 $(LIB_CHECK_E): $(LIB_CHECK_C) $(MOTIF_CHECK_E) $(IMP_CHECK_E)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(LIB_CHECK_E) $(LIB_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(LIB_CHECK_E) $(LIB_CHECK_C)  $(LINK_LIBS)
 
 $(MOTIF_CHECK_E): $(MOTIF_CHECK_C)
-	$(CC) $(CFLAGS) $(COMMON_I)  $(LINK_LIBS) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C)  $(LINK_LIBS)
 
 $(IMP_CHECK_E): $(IMP_CHECK_C)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(IMP_CHECK_E) $(IMP_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(IMP_CHECK_E) $(IMP_CHECK_C)  $(LINK_LIBS)
 
 
 # ほほほ
@@ -106,21 +106,21 @@ $(TEMP_BIN):
 
 $(XM_CONSTANT_CS): $(XM_CONSTANT_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/const.py $(XM_CONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)  $(LINK_LIBS)
 	$(GEN_EXE) >$(XM_CONSTANT_CS)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(LIB_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(GEN_EXE) $(LIB_CHECK_C)  $(LINK_LIBS)
 
 $(XM_RESOURCEID_CS): $(XM_RESOURCEID_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/resource.py $(XM_RESOURCEID_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)  $(LINK_LIBS)
 	$(GEN_EXE) >$(XM_RESOURCEID_CS)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(LIB_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(GEN_EXE) $(LIB_CHECK_C)  $(LINK_LIBS)
 
 $(XM_STRINGCONSTANT_CS): $(XM_STRINGCONSTANT_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/str_const.py $(XM_STRINGCONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)  $(LINK_LIBS)
 	$(GEN_EXE) >$(XM_STRINGCONSTANT_CS)
-	$(CC) $(CFLAGS) $(COMMON_I) $(LINK_LIBS) -o $(GEN_EXE) $(LIB_CHECK_C)
+	$(CC) $(CFLAGS) $(COMMON_I) -o $(GEN_EXE) $(LIB_CHECK_C)  $(LINK_LIBS)
 
 
 clean.lib:

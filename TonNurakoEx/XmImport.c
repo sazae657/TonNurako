@@ -39,9 +39,9 @@ TNK_EXPORT void XmTabListFree_TNK(XmTabList tablist) {
     XmTabListFree(tablist);
 }
 
-TNK_EXPORT void XmRedisplayWidget_TNK(Widget widget) {
-    XmRedisplayWidget(widget);
-}
+//TNK_EXPORT void XmRedisplayWidget_TNK(Widget widget) {
+//    XmRedisplayWidget(widget);
+//}
 
 //
 // XmRendition
