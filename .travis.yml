@@ -1,2 +1,6 @@
 language: csharp
 solution: TonNurako.sln
+
+install:
+    - sudo apt-get -qq update
+    - sudo apt-get -qq install libmotif-dev libxpm-dev
