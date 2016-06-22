@@ -20,16 +20,16 @@ namespace Widgets {
 
         Widgets() {
         }
-        
+
         /// <summary>
         /// Shellができた
         /// </summary>
         public override void ShellCreated()
-        {            
+        {
             this.Layout.MenuBar = CreateMenu();
             this.Title = Properties.Resources.Title;
             this.IconName = Properties.Resources.IconTitle;
-            
+
 
             var pw = new Paned();
             pw.Name = "pw";
@@ -73,13 +73,12 @@ namespace Widgets {
             rightPane.BottomAttachment = AttachmentType.Form;
 
             sb.Children.Add(rightPane);
-            sb.ClipWindow = rightPane;
 
             SetWidget(new PushButton(), false);
-            
+
             this.RealizedEvent += (sender,ev) => {
                 this.IconPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);
-            };            
+            };
         }
 
         #region Reflection
@@ -260,7 +259,7 @@ namespace Widgets {
                          d.Items.Help.Visible = false;
                      };
                      d.WidgetManagedEvent += (x, y) => {
-                        d.SymbolPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);                         
+                        d.SymbolPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);
                      };
                      StringBuilder str = new StringBuilder();
                      foreach (var asp in AppDomain.CurrentDomain.GetAssemblies()) {

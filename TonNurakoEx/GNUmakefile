@@ -68,10 +68,10 @@ ExtremeSports: check $(TARGET)
 $(TARGET): $(OBJ)
 	$(LINKER) $(OBJ) $(LINK_LIBS) $(LINK_FLAGS) -o $(TARGET)
 
-$(OBJ): $(OUTDIR)
+$(OBJ): $(BINDIR)
 
-$(OUTDIR):
-	mkdir -p $(OUTDIR)
+$(BINDIR):
+	mkdir -p $(BINDIR)
 
 # ﾁｪｯｸ
 check: $(RULES_OK_FILE) 

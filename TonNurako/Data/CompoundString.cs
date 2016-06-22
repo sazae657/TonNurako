@@ -291,7 +291,7 @@ namespace TonNurako.Data {
         }
         internal static class NativeMethods {
 
-            [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_CreateCompoundTextProperty", CharSet=CharSet.Auto)]
+            [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_CreateCompoundTextProperty", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true)]
             internal static extern int TNK_CreateCompoundTextProperty(
                         [In,Out]ref XTextProperty tprop,
                         IntPtr display,

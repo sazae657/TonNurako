@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TonNurako</RootNamespace>
     <AssemblyName>TonNurako</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -61,6 +61,7 @@
         <Compile Include="TonNurako\Data\XResource.cs" />
         <Compile Include="TonNurako\GC\GraphicsContext.cs" />
         <Compile Include="TonNurako\GC\Pixmap.cs" />
+        <Compile Include="TonNurako\GC\XImage.cs" />
         <Compile Include="TonNurako\Native\Attribute.cs" />
         <Compile Include="TonNurako\Native\CallbackQueue.cs" />
         <Compile Include="TonNurako\Native\DlSym.cs" />

@@ -56,8 +56,8 @@ namespace TonNurako.Native.X11
         public int fill_style; // int
         public int fill_rule; // int
         public int arc_mode; // int
-        public System.IntPtr tile; // Pixmap
-        public System.IntPtr stipple; // Pixmap
+        internal System.IntPtr tile; // Pixmap
+        internal System.IntPtr stipple; // Pixmap
         public int ts_x_origin; // int
         public int ts_y_origin; // int
         public int font; // Font
@@ -65,7 +65,7 @@ namespace TonNurako.Native.X11
         public bool graphics_exposures; // Bool
         public int clip_x_origin; // int
         public int clip_y_origin; // int
-        public System.IntPtr clip_mask; // Pixmap
+        internal System.IntPtr clip_mask; // Pixmap
         public int dash_offset; // int
         public byte dashes; // char
     }

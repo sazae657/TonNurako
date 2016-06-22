@@ -124,3 +124,43 @@ TNK_EXPORT int XUnloadFont_TNK(Display* display, Font font) {
     return XUnloadFont(display,font);
 }
 
+//
+// XImage
+//
+
+TNK_EXPORT XImage* XCreateImage_TNK(Display* display, Visual* visual, unsigned int depth, int format, int offset, char* data, unsigned int width, unsigned int height, int bitmap_pad, int bytes_per_line) {
+    return XCreateImage(display,visual,depth,format,offset,data,width,height,bitmap_pad,bytes_per_line);
+}
+
+TNK_EXPORT unsigned long XGetPixel_TNK(XImage* ximage, int x, int y) {
+    return XGetPixel(ximage,x,y);
+}
+
+TNK_EXPORT int XPutPixel_TNK(XImage* ximage, int x, int y, unsigned long pixel) {
+    return XPutPixel(ximage,x,y,pixel);
+}
+
+TNK_EXPORT XImage* XSubImage_TNK(XImage* ximage, int x, int y, unsigned int subimage_width, unsigned int subimage_height) {
+    return XSubImage(ximage,x,y,subimage_width,subimage_height);
+}
+
+TNK_EXPORT int XAddPixel_TNK(XImage* ximage, long value) {
+    return XAddPixel(ximage,value);
+}
+
+TNK_EXPORT int XDestroyImage_TNK(XImage* ximage) {
+    ximage->data = NULL;
+    return XDestroyImage(ximage);
+}
+
+TNK_EXPORT int XPutImage_TNK(Display* display, Drawable d, GC gc, XImage* image, int src_x, int src_y, int dest_x, int dest_y, unsigned int width, unsigned int height) {
+    return XPutImage(display,d,gc,image,src_x,src_y,dest_x,dest_y,width,height);
+}
+
+TNK_EXPORT XImage* XGetImage_TNK(Display* display, Drawable d, int x, int y, unsigned int width, unsigned int height, unsigned long plane_mask, int format) {
+    return XGetImage(display,d,x,y,width,height,plane_mask,format);
+}
+
+TNK_EXPORT XImage* XGetSubImage_TNK(Display* display, Drawable d, int x, int y, unsigned int width, unsigned int height, unsigned long plane_mask, int format, XImage* dest_image, int dest_x, int dest_y) {
+    return XGetSubImage(display,d,x,y,width,height,plane_mask,format,dest_image,dest_x,dest_y);
+}

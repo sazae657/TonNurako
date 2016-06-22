@@ -12,8 +12,11 @@ namespace TonNurako.Widgets.Xm
 	/// </summary>
 	public class ScrolledWindow : Manager
 	{
+        Form clipWindow;
+
 		public ScrolledWindow()  : base()
 		{
+            clipWindow = null;
 		}
 
         internal override void InitalizeLocals()
@@ -32,6 +35,14 @@ namespace TonNurako.Widgets.Xm
 			{
 				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateScrolledWindow, parent, ToolkitResources);
 			}
+            //IWidget cw = XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNclipWindow, Data.Resource.Access.G);
+            IntPtr cw = this.ToolkitResources.GetPointerValue(Native.Motif.ResourceId.XmNclipWindow);
+            if (IntPtr.Zero != cw) {
+                clipWindow = new Form();
+                clipWindow.WrapExistingWidget(cw);
+                this.Children.Add(clipWindow);
+            }
+
 			return base.Create (parent);
 		}
 
@@ -50,13 +61,11 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNclipWindow XmCClipWindow Widget dynamic G
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual IWidget ClipWindow {
+        public virtual IChild ClipWindow {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNclipWindow, Data.Resource.Access.CSG);
+                return XSports.GetWidget<IChild>(Native.Motif.ResourceId.XmNclipWindow, Data.Resource.Access.G);
             }
-            set {
-            XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNclipWindow, value, Data.Resource.Access.CSG);
-            }
+
         }
 
 
@@ -170,12 +179,12 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNworkWindow XmCWorkWindow Widget NULL CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual IWidget WorkWindow {
+        public virtual IChild WorkWindow {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNworkWindow);
+                return XSports.GetWidget<IChild>(Native.Motif.ResourceId.XmNworkWindow);
             }
             set {
-            XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNworkWindow, value);
+                XSports.SetWidget<IChild>(Native.Motif.ResourceId.XmNworkWindow, value);
             }
         }
 

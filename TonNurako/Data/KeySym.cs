@@ -1,5 +1,6 @@
 using TonNurako.Native.X11;
 using TonNurako.Native.Xt;
+
 namespace TonNurako.Data
 {
     /// <summary>

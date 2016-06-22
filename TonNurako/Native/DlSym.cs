@@ -13,6 +13,7 @@ namespace TonNurako.Native
     /// </summary>
     public class ExtremeSportsLoader : System.IDisposable
     {
+        [Serializable]
         public class SymbolNotFoundException : Exception
         {
             public SymbolNotFoundException( string message ) : base( message ) { }

@@ -16,22 +16,22 @@ namespace TonNurako.Native {
             Widget = ptr;
             Hash = ptr.ToInt64().ToString().GetHashCode();
         }
-        internal IntPtr Widget {
+        public IntPtr Widget {
             get;
         }
-        internal IntPtr Display {
+        public IntPtr Display {
             get { return Native.Xt.XtSports.XtDisplay(Widget);}
         }
         
-        internal IntPtr Window {
+        public IntPtr Window {
             get { return Native.Xt.XtSports.XtWindow(Widget);}
         }
         
-        internal IntPtr Screen {
+        public IntPtr Screen {
             get { return Native.Xt.XtSports.XtScreen(Widget);}
         }
 
-        internal string XtName {
+        public string XtName {
             get { return Native.Xt.XtSports.XtName(Widget);}
         }
 

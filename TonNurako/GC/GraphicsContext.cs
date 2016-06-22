@@ -25,17 +25,17 @@ namespace TonNurako.GC
         /// <summary>
         /// ﾀーｹﾞｯﾄ(Window or Pixmap)
         /// </summary>
-        internal IntPtr Target { get; set; }
+        public IntPtr Target { get; set; }
 
         /// <summary>
         /// ﾃﾞｽﾌﾟﾚー
         /// </summary>
-        internal IntPtr Display { get; set; }
+        public IntPtr Display { get; set; }
 
         /// <summary>
         /// ｽｸﾘーﾝ
         /// </summary>
-        internal IntPtr Screen { get; set; }
+        public IntPtr Screen { get; set; }
 
         public Drawable() {
             Target = IntPtr.Zero;
@@ -53,26 +53,29 @@ namespace TonNurako.GC
 
 		//作成したGCが入る
 		private IntPtr gc = IntPtr.Zero;
+        public IntPtr GCHandle { get { return gc; } }
 
 		//Displayが入る
 		private IntPtr display = IntPtr.Zero;
+        public IntPtr DisplayHandle { get { return display; } }
 
 		//Windowが入る
 		private IntPtr target = IntPtr.Zero;
+        public IntPtr TargetHandle { get { return target; } }
 
         private bool disposed;
-        
+
         internal delegate void SysDestroyGC();
-        internal SysDestroyGC DestroyGcFunc = null;        
+        internal SysDestroyGC DestroyGcFunc = null;
 
 		#endregion
 
 		#region ｺﾝｽﾄﾗｸﾀー
-        
+
         private GraphicsContext() {
             disposed = false;
         }
-        
+
 		/// <summary>
 		/// 共有GC取得
 		/// </summary>
@@ -80,7 +83,7 @@ namespace TonNurako.GC
 		public static GraphicsContext FromSharedGC(Widgets.IWidget w)
 		{
             var gc = new GraphicsContext();
-            
+
             gc.gc = Native.Xt.XtSports.XtGetGC(w);
             gc.display = w.NativeHandle.Display;
 			gc.target = w.NativeHandle.Window;
@@ -89,9 +92,9 @@ namespace TonNurako.GC
                 if (gc.gc != IntPtr.Zero) {
                     Native.Xt.XtSports.XtReleaseGC(w, gc.gc);
                     gc.gc = IntPtr.Zero;
-                }    
-            };            
-            return gc;       
+                }
+            };
+            return gc;
 		}
 
 
@@ -109,14 +112,14 @@ namespace TonNurako.GC
 			// 属性は後でｾｯﾄさせる
 			//
             gc = Native.X11.X11Sports.XCreateGC( display , target);
-            
+
             DestroyGcFunc = () => {
                 //GC解放
                 if (gc != IntPtr.Zero) {
                     Native.X11.X11Sports.XFreeGC(display, gc);
                     gc = IntPtr.Zero;
                     System.Diagnostics.Debug.WriteLine("GC : Dispose");
-                }          
+                }
             };
 		}
 
@@ -142,7 +145,7 @@ namespace TonNurako.GC
             if(disposed) {
                 return;
             }
-            
+
             if (null != DestroyGcFunc) {
                 DestroyGcFunc();
             }
@@ -177,7 +180,7 @@ namespace TonNurako.GC
             }
             Native.X11.X11Sports.XSetForeground(display, gc, color.Pixel);
         }
-        
+
         public void CopyArea(IDrawable dest, int x, int y, int w, int h, int dx, int dy) {
             if (gc == IntPtr.Zero) {
                 return;
@@ -386,7 +389,31 @@ namespace TonNurako.GC
 					w, (int)line, (int)cap, (int)join );
 			}
 		}
-		#endregion
+        #endregion
 
-	}
+        #region XImage
+		public void PutImage(XImage image) {
+			if( gc != IntPtr.Zero ) {
+				image.PutImage(display, target, gc, 0, 0, 0, 0, image.Width, image.Height);
+			}
+		}
+		public void PutImage(XImage image, int x, int y) {
+			if( gc != IntPtr.Zero ) {
+				image.PutImage(display, target, gc, x, y, 0, 0, image.Width, image.Height);
+			}
+		}
+		public void PutImage(XImage image, int x, int y, int dx, int dy) {
+			if( gc != IntPtr.Zero ) {
+				image.PutImage(display, target, gc, x, y, dx, dy, image.Width, image.Height);
+			}
+		}
+
+		public void PutImage(XImage image, int x, int y, int dx, int dy, int w, int h) {
+			if( gc != IntPtr.Zero ) {
+				image.PutImage(display, target, gc, x, y, dx, dy, w, h);
+			}
+		}
+        #endregion
+        
+    }
 }
