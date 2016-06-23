@@ -13,6 +13,9 @@
 
 ![VSS](https://raw.githubusercontent.com/sazae657/TonNurako/master/ScreenShot.png)
 
+[![Build Status](https://travis-ci.org/sazae657/TonNurako.svg?branch=master)](https://travis-ci.org/sazae657/TonNurako)
+
+
 ## ﾋﾞﾙﾄﾞ
 
 ### 必要なもの
