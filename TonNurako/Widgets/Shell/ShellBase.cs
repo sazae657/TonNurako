@@ -18,7 +18,7 @@ namespace TonNurako.Widgets {
         }
 
         public bool IsShellAvalible {
-            get; internal set;
+            get; set;
         }
 
 		#region ｺﾝｽﾄﾗｸﾀー

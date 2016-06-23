@@ -78,6 +78,11 @@ namespace TonNurako.Widgets {
         bool AllowAutoManage { get; }
 
         /// <summary>
+        /// ﾗｯﾌﾟされてる？
+        /// </summary>
+        bool WrappedWidget { get; }
+
+        /// <summary>
         /// このWidgetが隷属するｱﾌﾟﾘｹーｼｮﾝｺﾝﾃｷｽﾄへの参照
         /// </summary>
         ApplicationContext AppContext{ get; set;}
@@ -213,8 +218,6 @@ namespace TonNurako.Widgets {
             Children = new WidgetCollection(this);
             xresource = new XResource(this);
             XServerEvent = new Events.ServerEvent(null);
-
-            IsDisposed = false;
         }
 
         public ﾄﾝﾇﾗｼﾞｪｯﾄ(IntPtr _WdgRef, IWidget _Parent) {
@@ -223,7 +226,6 @@ namespace TonNurako.Widgets {
             xresource = new XResource(this);
             XServerEvent = new Events.ServerEvent(null);
 
-            IsDisposed = false;
             if (null != _Parent) {
                 AppContext = _Parent.AppContext;
             }
@@ -236,12 +238,10 @@ namespace TonNurako.Widgets {
             xresource = new XResource(this);
             XServerEvent = new Events.ServerEvent(null);
 
-            IsDisposed = false;
-
             AppContext = _WdgRef.AppContext;
         }
 
-        public bool IsDisposed { get; internal set; }
+        public bool IsDisposed { get; internal set; } = false;
 
         public ApplicationContext AppContext {
             get; set;
@@ -253,7 +253,9 @@ namespace TonNurako.Widgets {
         public bool AllowAutoManage {
             get {return false;}
         }
-
+        public bool WrappedWidget {
+            get {return true;}
+        }
         public WidgetCollection  Children {
             get;
         }
@@ -358,8 +360,10 @@ namespace TonNurako.Widgets {
 
             //ｳｲｼﾞｪｯﾄの作成
             if( self.IsAvailable ) {
-                w.Create(self);
-                System.Diagnostics.Debug.WriteLine($"Create<IMM>: {w.ToString()}:{self.GetHashCode()}");
+                if(! w.WrappedWidget) {
+                    w.Create(self);
+                    System.Diagnostics.Debug.WriteLine($"Create<IMM>: {w.ToString()}:{self.GetHashCode()}");
+                }
                 self.ManageChildren();
             }
             else {

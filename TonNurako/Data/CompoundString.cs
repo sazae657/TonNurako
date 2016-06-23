@@ -19,17 +19,19 @@ namespace TonNurako.Data {
 
 		//変換したXmStringへのﾎﾟｲﾝﾀ
 		private IntPtr xmString;
+
         private IntPtr lastConvertStr;
         private string vstr;
 
         bool isReference = false;
-		#endregion
+        #endregion
+       
 
-		#region ｺﾝｽﾄﾗｸﾀー
+        #region ｺﾝｽﾄﾗｸﾀー
         /// <summary>
         /// ｺﾝｽﾄﾗｸﾀー
         /// </summary>
-		public CompoundString()
+        public CompoundString()
 		{
             xmString = IntPtr.Zero;
             lastConvertStr = IntPtr.Zero;
@@ -123,12 +125,13 @@ namespace TonNurako.Data {
 
 		#endregion
 
-		#region 型変換
+		#region ﾌﾟﾛﾊﾟﾁー
 
-        internal IntPtr NativeString {
-            get {
-                return xmString;
-            }
+        /// <summary>
+        /// 中身への参照
+        /// </summary>
+        public IntPtr Handle {
+            get {return xmString;}
         }
 
         public string String {
@@ -206,7 +209,7 @@ namespace TonNurako.Data {
         public IntPtr [] ToNativeArray(bool NullTerm) {
             IntPtr [] ps = new IntPtr[NullTerm ? StringTable.Count+1: StringTable.Count];
             for (int i = 0;i < StringTable.Count;i++) {
-                ps[i] = StringTable[i].NativeString;
+                ps[i] = StringTable[i].Handle;
             }
             if(NullTerm) {
                 ps[StringTable.Count] = IntPtr.Zero;
@@ -304,7 +307,7 @@ namespace TonNurako.Data {
         }
         XTextProperty textProperty;
 
-        internal IntPtr Value {
+        public IntPtr Handle {
             get {return textProperty.xvalue;}
         }
 

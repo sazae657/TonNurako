@@ -178,7 +178,7 @@ namespace TonNurako.Native.Xt
         }
         public XtArg(string _Name, Data.CompoundString _Val) {
             name = _Name;
-            compoundStr = _Val.NativeString;
+            compoundStr = _Val.Handle;
             type = XtArgType.CompoundString;
 
             longVal = 0;

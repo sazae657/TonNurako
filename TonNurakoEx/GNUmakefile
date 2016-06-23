@@ -1,5 +1,6 @@
 include Config.mp3
 
+PLATFORM := SunOS
 BUILD := Debug
 LINKER := $(CC)
 BINDIR := ../bin/$(BUILD)/
@@ -47,6 +48,9 @@ ifeq ($(BUILD),Release)
 	OPT = -O2 -DNDEBUG
 endif
 
+ifeq ($(PLATFORM), Darwin)
+	LINK_FLAGS = -g -dynamiclib
+endif
 
 OBJ=DlSym.o	\
  	ClassDef.o \
@@ -66,7 +70,7 @@ all: ExtremeSports GenSrc
 ExtremeSports: check $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(LINKER) $(OBJ) $(LINK_LIBS) $(LINK_FLAGS) -o $(TARGET)
+	$(LINKER) $(LINK_FLAGS) -o $(TARGET) $(OBJ) $(LINK_LIBS) 
 
 $(OBJ): $(BINDIR)
 

@@ -33,17 +33,17 @@ namespace TonNurako.Data
         }
 
         private IntPtr fontList = IntPtr.Zero;
-        internal IntPtr FontList {
+        public IntPtr FontList {
             get {return fontList;}
         }
 
         private IntPtr font = IntPtr.Zero;
-        internal IntPtr Font {
+        public IntPtr Font {
             get {return font;}
         }
 
         private IntPtr display = IntPtr.Zero;
-        internal IntPtr Display {
+        public IntPtr Display {
             get {return display;}
         }
         internal SportyFontList() {

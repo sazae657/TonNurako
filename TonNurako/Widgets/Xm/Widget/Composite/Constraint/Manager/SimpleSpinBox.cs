@@ -71,7 +71,7 @@ namespace TonNurako.Widgets.Xm
 
         public void AddItem(string item, int pos) {
             using (var s = new Data.CompoundString(item)) {
-                NativeMethods.XmSimpleSpinBoxAddItem(this.NativeHandle.Widget , s.NativeString, pos);
+                NativeMethods.XmSimpleSpinBoxAddItem(this.NativeHandle.Widget , s.Handle, pos);
             }
         }
 
@@ -83,7 +83,7 @@ namespace TonNurako.Widgets.Xm
 
         public void SetItem(string item) {
             using (var s = new Data.CompoundString(item)) {
-                NativeMethods.XmSimpleSpinBoxSetItem(this.NativeHandle.Widget, s.NativeString);
+                NativeMethods.XmSimpleSpinBoxSetItem(this.NativeHandle.Widget, s.Handle);
             }
         }
 

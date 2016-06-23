@@ -61,6 +61,11 @@ namespace TonNurako.GC
         private IntPtr image = IntPtr.Zero;
 
         /// <summary>
+        /// 中身への参照
+        /// </summary>
+        public IntPtr Handle { get {return image; } }
+
+        /// <summary>
         /// 変換ﾊﾞｯﾌｧー
         /// </summary>
         private IntPtr convertBuffer = IntPtr.Zero;

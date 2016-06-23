@@ -34,7 +34,7 @@ namespace TonNurako.Widgets.Xm {
             ToolkitResources.RetainCustomObject(ct);
             ToolkitResources.Begin();
             ToolkitResources.Add(idEnc, ct.Encoding);
-            ToolkitResources.Add(idStr, ct.Value);
+            ToolkitResources.Add(idStr, ct.Handle);
             ToolkitResources.Commit(true);
         }
 

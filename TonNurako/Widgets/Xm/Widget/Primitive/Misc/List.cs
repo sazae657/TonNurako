@@ -176,10 +176,10 @@ namespace TonNurako.Widgets.Xm
         public void AddItem(string item, int pos, bool autoSelect = false) {
             using(var cs = new CompoundString(item)) {
                 if(true == autoSelect) {
-                    NativeMethods.XmListAddItem(this.NativeHandle.Widget, cs.NativeString, pos);
+                    NativeMethods.XmListAddItem(this.NativeHandle.Widget, cs.Handle, pos);
                 }
                 else {
-                    NativeMethods.XmListAddItemUnselected(this.NativeHandle.Widget, cs.NativeString, pos);
+                    NativeMethods.XmListAddItemUnselected(this.NativeHandle.Widget, cs.Handle, pos);
                 }
             }
         }
@@ -201,7 +201,7 @@ namespace TonNurako.Widgets.Xm
 
         public void DeleteItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListDeleteItem(this.NativeHandle.Widget, cs.NativeString);
+                NativeMethods.XmListDeleteItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
         public void DeleteItem(int pos) {
@@ -242,7 +242,7 @@ namespace TonNurako.Widgets.Xm
 
         public void DeselectItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListDeselectItem(this.NativeHandle.Widget, cs.NativeString);
+                NativeMethods.XmListDeselectItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
 
@@ -258,7 +258,7 @@ namespace TonNurako.Widgets.Xm
             IntPtr listRef;
             int count;
             using (var cs = new CompoundString(pattern)) {
-                bool r = NativeMethods.XmListGetMatchPos(this.NativeHandle.Widget, cs.NativeString, out listRef, out count);
+                bool r = NativeMethods.XmListGetMatchPos(this.NativeHandle.Widget, cs.Handle, out listRef, out count);
                 if (true != r) {
                     return new int[]{};
                 }
@@ -273,13 +273,13 @@ namespace TonNurako.Widgets.Xm
 
         public bool ItemExists(string item) {
             using (var cs = new CompoundString(item)) {
-                return NativeMethods.XmListItemExists(this.NativeHandle.Widget, cs.NativeString);
+                return NativeMethods.XmListItemExists(this.NativeHandle.Widget, cs.Handle);
             }
         }
 
         public int GetItemPos(string item) {
             using (var cs = new CompoundString(item)) {
-                return NativeMethods.XmListItemPos(this.NativeHandle.Widget, cs.NativeString);
+                return NativeMethods.XmListItemPos(this.NativeHandle.Widget, cs.Handle);
             }
         }
         public bool IsSelected(int pos) {
@@ -294,7 +294,7 @@ namespace TonNurako.Widgets.Xm
 
         public void SelectItem(string item, bool notify = false) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListSelectItem(this.NativeHandle.Widget, cs.NativeString, notify);
+                NativeMethods.XmListSelectItem(this.NativeHandle.Widget, cs.Handle, notify);
             }
         }
 
@@ -308,7 +308,7 @@ namespace TonNurako.Widgets.Xm
 
         public void SetBottomItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListSetBottomItem(this.NativeHandle.Widget, cs.NativeString);
+                NativeMethods.XmListSetBottomItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
 
@@ -325,7 +325,7 @@ namespace TonNurako.Widgets.Xm
 
         public void SetItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListSetItem(this.NativeHandle.Widget, cs.NativeString);
+                NativeMethods.XmListSetItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
 

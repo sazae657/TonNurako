@@ -67,6 +67,10 @@ namespace TonNurako.Widgets
             get; internal set;
         }
 
+        public bool WrappedWidget {
+            get; internal set;
+        } = false;
+
        public Events.ServerEvent XServerEvent {
             get;
         }
@@ -124,7 +128,8 @@ namespace TonNurako.Widgets
         /// <summary>
         /// ﾗｯﾌﾟする(どうなっても知らん)
         /// </summary>
-        internal void WrapExistingWidget(IntPtr widget) {
+        /// <param name="widget">ﾗｯﾌﾟするWidget</param>
+        public void WrapExistingWidget(IntPtr widget) {
             if (widget == IntPtr.Zero) {
                 throw new Exception("Null Widget Exception!!");
             }
@@ -134,6 +139,7 @@ namespace TonNurako.Widgets
             }
             IsManaged = true;
             AllowAutoManage = false;
+            WrappedWidget = true;
         }
 
         internal void InitializeBase() {
@@ -207,8 +213,8 @@ namespace TonNurako.Widgets
 
             foreach (IChild w in this.Children.GetCreationList())
             {
-                System.Diagnostics.Debug.WriteLine($"ManageChildren:{w.GetType()}");
                 if(! w.IsManaged) {
+                    System.Diagnostics.Debug.WriteLine($"ManageChildren:{w.GetType()} Parent:{w.Parent.GetType()}");
                     w.ManageChildren();
                 }
             }
@@ -267,8 +273,7 @@ namespace TonNurako.Widgets
         /// </summary>
         public virtual Native.WidgetHandle NativeHandle
         {
-            get
-            {
+            get {
                 return selfWidget;
             }
 

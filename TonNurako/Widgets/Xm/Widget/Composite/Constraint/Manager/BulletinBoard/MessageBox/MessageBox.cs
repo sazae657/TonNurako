@@ -161,9 +161,9 @@ namespace TonNurako.Widgets.Xm
             this.Children.Add(Items.Message);
 
             // Unmapだけ
-            this.UnmapEvent += (s, e ) => {
-               Destroy();
-            };
+            //this.UnmapEvent += (s, e ) => {
+            //   Destroy();
+            //};
         }
 
 		#endregion

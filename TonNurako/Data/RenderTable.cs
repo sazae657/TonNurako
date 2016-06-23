@@ -44,7 +44,7 @@ namespace TonNurako.Data
         }
 
         IntPtr handle = IntPtr.Zero;
-        internal IntPtr Handle {
+        public IntPtr Handle {
             get {return handle;}
         }
 

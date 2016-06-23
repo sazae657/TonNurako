@@ -19,7 +19,7 @@ namespace TonNurako.Data
         }
 
         internal IntPtr handle = IntPtr.Zero;
-        internal IntPtr Handle {
+        public IntPtr Handle {
             get {return handle;}
         }
 
@@ -66,7 +66,7 @@ namespace TonNurako.Data
         }
 
         internal IntPtr handle = IntPtr.Zero;
-        internal IntPtr Handle {
+        public IntPtr Handle {
             get {return handle;}
         }
 

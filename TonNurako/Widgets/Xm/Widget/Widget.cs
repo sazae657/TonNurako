@@ -24,7 +24,7 @@ namespace TonNurako.Widgets.Xm
 
 		//ﾌﾟﾛﾊﾟﾃｨの値
 		private WidgetProperties prop = null;
-        
+
         // ﾄﾞﾛﾜﾎﾞー
         protected Drawable drawable;
 
@@ -50,7 +50,9 @@ namespace TonNurako.Widgets.Xm
 		/// <returns></returns>
 		public virtual int Create(IWidget parent )
 		{
-            System.Diagnostics.Debug.WriteLine($"Create: {this.ToString()}:{this.GetHashCode()} Parent:{parent.ToString()}:{parent.GetHashCode()}");
+            if (! WrappedWidget) {
+                System.Diagnostics.Debug.WriteLine($"Create: {this.ToString()}:{this.GetHashCode()} Parent:{parent.ToString()}:{parent.GetHashCode()}");
+            }
 
 			//親ｳｲｼﾞｪｯﾄのｲﾝｽﾀﾝｽを保持
             parentWidget = parent;
@@ -60,14 +62,14 @@ namespace TonNurako.Widgets.Xm
 
 			//作成用ﾘｿーｽのｸﾘｱ
 			ToolkitResources.Clear();
-            
+
 			//ｺーﾙﾊﾞｯｸを追加
             CallbackQueue.Apply();
             XEventQueue.Apply();
 
 			//Loadｲﾍﾞﾝﾄを通知
 			UIeventTable.CallHandler(TonNuraEventId.WidgetCreated, this);
-            
+
             // 名前解決ﾃーﾌﾞﾙに追加
             if (null != AppContext) {
                 AppContext.RegisterWidget(this);
@@ -95,9 +97,11 @@ namespace TonNurako.Widgets.Xm
 			ToolkitResources.SetWidget(true );
 
 			if( this.Visible == true ) {
-                if (true == this.AllowAutoManage && ! this.IsManaged) {
-                    System.Diagnostics.Debug.WriteLine($"XtManageChild:{this.GetType()}");
+                if ((true == this.AllowAutoManage) &&
+                 (! this.IsManaged)) {
+                    System.Diagnostics.Debug.WriteLine($"[MCI] XtManageChild:{this.GetType()}");
                     Native.Xt.XtSports.XtManageChild(this);
+                    this.IsManaged = true;
                     OnWidgetManaged(new TnkWidgetEventArgs(this));
                 }
 			}
@@ -270,9 +274,6 @@ namespace TonNurako.Widgets.Xm
 		{
 			get
 			{
-                //if (IsAvailable) {
-                //    prop.visible = Native.Xt.XtCall.XtIsManaged(this);
-               // }
 				return prop.visible;
 			}
 			set
@@ -285,9 +286,11 @@ namespace TonNurako.Widgets.Xm
 				//if (value !=  Native.Xt.XtCall.XtIsManaged(this)) {
                     if( value == true ) {
                         Native.Xt.XtSports.XtManageChild(this);
+                        this.IsManaged = true;
                     }
                     else {
                         Native.Xt.XtSports.XtUnmanageChild(this);
+                        this.IsManaged = false;
                     }
 					prop.visible = value;
 				//}
@@ -543,7 +546,7 @@ namespace TonNurako.Widgets.Xm
 		}
 
         #endregion
-        
+
         #region ﾄﾞﾛﾜﾎﾞー
 		/// <summary>
 		/// ﾃﾞﾌｫﾙﾄｺﾝｽﾄﾗｸﾀ
@@ -553,11 +556,11 @@ namespace TonNurako.Widgets.Xm
             get {
                 // ﾄﾞﾛﾜﾎﾞー
                 this.drawable.Display = NativeHandle.Display;
-                this.drawable.Target = NativeHandle.Window;                
+                this.drawable.Target = NativeHandle.Window;
                 return this.drawable;
             }
         }
-        
+
         /// <summary>
 		/// 強制再描画
 		/// </summary>
@@ -566,7 +569,7 @@ namespace TonNurako.Widgets.Xm
                 Native.Motif.XmSports.XmRedisplayWidget(this);
             }
         }
-                    
+
         #endregion
 
 		#region Constraint
