@@ -50,7 +50,7 @@ namespace TonNurako.Widgets.Xm
 		/// <returns></returns>
 		public virtual int Create(IWidget parent )
 		{
-            if (! WrappedWidget) {
+            if (! WrappedWidget && !IsAvailable) {
                 System.Diagnostics.Debug.WriteLine($"Create: {this.ToString()}:{this.GetHashCode()} Parent:{parent.ToString()}:{parent.GetHashCode()}");
             }
 

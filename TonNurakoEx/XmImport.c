@@ -40,7 +40,24 @@ TNK_EXPORT void XmTabListFree_TNK(XmTabList tablist) {
 }
 
 TNK_EXPORT void XmRedisplayWidget_TNK(Widget widget) {
-    XmRedisplayWidget(widget);
+	XExposeEvent xev;
+	Dimension ww , hh ;
+    Widget w;
+
+    w = widget;
+
+    if( ! XtIsRealized(w)           ) return ;
+    if( ! XtIsManaged(w)            ) return ;
+	xev.window  = XtWindow(w) ; if( xev.window == (Window) NULL ) return ;
+	xev.type    = Expose ;
+	xev.display = XtDisplay(w) ;
+	xev.x       = xev.y = 0 ;
+	XtVaGetValues( w, XmNwidth, &ww, XmNheight, &hh, NULL ) ;
+	if( ww <= 0 || hh <= 0 ) return ;
+	xev.width   = ww ; xev.height  = hh ;
+	XSendEvent (XtDisplay(w), XtWindow(w), True, ExposureMask, (XEvent *)&xev);
+ 	XClearArea (XtDisplay(w), XtWindow(w), 0, 0, ww, hh, True);
+	XFlush( XtDisplay(w) ) ;
 }
 
 //

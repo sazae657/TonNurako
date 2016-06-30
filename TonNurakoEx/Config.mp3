@@ -3,8 +3,8 @@ MOTF_HEADER_ARGS   := -I/usr/dt/include
 MOTF_LIBRARY_ARGS := -L/usr/dt/lib
 
 # X11のﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
-X11_HEADER_ARGS :=-I/usr/openwin/include
-X11_LIBRARY_ARGS:=-L/usr/openwin/lib
+X11_HEADER_ARGS :=-I/usr/X11R6/include
+X11_LIBRARY_ARGS:=-L/usr/X11R6/lib
 
 # Motifのﾗｲﾌﾞﾗﾘー
 MOTIF_LIBS=-lXm -lXmu

@@ -48,7 +48,8 @@ TNK_XtAppCreateShell(
 
 	//Shellｳｲｼﾞｪｯﾄの作成
 	w = XtAppCreateShell( NULL, strAppTitle,
-		applicationShellWidgetClass, pContext->display,
+        sessionShellWidgetClass        
+        , pContext->display,
 		arglist, argcount);
 
     // EditRes
