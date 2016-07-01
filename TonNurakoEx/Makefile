@@ -1,4 +1,5 @@
 include Config.mp3
+-include Site.mp3
 
 BUILD := Debug
 LINKER := $(CC)

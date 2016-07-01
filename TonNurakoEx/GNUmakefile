@@ -1,4 +1,5 @@
 include Config.mp3
+-include Site.mp3
 
 PLATFORM := SunOS
 BUILD := Debug
