@@ -13,8 +13,15 @@ MOTIF_LIBS=-lXm -lXmu
 X11_LIBS=-lXpm -lXt -lX11
 
 # Cｺﾝﾊﾟｲﾗー
-CC :=cc
+CC := cc
+CFLAGS := -g -fPIC
+
 WARN_OPT := -Wall -Werror
+
+# リンカー
+LINK_FLAGS := -g -fPIC -shared
+
+EXE_LINK_FLAGS := -g
 
 # python ｲﾝﾀーﾌﾟﾘﾀー
 PYTHON := python2.7
