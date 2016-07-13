@@ -142,23 +142,41 @@ namespace TonNurako.Widgets.Xm
         /// 子をTNKに登録する
         /// </summary>
         internal virtual void RegisterChildren() {
-            Items.OK.WrapExistingWidget(GetChild(ChildId.XmDIALOG_OK_BUTTON));
-            this.Children.Add(Items.OK);
+            IntPtr w;
+            w = GetChild(ChildId.XmDIALOG_OK_BUTTON);
+            if (IntPtr.Zero != w) {
+                Items.OK.WrapExistingWidget(w);
+                this.Children.Add(Items.OK);
+            }
 
-            Items.Cancel.WrapExistingWidget(GetChild(ChildId.XmDIALOG_CANCEL_BUTTON));
-            this.Children.Add(Items.Cancel);
+            w = GetChild(ChildId.XmDIALOG_CANCEL_BUTTON);
+            if (IntPtr.Zero != w) {
+                Items.Cancel.WrapExistingWidget(w);
+                this.Children.Add(Items.Cancel);
+            }
+            w = GetChild(ChildId.XmDIALOG_HELP_BUTTON);
+            if (IntPtr.Zero != w) {
+                Items.Help.WrapExistingWidget(w);
+                this.Children.Add(Items.Help);
+            }
 
-            Items.Help.WrapExistingWidget(GetChild(ChildId.XmDIALOG_HELP_BUTTON));
-            this.Children.Add(Items.Help);
+            w = GetChild(ChildId.XmDIALOG_MESSAGE_LABEL);
+            if (IntPtr.Zero != w) {
+                Items.Message.WrapExistingWidget(w);
+                this.Children.Add(Items.Message);
+            }
 
-            Items.Message.WrapExistingWidget(GetChild(ChildId.XmDIALOG_MESSAGE_LABEL));
-            this.Children.Add(Items.Message);
+            w = GetChild(ChildId.XmDIALOG_SYMBOL_LABEL);
+            if (IntPtr.Zero != w) {
+                Items.Symbol.WrapExistingWidget(w);
+                this.Children.Add(Items.Symbol);
+            }
 
-            Items.Symbol.WrapExistingWidget(GetChild(ChildId.XmDIALOG_SYMBOL_LABEL));
-            this.Children.Add(Items.Message);
-
-            Items.Separator.WrapExistingWidget(GetChild(ChildId.XmDIALOG_SEPARATOR));
-            this.Children.Add(Items.Message);
+            w = GetChild(ChildId.XmDIALOG_SEPARATOR);
+            if (IntPtr.Zero != w) {
+                Items.Separator.WrapExistingWidget(w);
+                this.Children.Add(Items.Separator);
+            }
 
             // Unmapだけ
             //this.UnmapEvent += (s, e ) => {
