@@ -84,4 +84,4 @@ Widget XmCreateTree_TNK(Widget parent, String name, ArgList arglist,Cardinal arg
 Widget XmCreateWarningDialog_TNK(Widget parent, String name, ArgList arglist,Cardinal argcount) { return XmCreateWarningDialog(parent, name, arglist, argcount);}
 Widget XmCreateWorkArea_TNK(Widget parent, String name, ArgList arglist,Cardinal argcount) { return XmCreateWorkArea(parent, name, arglist, argcount);}
 Widget XmCreateWorkingDialog_TNK(Widget parent, String name, ArgList arglist,Cardinal argcount) { return XmCreateWorkingDialog(parent, name, arglist, argcount);}
-
+Widget XmCreateHierarchy_TNK(Widget parent, String name, ArgList arglist,Cardinal argcount) { return XtCreateWidget(name, xmHierarchyWidgetClass, parent, arglist, argcount);}

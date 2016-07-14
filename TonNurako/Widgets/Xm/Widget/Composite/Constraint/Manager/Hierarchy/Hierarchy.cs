@@ -21,6 +21,7 @@ namespace TonNurako.Widgets.Xm
         }
 
 		public Hierarchy() : base() {
+            HierarchyEventTable = new TnkXtEvents<Events.HierarchyEventArgs>();
 		}
 
         internal override void InitalizeLocals() {
@@ -116,14 +117,18 @@ namespace TonNurako.Widgets.Xm
 
 		#region ｲﾍﾞﾝﾄ
 
+        internal TnkXtEvents<Events.HierarchyEventArgs> HierarchyEventTable {
+            get;
+        }
+
         /// XmNnodeStateCallback XmCNodeStateCallback XtCallbackList NULL C
-        public virtual event EventHandler<Events.AnyEventArgs> NodeStateEvent
+        public virtual event EventHandler<Events.HierarchyEventArgs> NodeStateEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNnodeStateCallback ,  value );
+                HierarchyEventTable.AddHandler(this, Native.Motif.EventId.XmNnodeStateCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNnodeStateCallback ,  value );
+                HierarchyEventTable.RemoveHandler(Native.Motif.EventId.XmNnodeStateCallback ,  value );
             }
         }
 

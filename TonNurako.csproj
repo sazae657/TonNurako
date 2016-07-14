@@ -122,11 +122,13 @@
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\TabStackEventArgs.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ButtonBox.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ComboBox.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Container.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\DrawingArea.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\DropDown.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Events\SimpleSpinBoxEventArgs.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Frame.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\Hierarchy.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\HierarchyEventArgs.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\Outline.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Manager.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\ManagerEventArgs.cs" />

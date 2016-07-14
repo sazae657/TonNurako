@@ -1,6 +1,6 @@
 //
 // ﾄﾝﾇﾗｺ
-// 
+//
 // Motif
 //
 namespace TonNurako.Native.Motif {
@@ -91,5 +91,6 @@ namespace TonNurako.Native.Motif {
         XmCreateWarningDialog,
         XmCreateWorkArea,
         XmCreateWorkingDialog,
+        XmCreateHierarchy,
     }
 }

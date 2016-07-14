@@ -40,7 +40,7 @@ extern "C"{
     extern void XTRACE(FILE*, const char *format, ...);
 #   define CONS25W XTRACE
 #else
-#   if (defined(GARBAGE_PLATFORM)||defined(TRADITIONAL_PRINTF_DEBUG))
+#   if (defined(TRADITIONAL_PRINTF_DEBUG))
 #       define CONS25W fprintf
 #   else
 #       define CONS25W(...)

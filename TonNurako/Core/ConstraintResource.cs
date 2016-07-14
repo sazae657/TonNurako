@@ -502,4 +502,58 @@ namespace TonNurako.Widgets.Xm
 
     }
 
+
+
+    /// <summary>
+    /// Container束縛ﾘｿーｽ
+    /// </summary>
+    public class ContainerConstraint : ConstraintResource<Container> {
+        public ContainerConstraint(Widget widget) : base(widget) {
+        }
+
+        /// <summary>
+        /// XmNentryParent XmCWidget Widget NULL CSG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual IWidget EntryParent {
+            get {
+                return XSports.GetWidget<IWidget>(
+                    Native.Motif.ResourceId.XmNentryParent, Data.Resource.Access.CSG);
+            }
+            set {
+                XSports.SetWidget<IWidget>(
+                    Native.Motif.ResourceId.XmNentryParent, value, Data.Resource.Access.CSG);
+            }
+        }
+
+        /// <summary>
+        /// XmNoutlineState XmCOutlineState unsigned char XmCOLLAPSED CSG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual OutlineState OutlineState {
+            get {
+                return XSports.GetValue<OutlineState>(
+                Native.Motif.ResourceId.XmNoutlineState, OutlineState.Collapsed, Data.Resource.Access.CSG);
+            }
+            set {
+                XSports.SetValue<OutlineState>(
+                    Native.Motif.ResourceId.XmNoutlineState, value, Data.Resource.Access.CSG);
+            }
+        }
+
+        /// <summary>
+        /// XmNpositionIndex XmCPositionIndex int dynamic CSG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual int PositionIndex {
+            get {
+                return XSports.GetInt(
+                    Native.Motif.ResourceId.XmNpositionIndex, 0, Data.Resource.Access.CSG);
+            }
+            set {
+                XSports.SetInt(
+                    Native.Motif.ResourceId.XmNpositionIndex, value, Data.Resource.Access.CSG);
+            }
+        }
+    }
 }

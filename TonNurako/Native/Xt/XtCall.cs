@@ -17,6 +17,10 @@ namespace TonNurako.Native.Xt
             set;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="libXtName"></param>
         public static void Register(string libXtName) {
             if (null != Instance) {
                 return;
@@ -148,7 +152,7 @@ namespace TonNurako.Native.Xt
         public static void XtFree(IntPtr str) {
             NativeMethods.XtFree(str);
         }
-        
+
         public static Widgets.IWidget XtNameToWidget(Widgets.IWidget parent, string name)
         {
             var handle = NativeMethods.XtNameToWidget(parent.NativeHandle.Widget, name);
@@ -274,18 +278,18 @@ namespace TonNurako.Native.Xt
             TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data) {
             NativeMethods.XtRemoveEventHandler(w.NativeHandle.Widget,event_mask,nonmaskable,proc,client_data);
         }
-        
+
         public static IntPtr XtGetGC(Widgets.IWidget w, X11.GCMask value_mask, ref X11.XGCValues values) {
-            return NativeMethods.XtGetGC(w.NativeHandle.Widget, value_mask, ref values);    
+            return NativeMethods.XtGetGC(w.NativeHandle.Widget, value_mask, ref values);
         }
-        
+
         public static IntPtr XtGetGC(Widgets.IWidget w) {
-            return NativeMethods.XtGetGC(w.NativeHandle.Widget, 0, IntPtr.Zero);    
-        }        
-        
+            return NativeMethods.XtGetGC(w.NativeHandle.Widget, 0, IntPtr.Zero);
+        }
+
         internal static void XtReleaseGC(Widgets.IWidget w, IntPtr gc) {
             NativeMethods.XtReleaseGC(w.NativeHandle.Widget, gc);
-        }    
+        }
 
         // 一時的
         public static void XtInitializeWidgetClass(Native.Motif.WidgetClass glass) {
