@@ -501,7 +501,7 @@ namespace TonNurako.Widgets.Xm
                 return XSports.GetInt(Native.Motif.ResourceId.XmNselectedItemCount, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNselectedItemCount, value);
+                XSports.SetInt(Native.Motif.ResourceId.XmNselectedItemCount, value);
             }
         }
 
@@ -545,6 +545,24 @@ namespace TonNurako.Widgets.Xm
                 Marshal.Copy(listRef, ret, 0, count);
                 // listRefはfreeしちゃﾀﾞﾒ
                 return ret;
+            }
+            set {
+                IntPtr ptr = IntPtr.Zero;
+                int count = value.Length;
+                ToolkitResources.Begin();
+                try {
+                    SelectedPositionCount = count;
+                    if (0 != count) {
+                        ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(int)) * value.Length);
+                        Marshal.Copy(value, 0, ptr, value.Length);
+                        XSports.SetPtr(Native.Motif.ResourceId.XmNselectedPositions, ptr, Data.Resource.Access.CSG);
+                    }
+                }finally {
+                    ToolkitResources.Commit(true);
+                    if(IntPtr.Zero != ptr) {
+                        Marshal.FreeCoTaskMem(ptr);
+                    }
+                }
             }
         }
 

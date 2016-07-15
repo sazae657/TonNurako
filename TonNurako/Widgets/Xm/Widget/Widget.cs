@@ -585,6 +585,7 @@ namespace TonNurako.Widgets.Xm
             PanedWindowConstraint = new PanedWindowConstraint(this);
             HierarchyConstraint = new HierarchyConstraint(this);
             RowColumnConstraint = new RowColumnConstraint(this);
+            ContainerConstraint = new ContainerConstraint(this);
 		}
 
 
@@ -628,6 +629,13 @@ namespace TonNurako.Widgets.Xm
         /// RowColumn用
         /// </summary>
         public RowColumnConstraint RowColumnConstraint {
+            get; private set;
+        }
+
+        /// <summary>
+        /// Container用
+        /// </summary>
+        public ContainerConstraint ContainerConstraint {
             get; private set;
         }
         #endregion

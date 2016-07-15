@@ -58,6 +58,7 @@
         <Compile Include="TonNurako\Data\Rendition.cs" />
         <Compile Include="TonNurako\Data\SportyFontList.cs" />
         <Compile Include="TonNurako\Data\TabStop.cs" />
+        <Compile Include="TonNurako\Data\WidgetList.cs" />
         <Compile Include="TonNurako\Data\XResource.cs" />
         <Compile Include="TonNurako\GC\GraphicsContext.cs" />
         <Compile Include="TonNurako\GC\Pixmap.cs" />

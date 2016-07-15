@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace TonNurako.Widgets.Xm
 {
@@ -178,8 +179,43 @@ namespace TonNurako.Widgets.Xm
                     Native.Motif.ResourceId.XmNdetailColumnHeadingCount, value, Data.Resource.Access.CSG);
             }
         }
-        // ### UNKOWN TYPE
-        // ### XmNdetailOrder XmCDetailOrder Cardinal * NULL CSG
+
+        /// <summary>
+        // XmNdetailOrder XmCDetailOrder Cardinal * NULL CSG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual int [] DetailOrder {
+            get {
+                int count = 0;
+                if (0 == (count = DetailOrderCount)) {
+                    return new int[]{};
+                }
+                IntPtr listRef = XSports.GetPtr(Native.Motif.ResourceId.XmNdetailOrder);
+                int [] ret = new int[count];
+                Marshal.Copy(listRef, ret, 0, count);
+                // listRefはfreeしちゃﾀﾞﾒ
+                return ret;
+            }
+            set {
+                IntPtr ptr = IntPtr.Zero;
+                int count = value.Length;
+                ToolkitResources.Begin();
+                try {
+                    DetailOrderCount = count;
+                    if (0 != count) {
+                        ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(int)) * value.Length);
+                        Marshal.Copy(value, 0, ptr, value.Length);
+                        XSports.SetPtr(Native.Motif.ResourceId.XmNdetailOrder, ptr, Data.Resource.Access.CSG);
+                    }
+                }finally {
+                    ToolkitResources.Commit(true);
+                    if(IntPtr.Zero != ptr) {
+                        Marshal.FreeCoTaskMem(ptr);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// XmNdetailOrderCount XmCDetailOrderCount Cardinal dynamic CSG
         /// </summary>
@@ -197,9 +233,24 @@ namespace TonNurako.Widgets.Xm
                     Native.Motif.ResourceId.XmNdetailOrderCount, value, Data.Resource.Access.CSG);
             }
         }
-        // ### UNKOWN TYPE
-        // ### XmNdetailTabList XmCDetailTabList XmTabList NULL CSG
 
+        /// <summary>
+        /// XmNdetailTabList XmCDetailTabList XmTabList NULL CSG
+        /// </summary>
+        public virtual Data.TabList DetailTabList
+        {
+            get
+            {
+                Data.TabList tab = new Data.TabList(
+                    XSports.GetPtr(Native.Motif.ResourceId.XmNdetailTabList,  Data.Resource.Access.CSG));
+                return tab;
+            }
+            set
+            {
+                XSports.SetPtr(
+                    Native.Motif.ResourceId.XmNdetailTabList, value.Handle, Data.Resource.Access.CSG);
+            }
+        }
 
         /// <summary>
         /// XmNentryViewType XmCEntryViewType unsigned char XmANY_ICON CSG
@@ -452,23 +503,49 @@ namespace TonNurako.Widgets.Xm
                     Native.Motif.ResourceId.XmNselectColor, value, Data.Resource.Access.CSG);
             }
         }
-        // ### UNKOWN TYPE
-        // ### XmNselectedObjects XmCSelectedObjects WidgetList NULL SG
+
+        /// <summary>
+        /// ### XmNselectedObjects XmCSelectedObjects WidgetList NULL SG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.SG)]
+        public virtual Data.WidgetList SelectedObjects {
+            get{
+                IntPtr p = XSports.GetPtr(
+                   Native.Motif.ResourceId.XmNselectedObjects, Data.Resource.Access.SG);
+
+                int count = SelectedObjectCount;
+                var w = new Data.WidgetList(this.AppContext, p, count);
+                return w;
+            }
+            set {
+                int count = value.Count;
+                ToolkitResources.Begin();
+                try {
+                    SelectedObjectCount = count;
+                    if (0 != count) {
+                        XSports.SetPtr(Native.Motif.ResourceId.XmNselectedObjects, value.ToPointer(), Data.Resource.Access.CSG);
+                    }
+                }finally {
+                    ToolkitResources.Commit(true);
+                }
+            }
+
+        }
 
         /// <summary>
         /// XmNselectedObjectCount XmCSelectedObjectCount unsigned int 0 SG
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.SG)]
-        public virtual uint SelectedObjectCount
+        public virtual int SelectedObjectCount
         {
             get
             {
-                return XSports.GetUInt(
+                return XSports.GetInt(
                    Native.Motif.ResourceId.XmNselectedObjectCount, 0, Data.Resource.Access.SG);
             }
             set
             {
-                XSports.SetUInt(
+                XSports.SetInt(
                     Native.Motif.ResourceId.XmNselectedObjectCount, value, Data.Resource.Access.SG);
             }
         }

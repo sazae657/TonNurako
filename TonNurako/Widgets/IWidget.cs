@@ -372,6 +372,32 @@ namespace TonNurako.Widgets {
         }
 
         /// <summary>
+        /// 子ｳｲｼﾞｪｯﾄの追加
+        /// </summary>
+        /// <param name="cs">子ｳｲｼﾞｪｯﾄ</param>
+        public void Add(IEnumerable<IChild> cs)
+        {
+            foreach(IChild w in cs) {
+                if (self.Equals(w)) {
+                    throw new InvalidOperationException("再起Addやめれ");
+                }
+
+                widgetList.Add(w);
+                //ｳｲｼﾞｪｯﾄの作成
+                if( self.IsAvailable ) {
+                    if(! w.WrappedWidget) {
+                        w.Create(self);
+                        System.Diagnostics.Debug.WriteLine($"CreateL<IMM>: {w.ToString()}:{self.GetHashCode()}");
+                    }
+                    self.ManageChildren();
+                }
+                else {
+                    System.Diagnostics.Debug.WriteLine($"WidgetCollection<Queue>: {w.ToString()} Parent:{self.ToString()}:{self.GetHashCode()}");
+                }
+            }
+        }
+
+        /// <summary>
         /// 子ｳｲｼﾞｪｯﾄの削除
         /// </summary>
         public void Remove(IChild w)

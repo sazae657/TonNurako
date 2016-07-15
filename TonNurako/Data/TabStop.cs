@@ -27,7 +27,7 @@ namespace TonNurako.Data
             handle = NativeMethods.XmTabCreate(value,
                 (byte)units, (byte)offset_model, (byte)Native.Motif.Constant.XmALIGNMENT_BEGINNING, ".");
         }
-        
+
         #region IDisposable Support
         private bool disposedValue = false;
 
@@ -70,6 +70,10 @@ namespace TonNurako.Data
             get {return handle;}
         }
 
+        /// <summary>
+        /// tabの配列から
+        /// </summary>
+        /// <param name="tabs">Tab配列</param>
         public TabList(Tab[] tabs) {
             var arr = new IntPtr[tabs.Length];
             for (int i=0; i < tabs.Length; i++) {
@@ -78,6 +82,10 @@ namespace TonNurako.Data
             handle = NativeMethods.XmTabListInsertTabs (IntPtr.Zero, arr, tabs.Length, 0);
         }
 
+        /// <summary>
+        /// ﾈｲﾃｨﾌﾞから
+        /// </summary>
+        /// <param name="tabs">XmTabList</param>
         internal TabList(IntPtr tabs) {
             handle = tabs;
         }
