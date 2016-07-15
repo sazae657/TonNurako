@@ -586,6 +586,7 @@ namespace TonNurako.Widgets.Xm
             HierarchyConstraint = new HierarchyConstraint(this);
             RowColumnConstraint = new RowColumnConstraint(this);
             ContainerConstraint = new ContainerConstraint(this);
+            NotebookConstraint = new NotebookConstraint(this);
 		}
 
 
@@ -638,6 +639,14 @@ namespace TonNurako.Widgets.Xm
         public ContainerConstraint ContainerConstraint {
             get; private set;
         }
+
+        /// <summary>
+        /// Notebook用
+        /// </summary>
+        public NotebookConstraint NotebookConstraint {
+            get; private set;
+        }
+
         #endregion
 
         #region ｲﾍﾞﾝﾄ

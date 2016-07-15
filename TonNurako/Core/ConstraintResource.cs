@@ -556,4 +556,56 @@ namespace TonNurako.Widgets.Xm
             }
         }
     }
+
+    /// <summary>
+    /// Notebook束縛ﾘｿーｽ
+    /// </summary>
+    public class NotebookConstraint : ConstraintResource<Container> {
+        public NotebookConstraint(Widget widget) : base(widget) {
+        }
+        /// <summary>
+        /// XmNnotebookChildType XmCNotebookChildType unsigned char dynamic CG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CG)]
+        public virtual NotebookChildType NotebookChildType {
+            get {
+                return XSports.GetValue<NotebookChildType>(
+                    Native.Motif.ResourceId.XmNnotebookChildType, NotebookChildType.Page, Data.Resource.Access.CG);
+            }
+            set {
+                XSports.SetValue<NotebookChildType>(
+                    Native.Motif.ResourceId.XmNnotebookChildType, value, Data.Resource.Access.CG);
+            }
+        }
+
+        /// <summary>
+        /// XmNpageNumber XmCPageNumber int dynamic CSG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual int PageNumber {
+            get {
+                return XSports.GetInt(
+                    Native.Motif.ResourceId.XmNpageNumber, 0, Data.Resource.Access.CSG);
+            }
+            set {
+            XSports.SetInt(
+                Native.Motif.ResourceId.XmNpageNumber, value, Data.Resource.Access.CSG);
+            }
+        }
+
+        /// <summary>
+        /// XmNresizable XmCResizable Boolean True CSG
+        /// </summary>
+        [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
+        public virtual bool Resizable {
+            get {
+                return XSports.GetBool(
+                Native.Motif.ResourceId.XmNresizable, true, Data.Resource.Access.CSG);
+            }
+            set {
+            XSports.SetBool(
+                Native.Motif.ResourceId.XmNresizable, value, Data.Resource.Access.CSG);
+            }
+        }
+    }
 }

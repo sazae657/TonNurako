@@ -144,6 +144,8 @@
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimpleOptionMenu.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimplePopupMenu.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimplePulldownMenu.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Notebook.cs" />
+        <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\NotebookEventArgs.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\Paned.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\PanedWindow.cs" />
         <Compile Include="TonNurako\Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn.cs" />
