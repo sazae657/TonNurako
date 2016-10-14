@@ -10,10 +10,24 @@ using TonNurako.Native.Xt;
 using TonNurako.Widgets;
 namespace TonNurako.Native {
 
-    public struct TonNurakoExVersion {
-        public int Major;
-        public int Minor;
+    /// <summary>
+    /// ｴｸｽﾄﾘーﾑｽﾎﾟーﾂのﾊﾞーｼﾞｮﾝ構造体
+    /// </summary>
+    public class TonNurakoExVersion {
+        /// <summary>
+        /// ﾒｼﾞｬー
+        /// </summary>
+        public int Major {get; internal set;} = 0;
 
+        /// <summary>
+        /// ﾏｲﾅー
+        /// </summary>
+        public int Minor {get; internal set;} = 0;
+
+        /// <summary>
+        /// 文字列に
+        /// </summary>
+        /// <returns>文字列</returns>
         public override string ToString() {
             return $"{Major}.{Minor}";
         }
@@ -150,16 +164,19 @@ namespace TonNurako.Native {
 
         }
 
-		/// <summary>
+        /// <summary>
 		/// ExtremeSportsのﾊﾞーｼﾞｮﾝ取得
-		/// </summary>
-
+        /// </summary>
+        /// <returns>ﾊﾞーｼﾞｮﾝ</returns>
         public static uint GetVersionInt() {
             return NativeMethods.TNK_GetVersion();
         }
 
 
-
+        /// <summary>
+        /// ExtremeSportsのﾊﾞーｼﾞｮﾝ取得
+        /// </summary>
+        /// <returns>ﾊﾞーｼﾞｮﾝ構造体</returns>
         public static TonNurakoExVersion GetVersion() {
             uint v = NativeMethods.TNK_GetVersion();
             var r = new TonNurakoExVersion();
@@ -168,11 +185,18 @@ namespace TonNurako.Native {
             return r;
         }
 
-
+        /// <summary>
+        /// Motifのﾊﾞーｼﾞｮﾝ取得
+        /// </summary>
+        /// <returns>ﾊﾞーｼﾞｮﾝ</returns>
         public static uint GetMotifVersion() {
             return NativeMethods.TNK_GetMotifVersion();
         }
 
+        /// <summary>
+        /// Motifのﾊﾞーｼﾞｮﾝ文字列取得
+        /// </summary>
+        /// <returns>ﾊﾞーｼﾞｮﾝ文字列</returns>
         public static string GetMotifVersionString() {
             return Marshal.PtrToStringAnsi(NativeMethods.TNK_GetMotifVersionString());
         }

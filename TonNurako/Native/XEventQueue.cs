@@ -118,7 +118,9 @@ namespace TonNurako.Native {
             return true;
 		}
 
-
+		/// <summary>
+        /// 全消し
+        /// </summary>
         public void RemoveAll() {
             foreach(var q in activeCallbacks) {
                 System.Diagnostics.Debug.WriteLine($"XEventQueueM<{target.GetType()}>: Remove{q.EventMask}");

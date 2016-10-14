@@ -173,6 +173,12 @@ namespace TonNurako.Widgets.Xm
 
         }
 
+        /// <summary>
+        ///  追加
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
+        /// <param name="pos">位置</param>
+        /// <param name="autoSelect">自動選択</param>
         public void AddItem(string item, int pos, bool autoSelect = false) {
             using(var cs = new CompoundString(item)) {
                 if(true == autoSelect) {
@@ -184,6 +190,12 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
+        /// ｱｲﾃﾑ一括追加
+        /// </summary>
+        /// <param name="items">ｱｲﾃﾑ</param>
+        /// <param name="pos">先頭位置</param>
+        /// <param name="autoSelect">自動選択</param>
         public void AddItems(string[] items, int pos, bool autoSelect = false) {
             using(var cs = new CompoundStringTable(items)) {
                 if(true == autoSelect) {
@@ -195,32 +207,62 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
+        /// 全削除
+        /// </summary>
         public void DeleteAllItems() {
             NativeMethods.XmListDeleteAllItems(this.NativeHandle.Widget);
         }
 
+        /// <summary>
+        /// 削除
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
         public void DeleteItem(string item) {
             using(var cs = new CompoundString(item)) {
                 NativeMethods.XmListDeleteItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
+
+        /// <summary>
+        /// 削除(位置指定)
+        /// </summary>
+        /// <param name="pos">位置</param>
         public void DeleteItem(int pos) {
             NativeMethods.XmListDeletePos(this.NativeHandle.Widget, pos);
         }
 
+        /// <summary>
+        /// 削除
+        /// </summary>
+        /// <param name="items">ｱｲﾃﾑ</param>
         public void DeleteItems(string[] items) {
             using(var cs = new CompoundStringTable(items)) {
                 NativeMethods.XmListDeleteItems(this.NativeHandle.Widget, cs.ToNativeArray(true), items.Length);
             }
         }
+
+        /// <summary>
+        /// 削除
+        /// </summary>
+        /// <param name="offset">削除位置</param>
+        /// <param name="count">数</param>
         public void DeleteItems(int offset, int count) {
             NativeMethods.XmListDeleteItemsPos(this.NativeHandle.Widget, offset, count);
         }
 
+        /// <summary>
+        /// 削除
+        /// </summary>
+        /// <param name="pos">位置の集合</param>
         public void DeleteItems(int[] pos) {
             NativeMethods.XmListDeletePositions(this.NativeHandle.Widget, pos, pos.Length);
         }
 
+        /// <summary>
+        /// 選択位置取得
+        /// </summary>
+        /// <returns>選択位置の集合</returns>
         public int[] GetSelectedIndex() {
             IntPtr listRef;
             int count;
@@ -236,24 +278,64 @@ namespace TonNurako.Widgets.Xm
             return ret;
         }
 
+        /// <summary>
+        /// 選択する
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
+        /// <param name="notify">通知の有無</param>
+        public void SelectItem(string item, bool notify = false) {
+            using(var cs = new CompoundString(item)) {
+                NativeMethods.XmListSelectItem(this.NativeHandle.Widget, cs.Handle, notify);
+            }
+        }
+
+        /// <summary>
+        /// 選択(位置指定)
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <param name="notify">通知有無</param>
+        public void SelectItem(int position, bool notify = false) {
+            NativeMethods.XmListSelectPos(this.NativeHandle.Widget, position, notify);
+        }
+
+        /// <summary>
+        /// 全選択解除
+        /// </summary>
         public void DeselectAllItems() {
             NativeMethods.XmListDeselectAllItems(this.NativeHandle.Widget);
         }
 
+        /// <summary>
+        /// 選択解除
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
         public void DeselectItem(string item) {
             using(var cs = new CompoundString(item)) {
                 NativeMethods.XmListDeselectItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
 
+        /// <summary>
+        /// 選択解除
+        /// </summary>
+        /// <param name="pos">位置</param>
         public void DeselectItem(int pos) {
             NativeMethods.XmListDeselectPos(this.NativeHandle.Widget, pos);
         }
 
+        /// <summary>
+        /// ｶーｿﾙ位置取得
+        /// </summary>
+        /// <returns>位置</returns>
         public int GetKbdItemPos() {
             return NativeMethods.XmListGetKbdItemPos(this.NativeHandle.Widget);
         }
 
+        /// <summary>
+        /// ﾊﾟﾀーﾝに一致したｱｲﾃﾑ取得(位置)
+        /// </summary>
+        /// <param name="pattern">ﾊﾟﾀーﾝ</param>
+        /// <returns>位置の集合</returns>
         public int[] GetMatchPos(string pattern) {
             IntPtr listRef;
             int count;
@@ -271,69 +353,112 @@ namespace TonNurako.Widgets.Xm
             return ret;
         }
 
+
+        /// <summary>
+        /// 有無
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
+        /// <returns>有無</returns>
         public bool ItemExists(string item) {
             using (var cs = new CompoundString(item)) {
                 return NativeMethods.XmListItemExists(this.NativeHandle.Widget, cs.Handle);
             }
         }
 
+        /// <summary>
+        /// 位置の取得
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
+        /// <returns>位置</returns>
         public int GetItemPos(string item) {
             using (var cs = new CompoundString(item)) {
                 return NativeMethods.XmListItemPos(this.NativeHandle.Widget, cs.Handle);
             }
         }
+
+        /// <summary>
+        /// 選択されてる？
+        /// </summary>
+        /// <param name="pos">位置</param>
+        /// <returns>有無</returns>
         public bool IsSelected(int pos) {
             return NativeMethods.XmListPosSelected(this.NativeHandle.Widget, pos);
         }
 
+        /// <summary>
+        /// 奥の奥
+        /// </summary>
+        /// <param name="position">位置</param>
+        /// <returns>奥の奥</returns>
         public bool PosToBounds(int position) {
             int x, y, w, h;
             bool r = NativeMethods.XmListPosToBounds(this.NativeHandle.Widget, position, out x, out y, out w, out h);
             return r;
         }
 
-        public void SelectItem(string item, bool notify = false) {
-            using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListSelectItem(this.NativeHandle.Widget, cs.Handle, notify);
-            }
-        }
-
-        public void SelectItem(int position, bool notify = false) {
-            NativeMethods.XmListSelectPos(this.NativeHandle.Widget, position, notify);
-        }
-
+        /// <summary>
+        /// 追加ﾓーﾄﾞの設定
+        /// </summary>
+        /// <param name="state">ﾓーﾄﾞ</param>
         public void SetAddMode(bool state) {
             NativeMethods.XmListSetAddMode(this.NativeHandle.Widget, state);
         }
 
+        /// <summary>
+        /// 末尾にｱｲﾃﾑ設定
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
         public void SetBottomItem(string item) {
             using(var cs = new CompoundString(item)) {
                 NativeMethods.XmListSetBottomItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
 
+        /// <summary>
+        /// 末尾にｱｲﾃﾑ設定(位置指定)
+        /// </summary>
+        /// <param name="position">位置</param>
         public void SetBottomItem(int position) {
             NativeMethods.XmListSetBottomPos(this.NativeHandle.Widget, position);
         }
 
+        /// <summary>
+        /// 横ｽｸﾛーﾙﾊﾞーの位置設定
+        /// </summary>
+        /// <param name="position">位置</param>
         public void SetHorizontalScrollPosition(int position) {
             NativeMethods.XmListSetHorizPos(this.NativeHandle.Widget, position);
         }
+
+        /// <summary>
+        /// 縦ｽｸﾛーﾙﾊﾞーの位置設定
+        /// </summary>
+        /// <param name="position">位置</param>
         public void SetScrollPosition(int position) {
             NativeMethods.XmListSetPos(this.NativeHandle.Widget, position);
         }
 
+        /// <summary>
+        /// ｾｯﾄ
+        /// </summary>
+        /// <param name="item">ｱｲﾃﾑ</param>
         public void SetItem(string item) {
             using(var cs = new CompoundString(item)) {
                 NativeMethods.XmListSetItem(this.NativeHandle.Widget, cs.Handle);
             }
         }
 
+        /// <summary>
+        /// ｶーｿﾙ位置設定
+        /// </summary>
+        /// <param name="position">位置</param>
         public void XmListSetKbdItemPos(int position) {
             NativeMethods.XmListSetKbdItemPos(this.NativeHandle.Widget, position);
         }
 
-
+        /// <summary>
+        /// 更新
+        /// </summary>
         public void Update() {
             NativeMethods.XmListUpdateSelectedList(this.NativeHandle.Widget);
         }

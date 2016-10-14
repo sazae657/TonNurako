@@ -10,7 +10,7 @@ namespace TonNurako.Widgets.Xm
 	/// <summary>
 	/// DrawnButton
 	/// </summary>
-	public class DrawnButton : LabelBase, IDefectiveWidget
+	public class DrawnButton : LabelBase
 	{
 
 		public DrawnButton() : base() {

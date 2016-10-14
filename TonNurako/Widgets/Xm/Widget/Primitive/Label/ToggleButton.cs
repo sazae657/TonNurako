@@ -12,7 +12,7 @@ namespace TonNurako.Widgets.Xm
 	/// <summary>
 	/// ToggleButton
 	/// </summary>
-	public class ToggleButton : LabelBase, IDefectiveWidget
+	public class ToggleButton : LabelBase
 	{
 
 		public ToggleButton() : base() {
@@ -52,14 +52,28 @@ namespace TonNurako.Widgets.Xm
             internal static extern void XmToggleButtonSetValue(IntPtr widget, ToggleButtonState state, [MarshalAs(UnmanagedType.U1)] bool notify);
         }
 
+        /// <summary>
+        /// ｽﾃーﾄ取得(Booleanのみ)
+        /// </summary>
+        /// <returns>ｽﾃーﾄ</returns>
         public bool GetState() {
             return NativeMethods.XmToggleButtonGetState(this.NativeHandle.Widget);
         }
 
+        /// <summary>
+        /// ｽﾃーﾄ設定
+        /// </summary>
+        /// <param name="state">ｽﾃーﾄ</param>
+        /// <param name="notify">通知有無</param>
         public void SetState(bool state, bool notify) {
             NativeMethods.XmToggleButtonSetState(this.NativeHandle.Widget, state, notify);
         }
 
+        /// <summary>
+        /// ｽﾃーﾄ設定
+        /// </summary>
+        /// <param name="state">ｽﾃーﾄ</param>
+        /// <param name="notify">通知有無</param>
         public void SetState(ToggleButtonState state, bool notify) {
             NativeMethods.XmToggleButtonSetValue(this.NativeHandle.Widget, state, notify);
         }

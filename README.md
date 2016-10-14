@@ -43,12 +43,13 @@
 
 該当しない場合はこの手順をすっ飛ばして構いません
 
-#### 1. ﾊﾟｽを直指定する場合
- 
-TonNurako/TonNurakoEx/Config.mp3のﾊﾟｽを調整してください
+#### 1. ﾊﾟｽを指定する場合
+
+TonNurako/TonNurakoEx/Config.mp3 を TonNurako/TonNurakoEx/Site.mp3にｺﾋﾟーしてﾊﾟｽを調整してください
 ```
 % cd TonNurakoEx
-% dtpad Config.mp3
+% cp -i Config.mp3 Site.mp3
+% dtpad Site.mp3
 ```
 
 #### 2. Config.mp3編集するのが面倒くさい場合
@@ -76,10 +77,10 @@ TonNurako/TonNurakoEx/import.app フォルダー直下にX11とXmへのｼﾝﾎ
 ---
 % ls bin/Debug/*Ton*
  bin/Debug/TonNurako.dll
- bin/Debug/TonNurako.dll.mdb		
+ bin/Debug/TonNurako.dll.mdb
  bin/Debug/libTonNurako.extremesports
 % ls bin/Debug/*.exe
- bin/Debug/Simple.exe	
+ bin/Debug/Simple.exe
  bin/Debug/Widgets.exe
 %
 ```

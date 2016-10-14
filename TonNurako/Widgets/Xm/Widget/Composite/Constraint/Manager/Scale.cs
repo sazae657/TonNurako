@@ -39,7 +39,10 @@ namespace TonNurako.Widgets.Xm
 
 		#region ﾌﾟﾛﾊﾟﾁー
 
+        /// <summary>
         /// XmNdecimalPoints XmCDecimalPoints short 0 CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int DecimalPoints {
             get {
@@ -52,7 +55,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNeditable XmCEditable Boolean True CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool Editable {
             get {
@@ -68,7 +74,10 @@ namespace TonNurako.Widgets.Xm
         // XmNfontList XmCFontList XmFontList dynamic CSG
         // -> Core
 
-        /// XmNhighlightOnEnter XmCHighlightOnEnter Boolean False CSG
+        /// <summary>
+        ///  XmNhighlightOnEnter XmCHighlightOnEnter Boolean False CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool HighlightOnEnter {
             get {
@@ -81,7 +90,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNhighlightThickness XmCHighlightThickness Dimension 2 CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int HighlightThickness {
             get {
@@ -94,7 +106,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNmaximum XmCMaximum int 100 CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Maximum {
             get {
@@ -107,7 +122,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNminimum XmCMinimum int 0 CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Minimum {
             get {
@@ -120,7 +138,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNorientation XmCOrientation unsigned char XmVERTICAL CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual Orientation Orientation {
             get {
@@ -133,7 +154,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNprocessingDirection XmCProcessingDirection unsigned char dynamic CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual ProcessingDirection ProcessingDirection {
             get {
@@ -146,7 +170,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNscaleHeight XmCScaleHeight Dimension 0 CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int ScaleHeight {
             get {
@@ -159,7 +186,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNscaleMultiple XmCScaleMultiple int dynamic CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int ScaleMultiple {
             get {
@@ -172,7 +202,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNscaleWidth XmCScaleWidth Dimension 0 CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int ScaleWidth {
             get {
@@ -185,7 +218,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNrenderTable XmCRenderTable XmRenderTable dynamic CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual Data.RenderTable RenderTable {
             get {
@@ -198,7 +234,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNshowArrows XmCShowArrows XtEnum XmNONE CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual ShowArrows ShowArrows {
             get {
@@ -211,7 +250,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNshowValue XmCShowValue XtEnum XmNONE CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual ShowValuePosition ShowValue {
             get {
@@ -224,7 +266,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNsliderMark XmCSliderMark XtEnum dynamic CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual SliderMark SliderMark {
             get {
@@ -237,7 +282,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNsliderVisual XmCSliderVisual XtEnum dynamic CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual SliderVisual SliderVisual {
             get {
@@ -250,7 +298,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNslidingMode XmCSlidingMode XtEnum XmSLIDER CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual SlidingMode SlidingMode {
             get {
@@ -263,7 +314,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNtitleString XmCTitleString XmString NULL CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual string TitleString {
             get {
@@ -276,7 +330,10 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        /// <summary>
         /// XmNvalue XmCValue int dynamic CSG
+        /// </summary>
+        /// <returns></returns>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Value {
             get {
@@ -296,7 +353,9 @@ namespace TonNurako.Widgets.Xm
             get;
         }
 
-        /// XmNconvertCallback XmCCallback XtCallbackList NULL C
+        /// <summary>
+        /// XmNconvertCallback
+        /// </summary>
         public virtual event EventHandler<Events.ScaleEventArgs> ConvertEvent
         {
             add {
@@ -307,7 +366,9 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
-        /// XmNdragCallback XmCCallback XtCallbackList NULL C
+        /// <summary>
+        /// XmNdragCallback
+        /// </summary>
         public virtual event EventHandler<Events.ScaleEventArgs> DragEvent
         {
             add {
@@ -318,7 +379,9 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
-        /// XmNvalueChangedCallback XmCCallback XtCallbackList NULL C
+        /// <summary>
+        /// XmNvalueChangedCallback
+        /// </summary>
         public virtual event EventHandler<Events.ScaleEventArgs> ValueChangedEvent
         {
             add {

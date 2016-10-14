@@ -42,10 +42,10 @@ namespace TonNurako.Widgets.Xm
     ///
     /// </summary>
     public enum SliderVisual {
-        BackgroundColor = Native.Motif.Constant.XmMAX_SIDE,
-        ForegroundColor = Native.Motif.Constant.XmMAX_SIDE,
-        ShadowedBackground = Native.Motif.Constant.XmMAX_SIDE,
-        TroughColor = Native.Motif.Constant.XmMAX_SIDE,
+        BackgroundColor = Native.Motif.Constant.XmBACKGROUND_COLOR,
+        ForegroundColor = Native.Motif.Constant.XmFOREGROUND_COLOR,
+        ShadowedBackground = Native.Motif.Constant.XmSHADOWED_BACKGROUND,
+        TroughColor = Native.Motif.Constant.XmTROUGH_COLOR,
     }
 
     /// <summary>
