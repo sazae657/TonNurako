@@ -6,7 +6,6 @@ BUILD := Debug
 LINKER := $(CC)
 BINDIR := ../bin/$(BUILD)/
 
-
 CFLAGS := $(CFLAGS) -Iimport.app $(MOTF_HEADER_ARGS) $(X11_HEADER_ARGS) 
 LINK_LIBS := -Limport.app/lib $(MOTF_LIBRARY_ARGS) $(MOTIF_LIBS) $(X11_LIBRARY_ARGS) $(X11_LIBS)
 LINK_FLAGS := -g -shared
