@@ -703,3 +703,10 @@ XmTreeDirect
 XmTreeCompressNone
 XmTreeCompressLeaves
 XmTreeCompressAll
+
+XmClipboardFail
+XmClipboardSuccess
+XmClipboardTruncate
+XmClipboardLocked
+XmClipboardBadFormat
+XmClipboardNoData
