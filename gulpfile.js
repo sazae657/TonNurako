@@ -2,19 +2,34 @@ const k = require('gulp');
 const msbuild = require("gulp-msbuild");
 const shell = require('gulp-shell');
 const LPTSTR = require('run-sequence');
+const minimist = require("minimist");
+
+const TNK_BASE = "."
+var env = minimist(process.argv.slice(2));
+
+var kOnfiguration = 'Debug';
+if (env.release) {
+  kOnfiguration = 'Release';
+}
+
+function ccsf(format) {
+  return `${TNK_BASE}/${format}`;
+}
+
+
 
 k.task('build:TonNurako', () =>{
-  return k.src("./TonNurako.sln")
+  return k.src(ccsf("TonNurako.sln"))
     .pipe(msbuild({
         stdout: true,
         errorOnFail: true,
         targets: ['Clean', 'TonNurako'],
-        configuration: 'Debug'
+        configuration: kOnfiguration
     }));
 });
 
 k.task('build:ExtremeSports', shell.task([
-  'make -C TonNurakoEx'
+  `make -C ${ccsf('TonNurakoEx')}`
 ]))
 
 k.task('build:LPTSTR', (dome) => {
@@ -26,10 +41,10 @@ k.task('build', ['build:TonNurako']);
 
 k.task('_watch', () => {
   k.watch(
-    ['./TonNurako/**/*.cs'],
+    [ccsf('TonNurako/**/*.cs')],
    ['build:TonNurako'])
   k.watch(
-    [ './TonNurakoEx/**/*.c'],
+    [ccsf('TonNurakoEx/**/*.c')],
     ['build:LPTSTR'])
 });
 

@@ -16,7 +16,7 @@ X11_LIBS=-lXpm -lXt -lX11
 CC := cc
 CFLAGS := -g -fPIC
 
-WARN_OPT := -Wall -Werror
+WARN_OPT := -W -Wall -Werror -Wno-unused-parameter
 
 # リンカー
 LINK_FLAGS := -g -fPIC -shared

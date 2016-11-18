@@ -14,7 +14,7 @@ TNK_IMP_Xt_XtAppMainLoop(XtAppContext app, process_cb cb)
 TNK_EXPORT void
 TNK_IMP_Xt_XtAppSetExitFlag(  XtAppContext a )
 {
-	return XtAppSetExitFlag( a );
+	XtAppSetExitFlag( a );
 }
 
 TNK_EXPORT void

@@ -4,7 +4,6 @@ TNK_DECLARE_BEGIN
 
 #define TNK_INTERNAL_EVENT "_TNK_INTERNAL_EVENT"
 
-
 TNK_EXPORT
 unsigned int TNK_GetVersion()
 {
@@ -48,7 +47,7 @@ TNK_XtAppCreateShell(
 
 	//Shellｳｲｼﾞｪｯﾄの作成
 	w = XtAppCreateShell( NULL, strAppTitle,
-        sessionShellWidgetClass        
+        sessionShellWidgetClass
         , pContext->display,
 		arglist, argcount);
 
