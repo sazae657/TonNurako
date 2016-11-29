@@ -135,4 +135,5 @@ clean: clean.lib
 	- rm $(MOTIF_CHECK_E) $(LIB_CHECK_E) $(IMP_CHECK_E) $(RULES_OK_DIR)/*file
 	- rm $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
 
+install: clean
 
