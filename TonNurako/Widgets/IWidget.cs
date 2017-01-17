@@ -129,9 +129,9 @@ namespace TonNurako.Widgets {
     /// ｶーｿﾙの挙動
     /// </summary>
     public enum GrabOption {
-        None = 0,
-        NonExclusive,
-        Exclusive
+        None = TonNurako.Native.Motif.Constant.XtGrabNone,
+        NonExclusive = TonNurako.Native.Motif.Constant.XtGrabNonexclusive,
+        Exclusive = TonNurako.Native.Motif.Constant.XtGrabExclusive
     }
 
     /// <summary>

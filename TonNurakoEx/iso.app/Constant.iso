@@ -710,3 +710,7 @@ XmClipboardTruncate
 XmClipboardLocked
 XmClipboardBadFormat
 XmClipboardNoData
+
+XtGrabNone
+XtGrabNonexclusive
+XtGrabExclusive

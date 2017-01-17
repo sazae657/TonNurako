@@ -6,7 +6,9 @@
 using System;
 using System.Runtime.InteropServices;
 using TonNurako.Data;
+using TonNurako.Events;
 using TonNurako.Native;
+using TonNurako.Native.Motif;
 
 namespace TonNurako.Widgets.Xm
 {
@@ -18,7 +20,7 @@ namespace TonNurako.Widgets.Xm
 	{
 
 		public Shell() : base() {
-
+            PopupChildEventTable = new TnkEvents<Native.Motif.ResourceId, TnkEventArgs>();
 		}
 
         internal override void InitalizeLocals() {
@@ -31,7 +33,6 @@ namespace TonNurako.Widgets.Xm
 		public override int Create(IWidget parent) {
 			return base.Create (parent);
 		}
-
 
         #region 固有
         internal static class NativeMethods {
@@ -59,6 +60,7 @@ namespace TonNurako.Widgets.Xm
 
         #region ﾌﾟﾛﾊﾟﾁー
 
+
         /// XmNallowShellResize XmCAllowShellResize Boolean False CG
         [Data.Resource.SportyResource(Data.Resource.Access.CG)]
         public virtual bool AllowShellResize {
@@ -71,9 +73,6 @@ namespace TonNurako.Widgets.Xm
                 Native.Motif.ResourceId.XmNallowShellResize, value, Data.Resource.Access.CG);
             }
         }
-
-        // ### UNKOWN TYPE
-        // ### XmNcreatePopupChildProc XmCCreatePopupChildProc XtCreatePopupChildProc NULL CSG
 
         /// XmNgeometry XmCGeometry String NULL CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
@@ -143,6 +142,24 @@ namespace TonNurako.Widgets.Xm
             }
         }
 
+        internal TnkEvents<Native.Motif.ResourceId, TnkEventArgs> PopupChildEventTable;
+        /// <summary>
+        /// Popupが作られたら呼ばれる
+        /// </summary> <summary>
+        public event EventHandler<TnkEventArgs> CreatePopupChildEvent {
+            add{
+                if (! PopupChildEventTable.HasHandler(Native.Motif.ResourceId.XmNcreatePopupChildProc)) {
+                    XSports.SetCallback(ResourceId.XmNcreatePopupChildProc,
+                        (w, client, call ) =>{
+                            PopupChildEventTable.CallHandler(ResourceId.XmNcreatePopupChildProc, this);
+                        });
+                }
+                PopupChildEventTable.AddHandler(ResourceId.XmNcreatePopupChildProc, value);
+            }
+            remove{
+                PopupChildEventTable.RemoveHandler(ResourceId.XmNcreatePopupChildProc, value);
+            }
+        }
 		#endregion
 
 	}
