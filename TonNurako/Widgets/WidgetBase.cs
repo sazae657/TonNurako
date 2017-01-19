@@ -4,6 +4,7 @@
 // Widget
 //
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TonNurako.Data;
 using TonNurako.Events;
@@ -75,7 +76,6 @@ namespace TonNurako.Widgets
             get;
         }
 
-
         public Guid UniqueId {
             get; internal set;
         }
@@ -85,6 +85,11 @@ namespace TonNurako.Widgets
         public virtual ApplicationContext AppContext {
             get; set;
         }
+
+        /// <summary>
+        /// ﾘｿーｽ保持用
+        /// </summary>
+        Dictionary<object, IDisposable> resourceRef;
 
         /// <summary>
         /// ｺﾝｽﾄﾗｸﾀー
@@ -101,6 +106,8 @@ namespace TonNurako.Widgets
             XServerEvent = new Events.ServerEvent(this);
 
             xresource = new XResource(this);
+
+            resourceRef = new Dictionary<object, IDisposable>();
 
             ThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
         }
@@ -121,6 +128,8 @@ namespace TonNurako.Widgets
 
             xresource = new XResource(this);
             selfWidget = new Native.WidgetHandle(native);
+
+            resourceRef = new Dictionary<object, IDisposable>();
 
             ThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
         }
@@ -194,10 +203,44 @@ namespace TonNurako.Widgets
                 xresource.Dispose();
                 xresource = null;
             }
+            // 保持ﾘｿーｽ削除
+            foreach(var r in resourceRef.Values) {
+                r.Dispose();
+            }
+            resourceRef.Clear();
+
             System.Diagnostics.Debug.WriteLine("WidgetBase.Dispose: " + this.ToString());
         }
 
         #endregion
+
+        /// <summary>
+        /// ﾘｿーｽを保持させる
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <param name="resource">ﾛｿーｽ</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public virtual void RetainResource(object id, IDisposable resource) {
+            if (resourceRef.ContainsKey(id)) {
+                // 重複参照削除
+                var obj = resourceRef[id];
+                resourceRef.Remove(id);
+                obj.Dispose();
+            }
+            resourceRef.Add(id, resource);
+        }
+
+        /// <summary>
+        /// ﾘｿーｽを保持させる
+        /// </summary>
+        /// <param name="obzekt">ｵﾌﾞｾﾞｸﾄ</param>
+        /// <returns>ｵﾌﾞｾﾞｸﾄ</returns>
+        public T RetainResource<T>(T obzekt)
+            where T : IDisposable
+        {
+            RetainResource(obzekt, obzekt);
+            return obzekt;
+        }
 
         /// <summary>
         /// 子を全員ﾏﾈーｼﾞする

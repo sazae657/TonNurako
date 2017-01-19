@@ -57,18 +57,20 @@ namespace TonNurako.GC
         /// <param name="height">高さ</param>
         /// <param name="depth">色深度</param>
         public Pixmap(Widgets.IWidget w, int width, int height, int depth) {
-            
+
             drawable = new Drawable();
             //Display取得
-			drawable.Display = XtSports.XtDisplay( w );
+			drawable.Display = w.NativeHandle.Display;
 
 			//Window取得
-			IntPtr window = XtSports.XtWindow( w );
+			IntPtr window = w.NativeHandle.Window;
 
             System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.NativeHandle.Widget:x}> width={width} height={height} depth={depth}");
 
             drawable.Target =
                 X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
+            System.Diagnostics.Debug.WriteLine($"Pixmap {drawable.Target}");
+
 
             DestroyPixmapFunc = () => {
                 X11Sports.XFreePixmap(drawable.Display, drawable.Target);
@@ -145,6 +147,35 @@ namespace TonNurako.GC
             return pm;
         }
 
+        /// <summary>
+        /// XImageから生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="path">ﾌｧｲﾙ</param>
+        /// <returns></returns>
+        public static Pixmap FromXImage(Widgets.IWidget w, XImage image) {
+            var pm = new Pixmap(w, image.Width, image.Height, image.Depth);
+            using (GraphicsContext gc = new GraphicsContext(pm)) {
+                gc.PutImage(image);
+            }
+            return pm;
+        }
+
+        /// <summary>
+        /// Bitmapから生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="path">ﾌｧｲﾙ</param>
+        /// <returns></returns>
+        public static Pixmap FromBitmap(Widgets.IWidget w, System.Drawing.Bitmap bitmap) {
+            var pm = new Pixmap(w, bitmap.Width, bitmap.Height, 24);
+            using(var image = XImage.FromBitmap(w, bitmap))
+            using(var gc = new GraphicsContext(pm)) {
+                gc.PutImage(image);
+            }
+            return pm;
+        }
+
         public Drawable Drawable
         {
             get {
@@ -153,7 +184,7 @@ namespace TonNurako.GC
         }
 
         #region IDisposable
-        
+
         public void Dispose()
         {
             Dispose(true);

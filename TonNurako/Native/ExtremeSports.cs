@@ -291,9 +291,7 @@ namespace TonNurako.Native {
 		{
             internal IntPtr context;
             internal IntPtr display;
-
             internal TnkAppRefreshHandler comm;
-
             internal int   colormap;
 		}
 

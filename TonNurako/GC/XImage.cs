@@ -81,6 +81,11 @@ namespace TonNurako.GC
         public int Height {get; internal set;}
 
         /// <summary>
+        /// 深度
+        /// </summary>
+        public int Depth {get; internal set;}
+
+        /// <summary>
         /// ｺﾝｽﾄﾗｸﾀー
         /// </summary>
         public XImage() {
@@ -112,7 +117,7 @@ namespace TonNurako.GC
 
             im.Width = bitmap.Width;
             im.Height = bitmap.Height;
-
+            im.Depth = 24;
             return im;
         }
 
@@ -135,6 +140,7 @@ namespace TonNurako.GC
                 0, (uint)depth, Format.ZPixmap, 0, im.convertBuffer, (uint)width, (uint)height, bpp, 0);
             im.Width = width;
             im.Height = height;
+            im.Depth = bpp;
             return im;
         }
 
