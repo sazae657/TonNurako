@@ -140,7 +140,7 @@ namespace TonNurako.GC
                 0, (uint)depth, Format.ZPixmap, 0, im.convertBuffer, (uint)width, (uint)height, bpp, 0);
             im.Width = width;
             im.Height = height;
-            im.Depth = bpp;
+            im.Depth = depth;
             return im;
         }
 

@@ -64,10 +64,10 @@ namespace TonNurako.GC
 
 			//Window取得
 			IntPtr window = w.NativeHandle.Window;
-
-            System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.NativeHandle.Widget:x}> width={width} height={height} depth={depth}");
-
-            drawable.Target =
+            
+			System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.NativeHandle.Widget:x}> width={width} height={height} depth={depth}");
+            
+			drawable.Target =
                 X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
             System.Diagnostics.Debug.WriteLine($"Pixmap {drawable.Target}");
 
