@@ -38,6 +38,9 @@ namespace TonNurako.Native.X11
 		#region 描画関連
 
         internal static class NativeMethods {
+            [DllImport(ExtremeSports.Lib, EntryPoint="RootWindowOfScreen_TNK", CharSet=CharSet.Auto)]
+            public static extern IntPtr RootWindowOfScreen(IntPtr screen);
+
             [DllImport(ExtremeSports.Lib, EntryPoint="XCreateGC_TNK", CharSet=CharSet.Auto)]
             public static extern IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, [In,Out]ref XGCValues values);
 
@@ -138,7 +141,12 @@ namespace TonNurako.Native.X11
             public static extern IntPtr XKeysymToString(int keysym);
 
         }
-        public static IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, ref XGCValues values) {
+
+        public static IntPtr RootWindowOfScreen(IntPtr screen) {
+            return NativeMethods.RootWindowOfScreen(screen);
+		}
+
+		public static IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, ref XGCValues values) {
             return NativeMethods.XCreateGC(display,d,valuemask,ref values);
         }
         

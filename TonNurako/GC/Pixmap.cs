@@ -77,6 +77,31 @@ namespace TonNurako.GC
             };
         }
 
+		/// <summary>
+        /// 新規生成2
+        /// </summary>
+        /// <param name="display">ﾃﾞｽﾌﾟﾚー</param>
+        /// <param name="window">ｳｲﾝﾄﾞー</param>
+        /// <param name="width">幅</param>
+        /// <param name="height">高さ</param>
+        /// <param name="depth">色深度</param>
+        public Pixmap(IntPtr display, IntPtr window, int width, int height, int depth) {
+            drawable = new Drawable();
+			drawable.Display = display;
+
+			System.Diagnostics.Debug.WriteLine($"Pixmap(N) window=<0x{window:x}> display=<0x{display:x}> width={width} height={height} depth={depth}");
+            
+			drawable.Target =
+                X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
+            System.Diagnostics.Debug.WriteLine($"Pixmap(N) <{drawable.Target}>");
+
+            DestroyPixmapFunc = () => {
+				System.Diagnostics.Debug.WriteLine($"Pixmap(N) Dispose <{drawable.Target}>");
+                X11Sports.XFreePixmap(drawable.Display, drawable.Target);
+            };
+        }
+
+
         /// <summary>
         /// ﾌｧｲﾙから生成
         /// </summary>
@@ -160,6 +185,21 @@ namespace TonNurako.GC
             }
             return pm;
         }
+
+		/// <summary>
+        /// XImageから生成 (Root)
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="path">ﾌｧｲﾙ</param>
+        /// <returns></returns>
+        public static Pixmap FromXImageEx(Widgets.IWidget w, XImage image) {
+            var pm = new Pixmap(XtSports.XtDisplay(w), X11Sports.RootWindowOfScreen(XtSports.XtScreen(w)), image.Width, image.Height, image.Depth);
+            using (GraphicsContext gc = new GraphicsContext(pm)) {
+                gc.PutImage(image);
+            }
+            return pm;
+        }
+
 
         /// <summary>
         /// Bitmapから生成
