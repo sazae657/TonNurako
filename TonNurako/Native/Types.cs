@@ -22,9 +22,9 @@ namespace TonNurako.Native {
             }
             Widget = new X11.Widget(ptr);
 
-            Display = new X11.Display(Native.Xt.XtSports.XtDisplay(ptr));
-            Window = new X11.Window(Native.Xt.XtSports.XtWindow(ptr));
-            Screen = new X11.Screen(Native.Xt.XtSports.XtScreen(ptr));
+            Display = new X11.Display(Widget);
+            Window = new X11.Window(Widget);
+            Screen = new X11.Screen(Widget);
 
             Hash = ptr.ToInt64().ToString().GetHashCode();
         }
