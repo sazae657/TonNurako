@@ -258,7 +258,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, Native.NativeWidget val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.Widget);
+			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.Widget.Handle);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);

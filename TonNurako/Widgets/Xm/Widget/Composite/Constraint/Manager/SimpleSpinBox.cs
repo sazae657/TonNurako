@@ -71,19 +71,19 @@ namespace TonNurako.Widgets.Xm
 
         public void AddItem(string item, int pos) {
             using (var s = new Data.CompoundString(item)) {
-                NativeMethods.XmSimpleSpinBoxAddItem(this.Handle.Widget , s.Handle, pos);
+                NativeMethods.XmSimpleSpinBoxAddItem(this.Handle.Widget.Handle , s.Handle, pos);
             }
         }
 
 
         public void DeletePos(int pos) {
-            NativeMethods.XmSimpleSpinBoxDeletePos(this.Handle.Widget, pos);
+            NativeMethods.XmSimpleSpinBoxDeletePos(this.Handle.Widget.Handle, pos);
         }
 
 
         public void SetItem(string item) {
             using (var s = new Data.CompoundString(item)) {
-                NativeMethods.XmSimpleSpinBoxSetItem(this.Handle.Widget, s.Handle);
+                NativeMethods.XmSimpleSpinBoxSetItem(this.Handle.Widget.Handle, s.Handle);
             }
         }
 

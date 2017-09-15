@@ -155,7 +155,7 @@ namespace TonNurako.Native.Xt
 
         public static Widgets.IWidget XtNameToWidget(Widgets.IWidget parent, string name)
         {
-            var handle = NativeMethods.XtNameToWidget(parent.Handle.Widget, name);
+            var handle = NativeMethods.XtNameToWidget(parent.Handle.Widget.Handle, name);
             if (IntPtr.Zero == handle) {
                 return null;
             }
@@ -167,40 +167,40 @@ namespace TonNurako.Native.Xt
         }
 
         public static void  XtDestroyWidget(Widgets.IWidget wgt) {
-            NativeMethods.XtDestroyWidget(wgt.Handle.Widget);
+            NativeMethods.XtDestroyWidget(wgt.Handle.Widget.Handle);
         }
         public static  void  XtUnmanageChild(Widgets.IWidget wgt) {
-            NativeMethods.XtUnmanageChild(wgt.Handle.Widget);
+            NativeMethods.XtUnmanageChild(wgt.Handle.Widget.Handle);
         }
         public static  void  XtManageChild(Widgets.IWidget wgt) {
-            NativeMethods.XtManageChild(wgt.Handle.Widget);
+            NativeMethods.XtManageChild(wgt.Handle.Widget.Handle);
         }
 
         public static  void  XtUnmapWidget(Widgets.IWidget wgt) {
-            NativeMethods.XtUnmapWidget(wgt.Handle.Widget);
+            NativeMethods.XtUnmapWidget(wgt.Handle.Widget.Handle);
         }
 
         public static  void  XtRealizeWidget(Widgets.IWidget wgt) {
-            NativeMethods.XtRealizeWidget(wgt.Handle.Widget);
+            NativeMethods.XtRealizeWidget(wgt.Handle.Widget.Handle);
         }
 
         public static  bool  XtIsManaged(Widgets.IWidget wgt) {
-            return (NativeMethods.XtIsManaged(wgt.Handle.Widget).ToInt32() == 0) ? false : true;
+            return (NativeMethods.XtIsManaged(wgt.Handle.Widget.Handle).ToInt32() == 0) ? false : true;
         }
 
         public static  void  XtMapWidget(Widgets.IWidget wgt) {
-            NativeMethods.XtMapWidget(wgt.Handle.Widget);
+            NativeMethods.XtMapWidget(wgt.Handle.Widget.Handle);
         }
 
         public static  IntPtr  XtScreen(Widgets.IWidget wgt) {
-            return NativeMethods.XtScreen(wgt.Handle.Widget);
+            return NativeMethods.XtScreen(wgt.Handle.Widget.Handle);
         }
         public static  IntPtr  XtScreen(IntPtr wgt) {
             return NativeMethods.XtScreen(wgt);
         }
 
         public static  IntPtr  XtDisplay(Widgets.IWidget wgt) {
-            return NativeMethods.XtDisplay(wgt.Handle.Widget);
+            return NativeMethods.XtDisplay(wgt.Handle.Widget.Handle);
         }
 
         public static  IntPtr  XtDisplay(IntPtr wgt) {
@@ -208,7 +208,7 @@ namespace TonNurako.Native.Xt
         }
 
         public static  IntPtr  XtWindow(Widgets.IWidget wgt) {
-            return NativeMethods.XtWindow(wgt.Handle.Widget);
+            return NativeMethods.XtWindow(wgt.Handle.Widget.Handle);
         }
         public static  IntPtr  XtWindow(IntPtr wgt) {
             return NativeMethods.XtWindow(wgt);
@@ -223,11 +223,11 @@ namespace TonNurako.Native.Xt
         }
 
         public static  void  XtRemoveCallback(Widgets.IWidget wgt, string type, G.XtCallBack call) {
-            NativeMethods.XtRemoveCallback(wgt.Handle.Widget, type, call, IntPtr.Zero);
+            NativeMethods.XtRemoveCallback(wgt.Handle.Widget.Handle, type, call, IntPtr.Zero);
         }
 
         public static  void  XtAddCallback(Widgets.IWidget wgt, string type, G.XtCallBack call ) {
-            NativeMethods.XtAddCallback(wgt.Handle.Widget, type, call, IntPtr.Zero);
+            NativeMethods.XtAddCallback(wgt.Handle.Widget.Handle, type, call, IntPtr.Zero);
         }
         public static uint XtLastTimestampProcessed(IntPtr display) {
             return NativeMethods.XtLastTimestampProcessed(display);
@@ -240,17 +240,17 @@ namespace TonNurako.Native.Xt
 
 
         public static void XtAugmentTranslations(Widgets.IWidget wgt, IntPtr translations) {
-            NativeMethods.XtAugmentTranslations(wgt.Handle.Widget,translations);
+            NativeMethods.XtAugmentTranslations(wgt.Handle.Widget.Handle,translations);
         }
 
 
         public static void XtOverrideTranslations(Widgets.IWidget wgt, IntPtr translations) {
-            NativeMethods.XtOverrideTranslations(wgt.Handle.Widget,translations);
+            NativeMethods.XtOverrideTranslations(wgt.Handle.Widget.Handle,translations);
         }
 
 
         public static void XtUninstallTranslations(Widgets.IWidget wgt) {
-            NativeMethods.XtUninstallTranslations(wgt.Handle.Widget);
+            NativeMethods.XtUninstallTranslations(wgt.Handle.Widget.Handle);
         }
 
 
@@ -260,35 +260,35 @@ namespace TonNurako.Native.Xt
 
 
         public static void XtInstallAccelerators(Widgets.IWidget destination, Widgets.IWidget source) {
-            NativeMethods.XtInstallAccelerators(destination.Handle.Widget, source.Handle.Widget);
+            NativeMethods.XtInstallAccelerators(destination.Handle.Widget.Handle, source.Handle.Widget.Handle);
         }
 
 
         public static void XtInstallAllAccelerators(Widgets.IWidget destination, Widgets.IWidget source) {
-            NativeMethods.XtInstallAllAccelerators(destination.Handle.Widget, source.Handle.Widget);
+            NativeMethods.XtInstallAllAccelerators(destination.Handle.Widget.Handle, source.Handle.Widget.Handle);
         }
 
         public static void XtAddEventHandler(Widgets.IWidget w, ulong event_mask, bool nonmaskable,
                      TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data) {
-            NativeMethods.XtAddEventHandler(w.Handle.Widget, event_mask,nonmaskable,proc,client_data);
+            NativeMethods.XtAddEventHandler(w.Handle.Widget.Handle, event_mask,nonmaskable,proc,client_data);
         }
 
 
         public static void XtRemoveEventHandler(Widgets.IWidget w, ulong event_mask, bool nonmaskable,
             TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data) {
-            NativeMethods.XtRemoveEventHandler(w.Handle.Widget,event_mask,nonmaskable,proc,client_data);
+            NativeMethods.XtRemoveEventHandler(w.Handle.Widget.Handle,event_mask,nonmaskable,proc,client_data);
         }
 
         public static IntPtr XtGetGC(Widgets.IWidget w, X11.GCMask value_mask, ref X11.XGCValues values) {
-            return NativeMethods.XtGetGC(w.Handle.Widget, value_mask, ref values);
+            return NativeMethods.XtGetGC(w.Handle.Widget.Handle, value_mask, ref values);
         }
 
         public static IntPtr XtGetGC(Widgets.IWidget w) {
-            return NativeMethods.XtGetGC(w.Handle.Widget, 0, IntPtr.Zero);
+            return NativeMethods.XtGetGC(w.Handle.Widget.Handle, 0, IntPtr.Zero);
         }
 
         internal static void XtReleaseGC(Widgets.IWidget w, IntPtr gc) {
-            NativeMethods.XtReleaseGC(w.Handle.Widget, gc);
+            NativeMethods.XtReleaseGC(w.Handle.Widget.Handle, gc);
         }
 
         // 一時的

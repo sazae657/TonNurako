@@ -65,7 +65,7 @@ namespace TonNurako.GC
 			//Window取得
 			IntPtr window = w.Handle.Window.Handle;
 
-			System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.Handle.Widget:x}> width={width} height={height} depth={depth}");
+			System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.Handle.Widget.Handle:x}> width={width} height={height} depth={depth}");
 
 			drawable.Target =
                 X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
@@ -157,7 +157,7 @@ namespace TonNurako.GC
 
             IntPtr buf = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buffer.Length+1));
             Marshal.Copy(buffer, 0, buf, buffer.Length);
-	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display.Handle, w.Handle.Widget, ref pm.PixMax, buf);
+	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display.Handle, w.Handle.Widget.Handle, ref pm.PixMax, buf);
             Marshal.FreeCoTaskMem(buf);
             if ( 0 != r) {
                 pm = null;

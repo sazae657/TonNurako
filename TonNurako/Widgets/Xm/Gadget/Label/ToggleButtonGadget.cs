@@ -45,11 +45,11 @@ namespace TonNurako.Widgets.Xm
         }
 
         public bool GetState() {
-            return NativeMethods.XmToggleButtonGadgetGetState(this.Handle.Widget);
+            return NativeMethods.XmToggleButtonGadgetGetState(this.Handle.Widget.Handle);
         }
 
         public void SetState(bool state, bool notify) {
-            NativeMethods.XmToggleButtonGadgetSetState(this.Handle.Widget, state, notify);
+            NativeMethods.XmToggleButtonGadgetSetState(this.Handle.Widget.Handle, state, notify);
         }
 
         #endregion

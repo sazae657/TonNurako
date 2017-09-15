@@ -20,11 +20,11 @@ namespace TonNurako.Native {
             if (IntPtr.Zero == ptr) {
                 throw new NullReferenceException("Null Widget!!");
             }
-            Widget = ptr;
+            Widget = new X11.Widget(ptr);
 
-            //Display = new X11.Display(Native.Xt.XtSports.XtDisplay(ptr));
-            //Window = new X11.Window(Native.Xt.XtSports.XtWindow(ptr));
-            //Screen = new X11.Screen(Native.Xt.XtSports.XtScreen(ptr));
+            Display = new X11.Display(Native.Xt.XtSports.XtDisplay(ptr));
+            Window = new X11.Window(Native.Xt.XtSports.XtWindow(ptr));
+            Screen = new X11.Screen(Native.Xt.XtSports.XtScreen(ptr));
 
             Hash = ptr.ToInt64().ToString().GetHashCode();
         }
@@ -33,7 +33,7 @@ namespace TonNurako.Native {
         /// Widget
         /// </summary>
         /// <returns>Widget</returns>
-        public IntPtr Widget {
+        public X11.Widget Widget {
             get;
         }
 
@@ -41,35 +41,34 @@ namespace TonNurako.Native {
         /// Display
         /// </summary>
         /// <returns>Display</returns>
-        public X11.Display Display => new X11.Display(Native.Xt.XtSports.XtDisplay(Widget));
+        public X11.Display Display { get; }
 
         /// <summary>
         /// Window
         /// </summary>
         /// <returns>Window</returns>
-        public X11.Window Window => new X11.Window(Native.Xt.XtSports.XtWindow(Widget));
-        
+        public X11.Window Window { get; }
+
 
         /// <summary>
         /// RootWindowOfScreen
         /// </summary>
         /// <returns>RootWindowOfScreen</returns>
-        public X11.Window RootWindowOfScreen =>
-            new X11.Window(X11.X11Sports.RootWindowOfScreen(Screen.Handle));
+        public X11.Window RootWindowOfScreen { get; }
 
 
         /// <summary>
         /// Screen
         /// </summary>
         /// <returns>Screen</returns>
-        public X11.Screen Screen => new X11.Screen(Native.Xt.XtSports.XtScreen(Widget));
+        public X11.Screen Screen { get; }
 
         /// <summary>
         /// Name
         /// </summary>
         /// <returns>Name</returns>
         public string XtName =>
-            Native.Xt.XtSports.XtName(Widget);
+            Native.Xt.XtSports.XtName(Widget.Handle);
         
 
         /// <summary>
@@ -77,8 +76,7 @@ namespace TonNurako.Native {
         /// </summary>
         /// <param name="with">比較元</param>
         /// <returns>比較結果</returns>
-        public bool Equals(NativeWidget with) =>
-            (this.Widget == with.Widget);
+        public bool Equals(NativeWidget with) => (this.Widget == with.Widget);
         
         /// <summary>
         /// ﾊｯｼｭ

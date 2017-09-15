@@ -214,14 +214,14 @@ namespace TonNurako.Native {
 		/// ﾌﾟﾗｲﾍﾞーﾄｲﾍﾞﾝﾄ発行
 		/// </summary>
         public static void TriggerPrivateEvent(TnkAppContext context, IWidget w) {
-            NativeMethods.TNK_IMP_TriggerPrivateEvent(ref context, w.Handle.Widget);
+            NativeMethods.TNK_IMP_TriggerPrivateEvent(ref context, w.Handle.Widget.Handle);
         }
 
 		/// <summary>
 		/// XFlushを呼ぶ
 		/// </summary>
         public static void Flush(TnkAppContext context, IWidget w) {
-            NativeMethods.TNK_IMP_Flush(ref context, w.Handle.Widget);
+            NativeMethods.TNK_IMP_Flush(ref context, w.Handle.Widget.Handle);
         }
 
 
@@ -247,7 +247,7 @@ namespace TonNurako.Native {
 		public static void SetValues(
 			IWidget w,  Native.Xt.XtArg [] args )
 		{
-            NativeMethods.TNK_IMP_Xt_XtSetValues( w.Handle.Widget,  args, args.Length );
+            NativeMethods.TNK_IMP_Xt_XtSetValues( w.Handle.Widget.Handle,  args, args.Length );
 		}
 		public static void SetValues(
 			IntPtr w,  Native.Xt.XtArg [] args )
@@ -322,7 +322,7 @@ namespace TonNurako.Native {
 
 		public static int XCreateColormap(IWidget w)
 		{
-			return NativeMethods.TNK_IMP_Xt_XCreateColormap(w.Handle.Widget);
+			return NativeMethods.TNK_IMP_Xt_XCreateColormap(w.Handle.Widget.Handle);
 		}
 
 		public static void TnkAssignColorMap([In,Out]TnkAppContext pCtx, int cmap)
@@ -334,7 +334,7 @@ namespace TonNurako.Native {
  		public static XColor XAllocColor(IWidget widget, byte r, byte g, byte b, byte a)
 		{
             XColor color;
-			int rv = NativeMethods.TNK_IMP_Xt_XAllocColor(out color, widget.Handle.Widget, r, g, b, a);
+			int rv = NativeMethods.TNK_IMP_Xt_XAllocColor(out color, widget.Handle.Widget.Handle, r, g, b, a);
             if (0 == rv) {
                 throw new Exception("XAllocColor :" + r.ToString());
             }
@@ -344,7 +344,7 @@ namespace TonNurako.Native {
  		public static XColor XParseColor(IWidget widget, string name)
 		{
             XColor color = new XColor();
-			color.pixel = NativeMethods.TNK_IMP_Xt_XParseColorM(widget.Handle.Widget, name);
+			color.pixel = NativeMethods.TNK_IMP_Xt_XParseColorM(widget.Handle.Widget.Handle, name);
 
             return color;
 		}
@@ -353,12 +353,12 @@ namespace TonNurako.Native {
 
 		public static void XmAddWMProtocolCallback( Native.NativeWidget w, string name, Xt.G.XtCallBack call )
 		{
-			NativeMethods.TNK_IMP_Xm_XmAddWMProtocolCallback(w.Widget, name, call );
+			NativeMethods.TNK_IMP_Xm_XmAddWMProtocolCallback(w.Widget.Handle, name, call );
 		}
 
 		public static void XmRemoveWMProtocolCallback( Native.NativeWidget w, string name, Xt.G.XtCallBack call )
 		{
-			NativeMethods.TNK_IMP_Xm_XmRemoveWMProtocolCallback(w.Widget, name, call );
+			NativeMethods.TNK_IMP_Xm_XmRemoveWMProtocolCallback(w.Widget.Handle, name, call );
 		}
 
 
@@ -366,33 +366,33 @@ namespace TonNurako.Native {
 
 		public static void XtGetValues( Native.NativeWidget w, string val, out byte data  )
 		{
-			NativeMethods.TNK_IMP_Xt_XtGetValuesByte(w.Widget, val, out data );
+			NativeMethods.TNK_IMP_Xt_XtGetValuesByte(w.Widget.Handle, val, out data );
 		}
 
 
 		public static void XtGetValues( Native.NativeWidget w, string val, out bool data  )
 		{
-			NativeMethods.TNK_IMP_Xt_XtGetValuesBoolean( w.Widget, val, out data );
+			NativeMethods.TNK_IMP_Xt_XtGetValuesBoolean( w.Widget.Handle, val, out data );
 		}
 
 		public static void XtGetValues( Native.NativeWidget w, string val, out ushort data  )
 		{
-			NativeMethods.TNK_IMP_Xt_XtGetValuesDimension( w.Widget, val, out data );
+			NativeMethods.TNK_IMP_Xt_XtGetValuesDimension( w.Widget.Handle, val, out data );
 		}
 
 		public static void XtGetValues( Native.NativeWidget w, string val, out int data  )
 		{
-			NativeMethods.TNK_IMP_Xt_XtGetValuesInt( w.Widget, val, out data );
+			NativeMethods.TNK_IMP_Xt_XtGetValuesInt( w.Widget.Handle, val, out data );
 		}
 
 		public static void XtGetValues( Native.NativeWidget w, string val, out long data  )
 		{
-			NativeMethods.TNK_IMP_Xt_XtGetValuesLong( w.Widget, val, out data );
+			NativeMethods.TNK_IMP_Xt_XtGetValuesLong( w.Widget.Handle, val, out data );
 		}
 
 		public static CompoundString XtGetValuesCS( Native.NativeWidget w, string val)
 		{
-			IntPtr cs = NativeMethods.TNK_IMP_Xt_XtGetValuesCompoundString( w.Widget, val);
+			IntPtr cs = NativeMethods.TNK_IMP_Xt_XtGetValuesCompoundString( w.Widget.Handle, val);
             if (IntPtr.Zero == cs) {
                 return null;
             }
@@ -401,7 +401,7 @@ namespace TonNurako.Native {
 
 		public static string XtGetValuesAS( Native.NativeWidget w, string val, bool callFree)
 		{
-			IntPtr cs = NativeMethods.TNK_IMP_Xt_XtGetValuesAnsiString(w.Widget, val);
+			IntPtr cs = NativeMethods.TNK_IMP_Xt_XtGetValuesAnsiString(w.Widget.Handle, val);
             if (IntPtr.Zero == cs) {
                 return null;
             }

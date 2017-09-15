@@ -231,9 +231,20 @@ namespace TonNurako.Widgets {
             }
         }
 
+        public ﾄﾝﾇﾗｼﾞｪｯﾄ(TonNurako.Native.X11.Widget _WdgRef, IWidget _Parent) {
+            Handle = new Native.NativeWidget(_WdgRef.Handle);
+            Children = new WidgetCollection(this);
+            xresource = new XResource(this);
+            XServerEvent = new Events.ServerEvent(null);
+
+            if (null != _Parent) {
+                AppContext = _Parent.AppContext;
+            }
+        }
+
 
         public ﾄﾝﾇﾗｼﾞｪｯﾄ(IWidget _WdgRef) {
-            Handle = new Native.NativeWidget(_WdgRef.Handle.Widget);
+            Handle = new Native.NativeWidget(_WdgRef.Handle.Widget.Handle);
             Children = new WidgetCollection(this);
             xresource = new XResource(this);
             XServerEvent = new Events.ServerEvent(null);
