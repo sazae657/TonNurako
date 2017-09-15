@@ -49,14 +49,6 @@ namespace TonNurako.Native {
         /// <returns>Window</returns>
         public X11.Window Window { get; }
 
-
-        /// <summary>
-        /// RootWindowOfScreen
-        /// </summary>
-        /// <returns>RootWindowOfScreen</returns>
-        public X11.Window RootWindowOfScreen { get; }
-
-
         /// <summary>
         /// Screen
         /// </summary>
@@ -64,6 +56,13 @@ namespace TonNurako.Native {
         public X11.Screen Screen { get; }
 
         /// <summary>
+        /// RootWindowOfScreen
+        /// </summary>
+        /// <returns>RootWindowOfScreen</returns>
+        public X11.Window RootWindowOfScreen => 
+            new X11.Window(TonNurako.Native.X11.X11Sports.RootWindowOfScreen(Screen.Handle));
+
+                /// <summary>
         /// Name
         /// </summary>
         /// <returns>Name</returns>
