@@ -60,12 +60,12 @@ namespace TonNurako.GC
 
             drawable = new Drawable();
             //Display取得
-			drawable.Display = w.NativeHandle.Display;
+			drawable.Display = w.Handle.Display;
 
 			//Window取得
-			IntPtr window = w.NativeHandle.Window;
+			IntPtr window = w.Handle.Window.Handle;
 
-			System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.NativeHandle.Widget:x}> width={width} height={height} depth={depth}");
+			System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.Handle.Widget:x}> width={width} height={height} depth={depth}");
 
 			drawable.Target =
                 X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
@@ -85,14 +85,14 @@ namespace TonNurako.GC
         /// <param name="width">幅</param>
         /// <param name="height">高さ</param>
         /// <param name="depth">色深度</param>
-        public Pixmap(IntPtr display, IntPtr window, int width, int height, int depth) {
+        public Pixmap(Display display, Window window, int width, int height, int depth) {
             drawable = new Drawable();
 			drawable.Display = display;
 
-			System.Diagnostics.Debug.WriteLine($"Pixmap(N) window=<0x{window:x}> display=<0x{display:x}> width={width} height={height} depth={depth}");
+			System.Diagnostics.Debug.WriteLine($"Pixmap(N) window=<0x{window.Handle:x}> display=<0x{display.Handle:x}> width={width} height={height} depth={depth}");
 
 			drawable.Target =
-                X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
+                X11Sports.XCreatePixmap(drawable.Display, window.Handle, (uint)width, (uint)height, (uint)depth);
             System.Diagnostics.Debug.WriteLine($"Pixmap(N) <{drawable.Target}>");
 
             DestroyPixmapFunc = () => {
@@ -110,14 +110,14 @@ namespace TonNurako.GC
         /// <returns></returns>
         public static Pixmap FromFile(Widgets.Xm.Primitive w, string path) {
             Pixmap pm = new Pixmap();
-            pm.drawable.Display = XtSports.XtDisplay(w);
-            pm.drawable.Screen = XtSports.XtScreen(w);
-            pm.drawable.Target = (IntPtr)Native.Motif.XmSports.XmGetPixmap(pm.drawable.Screen, path,
+            pm.drawable.Display = new TonNurako.Native.X11.Display(w);
+            pm.drawable.Screen = new TonNurako.Native.X11.Screen(w);
+            pm.drawable.Target = (IntPtr)Native.Motif.XmSports.XmGetPixmap(pm.drawable.Screen.Handle, path,
                 w.BackgroundColor.Pixel,
                 w.ForegroundColor.Pixel
             );
             pm.DestroyPixmapFunc = () => {
-                Native.Motif.XmSports.XmDestroyPixmap(pm.drawable.Display, pm.drawable.Target);
+                Native.Motif.XmSports.XmDestroyPixmap(pm.drawable.Display.Handle, pm.drawable.Target);
             };
             return pm;
         }
@@ -130,15 +130,15 @@ namespace TonNurako.GC
         /// <returns></returns>
         public static Pixmap FromFile(Widgets.Xm.Manager w, string path) {
             Pixmap pm = new Pixmap();
-            pm.drawable.Display = XtSports.XtDisplay(w);
-            pm.drawable.Screen = XtSports.XtScreen(w);
-            var xpm = Native.Motif.XmSports.XmGetPixmap(pm.drawable.Screen, path,
+            pm.drawable.Display = new Display(w);
+            pm.drawable.Screen = new Screen(w);
+            var xpm = Native.Motif.XmSports.XmGetPixmap(pm.drawable.Screen.Handle, path,
                 w.BackgroundColor.Pixel,
                 w.ForegroundColor.Pixel
             );
             pm.drawable.Target = (IntPtr)xpm;
             pm.DestroyPixmapFunc = () => {
-                Native.Motif.XmSports.XmDestroyPixmap(pm.drawable.Screen, pm.drawable.Target);
+                Native.Motif.XmSports.XmDestroyPixmap(pm.drawable.Screen.Handle, pm.drawable.Target);
             };
             return pm;
         }
@@ -151,13 +151,13 @@ namespace TonNurako.GC
         /// <returns></returns>
         public static Pixmap FromBuffer(Widgets.IWidget w, byte[] buffer) {
             Pixmap pm = new Pixmap();
-            pm.drawable.Display = XtSports.XtDisplay(w);
-            pm.drawable.Screen = XtSports.XtScreen(w);
+            pm.drawable.Display = new Display(w);
+            pm.drawable.Screen = new Screen(w);
             pm.PixMax = new TNK_PIXMAX();
 
             IntPtr buf = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buffer.Length+1));
             Marshal.Copy(buffer, 0, buf, buffer.Length);
-	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display, w.NativeHandle.Widget, ref pm.PixMax, buf);
+	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display.Handle, w.Handle.Widget, ref pm.PixMax, buf);
             Marshal.FreeCoTaskMem(buf);
             if ( 0 != r) {
                 pm = null;
@@ -193,8 +193,8 @@ namespace TonNurako.GC
         /// <param name="path">ﾌｧｲﾙ</param>
         /// <returns></returns>
         public static Pixmap FromXImageEx(Widgets.IWidget w, XImage image) {
-            var pm = new Pixmap(w.NativeHandle.Window,
-                w.NativeHandle.RootWindowOfScreen, image.Width, image.Height, image.Depth);
+            var pm = new Pixmap(w.Handle.Display,
+                w.Handle.RootWindowOfScreen, image.Width, image.Height, image.Depth);
             using (GraphicsContext gc = new GraphicsContext(pm)) {
                 gc.PutImage(image);
             }
@@ -242,9 +242,9 @@ namespace TonNurako.GC
                 if (null != DestroyPixmapFunc) {
                     DestroyPixmapFunc();
                 }
-                drawable.Display = IntPtr.Zero;
+                drawable.Display = null;
                 drawable.Target = IntPtr.Zero;
-                drawable.Screen = IntPtr.Zero;
+                drawable.Screen = null;
             }
         }
         #endregion

@@ -103,11 +103,11 @@ namespace TonNurako.Native.Motif
             }
 
         public static void XmMenuPosition(Widgets.IWidget menu, TonNurako.Native.Xt.XEventStruct.XButtonEvent xevent) {
-            NativeMethods.XmMenuPosition(menu.NativeHandle.Widget, xevent);
+            NativeMethods.XmMenuPosition(menu.Handle.Widget, xevent);
         }
         
         public static void XmRedisplayWidget(Widgets.IWidget widget) {
-            NativeMethods.XmRedisplayWidget(widget.NativeHandle.Widget);
+            NativeMethods.XmRedisplayWidget(widget.Handle.Widget);
         }        
 
 
@@ -120,7 +120,7 @@ namespace TonNurako.Native.Motif
         /// </summary>
         public static IntPtr CallCreate2P(Native.Motif.CreateSymbol sym, Widgets.IWidget parent,string name, Native.Xt.XtArg[] args) {
             if (null ==args || 0 == args.Length) {
-                return Instance.xmCreateFuncs[(int)sym](parent.NativeHandle.Widget, name, null, 0);
+                return Instance.xmCreateFuncs[(int)sym](parent.Handle.Widget, name, null, 0);
             }
 
             Native.Xt.NativeXtArg[] au = new Native.Xt.NativeXtArg[args.Length];
@@ -129,7 +129,7 @@ namespace TonNurako.Native.Motif
                 System.Diagnostics.Debug.WriteLine($"NA<A>: {k.Name} : {k.Value}");
             }
             System.Diagnostics.Debug.WriteLine($"XM_CVT {au.Length} -> {argc}");
-            IntPtr wgt = Instance.xmCreateFuncs[(int)sym](parent.NativeHandle.Widget, name, au, argc);
+            IntPtr wgt = Instance.xmCreateFuncs[(int)sym](parent.Handle.Widget, name, au, argc);
             ExtremeSports.TnkFreeDeepCopyArg(au);
 
             return wgt;

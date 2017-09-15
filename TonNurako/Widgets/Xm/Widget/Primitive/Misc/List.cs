@@ -182,10 +182,10 @@ namespace TonNurako.Widgets.Xm
         public void AddItem(string item, int pos, bool autoSelect = false) {
             using(var cs = new CompoundString(item)) {
                 if(true == autoSelect) {
-                    NativeMethods.XmListAddItem(this.NativeHandle.Widget, cs.Handle, pos);
+                    NativeMethods.XmListAddItem(this.Handle.Widget, cs.Handle, pos);
                 }
                 else {
-                    NativeMethods.XmListAddItemUnselected(this.NativeHandle.Widget, cs.Handle, pos);
+                    NativeMethods.XmListAddItemUnselected(this.Handle.Widget, cs.Handle, pos);
                 }
             }
         }
@@ -199,10 +199,10 @@ namespace TonNurako.Widgets.Xm
         public void AddItems(string[] items, int pos, bool autoSelect = false) {
             using(var cs = new CompoundStringTable(items)) {
                 if(true == autoSelect) {
-                    NativeMethods.XmListAddItems(this.NativeHandle.Widget, cs.ToNativeArray(true), items.Length, pos);
+                    NativeMethods.XmListAddItems(this.Handle.Widget, cs.ToNativeArray(true), items.Length, pos);
                 }
                 else {
-                    NativeMethods.XmListAddItemsUnselected(this.NativeHandle.Widget, cs.ToNativeArray(true), items.Length, pos);
+                    NativeMethods.XmListAddItemsUnselected(this.Handle.Widget, cs.ToNativeArray(true), items.Length, pos);
                 }
             }
         }
@@ -211,7 +211,7 @@ namespace TonNurako.Widgets.Xm
         /// 全削除
         /// </summary>
         public void DeleteAllItems() {
-            NativeMethods.XmListDeleteAllItems(this.NativeHandle.Widget);
+            NativeMethods.XmListDeleteAllItems(this.Handle.Widget);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="item">ｱｲﾃﾑ</param>
         public void DeleteItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListDeleteItem(this.NativeHandle.Widget, cs.Handle);
+                NativeMethods.XmListDeleteItem(this.Handle.Widget, cs.Handle);
             }
         }
 
@@ -229,7 +229,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="pos">位置</param>
         public void DeleteItem(int pos) {
-            NativeMethods.XmListDeletePos(this.NativeHandle.Widget, pos);
+            NativeMethods.XmListDeletePos(this.Handle.Widget, pos);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="items">ｱｲﾃﾑ</param>
         public void DeleteItems(string[] items) {
             using(var cs = new CompoundStringTable(items)) {
-                NativeMethods.XmListDeleteItems(this.NativeHandle.Widget, cs.ToNativeArray(true), items.Length);
+                NativeMethods.XmListDeleteItems(this.Handle.Widget, cs.ToNativeArray(true), items.Length);
             }
         }
 
@@ -248,7 +248,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="offset">削除位置</param>
         /// <param name="count">数</param>
         public void DeleteItems(int offset, int count) {
-            NativeMethods.XmListDeleteItemsPos(this.NativeHandle.Widget, offset, count);
+            NativeMethods.XmListDeleteItemsPos(this.Handle.Widget, offset, count);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="pos">位置の集合</param>
         public void DeleteItems(int[] pos) {
-            NativeMethods.XmListDeletePositions(this.NativeHandle.Widget, pos, pos.Length);
+            NativeMethods.XmListDeletePositions(this.Handle.Widget, pos, pos.Length);
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace TonNurako.Widgets.Xm
         public int[] GetSelectedIndex() {
             IntPtr listRef;
             int count;
-            bool r = NativeMethods.XmListGetSelectedPos(this.NativeHandle.Widget, out listRef, out count);
+            bool r = NativeMethods.XmListGetSelectedPos(this.Handle.Widget, out listRef, out count);
             if (true != r) {
                 return new int[]{};
             }
@@ -285,7 +285,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="notify">通知の有無</param>
         public void SelectItem(string item, bool notify = false) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListSelectItem(this.NativeHandle.Widget, cs.Handle, notify);
+                NativeMethods.XmListSelectItem(this.Handle.Widget, cs.Handle, notify);
             }
         }
 
@@ -295,14 +295,14 @@ namespace TonNurako.Widgets.Xm
         /// <param name="position">位置</param>
         /// <param name="notify">通知有無</param>
         public void SelectItem(int position, bool notify = false) {
-            NativeMethods.XmListSelectPos(this.NativeHandle.Widget, position, notify);
+            NativeMethods.XmListSelectPos(this.Handle.Widget, position, notify);
         }
 
         /// <summary>
         /// 全選択解除
         /// </summary>
         public void DeselectAllItems() {
-            NativeMethods.XmListDeselectAllItems(this.NativeHandle.Widget);
+            NativeMethods.XmListDeselectAllItems(this.Handle.Widget);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="item">ｱｲﾃﾑ</param>
         public void DeselectItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListDeselectItem(this.NativeHandle.Widget, cs.Handle);
+                NativeMethods.XmListDeselectItem(this.Handle.Widget, cs.Handle);
             }
         }
 
@@ -320,7 +320,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="pos">位置</param>
         public void DeselectItem(int pos) {
-            NativeMethods.XmListDeselectPos(this.NativeHandle.Widget, pos);
+            NativeMethods.XmListDeselectPos(this.Handle.Widget, pos);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <returns>位置</returns>
         public int GetKbdItemPos() {
-            return NativeMethods.XmListGetKbdItemPos(this.NativeHandle.Widget);
+            return NativeMethods.XmListGetKbdItemPos(this.Handle.Widget);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace TonNurako.Widgets.Xm
             IntPtr listRef;
             int count;
             using (var cs = new CompoundString(pattern)) {
-                bool r = NativeMethods.XmListGetMatchPos(this.NativeHandle.Widget, cs.Handle, out listRef, out count);
+                bool r = NativeMethods.XmListGetMatchPos(this.Handle.Widget, cs.Handle, out listRef, out count);
                 if (true != r) {
                     return new int[]{};
                 }
@@ -361,7 +361,7 @@ namespace TonNurako.Widgets.Xm
         /// <returns>有無</returns>
         public bool ItemExists(string item) {
             using (var cs = new CompoundString(item)) {
-                return NativeMethods.XmListItemExists(this.NativeHandle.Widget, cs.Handle);
+                return NativeMethods.XmListItemExists(this.Handle.Widget, cs.Handle);
             }
         }
 
@@ -372,7 +372,7 @@ namespace TonNurako.Widgets.Xm
         /// <returns>位置</returns>
         public int GetItemPos(string item) {
             using (var cs = new CompoundString(item)) {
-                return NativeMethods.XmListItemPos(this.NativeHandle.Widget, cs.Handle);
+                return NativeMethods.XmListItemPos(this.Handle.Widget, cs.Handle);
             }
         }
 
@@ -382,7 +382,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="pos">位置</param>
         /// <returns>有無</returns>
         public bool IsSelected(int pos) {
-            return NativeMethods.XmListPosSelected(this.NativeHandle.Widget, pos);
+            return NativeMethods.XmListPosSelected(this.Handle.Widget, pos);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace TonNurako.Widgets.Xm
         /// <returns>奥の奥</returns>
         public bool PosToBounds(int position) {
             int x, y, w, h;
-            bool r = NativeMethods.XmListPosToBounds(this.NativeHandle.Widget, position, out x, out y, out w, out h);
+            bool r = NativeMethods.XmListPosToBounds(this.Handle.Widget, position, out x, out y, out w, out h);
             return r;
         }
 
@@ -401,7 +401,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="state">ﾓーﾄﾞ</param>
         public void SetAddMode(bool state) {
-            NativeMethods.XmListSetAddMode(this.NativeHandle.Widget, state);
+            NativeMethods.XmListSetAddMode(this.Handle.Widget, state);
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="item">ｱｲﾃﾑ</param>
         public void SetBottomItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListSetBottomItem(this.NativeHandle.Widget, cs.Handle);
+                NativeMethods.XmListSetBottomItem(this.Handle.Widget, cs.Handle);
             }
         }
 
@@ -419,7 +419,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="position">位置</param>
         public void SetBottomItem(int position) {
-            NativeMethods.XmListSetBottomPos(this.NativeHandle.Widget, position);
+            NativeMethods.XmListSetBottomPos(this.Handle.Widget, position);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="position">位置</param>
         public void SetHorizontalScrollPosition(int position) {
-            NativeMethods.XmListSetHorizPos(this.NativeHandle.Widget, position);
+            NativeMethods.XmListSetHorizPos(this.Handle.Widget, position);
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="position">位置</param>
         public void SetScrollPosition(int position) {
-            NativeMethods.XmListSetPos(this.NativeHandle.Widget, position);
+            NativeMethods.XmListSetPos(this.Handle.Widget, position);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="item">ｱｲﾃﾑ</param>
         public void SetItem(string item) {
             using(var cs = new CompoundString(item)) {
-                NativeMethods.XmListSetItem(this.NativeHandle.Widget, cs.Handle);
+                NativeMethods.XmListSetItem(this.Handle.Widget, cs.Handle);
             }
         }
 
@@ -453,14 +453,14 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <param name="position">位置</param>
         public void XmListSetKbdItemPos(int position) {
-            NativeMethods.XmListSetKbdItemPos(this.NativeHandle.Widget, position);
+            NativeMethods.XmListSetKbdItemPos(this.Handle.Widget, position);
         }
 
         /// <summary>
         /// 更新
         /// </summary>
         public void Update() {
-            NativeMethods.XmListUpdateSelectedList(this.NativeHandle.Widget);
+            NativeMethods.XmListUpdateSelectedList(this.Handle.Widget);
         }
 
 		#region ﾌﾟﾛﾊﾟﾁー

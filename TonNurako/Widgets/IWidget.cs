@@ -27,7 +27,7 @@ namespace TonNurako.Widgets {
         /// <summary>
         /// XToolkitのWidgetを取得 (あぶない)
         /// </summary>
-        Native.WidgetHandle NativeHandle {get; set;}
+        Native.NativeWidget Handle {get; set;}
 
         /// <summary>
         /// このWidget、生きてますか？
@@ -214,14 +214,14 @@ namespace TonNurako.Widgets {
     public class ﾄﾝﾇﾗｼﾞｪｯﾄ : IWidget
     {
         private ﾄﾝﾇﾗｼﾞｪｯﾄ(IntPtr _WdgRef) {
-            NativeHandle = new Native.WidgetHandle(_WdgRef);
+            Handle = new Native.NativeWidget(_WdgRef);
             Children = new WidgetCollection(this);
             xresource = new XResource(this);
             XServerEvent = new Events.ServerEvent(null);
         }
 
         public ﾄﾝﾇﾗｼﾞｪｯﾄ(IntPtr _WdgRef, IWidget _Parent) {
-            NativeHandle = new Native.WidgetHandle(_WdgRef);
+            Handle = new Native.NativeWidget(_WdgRef);
             Children = new WidgetCollection(this);
             xresource = new XResource(this);
             XServerEvent = new Events.ServerEvent(null);
@@ -233,7 +233,7 @@ namespace TonNurako.Widgets {
 
 
         public ﾄﾝﾇﾗｼﾞｪｯﾄ(IWidget _WdgRef) {
-            NativeHandle = new Native.WidgetHandle(_WdgRef.NativeHandle.Widget);
+            Handle = new Native.NativeWidget(_WdgRef.Handle.Widget);
             Children = new WidgetCollection(this);
             xresource = new XResource(this);
             XServerEvent = new Events.ServerEvent(null);
@@ -266,7 +266,7 @@ namespace TonNurako.Widgets {
 
         public object UserData { get; set; }
 
-        public Native.WidgetHandle  NativeHandle {
+        public Native.NativeWidget  Handle {
             get;
             set;
         }

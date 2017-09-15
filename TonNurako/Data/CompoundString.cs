@@ -328,7 +328,7 @@ namespace TonNurako.Data {
 
 
         public int Create(Widgets.IWidget widget, string text) {
-            var result = NativeMethods.TNK_CreateCompoundTextProperty(ref textProperty, widget.NativeHandle.Display, text);
+            var result = NativeMethods.TNK_CreateCompoundTextProperty(ref textProperty, widget.Handle.Display.Handle, text);
             return result;
         }
 

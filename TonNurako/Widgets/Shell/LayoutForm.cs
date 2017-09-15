@@ -60,7 +60,7 @@ namespace TonNurako.Widgets {
         /// <summary>
         /// 自身のWidgetを返す
         /// </summary>
-        public override Native.WidgetHandle NativeHandle
+        public override Native.NativeWidget Handle
         {
             get
             {

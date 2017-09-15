@@ -78,7 +78,7 @@ namespace TonNurako.Widgets.Xm
                 this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateText, parent, ToolkitResources);
             }
             if (null != remainText) {
-                NativeMethods.XmTextSetString(this.NativeHandle.Widget, remainText);
+                NativeMethods.XmTextSetString(this.Handle.Widget, remainText);
                 remainText = null;
             }
             return base.Create(parent);
@@ -213,45 +213,45 @@ namespace TonNurako.Widgets.Xm
         }
 
         public void ClearSelection() {
-            NativeMethods.XmTextClearSelection(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextClearSelection(this.Handle.Widget,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
         public void SetSelection(Range range) {
-            NativeMethods.XmTextSetSelection(this.NativeHandle.Widget,
-                range.Begin, range.End, Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextSetSelection(this.Handle.Widget,
+                range.Begin, range.End, Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public void Copy() {
-            NativeMethods.XmTextCopy(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextCopy(this.Handle.Widget,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public void CopyLink() {
-            NativeMethods.XmTextCopyLink(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextCopyLink(this.Handle.Widget,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public void Cut() {
-            NativeMethods.XmTextCut(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextCut(this.Handle.Widget,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public void DisableRedisplay() {
-            NativeMethods.XmTextDisableRedisplay(this.NativeHandle.Widget);
+            NativeMethods.XmTextDisableRedisplay(this.Handle.Widget);
         }
 
         public void EnableRedisplay() {
-            NativeMethods.XmTextEnableRedisplay(this.NativeHandle.Widget);
+            NativeMethods.XmTextEnableRedisplay(this.Handle.Widget);
         }
 
         public bool Find(string find, int offset, FindDirection direction, TextPosition pos) {
             long ret = -1;
-            bool r = NativeMethods.XmTextFindString(this.NativeHandle.Widget, (long)offset, find, direction, out ret);
+            bool r = NativeMethods.XmTextFindString(this.Handle.Widget, (long)offset, find, direction, out ret);
             if (true != r) {
                 return false;
             }
             short x, y;
-            NativeMethods.XmTextPosToXY(this.NativeHandle.Widget, ret, out x, out y);
+            NativeMethods.XmTextPosToXY(this.Handle.Widget, ret, out x, out y);
             pos.X = x;
             pos.Y = y;
             pos.Position = (int)ret;
@@ -260,41 +260,41 @@ namespace TonNurako.Widgets.Xm
 
         public int Find(string find, int offset, FindDirection direction) {
             long ret = -1;
-            bool r = NativeMethods.XmTextFindString(this.NativeHandle.Widget, (long)offset, find, direction, out ret);
+            bool r = NativeMethods.XmTextFindString(this.Handle.Widget, (long)offset, find, direction, out ret);
             if (true != r) {
                 return -1;
             }
             return (int)ret;
         }
         public int GetBaseline() {
-            return NativeMethods.XmTextGetBaseline(this.NativeHandle.Widget);
+            return NativeMethods.XmTextGetBaseline(this.Handle.Widget);
         }
 
         public int GetCenterline() {
-            return NativeMethods.XmTextGetCenterline(this.NativeHandle.Widget);
+            return NativeMethods.XmTextGetCenterline(this.Handle.Widget);
         }
 
         public bool GetEditable() {
-            return NativeMethods.XmTextGetEditable(this.NativeHandle.Widget);
+            return NativeMethods.XmTextGetEditable(this.Handle.Widget);
         }
 
         public void SetEditable(bool editable) {
-            NativeMethods.XmTextSetEditable(this.NativeHandle.Widget, editable);
+            NativeMethods.XmTextSetEditable(this.Handle.Widget, editable);
         }
 
         public int GetInsertionPosition() {
-            return (int)NativeMethods.XmTextGetInsertionPosition(this.NativeHandle.Widget);
+            return (int)NativeMethods.XmTextGetInsertionPosition(this.Handle.Widget);
         }
         public int GetLastPosition() {
-            return (int)NativeMethods.XmTextGetLastPosition(this.NativeHandle.Widget);
+            return (int)NativeMethods.XmTextGetLastPosition(this.Handle.Widget);
         }
 
         public int GetMaxLength() {
-            return (int)NativeMethods.XmTextGetMaxLength(this.NativeHandle.Widget);
+            return (int)NativeMethods.XmTextGetMaxLength(this.Handle.Widget);
         }
 
         public string GetSelection() {
-            IntPtr p = NativeMethods.XmTextGetSelection(this.NativeHandle.Widget);
+            IntPtr p = NativeMethods.XmTextGetSelection(this.Handle.Widget);
             if (IntPtr.Zero == p) {
                 return null;
             }
@@ -305,7 +305,7 @@ namespace TonNurako.Widgets.Xm
 
         public Range GetSelectionPosition() {
             long begin,  end;
-            bool r = NativeMethods.XmTextGetSelectionPosition(this.NativeHandle.Widget, out begin, out end);
+            bool r = NativeMethods.XmTextGetSelectionPosition(this.Handle.Widget, out begin, out end);
             if (true != r) {
                 return null;
             }
@@ -313,54 +313,54 @@ namespace TonNurako.Widgets.Xm
         }
 
         public int GetTopCharacter() {
-            return (int)NativeMethods.XmTextGetTopCharacter(this.NativeHandle.Widget);
+            return (int)NativeMethods.XmTextGetTopCharacter(this.Handle.Widget);
         }
 
         public void SetTopCharacter(int ch) {
-            NativeMethods.XmTextSetTopCharacter(this.NativeHandle.Widget, ch);
+            NativeMethods.XmTextSetTopCharacter(this.Handle.Widget, ch);
         }
 
         public void Insert(string text, int offset) {
-            NativeMethods.XmTextInsert(this.NativeHandle.Widget, (long)offset, text);
+            NativeMethods.XmTextInsert(this.Handle.Widget, (long)offset, text);
         }
 
         public bool Paste() {
-            return NativeMethods.XmTextPaste(this.NativeHandle.Widget);
+            return NativeMethods.XmTextPaste(this.Handle.Widget);
         }
         public bool PasteLink() {
-            return NativeMethods.XmTextPasteLink(this.NativeHandle.Widget);
+            return NativeMethods.XmTextPasteLink(this.Handle.Widget);
         }
 
         public bool Remove() {
-            return NativeMethods.XmTextRemove(this.NativeHandle.Widget);
+            return NativeMethods.XmTextRemove(this.Handle.Widget);
         }
 
         public void Replace(Range range, string replace) {
-            NativeMethods.XmTextReplace(this.NativeHandle.Widget, range.Begin, range.End, replace);
+            NativeMethods.XmTextReplace(this.Handle.Widget, range.Begin, range.End, replace);
         }
 
         public void Scroll(int line) {
-            NativeMethods.XmTextScroll(this.NativeHandle.Widget, line);
+            NativeMethods.XmTextScroll(this.Handle.Widget, line);
         }
 
         public void SetAddMode(bool mode) {
-            NativeMethods.XmTextSetAddMode(this.NativeHandle.Widget, mode);
+            NativeMethods.XmTextSetAddMode(this.Handle.Widget, mode);
         }
 
         public void SetHighlight(Range range, HighlightMode mode) {
-            NativeMethods.XmTextSetHighlight(this.NativeHandle.Widget, range.Begin, range.End, mode);
+            NativeMethods.XmTextSetHighlight(this.Handle.Widget, range.Begin, range.End, mode);
         }
 
         public void SetInsertionPosition(TextPosition pos) {
-            NativeMethods.XmTextSetInsertionPosition(this.NativeHandle.Widget, pos.Position);
+            NativeMethods.XmTextSetInsertionPosition(this.Handle.Widget, pos.Position);
         }
 
         public void SetMaxLength(int max) {
-            NativeMethods.XmTextSetMaxLength(this.NativeHandle.Widget, max);
+            NativeMethods.XmTextSetMaxLength(this.Handle.Widget, max);
         }
 
         public void ShowPosition(int pos) {
-            NativeMethods.XmTextShowPosition(this.NativeHandle.Widget, pos);
+            NativeMethods.XmTextShowPosition(this.Handle.Widget, pos);
         }
 
 		#region ﾌﾟﾛﾊﾟﾃｨ
@@ -374,7 +374,7 @@ namespace TonNurako.Widgets.Xm
 				if( ! IsAvailable ) {
                     return "";
                 }
-                IntPtr pStr = NativeMethods.XmTextGetString(this.NativeHandle.Widget);
+                IntPtr pStr = NativeMethods.XmTextGetString(this.Handle.Widget);
                 string r = Marshal.PtrToStringAnsi(pStr);
                 Native.Xt.XtSports.XtFree(pStr);
 				return r;
@@ -385,7 +385,7 @@ namespace TonNurako.Widgets.Xm
                     remainText = value; // 控えに送る
                     return;
                 }
-                NativeMethods.XmTextSetString(this.NativeHandle.Widget, value );
+                NativeMethods.XmTextSetString(this.Handle.Widget, value );
 			}
 		}
         #endregion

@@ -33,7 +33,7 @@ namespace TonNurako {
         private Dictionary<Guid, IShell> shellWidgetList;
 
         // ｳｲｼﾞｪｯﾄ解決ﾃーﾌﾞﾙ(ｺーﾙﾊﾞｯｸとかね)
-        private Dictionary<Native.WidgetHandle, IWidget> widgetResolutionTable;
+        private Dictionary<Native.NativeWidget, IWidget> widgetResolutionTable;
 
         // ﾄﾝﾇﾗｺﾝﾃｷｽﾄ
         public ExtremeSports.TnkAppContext NativeContext;
@@ -70,7 +70,7 @@ namespace TonNurako {
             eventTable = new TnkEvents<Events.TonNuraEventId, Events.TnkEventArgs>();
             Name = "";
             fallbackResource = new Dictionary<string, string>();
-            widgetResolutionTable = new Dictionary<Native.WidgetHandle, IWidget>(new Native.WidgetHandleComparer());
+            widgetResolutionTable = new Dictionary<Native.NativeWidget, IWidget>(new Native.NativeWidgetComparer());
         }
 
         /// <summary>
@@ -161,11 +161,11 @@ namespace TonNurako {
         /// <param name="widget">追加するｳｲｼﾞｪｯﾄ</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void RegisterWidget(IWidget widget) {
-            if (null == widget.NativeHandle) {
+            if (null == widget.Handle) {
                 return;
             }
-            if(! widgetResolutionTable.ContainsKey(widget.NativeHandle)) {
-                widgetResolutionTable.Add(widget.NativeHandle, widget);
+            if(! widgetResolutionTable.ContainsKey(widget.Handle)) {
+                widgetResolutionTable.Add(widget.Handle, widget);
             }
         }
 
@@ -180,7 +180,7 @@ namespace TonNurako {
                 throw new NullReferenceException("Null Widget");
             }
             IWidget widget;
-            if (widgetResolutionTable.TryGetValue(new Native.WidgetHandle(handle), out widget)) {
+            if (widgetResolutionTable.TryGetValue(new Native.NativeWidget(handle), out widget)) {
                 return widget;
             }
             throw new Exception($"Widget Not Found <{handle}>");
@@ -193,12 +193,12 @@ namespace TonNurako {
 		/// <param name="widget">ｳｲｼﾞｪｯﾄ</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UnregisterWidget(IWidget widget) {
-            if ((null == widget.NativeHandle)
-                || (! widgetResolutionTable.ContainsKey(widget.NativeHandle)))
+            if ((null == widget.Handle)
+                || (! widgetResolutionTable.ContainsKey(widget.Handle)))
             {
                 return;
             }
-            widgetResolutionTable.Remove(widget.NativeHandle);
+            widgetResolutionTable.Remove(widget.Handle);
         }
 
 		/// <summary>

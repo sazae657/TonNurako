@@ -57,7 +57,7 @@ namespace TonNurako.Widgets.Xm
         /// </summary>
         /// <returns>ｽﾃーﾄ</returns>
         public bool GetState() {
-            return NativeMethods.XmToggleButtonGetState(this.NativeHandle.Widget);
+            return NativeMethods.XmToggleButtonGetState(this.Handle.Widget);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="state">ｽﾃーﾄ</param>
         /// <param name="notify">通知有無</param>
         public void SetState(bool state, bool notify) {
-            NativeMethods.XmToggleButtonSetState(this.NativeHandle.Widget, state, notify);
+            NativeMethods.XmToggleButtonSetState(this.Handle.Widget, state, notify);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace TonNurako.Widgets.Xm
         /// <param name="state">ｽﾃーﾄ</param>
         /// <param name="notify">通知有無</param>
         public void SetState(ToggleButtonState state, bool notify) {
-            NativeMethods.XmToggleButtonSetValue(this.NativeHandle.Widget, state, notify);
+            NativeMethods.XmToggleButtonSetValue(this.Handle.Widget, state, notify);
         }
 
         #endregion

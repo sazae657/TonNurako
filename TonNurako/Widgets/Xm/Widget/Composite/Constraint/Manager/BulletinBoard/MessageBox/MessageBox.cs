@@ -57,7 +57,7 @@ namespace TonNurako.Widgets.Xm
             internal static extern IntPtr XmMessageBoxGetChild(IntPtr widget, byte id);
         }
         internal IntPtr GetChild(ChildId id) {
-            return NativeMethods.XmMessageBoxGetChild(this.NativeHandle.Widget, (byte)id);
+            return NativeMethods.XmMessageBoxGetChild(this.Handle.Widget, (byte)id);
         }
 
 

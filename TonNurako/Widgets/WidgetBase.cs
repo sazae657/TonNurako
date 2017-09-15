@@ -19,7 +19,7 @@ namespace TonNurako.Widgets
     {
 
         //自身のｳｲｼﾞｪｯﾄ
-        internal Native.WidgetHandle selfWidget = null;
+        internal Native.NativeWidget selfWidget = null;
 
         //子ｳｲｼﾞｪｯﾄのﾘｽﾄ
         private WidgetCollection children = null;
@@ -127,7 +127,7 @@ namespace TonNurako.Widgets
             XServerEvent = new Events.ServerEvent(this);
 
             xresource = new XResource(this);
-            selfWidget = new Native.WidgetHandle(native);
+            selfWidget = new Native.NativeWidget(native);
 
             resourceRef = new Dictionary<object, IDisposable>();
 
@@ -142,7 +142,7 @@ namespace TonNurako.Widgets
             if (widget == IntPtr.Zero) {
                 throw new Exception("Null Widget Exception!!");
             }
-            selfWidget = new Native.WidgetHandle(widget);
+            selfWidget = new Native.NativeWidget(widget);
             if (IntPtr.Zero != widget) {
                 this.Name = selfWidget.XtName;
             }
@@ -314,7 +314,7 @@ namespace TonNurako.Widgets
         /// <summary>
         /// 自身のWidgetを返す
         /// </summary>
-        public virtual Native.WidgetHandle NativeHandle
+        public virtual Native.NativeWidget Handle
         {
             get {
                 return selfWidget;

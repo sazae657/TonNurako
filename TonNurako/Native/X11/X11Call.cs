@@ -146,128 +146,128 @@ namespace TonNurako.Native.X11
             return NativeMethods.RootWindowOfScreen(screen);
 		}
 
-		public static IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, ref XGCValues values) {
-            return NativeMethods.XCreateGC(display,d,valuemask,ref values);
+		public static IntPtr XCreateGC(Display display, IntPtr d, GCMask valuemask, ref XGCValues values) {
+            return NativeMethods.XCreateGC(display.Handle,d,valuemask,ref values);
         }
         
-        public static IntPtr XCreateGC(IntPtr display, IntPtr d) {
-            return NativeMethods.XCreateGC(display, d, 0, IntPtr.Zero);
+        public static IntPtr XCreateGC(Display display, IntPtr d) {
+            return NativeMethods.XCreateGC(display.Handle, d, 0, IntPtr.Zero);
         }        
 
-        public static int XFreeGC(IntPtr display, IntPtr gc) {
-            return NativeMethods.XFreeGC(display,gc);
+        public static int XFreeGC(Display display, IntPtr gc) {
+            return NativeMethods.XFreeGC(display.Handle, gc);
         }
 
-        public static int XGetGCValues(IntPtr display, IntPtr gc, GCMask valuemask, out XGCValues values_return) {
-            return NativeMethods.XGetGCValues(display, gc, valuemask, out values_return);
+        public static int XGetGCValues(Display display, IntPtr gc, GCMask valuemask, out XGCValues values_return) {
+            return NativeMethods.XGetGCValues(display.Handle, gc, valuemask, out values_return);
         }
 
-        public static IntPtr XCreatePixmap(IntPtr display, IntPtr d, uint width, uint height, uint depth) {
-            return NativeMethods.XCreatePixmap(display,d,width,height,depth);
+        public static IntPtr XCreatePixmap(Display display, IntPtr d, uint width, uint height, uint depth) {
+            return NativeMethods.XCreatePixmap(display.Handle, d,width,height,depth);
         }
 
-        public static int XFreePixmap(IntPtr display, IntPtr pixmap) {
-            return NativeMethods.XFreePixmap(display,pixmap);
+        public static int XFreePixmap(Display display, IntPtr pixmap) {
+            return NativeMethods.XFreePixmap(display.Handle, pixmap);
         }
 
-        public static int XSetForeground(IntPtr display, IntPtr gc, ulong foreground) {
-            return NativeMethods.XSetForeground(display,gc,foreground);
+        public static int XSetForeground(Display display, IntPtr gc, ulong foreground) {
+            return NativeMethods.XSetForeground(display.Handle, gc,foreground);
         }
 
-        public static int XSetBackground(IntPtr display, IntPtr gc, ulong background) {
-            return NativeMethods.XSetBackground(display,gc,background);
+        public static int XSetBackground(Display display, IntPtr gc, ulong background) {
+            return NativeMethods.XSetBackground(display.Handle, gc,background);
         }
 
-        public static int XCopyPlane(IntPtr display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y, uint width, uint height, int dest_x, int dest_y, ulong plane) {
-            return NativeMethods.XCopyPlane(display,src,dest,gc,src_x,src_y,width,height,dest_x,dest_y,plane);
+        public static int XCopyPlane(Display display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y, uint width, uint height, int dest_x, int dest_y, ulong plane) {
+            return NativeMethods.XCopyPlane(display.Handle, src,dest,gc,src_x,src_y,width,height,dest_x,dest_y,plane);
         }
 
-        public static int XCopyArea(IntPtr display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y, uint width, uint height, int dest_x, int dest_y) {
-            return NativeMethods.XCopyArea(display,src,dest,gc,src_x,src_y,width,height,dest_x,dest_y);
+        public static int XCopyArea(Display display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y, uint width, uint height, int dest_x, int dest_y) {
+            return NativeMethods.XCopyArea(display.Handle, src,dest,gc,src_x,src_y,width,height,dest_x,dest_y);
         }
 
-        public static int XClearWindow(IntPtr display, IntPtr w) {
-            return NativeMethods.XClearWindow(display,w);
+        public static int XClearWindow(Display display, IntPtr w) {
+            return NativeMethods.XClearWindow(display.Handle, w);
         }
 
-        public static int XClearArea(IntPtr display, IntPtr w, int x, int y, uint width, uint height, [MarshalAs(UnmanagedType.U1)] bool exposures) {
-            return NativeMethods.XClearArea(display,w,x,y,width,height,exposures);
+        public static int XClearArea(Display display, IntPtr w, int x, int y, uint width, uint height, [MarshalAs(UnmanagedType.U1)] bool exposures) {
+            return NativeMethods.XClearArea(display.Handle, w,x,y,width,height,exposures);
         }
 
-        public static int XDrawPoint(IntPtr display, IntPtr d, IntPtr gc, int x, int y) {
-            return NativeMethods.XDrawPoint(display,d,gc,x,y);
+        public static int XDrawPoint(Display display, IntPtr d, IntPtr gc, int x, int y) {
+            return NativeMethods.XDrawPoint(display.Handle, d,gc,x,y);
         }
 
-        public static int XDrawPoints(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode) {
-            return NativeMethods.XDrawPoints(display,d,gc,points,npoints,mode);
+        public static int XDrawPoints(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode) {
+            return NativeMethods.XDrawPoints(display.Handle, d,gc,points,npoints,mode);
         }
 
-        public static int XDrawLine(IntPtr display, IntPtr d, IntPtr gc, int x1, int y1, int x2, int y2) {
-            return NativeMethods.XDrawLine(display,d,gc,x1,y1,x2,y2);
+        public static int XDrawLine(Display display, IntPtr d, IntPtr gc, int x1, int y1, int x2, int y2) {
+            return NativeMethods.XDrawLine(display.Handle, d,gc,x1,y1,x2,y2);
         }
 
-        public static int XDrawLines(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode) {
-            return NativeMethods.XDrawLines(display,d,gc,points,npoints,mode);
-        }
-
-
-        public static int XDrawSegments(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XSegment [] segments, int nsegments) {
-            return NativeMethods.XDrawSegments(display,d,gc,segments,nsegments);
+        public static int XDrawLines(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode) {
+            return NativeMethods.XDrawLines(display.Handle, d,gc,points,npoints,mode);
         }
 
 
-        public static int XDrawRectangle(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height) {
-            return NativeMethods.XDrawRectangle(display,d,gc,x,y,width,height);
+        public static int XDrawSegments(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XSegment [] segments, int nsegments) {
+            return NativeMethods.XDrawSegments(display.Handle, d,gc,segments,nsegments);
         }
 
 
-        public static int XDrawRectangles(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles) {
-            return NativeMethods.XDrawRectangles(display,d,gc,rectangles,nrectangles);
+        public static int XDrawRectangle(Display display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height) {
+            return NativeMethods.XDrawRectangle(display.Handle, d,gc,x,y,width,height);
         }
 
 
-        public static int XFillRectangle(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height) {
-            return NativeMethods.XFillRectangle(display,d,gc,x,y,width,height);
+        public static int XDrawRectangles(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles) {
+            return NativeMethods.XDrawRectangles(display.Handle, d,gc,rectangles,nrectangles);
         }
 
 
-        public static int XFillRectangles(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles) {
-            return NativeMethods.XFillRectangles(display,d,gc,rectangles,nrectangles);
+        public static int XFillRectangle(Display display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height) {
+            return NativeMethods.XFillRectangle(display.Handle, d,gc,x,y,width,height);
         }
 
 
-        public static int XFillPolygon(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int shape, int mode) {
-            return NativeMethods.XFillPolygon(display,d,gc,points,npoints,shape,mode);
+        public static int XFillRectangles(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles) {
+            return NativeMethods.XFillRectangles(display.Handle, d,gc,rectangles,nrectangles);
         }
 
 
-        public static int XFillArc(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height, int angle1, int angle2) {
-            return NativeMethods.XFillArc(display,d,gc,x,y,width,height,angle1,angle2);
+        public static int XFillPolygon(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int shape, int mode) {
+            return NativeMethods.XFillPolygon(display.Handle, d,gc,points,npoints,shape,mode);
         }
 
 
-        public static int XFillArcs(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs) {
-            return NativeMethods.XFillArcs(display,d,gc,arcs,narcs);
+        public static int XFillArc(Display display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height, int angle1, int angle2) {
+            return NativeMethods.XFillArc(display.Handle, d,gc,x,y,width,height,angle1,angle2);
         }
 
 
-        public static int XDrawArc(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height, int angle1, int angle2) {
-            return NativeMethods.XDrawArc(display,d,gc,x,y,width,height,angle1,angle2);
+        public static int XFillArcs(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs) {
+            return NativeMethods.XFillArcs(display.Handle, d,gc,arcs,narcs);
         }
 
 
-        public static int XDrawArcs(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs) {
-            return NativeMethods.XDrawArcs(display,d,gc,arcs,narcs);
+        public static int XDrawArc(Display display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height, int angle1, int angle2) {
+            return NativeMethods.XDrawArc(display.Handle, d,gc,x,y,width,height,angle1,angle2);
         }
 
 
-        public static int XSetLineAttributes(IntPtr display, IntPtr gc, uint line_width, int line_style, int cap_style, int join_style) {
-            return NativeMethods.XSetLineAttributes(display,gc,line_width,line_style,cap_style,join_style);
+        public static int XDrawArcs(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs) {
+            return NativeMethods.XDrawArcs(display.Handle, d,gc,arcs,narcs);
         }
 
 
-        public static int XSetDashes(IntPtr display, IntPtr gc, int dash_offset, string dash_list, int n) {
-            return NativeMethods.XSetDashes(display,gc,dash_offset,dash_list,n);
+        public static int XSetLineAttributes(Display display, IntPtr gc, uint line_width, int line_style, int cap_style, int join_style) {
+            return NativeMethods.XSetLineAttributes(display.Handle, gc,line_width,line_style,cap_style,join_style);
+        }
+
+
+        public static int XSetDashes(Display display, IntPtr gc, int dash_offset, string dash_list, int n) {
+            return NativeMethods.XSetDashes(display.Handle,gc,dash_offset,dash_list,n);
         }
 
        /* たぶんやらない

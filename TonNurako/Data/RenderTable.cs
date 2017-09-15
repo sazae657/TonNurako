@@ -51,7 +51,7 @@ namespace TonNurako.Data
         private bool isReference = false;
 
         public RenderTable(Widgets.IWidget widget, string property) {
-            handle = NativeMethods.XmRenderTableCvtFromProp(widget.NativeHandle.Widget, property, (uint)property.Length);
+            handle = NativeMethods.XmRenderTableCvtFromProp(widget.Handle.Widget, property, (uint)property.Length);
         }
 
         public RenderTable(Rendition[] renditions) {
