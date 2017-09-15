@@ -50,12 +50,19 @@ namespace TonNurako.Native {
         }
 
         /// <summary>
+        /// RootWindowOfScreen
+        /// </summary>
+        /// <returns>RootWindowOfScreen</returns>
+        public IntPtr RootWindowOfScreen =>
+            X11.X11Sports.RootWindowOfScreen(Native.Xt.XtSports.XtScreen(Widget));
+
+
+        /// <summary>
         /// Screen
         /// </summary>
         /// <returns>Screen</returns>
-        public IntPtr Screen {
-            get { return Native.Xt.XtSports.XtScreen(Widget);}
-        }
+        public IntPtr Screen =>
+            Native.Xt.XtSports.XtScreen(Widget);
 
         /// <summary>
         /// Name

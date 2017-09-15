@@ -64,9 +64,9 @@ namespace TonNurako.GC
 
 			//Window取得
 			IntPtr window = w.NativeHandle.Window;
-            
+
 			System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.NativeHandle.Widget:x}> width={width} height={height} depth={depth}");
-            
+
 			drawable.Target =
                 X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
             System.Diagnostics.Debug.WriteLine($"Pixmap {drawable.Target}");
@@ -90,7 +90,7 @@ namespace TonNurako.GC
 			drawable.Display = display;
 
 			System.Diagnostics.Debug.WriteLine($"Pixmap(N) window=<0x{window:x}> display=<0x{display:x}> width={width} height={height} depth={depth}");
-            
+
 			drawable.Target =
                 X11Sports.XCreatePixmap(drawable.Display, window, (uint)width, (uint)height, (uint)depth);
             System.Diagnostics.Debug.WriteLine($"Pixmap(N) <{drawable.Target}>");
@@ -193,7 +193,8 @@ namespace TonNurako.GC
         /// <param name="path">ﾌｧｲﾙ</param>
         /// <returns></returns>
         public static Pixmap FromXImageEx(Widgets.IWidget w, XImage image) {
-            var pm = new Pixmap(XtSports.XtDisplay(w), X11Sports.RootWindowOfScreen(XtSports.XtScreen(w)), image.Width, image.Height, image.Depth);
+            var pm = new Pixmap(w.NativeHandle.Window,
+                w.NativeHandle.RootWindowOfScreen, image.Width, image.Height, image.Depth);
             using (GraphicsContext gc = new GraphicsContext(pm)) {
                 gc.PutImage(image);
             }
