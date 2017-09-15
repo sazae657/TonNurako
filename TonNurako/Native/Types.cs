@@ -22,9 +22,9 @@ namespace TonNurako.Native {
             }
             Widget = ptr;
 
-            Display = new X11.Display(Native.Xt.XtSports.XtDisplay(ptr));
-            Window = new X11.Window(Native.Xt.XtSports.XtWindow(ptr));
-            Screen = new X11.Screen(Native.Xt.XtSports.XtScreen(ptr));
+            //Display = new X11.Display(Native.Xt.XtSports.XtDisplay(ptr));
+            //Window = new X11.Window(Native.Xt.XtSports.XtWindow(ptr));
+            //Screen = new X11.Screen(Native.Xt.XtSports.XtScreen(ptr));
 
             Hash = ptr.ToInt64().ToString().GetHashCode();
         }
@@ -41,13 +41,13 @@ namespace TonNurako.Native {
         /// Display
         /// </summary>
         /// <returns>Display</returns>
-        public X11.Display Display { get; }
+        public X11.Display Display => new X11.Display(Native.Xt.XtSports.XtDisplay(Widget));
 
         /// <summary>
         /// Window
         /// </summary>
         /// <returns>Window</returns>
-        public X11.Window Window { get; }
+        public X11.Window Window => new X11.Window(Native.Xt.XtSports.XtWindow(Widget));
         
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace TonNurako.Native {
         /// Screen
         /// </summary>
         /// <returns>Screen</returns>
-        public X11.Screen Screen { get; }
+        public X11.Screen Screen => new X11.Screen(Native.Xt.XtSports.XtScreen(Widget));
 
         /// <summary>
         /// Name
