@@ -32,11 +32,15 @@ namespace TonNurako.Native.X11 {
         public Display() {
         }
 
-        Widgets.IWidget widget;
+        Widget widget;
         IntPtr display;
 
-        public Display(Widgets.IWidget window) {
+        public Display(Widget window) {
             widget = window;
+        }
+
+        public Display(Widgets.IWidget window) {
+            widget = window.Handle.Widget;
         }
 
         public Display(IntPtr dpy) {
@@ -44,18 +48,22 @@ namespace TonNurako.Native.X11 {
         }
 
         public IntPtr Handle =>
-            (widget != null) ? Native.Xt.XtSports.XtDisplay(widget.Handle.Widget.Handle) : display;
+            (widget != null) ? Native.Xt.XtSports.XtDisplay(widget.Handle) : display;
     }
 
 
     public class Screen : X11Interop {
 
-        Widgets.IWidget widget;
+        Widget widget;
         IntPtr screen;
 
-        public Screen(Widgets.IWidget widget) {
+        public Screen(Widget widget) {
             this.widget = widget;
             
+        }
+
+        public Screen(Widgets.IWidget window) {
+            widget = window.Handle.Widget;
         }
 
         public Screen(IntPtr window) {
@@ -63,17 +71,21 @@ namespace TonNurako.Native.X11 {
         }
 
         public IntPtr Handle =>
-            (widget != null) ? Native.Xt.XtSports.XtScreen(widget.Handle.Widget.Handle) : screen;
+            (widget != null) ? Native.Xt.XtSports.XtScreen(widget.Handle) : screen;
 
     }
 
     public class Window : X11Interop {
 
-        Widgets.IWidget widget;
+        Widget widget;
         IntPtr window;
 
-        public Window(Widgets.IWidget widget) {
+        public Window(Widget widget) {
             this.widget = widget;
+        }
+
+        public Window(Widgets.IWidget window) {
+            widget = window.Handle.Widget;
         }
 
         public Window(IntPtr window) {
@@ -81,7 +93,7 @@ namespace TonNurako.Native.X11 {
         }
 
         public IntPtr Handle =>
-            (widget != null) ? Native.Xt.XtSports.XtWindow(widget.Handle.Widget.Handle) : window;
+            (widget != null) ? Native.Xt.XtSports.XtWindow(widget.Handle) : window;
 
 
     }
