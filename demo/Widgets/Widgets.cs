@@ -77,7 +77,7 @@ namespace Widgets {
             SetWidget(new PushButton(), false);
 
             this.RealizedEvent += (sender,ev) => {
-                this.IconPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);
+                this.IconPixmap = TonNurako.GC.Pixmap.FromXpm(this, Properties.Resources.icon_xpm);
             };
         }
 
@@ -259,7 +259,7 @@ namespace Widgets {
                          d.Items.Help.Visible = false;
                      };
                      d.WidgetManagedEvent += (x, y) => {
-                        d.SymbolPixmap = TonNurako.GC.Pixmap.FromBuffer(this, Properties.Resources.icon_xpm);
+                        d.SymbolPixmap = TonNurako.GC.Pixmap.FromXpm(this, Properties.Resources.icon_xpm);
                      };
                      StringBuilder str = new StringBuilder();
                      foreach (var asp in AppDomain.CurrentDomain.GetAssemblies()) {
@@ -840,7 +840,7 @@ namespace Widgets {
                     var path = fsb.DirSpec;
                     if (System.IO.File.Exists(path)) {
                         try {
-                            var pixmap = TonNurako.GC.Pixmap.FromFile(this.Layout, path);
+                            var pixmap = TonNurako.GC.Pixmap.FromXpm(this.Layout, path);
                             war.info.SetValue(war.instance, pixmap, null);
                             cb.LabelString = fsb.TextString;
                         }

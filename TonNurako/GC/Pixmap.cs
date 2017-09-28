@@ -4,11 +4,55 @@
 // GC
 //
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TonNurako.Native.X11;
 using TonNurako.Native.Xt;
+
 namespace TonNurako.GC
 {
+    /// <summary>
+    /// XPM用の原色実装
+    /// </summary>
+    public class X11ColorResolver :
+        TonNurako.XImageFormat.I原色 {
+
+        public X11ColorResolver(Widgets.IWidget widget) {
+            Widget = widget;
+            colorMap = new Dictionary<string, XImageFormat.Xi.ぉ>();
+        }
+
+        public X11ColorResolver(Widgets.IWidget widget, XImageFormat.Xi.ぉ bg, XImageFormat.Xi.ぉ fg) {
+            Widget = widget;
+            colorMap = new Dictionary<string, XImageFormat.Xi.ぉ>();
+        }
+
+        Dictionary<string, XImageFormat.Xi.ぉ> colorMap;
+
+        Widgets.IWidget Widget;
+
+        XImageFormat.Xi.ぉ 
+            XImageFormat.I原色.Black => Lookup(XImageFormat.Xi.ColorFormat.Name, "black");
+
+        XImageFormat.Xi.ぉ 
+            XImageFormat.I原色.White => Lookup(XImageFormat.Xi.ColorFormat.Name, "white");
+
+        XImageFormat.Xi.ぉ 
+            XImageFormat.I原色.None => Lookup(XImageFormat.Xi.ColorFormat.Name, "none");
+
+        public TonNurako.XImageFormat.Xi.ぉ Lookup(XImageFormat.Xi.ColorFormat fmt, string color) {
+            var key = color.ToLower();
+            if (colorMap.ContainsKey(key)) {
+                return colorMap[key];
+            }
+            var c = Data.Color.FromName(Widget, color);
+
+            var k = new XImageFormat.Xi.ぉ(c.R, c.G, c.B);
+            colorMap.Add(key, k);
+            return k;
+        }
+    }
+
     /// <summary>
     /// Pixmap
     /// </summary>
@@ -29,8 +73,9 @@ namespace TonNurako.GC
         internal TNK_PIXMAX PixMax = new TNK_PIXMAX();
         Drawable drawable = null;
 
-        internal static class NativeMethods {
 
+        internal static class NativeMethods {
+#if TNK_USE_LIBXPM
             [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_LoadPixmapFromBuffer", CharSet=CharSet.Auto)]
             internal static extern int TNK_LoadPixmapFromBuffer(
                         IntPtr display,
@@ -41,8 +86,10 @@ namespace TonNurako.GC
 
             [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_FreePixmapBuffer", CharSet=CharSet.Auto)]
             internal static extern void TNK_FreePixmapBuffer([In,Out]ref TNK_PIXMAX pixmax);
+#endif
 
         }
+
 
         internal Pixmap() {
             drawable = new Drawable();
@@ -103,7 +150,7 @@ namespace TonNurako.GC
 
 
         /// <summary>
-        /// ﾌｧｲﾙから生成
+        /// ﾌｧｲﾙから生成(Motif)
         /// </summary>
         /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
         /// <param name="path">ﾌｧｲﾙ</param>
@@ -123,7 +170,7 @@ namespace TonNurako.GC
         }
 
         /// <summary>
-        /// ﾌｧｲﾙから生成
+        /// ﾌｧｲﾙから生成(Motif)
         /// </summary>
         /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
         /// <param name="path">ﾌｧｲﾙ</param>
@@ -149,12 +196,27 @@ namespace TonNurako.GC
         /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
         /// <param name="buffer">ﾊﾞｯﾌｧー</param>
         /// <returns></returns>
-        public static Pixmap FromBuffer(Widgets.IWidget w, byte[] buffer) {
-            Pixmap pm = new Pixmap();
-            pm.drawable.Display = new Display(w);
-            pm.drawable.Screen = new Screen(w);
-            pm.PixMax = new TNK_PIXMAX();
+        public static Pixmap FromXpm(Widgets.IWidget w, byte[] buffer) {
+            var loader = new XImageFormat.XpmLoader(new X11ColorResolver(w));
+            XImageFormat.Xpm 画像 = null;
+            using (var ms = new System.IO.MemoryStream(buffer)) {
+                画像 = loader.Load(ms);
+            }
 
+            var buf = 画像.Toぉ();
+            var mp = XImageFormat.Xi.おやさい.原色配列に変換(
+                    XImageFormat.Xi.ぉ.画素.B,
+                    XImageFormat.Xi.ぉ.画素.G,
+                    XImageFormat.Xi.ぉ.画素.R,
+                    XImageFormat.Xi.ぉ.画素.A, ref buf);
+            TonNurako.GC.Pixmap pixmap = null;
+            using (
+                var img = TonNurako.GC.XImage.FromBuffer(w, mp, 画像.Width, 画像.Height, 24, 32)) {
+                pixmap = TonNurako.GC.Pixmap.FromXImageEx(w, img);
+            }
+            return pixmap;
+
+#if TNK_USE_LIBXPM
             IntPtr buf = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buffer.Length+1));
             Marshal.Copy(buffer, 0, buf, buffer.Length);
 	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display.Handle, w.Handle.Widget.Handle, ref pm.PixMax, buf);
@@ -168,8 +230,34 @@ namespace TonNurako.GC
             pm.DestroyPixmapFunc = () => {
                 NativeMethods.TNK_FreePixmapBuffer(ref pm.PixMax);
             };
+#endif
+        }
 
-            return pm;
+        /// <summary>
+        /// ﾌｧｲﾙから生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="buffer">ﾊﾞｯﾌｧー</param>
+        /// <returns></returns>
+        public static Pixmap FromXpm(Widgets.IWidget w, string path) {
+            var loader = new XImageFormat.XpmLoader(new X11ColorResolver(w));
+            XImageFormat.Xpm 画像 = null;
+            using (var ms = new System.IO.FileStream(path, System.IO.FileMode.Open)) {
+                画像 = loader.Load(ms);
+            }
+
+            var buf = 画像.Toぉ();
+            var mp = XImageFormat.Xi.おやさい.原色配列に変換(
+                    XImageFormat.Xi.ぉ.画素.B,
+                    XImageFormat.Xi.ぉ.画素.G,
+                    XImageFormat.Xi.ぉ.画素.R,
+                    XImageFormat.Xi.ぉ.画素.A, ref buf);
+            TonNurako.GC.Pixmap pixmap = null;
+            using (
+                var img = TonNurako.GC.XImage.FromBuffer(w, mp, 画像.Width, 画像.Height, 24, 32)) {
+                pixmap = TonNurako.GC.Pixmap.FromXImageEx(w, img);
+            }
+            return pixmap;
         }
 
         /// <summary>
@@ -224,7 +312,7 @@ namespace TonNurako.GC
             }
         }
 
-        #region IDisposable
+#region IDisposable
 
         public void Dispose()
         {
@@ -247,6 +335,6 @@ namespace TonNurako.GC
                 drawable.Screen = null;
             }
         }
-        #endregion
+#endregion
     }
 }
