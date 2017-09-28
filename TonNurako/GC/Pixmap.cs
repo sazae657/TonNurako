@@ -62,6 +62,7 @@ namespace TonNurako.GC
 
         internal SysDestroyPixmap DestroyPixmapFunc = null;
 
+#if TNK_USE_LIBXPM
         [StructLayout(LayoutKind.Sequential)]
         internal struct TNK_PIXMAX
         {
@@ -71,6 +72,7 @@ namespace TonNurako.GC
             public IntPtr attr;
         };
         internal TNK_PIXMAX PixMax = new TNK_PIXMAX();
+#endif
         Drawable drawable = null;
 
 
