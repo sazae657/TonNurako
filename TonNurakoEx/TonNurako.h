@@ -16,7 +16,9 @@
 #include <Xm/Outline.h>
 #include <Xm/Tree.h>
 #include <X11/Xmu/Editres.h>
+#if defined(TNK_USE_LIBXPM)
 #include <X11/xpm.h>
+#endif
 #include <X11/Intrinsic.h>
 
 #define TONNURAKO_EX_MAJOR_VERSION 1
@@ -72,6 +74,7 @@ tagTNK_CODE {
 /*----------------------------------------------------------------------------
 "C"ｽﾀｲﾙのﾀﾞｻい関数群
 -----------------------------------------------------------------------------*/
+#if defined(TNK_USE_LIBXPM)
 typedef struct
 tagTNK_PIXMAX
 {
@@ -80,6 +83,7 @@ tagTNK_PIXMAX
     Pixmap mask;
     XpmAttributes* attr;
 }TNK_PIXMAX;
+#endif
 
 //AppContext周りの情報を格納する
 typedef struct

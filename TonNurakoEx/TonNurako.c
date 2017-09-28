@@ -179,7 +179,7 @@ dumpbin(const void* p, size_t len, const char* fs)
     fclose(fp);
 }
 
-
+#if defined(TNK_USE_LIBXPM)
 //
 // Pixmap
 //
@@ -215,6 +215,7 @@ TNK_FreePixmapBuffer(TNK_PIXMAX* pix) {
         pix->mask = 0L;
     }
 }
+#endif
 
 TNK_EXPORT int
 TNK_CreateCompoundTextProperty(XTextProperty* tprop, Display* display, String text) {
