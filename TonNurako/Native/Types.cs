@@ -11,17 +11,21 @@ namespace TonNurako.Native {
     /// <summary>
     /// ﾈーﾁﾌﾞなﾊﾝﾄﾞﾙへのｱｸｾｯｻー
     /// </summary>
-    public class WidgetHandle
-    {
+    public class NativeWidget {
         /// <summary>
         /// ｺﾝｽﾄﾗｸﾀー
         /// </summary>
         /// <param name="ptr">Widget</param>
-        public WidgetHandle(System.IntPtr ptr) {
+        public NativeWidget(System.IntPtr ptr) {
             if (IntPtr.Zero == ptr) {
                 throw new NullReferenceException("Null Widget!!");
             }
-            Widget = ptr;
+            Widget = new X11.Widget(ptr);
+
+            Display = new X11.Display(Widget);
+            Window = new X11.Window(Widget);
+            Screen = new X11.Screen(Widget);
+
             Hash = ptr.ToInt64().ToString().GetHashCode();
         }
 
@@ -29,7 +33,7 @@ namespace TonNurako.Native {
         /// Widget
         /// </summary>
         /// <returns>Widget</returns>
-        public IntPtr Widget {
+        public X11.Widget Widget {
             get;
         }
 
@@ -37,43 +41,42 @@ namespace TonNurako.Native {
         /// Display
         /// </summary>
         /// <returns>Display</returns>
-        public IntPtr Display {
-            get { return Native.Xt.XtSports.XtDisplay(Widget);}
-        }
+        public X11.Display Display { get; }
 
         /// <summary>
         /// Window
         /// </summary>
         /// <returns>Window</returns>
-        public IntPtr Window {
-            get { return Native.Xt.XtSports.XtWindow(Widget);}
-        }
+        public X11.Window Window { get; }
 
         /// <summary>
         /// Screen
         /// </summary>
         /// <returns>Screen</returns>
-        public IntPtr Screen {
-            get { return Native.Xt.XtSports.XtScreen(Widget);}
-        }
+        public X11.Screen Screen { get; }
 
         /// <summary>
+        /// RootWindowOfScreen
+        /// </summary>
+        /// <returns>RootWindowOfScreen</returns>
+        public X11.Window RootWindowOfScreen => 
+            new X11.Window(TonNurako.Native.X11.X11Sports.RootWindowOfScreen(Screen.Handle));
+
+                /// <summary>
         /// Name
         /// </summary>
         /// <returns>Name</returns>
-        public string XtName {
-            get { return Native.Xt.XtSports.XtName(Widget);}
-        }
+        public string XtName =>
+            Native.Xt.XtSports.XtName(Widget.Handle);
+        
 
         /// <summary>
         /// 比較
         /// </summary>
         /// <param name="with">比較元</param>
         /// <returns>比較結果</returns>
-        public bool Equals(WidgetHandle with) {
-            return (this.Widget == with.Widget);
-        }
-
+        public bool Equals(NativeWidget with) => (this.Widget == with.Widget);
+        
         /// <summary>
         /// ﾊｯｼｭ
         /// </summary>
@@ -87,7 +90,7 @@ namespace TonNurako.Native {
     /// <summary>
     /// WidgetHandleの比較演算子
     /// </summary>
-    public class WidgetHandleComparer : IEqualityComparer<WidgetHandle>
+    public class NativeWidgetComparer : IEqualityComparer<NativeWidget>
     {
         /// <summary>
         /// Equals
@@ -95,19 +98,13 @@ namespace TonNurako.Native {
         /// <param name="x">x</param>
         /// <param name="y">y</param>
         /// <returns></returns>
-        public bool Equals(WidgetHandle x, WidgetHandle y)
-        {
-            return x.Equals(y);
-        }
-
+        public bool Equals(NativeWidget x, NativeWidget y) => x.Equals(y);
+        
         /// <summary>
         /// ﾊｯｼｭ
         /// </summary>
         /// <param name="obj">WidgetHandle</param>
         /// <returns>ﾊｯｼｭ</returns>
-        public int GetHashCode(WidgetHandle obj)
-        {
-            return obj.Hash;
-        }
+        public int GetHashCode(NativeWidget obj) => obj.Hash;
     }
 }

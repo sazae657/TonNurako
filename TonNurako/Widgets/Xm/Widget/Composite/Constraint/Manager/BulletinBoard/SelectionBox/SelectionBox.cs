@@ -67,7 +67,7 @@ namespace TonNurako.Widgets.Xm
             internal static extern IntPtr XmSelectionBoxGetChild(IntPtr widget, byte id);
         }
         internal IntPtr GetChild(ChildId id) {
-            return NativeMethods.XmSelectionBoxGetChild(this.NativeHandle.Widget, (byte)id);
+            return NativeMethods.XmSelectionBoxGetChild(this.Handle.Widget.Handle, (byte)id);
         }
 
         #region ﾌﾟﾛﾊﾟﾁー

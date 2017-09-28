@@ -55,7 +55,7 @@ namespace TonNurako.Widgets {
 			AppContext.AddShellWidget(this);
 
 			//ShellWidgetの作成
-			selfWidget = new Native.WidgetHandle(
+			selfWidget = new Native.NativeWidget(
                 ExtremeSports.XtAppCreateShell(ref m_appContext.NativeContext, this.Name, ref args, this.ToolkitResources.ToXtArg()));
             this.ToolkitResources.Clear();
 

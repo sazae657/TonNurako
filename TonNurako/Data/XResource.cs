@@ -255,10 +255,10 @@ namespace TonNurako.Data
 		/// </summary>
 		/// <param name="arg">ｾｯﾄするﾘｿーｽ</param>
 		/// <param name="val">値</param>
-		public void Add(Enum arg, Native.WidgetHandle val )
+		public void Add(Enum arg, Native.NativeWidget val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.Widget);
+			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.Widget.Handle);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -472,7 +472,7 @@ namespace TonNurako.Data
 			{
 				if( c.widget.IsAvailable )
 				{
-					this.Add( c.arg, c.widget.NativeHandle );
+					this.Add( c.arg, c.widget.Handle );
 
                     dl.Add( c );
               	}
@@ -540,7 +540,7 @@ namespace TonNurako.Data
 		/// <param name="val">取得した値を格納する領域</param>
 		public void GetValue(Enum arg, out byte val )
 		{
-			ExtremeSports.XtGetValues(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
+			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
 		}
 
 		/// <summary>
@@ -550,7 +550,7 @@ namespace TonNurako.Data
 		/// <param name="val">取得した値を格納する領域</param>
 		public void GetValue(Enum arg, out bool val )
 		{
-			ExtremeSports.XtGetValues(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
+			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
 		}
 
 		/// <summary>
@@ -560,7 +560,7 @@ namespace TonNurako.Data
 		/// <param name="val">取得した値を格納する領域</param>
 		public void GetValue(Enum arg, out int val )
 		{
-			ExtremeSports.XtGetValues(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
+			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
 		}
 
 		/// <summary>
@@ -570,18 +570,18 @@ namespace TonNurako.Data
 		/// <param name="val">取得した値を格納する領域</param>
 		public void GetValue(Enum arg, out ushort val )
 		{
-			ExtremeSports.XtGetValues(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
+			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
 		}
 
 		public void GetValue(Enum arg, out long val )
 		{
-			ExtremeSports.XtGetValues(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
+			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
 		}
 
 		public void GetValue(Enum arg, out TonNurako.Data.Color val )
 		{
             long pixel = 0;
-			ExtremeSports.XtGetValues(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), out pixel);
+			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out pixel);
 
             val = new TonNurako.Data.Color((uint)pixel);
 		}
@@ -594,7 +594,7 @@ namespace TonNurako.Data
 		{
             string ret = "";
             using(CompoundString s =
-                ExtremeSports.XtGetValuesCS(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg))) {
+                ExtremeSports.XtGetValuesCS(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg))) {
                 ret = s.String;
             }
             return ret;
@@ -605,7 +605,7 @@ namespace TonNurako.Data
 		/// </summary>
 		public string GetAnsiStringValue(Enum arg, bool callFree)
 		{
-            return ExtremeSports.XtGetValuesAS(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), callFree);
+            return ExtremeSports.XtGetValuesAS(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), callFree);
 		}
 
 		/// <summary>
@@ -614,7 +614,7 @@ namespace TonNurako.Data
 		/// <param name="arg">取得するﾘｿーｽ</param>
 		public CompoundString GetCompoundStringValue(Enum arg)
 		{
-            return ExtremeSports.XtGetValuesCS(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg));
+            return ExtremeSports.XtGetValuesCS(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg));
 		}
 
 
@@ -634,7 +634,7 @@ namespace TonNurako.Data
 		public IntPtr GetPointerValue(Enum arg)
 		{
             long ret;
-            ExtremeSports.XtGetValues(Widget.NativeHandle, ToolkitOptionAttribute.GetToolkitName(arg), out ret);
+            ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out ret);
             return (IntPtr)ret;
 		}
 

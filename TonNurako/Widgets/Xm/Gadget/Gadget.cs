@@ -45,7 +45,7 @@ namespace TonNurako.Widgets.Xm
             if (IntPtr.Zero == w) {
                 throw new Exception($"{sym.ToString()} failed");
             }
-            NativeHandle = new Native.WidgetHandle(w);
+            Handle = new Native.NativeWidget(w);
             if (null != res) {
                 res.Clear();
             }

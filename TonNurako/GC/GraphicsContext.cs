@@ -30,38 +30,35 @@ namespace TonNurako.GC
         /// <summary>
         /// ﾃﾞｽﾌﾟﾚー
         /// </summary>
-        public IntPtr Display { get; set; }
+        public Native.X11.Display Display { get; set; }
 
         /// <summary>
         /// ｽｸﾘーﾝ
         /// </summary>
-        public IntPtr Screen { get; set; }
+        public Native.X11.Screen Screen { get; set; }
 
         public Drawable() {
             Target = IntPtr.Zero;
-            Display = IntPtr.Zero;
-            Screen = IntPtr.Zero;
+            Display = null;
+            Screen = null;
         }
     }
 
-	/// <summary>
-	/// GC
-	/// </summary>
-	public class GraphicsContext : IDisposable
-	{
-		#region ｲﾝｽﾀﾝｽ変数
+    /// <summary>
+    /// GC
+    /// </summary>
+    public class GraphicsContext : IDisposable {
+        #region ｲﾝｽﾀﾝｽ変数
 
-		//作成したGCが入る
-		private IntPtr gc = IntPtr.Zero;
+        //作成したGCが入る
+        private IntPtr gc = IntPtr.Zero;
         public IntPtr GCHandle { get { return gc; } }
 
-		//Displayが入る
-		private IntPtr display = IntPtr.Zero;
-        public IntPtr DisplayHandle { get { return display; } }
+        //Displayが入る
+        public TonNurako.Native.X11.Display Display { get; private set; }
 
-		//Windowが入る
-		private IntPtr target = IntPtr.Zero;
-        public IntPtr TargetHandle { get { return target; } }
+        //Windowが入る
+        public IntPtr Target { get; private set; }
 
         private bool disposed;
 
@@ -85,8 +82,8 @@ namespace TonNurako.GC
             var gc = new GraphicsContext();
 
             gc.gc = Native.Xt.XtSports.XtGetGC(w);
-            gc.display = w.NativeHandle.Display;
-			gc.target = w.NativeHandle.Window;
+            gc.Display = w.Handle.Display;
+			gc.Target = w.Handle.Window.Handle;
             gc.DestroyGcFunc = () => {
                 //GC解放
                 if (gc.gc != IntPtr.Zero) {
@@ -105,18 +102,18 @@ namespace TonNurako.GC
 		public GraphicsContext(IDrawable w)
 		{
             disposed = false;
-            display = w.Drawable.Display;
-			target = w.Drawable.Target;
+            Display = w.Drawable.Display;
+            Target = w.Drawable.Target;
 			//
 			// 単純なGCを生成
 			// 属性は後でｾｯﾄさせる
 			//
-            gc = Native.X11.X11Sports.XCreateGC( display , target);
+            gc = Native.X11.X11Sports.XCreateGC(Display, Target);
 
             DestroyGcFunc = () => {
                 //GC解放
                 if (gc != IntPtr.Zero) {
-                    Native.X11.X11Sports.XFreeGC(display, gc);
+                    Native.X11.X11Sports.XFreeGC(Display, gc);
                     gc = IntPtr.Zero;
                     System.Diagnostics.Debug.WriteLine("GC : Dispose");
                 }
@@ -163,7 +160,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				Native.X11.X11Sports.XClearWindow(display, target );
+				Native.X11.X11Sports.XClearWindow(Display, Target );
 			}
 		}
 
@@ -171,22 +168,22 @@ namespace TonNurako.GC
             if (gc == IntPtr.Zero) {
                 return;
             }
-            Native.X11.X11Sports.XSetForeground(display, gc, color.pixel);
+            Native.X11.X11Sports.XSetForeground(Display, gc, color.pixel);
         }
 
         public void SetForeground(TonNurako.Data.Color color) {
             if (gc == IntPtr.Zero) {
                 return;
             }
-            Native.X11.X11Sports.XSetForeground(display, gc, color.Pixel);
+            Native.X11.X11Sports.XSetForeground(Display, gc, color.Pixel);
         }
 
         public void CopyArea(IDrawable dest, int x, int y, int w, int h, int dx, int dy) {
             if (gc == IntPtr.Zero) {
                 return;
             }
-            Native.X11.X11Sports.XCopyArea(display,
-                target, dest.Drawable.Target,
+            Native.X11.X11Sports.XCopyArea(Display,
+                Target, dest.Drawable.Target,
                 this.gc,
                 x, y, (uint)w, (uint)h,
                 dx, dy);
@@ -205,7 +202,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				Native.X11.X11Sports.XDrawPoint( display, target, gc, x, y );
+				Native.X11.X11Sports.XDrawPoint(Display, Target, gc, x, y );
 			}
 		}
 		/// <summary>
@@ -217,7 +214,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				Native.X11.X11Sports.XDrawPoints( display, target, gc, points, points.Length, (int)mode );
+				Native.X11.X11Sports.XDrawPoints(Display, Target, gc, points, points.Length, (int)mode );
 			}
 
 		}
@@ -233,7 +230,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawLine( display, target, gc, ax, ay, fx, fy );
+				TonNurako.Native.X11.X11Sports.XDrawLine( Display, Target, gc, ax, ay, fx, fy );
 			}
 		}
 
@@ -246,7 +243,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawLines( display, target, gc, points, points.Length, (int)mode );
+				TonNurako.Native.X11.X11Sports.XDrawLines( Display, Target, gc, points, points.Length, (int)mode );
 			}
 
 		}
@@ -262,7 +259,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawRectangle( display, target, gc, x, y, (uint)w, (uint)h );
+				TonNurako.Native.X11.X11Sports.XDrawRectangle( Display, Target, gc, x, y, (uint)w, (uint)h );
 			}
 		}
 
@@ -274,7 +271,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawRectangles( display, target, gc, rects, rects.Length );
+				TonNurako.Native.X11.X11Sports.XDrawRectangles( Display, Target, gc, rects, rects.Length );
 			}
 
 		}
@@ -290,7 +287,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillRectangle( display, target, gc, x, y, (uint)w, (uint)h );
+				TonNurako.Native.X11.X11Sports.XFillRectangle( Display, Target, gc, x, y, (uint)w, (uint)h );
 			}
 		}
 
@@ -302,7 +299,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillRectangles( display, target, gc, rects, rects.Length );
+				TonNurako.Native.X11.X11Sports.XFillRectangles( Display, Target, gc, rects, rects.Length );
 			}
 
 		}
@@ -320,7 +317,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawArc( display, target, gc,
+				TonNurako.Native.X11.X11Sports.XDrawArc( Display, Target, gc,
 					x, y, (uint)w, (uint)h, startAngle, sweepAngle );
 			}
 		}
@@ -333,7 +330,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XDrawArcs( display, target, gc,
+				TonNurako.Native.X11.X11Sports.XDrawArcs( Display, Target, gc,
 					arcs, arcs.Length );
 			}
 		}
@@ -351,7 +348,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillArc( display, target, gc,
+				TonNurako.Native.X11.X11Sports.XFillArc( Display, Target, gc,
 					x, y, (uint)w, (uint)h, startAngle, sweepAngle );
 			}
 		}
@@ -364,7 +361,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XFillArcs( display, target, gc,
+				TonNurako.Native.X11.X11Sports.XFillArcs( Display, Target, gc,
 					arcs, arcs.Length );
 			}
 		}
@@ -385,7 +382,7 @@ namespace TonNurako.GC
 		{
 			if( gc != IntPtr.Zero )
 			{
-				TonNurako.Native.X11.X11Sports.XSetLineAttributes( display, gc,
+				TonNurako.Native.X11.X11Sports.XSetLineAttributes( Display, gc,
 					w, (int)line, (int)cap, (int)join );
 			}
 		}
@@ -394,23 +391,23 @@ namespace TonNurako.GC
         #region XImage
 		public void PutImage(XImage image) {
 			if( gc != IntPtr.Zero ) {
-				image.PutImage(display, target, gc, 0, 0, 0, 0, image.Width, image.Height);
+				image.PutImage(Display, Target, gc, 0, 0, 0, 0, image.Width, image.Height);
 			}
 		}
 		public void PutImage(XImage image, int x, int y) {
 			if( gc != IntPtr.Zero ) {
-				image.PutImage(display, target, gc, x, y, 0, 0, image.Width, image.Height);
+				image.PutImage(Display, Target, gc, x, y, 0, 0, image.Width, image.Height);
 			}
 		}
 		public void PutImage(XImage image, int x, int y, int dx, int dy) {
 			if( gc != IntPtr.Zero ) {
-				image.PutImage(display, target, gc, x, y, dx, dy, image.Width, image.Height);
+				image.PutImage(Display, Target, gc, x, y, dx, dy, image.Width, image.Height);
 			}
 		}
 
 		public void PutImage(XImage image, int x, int y, int dx, int dy, int w, int h) {
 			if( gc != IntPtr.Zero ) {
-				image.PutImage(display, target, gc, x, y, dx, dy, w, h);
+				image.PutImage(Display, Target, gc, x, y, dx, dy, w, h);
 			}
 		}
         #endregion

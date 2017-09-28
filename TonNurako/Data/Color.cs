@@ -42,7 +42,7 @@ namespace TonNurako.Data
         }
 
         public TonNurako.Native.Xt.XColor ToXColor(TonNurako.Widgets.IWidget widget) {
-            return Native.ExtremeSports.XAllocColor((null == widget.NativeHandle) ? this.Widget : widget, R, G, B, 255);
+            return Native.ExtremeSports.XAllocColor((null == widget.Handle) ? this.Widget : widget, R, G, B, 255);
         }
 
         public override string ToString() {

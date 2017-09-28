@@ -125,7 +125,7 @@ namespace TonNurako.Native {
                             q.eventName, q.proc );
                         break;
                     case CallbackType.WM:
-                        ExtremeSports.XmRemoveWMProtocolCallback( target.NativeHandle,
+                        ExtremeSports.XmRemoveWMProtocolCallback( target.Handle,
                             q.eventName, q.proc );
                         break;
                 }
@@ -152,7 +152,7 @@ namespace TonNurako.Native {
                             w.eventName, w.proc );
                         break;
                     case CallbackType.WM:
-                        ExtremeSports.XmRemoveWMProtocolCallback( target.NativeHandle,
+                        ExtremeSports.XmRemoveWMProtocolCallback( target.Handle,
                             w.eventName, w.proc );
                         break;
                 }
@@ -184,7 +184,7 @@ namespace TonNurako.Native {
                             q.eventName, q.proc );
                         break;
                     case CallbackType.WM:
-                        ExtremeSports.XmAddWMProtocolCallback( target.NativeHandle,
+                        ExtremeSports.XmAddWMProtocolCallback( target.Handle,
                             q.eventName, q.proc );
                         break;
                 }

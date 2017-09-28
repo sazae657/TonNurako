@@ -112,7 +112,7 @@ namespace TonNurako.GC
             im.convertBuffer = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buf.Length+1));
             Marshal.Copy(buf, 0, im.convertBuffer, buf.Length);
 
-            im.image = NativeMethods.XCreateImage(w.NativeHandle.Display,
+            im.image = NativeMethods.XCreateImage(w.Handle.Display.Handle,
                 0, 24, Format.ZPixmap, 0, im.convertBuffer, (uint)bitmap.Width, (uint)bitmap.Height, 32, 0);
 
             im.Width = bitmap.Width;
@@ -136,7 +136,7 @@ namespace TonNurako.GC
             im.convertBuffer = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buffer.Length+1));
             Marshal.Copy(buffer, 0, im.convertBuffer, buffer.Length);
 
-            im.image = NativeMethods.XCreateImage(w.NativeHandle.Display,
+            im.image = NativeMethods.XCreateImage(w.Handle.Display.Handle,
                 0, (uint)depth, Format.ZPixmap, 0, im.convertBuffer, (uint)width, (uint)height, bpp, 0);
             im.Width = width;
             im.Height = height;
@@ -144,8 +144,8 @@ namespace TonNurako.GC
             return im;
         }
 
-        internal void PutImage(IntPtr dpy, IntPtr d, IntPtr gc, int sx, int sy, int dx, int dy, int w, int h) {
-            NativeMethods.XPutImage(dpy, d, gc, image, sx, sy, dx, dy, (uint)w, (uint)h);
+        internal void PutImage(Display dpy, IntPtr d, IntPtr gc, int sx, int sy, int dx, int dy, int w, int h) {
+            NativeMethods.XPutImage(dpy.Handle, d, gc, image, sx, sy, dx, dy, (uint)w, (uint)h);
         }
 
 		#region IDisposable ﾒﾝﾊﾞー

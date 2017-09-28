@@ -555,8 +555,8 @@ namespace TonNurako.Widgets.Xm
         {
             get {
                 // ﾄﾞﾛﾜﾎﾞー
-                this.drawable.Display = NativeHandle.Display;
-                this.drawable.Target = NativeHandle.Window;
+                this.drawable.Display = Handle.Display;
+                this.drawable.Target = Handle.Window.Handle;
                 return this.drawable;
             }
         }

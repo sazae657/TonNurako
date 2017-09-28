@@ -157,7 +157,7 @@ namespace TonNurako.Data
             if (!widg.IsAvailable) {
                 throw new InvalidOperationException($"{widg.GetType()} Not Avalible!!");
             }
-            widget.ToolkitResources.Add(key, widg.NativeHandle);
+            widget.ToolkitResources.Add(key, widg.Handle);
             widget.ToolkitResources.SetWidget(true);
         }
 
@@ -183,7 +183,7 @@ namespace TonNurako.Data
                 return;
             }
             foreach (WidgetHolder e in this.widgetResList[a.Sender]) {
-                widget.ToolkitResources.Add(e.key, e.widget.NativeHandle);
+                widget.ToolkitResources.Add(e.key, e.widget.Handle);
             }
             widget.ToolkitResources.SetWidget(true);
             this.widgetResList.Remove((Widgets.IWidget)a.Sender);

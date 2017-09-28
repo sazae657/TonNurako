@@ -48,12 +48,12 @@ namespace TonNurako.Widgets.Xm
 
         public void Popup(GrabOption option)
         {
-            NativeMethods.XtPopup(this.NativeHandle.Widget, (int)option);
+            NativeMethods.XtPopup(this.Handle.Widget.Handle, (int)option);
         }
 
         public void Popdown()
         {
-            NativeMethods.XtPopdown(this.NativeHandle.Widget);
+            NativeMethods.XtPopdown(this.Handle.Widget.Handle);
         }
 
         #endregion

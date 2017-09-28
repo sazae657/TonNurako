@@ -40,7 +40,7 @@ namespace TonNurako.Widgets.Xm
 				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateTextField, parent, ToolkitResources);
 			}
             if(null != remainText) {
-                NativeMethods.XmTextFieldSetString(this.NativeHandle.Widget, remainText);
+                NativeMethods.XmTextFieldSetString(this.Handle.Widget.Handle, remainText);
                 remainText = null;
             }
 
@@ -148,55 +148,55 @@ namespace TonNurako.Widgets.Xm
         }
 
         public void ClearSelection() {
-            NativeMethods.XmTextFieldClearSelection(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextFieldClearSelection(this.Handle.Widget.Handle,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
         public void SetSelection(Text.Range range) {
-            NativeMethods.XmTextFieldSetSelection(this.NativeHandle.Widget,
-                range.Begin, range.End, Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextFieldSetSelection(this.Handle.Widget.Handle,
+                range.Begin, range.End, Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public void Copy() {
-            NativeMethods.XmTextFieldCopy(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextFieldCopy(this.Handle.Widget.Handle,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public void CopyLink() {
-            NativeMethods.XmTextFieldCopyLink(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextFieldCopyLink(this.Handle.Widget.Handle,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public void Cut() {
-            NativeMethods.XmTextFieldCut(this.NativeHandle.Widget,
-                            Native.Xt.XtSports.XtLastTimestampProcessed(this.NativeHandle.Display));
+            NativeMethods.XmTextFieldCut(this.Handle.Widget.Handle,
+                            Native.Xt.XtSports.XtLastTimestampProcessed(this.Handle.Display.Handle));
         }
 
         public int GetBaseline() {
-            return NativeMethods.XmTextFieldGetBaseline(this.NativeHandle.Widget);
+            return NativeMethods.XmTextFieldGetBaseline(this.Handle.Widget.Handle);
         }
 
 
         public bool GetEditable() {
-            return NativeMethods.XmTextFieldGetEditable(this.NativeHandle.Widget);
+            return NativeMethods.XmTextFieldGetEditable(this.Handle.Widget.Handle);
         }
 
         public void SetEditable(bool editable) {
-            NativeMethods.XmTextFieldSetEditable(this.NativeHandle.Widget, editable);
+            NativeMethods.XmTextFieldSetEditable(this.Handle.Widget.Handle, editable);
         }
 
         public int GetInsertionPosition() {
-            return (int)NativeMethods.XmTextFieldGetInsertionPosition(this.NativeHandle.Widget);
+            return (int)NativeMethods.XmTextFieldGetInsertionPosition(this.Handle.Widget.Handle);
         }
         public int GetLastPosition() {
-            return (int)NativeMethods.XmTextFieldGetLastPosition(this.NativeHandle.Widget);
+            return (int)NativeMethods.XmTextFieldGetLastPosition(this.Handle.Widget.Handle);
         }
 
         public int GetMaxLength() {
-            return (int)NativeMethods.XmTextFieldGetMaxLength(this.NativeHandle.Widget);
+            return (int)NativeMethods.XmTextFieldGetMaxLength(this.Handle.Widget.Handle);
         }
 
         public string GetSelection() {
-            IntPtr p = NativeMethods.XmTextFieldGetSelection(this.NativeHandle.Widget);
+            IntPtr p = NativeMethods.XmTextFieldGetSelection(this.Handle.Widget.Handle);
             if (IntPtr.Zero == p) {
                 return null;
             }
@@ -207,7 +207,7 @@ namespace TonNurako.Widgets.Xm
 
         public Text.Range GetSelectionPosition() {
             long begin,  end;
-            bool r = NativeMethods.XmTextFieldGetSelectionPosition(this.NativeHandle.Widget, out begin, out end);
+            bool r = NativeMethods.XmTextFieldGetSelectionPosition(this.Handle.Widget.Handle, out begin, out end);
             if (true != r) {
                 return null;
             }
@@ -217,42 +217,42 @@ namespace TonNurako.Widgets.Xm
 
 
         public void Insert(string text, int offset) {
-            NativeMethods.XmTextFieldInsert(this.NativeHandle.Widget, (long)offset, text);
+            NativeMethods.XmTextFieldInsert(this.Handle.Widget.Handle, (long)offset, text);
         }
 
         public bool Paste() {
-            return NativeMethods.XmTextFieldPaste(this.NativeHandle.Widget);
+            return NativeMethods.XmTextFieldPaste(this.Handle.Widget.Handle);
         }
         public bool PasteLink() {
-            return NativeMethods.XmTextFieldPasteLink(this.NativeHandle.Widget);
+            return NativeMethods.XmTextFieldPasteLink(this.Handle.Widget.Handle);
         }
 
         public bool Remove() {
-            return NativeMethods.XmTextFieldRemove(this.NativeHandle.Widget);
+            return NativeMethods.XmTextFieldRemove(this.Handle.Widget.Handle);
         }
 
         public void Replace(Text.Range range, string replace) {
-            NativeMethods.XmTextFieldReplace(this.NativeHandle.Widget, range.Begin, range.End, replace);
+            NativeMethods.XmTextFieldReplace(this.Handle.Widget.Handle, range.Begin, range.End, replace);
         }
 
         public void SetAddMode(bool mode) {
-            NativeMethods.XmTextFieldSetAddMode(this.NativeHandle.Widget, mode);
+            NativeMethods.XmTextFieldSetAddMode(this.Handle.Widget.Handle, mode);
         }
 
         public void SetHighlight(Text.Range range, Text.HighlightMode mode) {
-            NativeMethods.XmTextFieldSetHighlight(this.NativeHandle.Widget, range.Begin, range.End, mode);
+            NativeMethods.XmTextFieldSetHighlight(this.Handle.Widget.Handle, range.Begin, range.End, mode);
         }
 
         public void SetInsertionPosition(TextPosition pos) {
-            NativeMethods.XmTextFieldSetInsertionPosition(this.NativeHandle.Widget, pos.Position);
+            NativeMethods.XmTextFieldSetInsertionPosition(this.Handle.Widget.Handle, pos.Position);
         }
 
         public void SetMaxLength(int max) {
-            NativeMethods.XmTextFieldSetMaxLength(this.NativeHandle.Widget, max);
+            NativeMethods.XmTextFieldSetMaxLength(this.Handle.Widget.Handle, max);
         }
 
         public void ShowPosition(int pos) {
-            NativeMethods.XmTextFieldShowPosition(this.NativeHandle.Widget, pos);
+            NativeMethods.XmTextFieldShowPosition(this.Handle.Widget.Handle, pos);
         }
 
 		/// <summary>
@@ -265,7 +265,7 @@ namespace TonNurako.Widgets.Xm
 				if( ! IsAvailable ) {
                     return "";
                 }
-                IntPtr pStr = NativeMethods.XmTextFieldGetString(this.NativeHandle.Widget);
+                IntPtr pStr = NativeMethods.XmTextFieldGetString(this.Handle.Widget.Handle);
                 string r = Marshal.PtrToStringAnsi(pStr);
                 Native.Xt.XtSports.XtFree(pStr);
 				return r;
@@ -278,7 +278,7 @@ namespace TonNurako.Widgets.Xm
                     return;
                 }
                 System.Diagnostics.Debug.WriteLine("Text Set: " + value);
-                NativeMethods.XmTextFieldSetString( this.NativeHandle.Widget, value );
+                NativeMethods.XmTextFieldSetString( this.Handle.Widget.Handle, value );
 			}
 
 		}

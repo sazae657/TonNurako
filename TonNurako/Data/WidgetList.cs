@@ -54,7 +54,7 @@ namespace TonNurako.Data
         public IntPtr [] ToNativeArray() {
             IntPtr [] ps = new IntPtr[widgetList.Count];
             for (int i = 0;i < widgetList.Count;i++) {
-                ps[i] = widgetList[i].NativeHandle.Widget;
+                ps[i] = widgetList[i].Handle.Widget.Handle;
             }
             return ps;
         }

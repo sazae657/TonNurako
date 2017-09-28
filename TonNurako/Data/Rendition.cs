@@ -78,13 +78,13 @@ namespace TonNurako.Data
 
         public Rendition(Widgets.IWidget widget) {
             resource = new XResource(null);
-            handle = NativeMethods.XmRenditionCreate(widget.NativeHandle.Widget,
+            handle = NativeMethods.XmRenditionCreate(widget.Handle.Widget.Handle,
                         Native.Motif.StringConstant.XmFONTLIST_DEFAULT_TAG, new Native.Xt.NativeXtArg[]{}, 0);
         }
 
         public Rendition(Widgets.IWidget widget, string tag) {
             resource = new XResource(null);
-            handle = NativeMethods.XmRenditionCreate(widget.NativeHandle.Widget, tag, new Native.Xt.NativeXtArg[]{}, 0);
+            handle = NativeMethods.XmRenditionCreate(widget.Handle.Widget.Handle, tag, new Native.Xt.NativeXtArg[]{}, 0);
         }
 
 
@@ -95,7 +95,7 @@ namespace TonNurako.Data
             if (argc != 0) {
                 argc = Native.ExtremeSports.TnkConvertResourceEx(args, au, true);
             }
-            handle = NativeMethods.XmRenditionCreate(widget.NativeHandle.Widget, tag, au, argc);
+            handle = NativeMethods.XmRenditionCreate(widget.Handle.Widget.Handle, tag, au, argc);
             Native.ExtremeSports.TnkFreeDeepCopyArg(au);
 
             Resource.Clear();
