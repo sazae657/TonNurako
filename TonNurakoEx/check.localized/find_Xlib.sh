@@ -47,8 +47,8 @@ fi
 
 echo "Xt:LIBS=$LIBS"
 echo "Xt:CFLAGS=$CFLAGS"
-cc ${CFLAGS} ${LIBS} ${KWD}/check.localized/check_xlib.c -o ${KWD}/a.out 2>&1 || echo "XLIB!!"
-cc ${CFLAGS} ${LIBS} ${KWD}/check.localized/check_xmu.c -o ${KWD}/a.out 2>&1 || echo "XLIB!!"
+cc ${CFLAGS} -o ${KWD}/a.out ${LIBS} ${KWD}/check.localized/check_xlib.c 2>&1 || exit 9
+cc ${CFLAGS} -o ${KWD}/a.out ${LIBS} ${KWD}/check.localized/check_xmu.c  2>&1 || exit 9
 
 echo "X11_HEADER_ARGS := ${CFLAGS}" >>${SITE_MP3}
 echo "X11_LIBS := ${LIBS}" >>${SITE_MP3}
