@@ -9,7 +9,7 @@ export RULES_INC="${KWD}/check.localized/rules.inc"
 export RULES_LIB="${KWD}/check.localized/rules.lib"
 
 function cleanup {
-	rm ${RULES_OK} ${RULES_INC} ${RULES_LIB} ${KWD}/a.out ${KWD}/*.o
+	rm -f ${RULES_OK} ${RULES_INC} ${RULES_LIB} ${KWD}/a.out ${KWD}/*.o
 }
 
 function error_exit {
