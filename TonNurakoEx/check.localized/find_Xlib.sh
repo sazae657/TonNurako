@@ -53,12 +53,12 @@ fi
 
 echo "Xt:LIBS=$LIBS_Xt"
 echo "Xt:CFLAGS=$CFLAGS_Xt"
-cc ${CFLAGS_Xt} -o ${KWD}/a.out ${LIBS_Xt} ${KWD}/check.localized/check_xlib.c 2>&1 || exit 9
+cc -v ${CFLAGS_Xt} -o ${KWD}/a.out ${LIBS_Xt} ${KWD}/check.localized/check_xlib.c 2>&1 || exit 9
 echo "-- Xt Check OK --"
 
 echo "Xt:LIBS=$LIBS_Xmu"
 echo "Xt:CFLAGS=$CFLAGS_Xmu"
-cc ${CFLAGS_Xmu} -o ${KWD}/a.out ${LIBS_Xmu} ${KWD}/check.localized/check_xmu.c  2>&1 || exit 9
+cc -v ${CFLAGS_Xmu} -o ${KWD}/a.out ${LIBS_Xmu} ${KWD}/check.localized/check_xmu.c  2>&1 || exit 9
 echo "-- Xmu Check OK --"
 
 echo "X11_HEADER_ARGS := ${CFLAGS_Xt} ${CFLAGS_Xmu}" >>${SITE_MP3}
