@@ -18,7 +18,7 @@ XMU_FOUND="NO"
 XT_LIBS=$(pkg-config --libs xt)
 if [ "x" != "x${XT_LIBS}" ];then
    echo found X11 from pkgconfig
-   LIBS_Xt="-L$(pkg-config --variable=libdir xt) ${XT_LIBS}"
+   LIBS_Xt="${XT_LIBS}"
    CFLAGS_Xt=$(pkg-config --cflags xt)
    XLIB_FOUND="YES"
 fi
@@ -26,7 +26,7 @@ fi
 XMU_LIBS=$(pkg-config --libs xmu)
 if [ "x" != "x${XMU_LIBS}" ];then
    echo found Xmu from pkgconfig
-   LIBS_Xmu="-L$(pkg-config --variable=libdir xmu) ${XMU_LIBS}"
+   LIBS_Xmu="${XMU_LIBS}"
    CFLAGS_Xmu=$(pkg-config --cflags xt)
    XMU_FOUND="YES"
 fi
@@ -53,12 +53,12 @@ fi
 
 echo "Xt:LIBS=$LIBS_Xt"
 echo "Xt:CFLAGS=$CFLAGS_Xt"
-cc ${CFLAGS_Xt} -o ${KWD}/a.out ${LIBS_Xt} ${KWD}/check.localized/check_xlib.c 2>&1 || exit 9
+cc ${CFLAGS_Xt} -o ${KWD}/a.out ${KWD}/check.localized/check_xlib.c ${LIBS_Xt}   || exit 9
 echo "-- Xt Check OK --"
 
 echo "Xt:LIBS=$LIBS_Xmu"
 echo "Xt:CFLAGS=$CFLAGS_Xmu"
-cc ${CFLAGS_Xmu} -o ${KWD}/a.out ${LIBS_Xmu} ${KWD}/check.localized/check_xmu.c  2>&1 || exit 9
+cc ${CFLAGS_Xmu} -o ${KWD}/a.out ${KWD}/check.localized/check_xmu.c ${LIBS_Xmu}  || exit 9
 echo "-- Xmu Check OK --"
 
 echo "X11_HEADER_ARGS := ${CFLAGS_Xt} ${CFLAGS_Xmu}" >>${SITE_MP3}
