@@ -2,3 +2,5 @@ Site.mp3
 *.o
 import.app/*
 !import.app/Contents
+check.localized/rules.*
+

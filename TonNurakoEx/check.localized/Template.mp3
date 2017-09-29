@@ -1,0 +1,28 @@
+# Motifのﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
+#MOTF_HEADER_ARGS   := @MOTIF_INC@ 
+MOTF_LIBRARY_ARGS := 
+#
+## X11のﾍｯﾀﾞーとﾗｲﾌﾞﾗﾘーのﾊﾟｽ
+#X11_HEADER_ARGS := @X11_INC@
+X11_LIBRARY_ARGS:=
+#
+## Motifのﾗｲﾌﾞﾗﾘー
+#MOTIF_LIBS= @MOTIF_LIBS@
+#
+## X11のﾗｲﾌﾞﾗﾘー
+#X11_LIBS= @X11_LIBS@
+
+# Cｺﾝﾊﾟｲﾗー
+CC := cc
+CFLAGS := -g -fPIC
+
+WARN_OPT := -W -Wall -Werror -Wno-unused-parameter
+
+# リンカー
+LINK_FLAGS := -g -fPIC -shared
+
+EXE_LINK_FLAGS := -g
+
+# python ｲﾝﾀーﾌﾟﾘﾀー
+PYTHON := python2.7
+

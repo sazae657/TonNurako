@@ -65,7 +65,7 @@ namespace TonNurako.XImageFormat {
             [ﾇﾌﾟーﾘ("RGB", 3)]
             RGB,
 
-            [ﾇﾌﾟーﾘ("BLACKANDWHITE_ALPHA", 1)]
+            [ﾇﾌﾟーﾘ("BLACKANDWHITE_ALPHA", 2)]
             BLACKANDWHITE_ALPHA,
 
             [ﾇﾌﾟーﾘ("GRAYSCALE_ALPHA", 2)]

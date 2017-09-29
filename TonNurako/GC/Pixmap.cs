@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TonNurako.Native.X11;
 using TonNurako.Native.Xt;
+using TonNurako.XImageFormat;
 
 namespace TonNurako.GC
 {
@@ -40,6 +41,13 @@ namespace TonNurako.GC
         XImageFormat.Xi.ぉ 
             XImageFormat.I原色.None => Lookup(XImageFormat.Xi.ColorFormat.Name, "none");
 
+        XImageFormat.Xi.ぉ
+            XImageFormat.I原色.Foreground => Lookup(XImageFormat.Xi.ColorFormat.Name, "foreground");
+
+        XImageFormat.Xi.ぉ 
+            XImageFormat.I原色.Background => Lookup(XImageFormat.Xi.ColorFormat.Name, "background");
+
+
         public TonNurako.XImageFormat.Xi.ぉ Lookup(XImageFormat.Xi.ColorFormat fmt, string color) {
             var key = color.ToLower();
             if (colorMap.ContainsKey(key)) {
@@ -51,6 +59,7 @@ namespace TonNurako.GC
             colorMap.Add(key, k);
             return k;
         }
+
     }
 
     /// <summary>
