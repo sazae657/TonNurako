@@ -137,5 +137,5 @@ clean: clean.lib
 
 install: clean
 
-make:
+audio:
 	./config.sh

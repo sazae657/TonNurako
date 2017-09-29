@@ -4,4 +4,4 @@ solution: TonNurako.sln
 install:
     - sudo apt-get -qq update
     - sudo apt-get -qq install libmotif-dev libxmu-dev libxt-dev
-    - ./TonNurakoEx/config.sh
+    - make -C TonNurakoEx audio
