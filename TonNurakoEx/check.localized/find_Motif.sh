@@ -14,6 +14,8 @@ CFLAGS="${CFLAGS} $(cat ${RULES_INC})"
 
 cc ${CFLAGS} ${LIBS} ${KWD}/check.localized/check_motif.c -o ${KWD}/a.out 2>&1 || echo "Motif"
 
+echo "Xm:LIBS=$LIBS"
+echo "Xm:CFLAGS=$CFLAGS"
 echo "MOTF_HEADER_ARGS := ${CFLAGS}" >>${SITE_MP3}
 echo "MOTIF_LIBS := ${LIBS}" >>${SITE_MP3}
 

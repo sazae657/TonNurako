@@ -45,8 +45,8 @@ if [ "xNO" = "x${XMU_FOUND}" ];then
 	CFLAGS="${CFLAGS} $(cat ${RULES_INC})"
 fi
 
-#echo "LIBS=$LIBS"
-#echo "CFLAGS=$CFLAGS"
+echo "Xt:LIBS=$LIBS"
+echo "Xt:CFLAGS=$CFLAGS"
 cc ${CFLAGS} ${LIBS} ${KWD}/check.localized/check_xlib.c -o ${KWD}/a.out 2>&1 || echo "XLIB!!"
 cc ${CFLAGS} ${LIBS} ${KWD}/check.localized/check_xmu.c -o ${KWD}/a.out 2>&1 || echo "XLIB!!"
 
