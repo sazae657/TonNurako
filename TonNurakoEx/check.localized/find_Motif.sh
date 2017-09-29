@@ -12,7 +12,7 @@ LIBS="${LIBS} $(cat ${RULES_LIB})"
 CFLAGS="${CFLAGS} $(cat ${RULES_INC})"
 
 
-cc ${CFLAGS} ${LIBS} ${KWD}/check.localized/check_motif.c -o ${KWD}/a.out 2>&1 || exit 9
+cc ${CFLAGS} ${KWD}/check.localized/check_motif.c -o ${KWD}/a.out ${LIBS} || exit 9
 
 echo "Xm:LIBS=$LIBS"
 echo "Xm:CFLAGS=$CFLAGS"
