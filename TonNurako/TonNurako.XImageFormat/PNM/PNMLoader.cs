@@ -146,7 +146,7 @@ namespace TonNurako.XImageFormat {
                 r[i] = new Xi.ぉ(0, 0, 0, 0xFF);
                 switch (pnm.Format) {
                     case PNM.形式.P1:
-                        var v = (q.Value == 0) ? 0 : 0xff;
+                        var v = (q.Value == 0) ? 0xff : 0x00;
                         r[i].ぃ(v, v, v);
                         break;
                     case PNM.形式.P2:
@@ -440,16 +440,18 @@ namespace TonNurako.XImageFormat {
             var r = new Xi.ぉ[pnm.Width * pnm.Height];
             int po = 0;
             int bo = 0;
-            int ps = pnm.Maxval > 255 ? 2 : 1;
+            int ps = pnm.Maxval > 255 ? 4 : 2;
             for (int y = 0; y < pnm.Height; ++y) {
                 for (int x = 0; x < pnm.Width; ++x) {
-                    if (ps == 1) {
-                        var a = buf[bo] == 1 ? 0xFF : 0x00;
-                        r[po++] = new Xi.ぉ(0xFF, 0xFF, 0xFF, a);
+                    if (ps == 2) {
+                        var c = buf[bo] == 0 ? 0x00 : 0xff;
+                        var a = buf[bo+1];
+                        r[po++] = new Xi.ぉ(c, c, c, a);
                     }
                     else {
-                        var a = (buf[bo] | buf[bo + 1] << 8) == 1 ? 0xFF : 0x00;
-                        r[po++] = new Xi.ぉ(0xFF, 0xFF, 0xFF, a);
+                        var a = (buf[bo] | buf[bo + 1] << 8) == 0 ? 0x00 : 0xff;
+                        var c = (buf[bo+2] | buf[bo + 3] << 8);
+                        r[po++] = new Xi.ぉ(c, c, c, a);
                     }
                     bo += ps;
                 }

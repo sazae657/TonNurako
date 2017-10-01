@@ -7,7 +7,7 @@ LINKER := $(CC)
 BINDIR := ../bin/$(BUILD)/
 
 
-CFLAGS := $(CFLAGS) -Iimport.app $(MOTF_HEADER_ARGS) $(X11_HEADER_ARGS) 
+CFLAGS := $(CFLAGS) -Iimport.app $(MOTF_HEADER_ARGS) $(X11_HEADER_ARGS)
 LINK_LIBS := -Limport.app/lib $(MOTF_LIBRARY_ARGS) $(MOTIF_LIBS) $(X11_LIBRARY_ARGS) $(X11_LIBS)
 LINK_FLAGS := -g -shared
 OPT := -g -D_DEBUG
@@ -31,7 +31,7 @@ RULES_OK_FILE=tmpfile.app/Contents/_CodeSignature/Zakefile
 
 # 自動生成用
 GEN_EXE := tmpfile.app/Contents/MacOS/gen
-GEN_C := tmpfile.app/Contents/Resources/gen.c 
+GEN_C := tmpfile.app/Contents/Resources/gen.c
 GEN_SRC_DIR := ../TonNurako/Native/GEN
 TEMPLATE_DIR := iso.app
 SCRIPT_DIR := scripts.app
@@ -72,7 +72,7 @@ all: ExtremeSports GenSrc
 ExtremeSports: check $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(LINKER) $(LINK_FLAGS) -o $(TARGET) $(OBJ) $(LINK_LIBS) 
+	$(LINKER) $(LINK_FLAGS) -o $(TARGET) $(OBJ) $(LINK_LIBS)
 
 $(OBJ): $(BINDIR)
 
@@ -80,7 +80,7 @@ $(BINDIR):
 	mkdir -p $(BINDIR)
 
 # ﾁｪｯｸ
-check: $(RULES_OK_FILE) 
+check: $(RULES_OK_FILE)
 
 speaker: $(LIB_CHECK_E)  $(MOTIF_CHECK_E) $(IMP_CHECK_E)
 	@ $(LIB_CHECK_E) $(CHECK_ARGS)
@@ -97,7 +97,7 @@ $(LIB_CHECK_E): $(LIB_CHECK_C) $(MOTIF_CHECK_E) $(IMP_CHECK_E)
 	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(LIB_CHECK_E) $(LIB_CHECK_C) $(LINK_LIBS)
 
 $(MOTIF_CHECK_E): $(MOTIF_CHECK_C)
-	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C) $(LINK_LIBS) 
+	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(MOTIF_CHECK_E) $(MOTIF_CHECK_C) $(LINK_LIBS)
 
 $(IMP_CHECK_E): $(IMP_CHECK_C)
 	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(IMP_CHECK_E) $(IMP_CHECK_C) $(LINK_LIBS)
@@ -107,7 +107,7 @@ $(IMP_CHECK_E): $(IMP_CHECK_C)
 
 GenSrc: $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
 
-$(TEMP_BIN): 
+$(TEMP_BIN):
 	mkdir -p $(TEMP_BIN)
 
 $(XM_CONSTANT_CS): $(XM_CONSTANT_CS_TPL)
@@ -141,3 +141,5 @@ clean: clean.lib
 
 install: clean
 
+audio:
+	./config.sh

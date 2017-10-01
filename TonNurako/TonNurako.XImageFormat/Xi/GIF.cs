@@ -9,7 +9,7 @@ namespace TonNurako.XImageFormat {
     /// <summary>
     /// 原色
     /// </summary>
-    public interface I原色 
+    public interface I原色
     {
         /// <summary>
         /// 原色を返す
@@ -33,12 +33,22 @@ namespace TonNurako.XImageFormat {
         /// 虚無
         /// </summary>
         ぉ None { get; }
+
+        /// <summary>
+        /// 背景
+        /// </summary>
+        ぉ Background { get; }
+
+        /// <summary>
+        /// 前景
+        /// </summary>
+        ぉ Foreground { get; }
     }
 
     /// <summary>
     /// 原色のﾌｫーﾙﾊﾞｯｸ
     /// </summary>
-    public class Fallback原色 : I原色 
+    public class Fallback原色 : I原色
     {
 
         /// <summary>
@@ -71,6 +81,9 @@ namespace TonNurako.XImageFormat {
         static readonly ぉ _none = new ぉ(0, 0, 0, 0);
         public ぉ None => _none;
 
+        public ぉ Background => _white;
+
+        public ぉ Foreground => _black;
 
         internal ぉ ParseRGB(string rgb) {
             var excel = rgb.Substring(1);

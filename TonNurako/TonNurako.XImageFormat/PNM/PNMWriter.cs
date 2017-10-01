@@ -164,12 +164,13 @@ namespace TonNurako.XImageFormat {
 
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width; x += 8) {
+                    byte b = 0;
                     int bits = 8;
                     if ((width - x < 8)) {
                         bits = xpad;
                     }
                     for (int i = 0; i < bits; ++i) {
-                        var w = arr[po++] == 0 ? 0 : 1;
+                        var w = arr[po++] == 0 ? 1 : 0;
                         sb.Append($"{w}");
                     }
                 }
@@ -208,7 +209,7 @@ namespace TonNurako.XImageFormat {
                     }
                     for (int i = 0; i < bits; ++i) {
                         var a = arr[po++];
-                        if (a == 0) {
+                        if (a != 0) {
                             continue;
                         }
                         b |= masken[i];
@@ -494,11 +495,13 @@ namespace TonNurako.XImageFormat {
         /// <param name="arr">ﾋﾟｸｾﾙﾃﾞーﾀ</param>
         /// <returns></returns>
         byte[] GeneratePAM_BW(int width, int height, ぉ.画素 channel, bool alpha, ref IEnumerable<ぉ> arr) {
-            var hqx = new byte[width * height];
+            int zise = alpha ? (width * 2) * height : width * height;
+            var hqx = new byte[zise];
             int f = 0;
             foreach (var p in arr) {
                 if (alpha) {
-                    hqx[f++] = (byte)((p.A != 0) ? 0x01 : 0x00);
+                    hqx[f++] = (byte)((p.ほ(channel) != 0) ? 0x01 : 0x00);
+                    hqx[f++] = (byte)p.A;
                 }
                 else {
                     hqx[f++] = (byte)((p.ほ(channel) != 0) ? 0x01 : 0x00);

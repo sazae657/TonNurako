@@ -64,7 +64,7 @@ namespace TonNurako.XImageFormat {
                     }
                     for (int i = 0; i < bits; ++i) {
                         var a = arr[po++];
-                        if (a == 0) {
+                        if (a != 0) {
                             continue;
                         }
                         b |= masken[i];
