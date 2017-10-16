@@ -25,11 +25,12 @@ XtInitializeWidgetClass_TNK(WidgetClass object_class)
 
 TNK_EXPORT int
 TNK_IMP_Xt_XCreateColormap(Widget w) {
-    XColor color;
-    memset(&color, 0x00, sizeof(XColor));
-    color.flags = DoRed|DoGreen|DoBlue;
-
     return DefaultColormapOfScreen(XtScreen(w));
+}
+
+TNK_EXPORT int
+TNK_IMP_Xt_DefaultColormapOfScreen(Screen* w) {
+    return DefaultColormapOfScreen(w);
 }
 
 TNK_EXPORT int
@@ -51,6 +52,20 @@ TNK_IMP_Xt_XAllocColor(XColor* color, Widget w, int r, int g, int b, int a)
         cm,
         color);
 
+}
+
+TNK_EXPORT int
+TNK_IMP_Xt_XAllocColorD(XColor* color, Display* d, Colormap cm, int r, int g, int b, int a)
+{
+    color->red = 257 * r;
+    color->green = 257 * g;
+    color->blue = 257 * b;
+    color->flags = DoRed|DoGreen|DoBlue;
+
+    return XAllocColor(
+        d,
+        cm,
+        color);
 }
 
 TNK_EXPORT int

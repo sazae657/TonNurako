@@ -23,8 +23,8 @@ namespace TonNurako.Events
         }
 
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
-            var callData = (Native.Motif.XmStruct.XmScrollBarCallbackStruct)
-            Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmScrollBarCallbackStruct ) );
+            var callData = (TonNurako.Motif.XmStruct.XmScrollBarCallbackStruct)
+            Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmScrollBarCallbackStruct ) );
 
             this.Reason = ConvertReason(callData.reason);
             this.Value = callData.value;

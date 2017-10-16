@@ -6,7 +6,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace TonNurako.Native.Motif
+namespace TonNurako.Motif
 {
     /// <summary>
 	/// Motif用構造体

@@ -6,7 +6,8 @@ print '''
 #include <stdio.h>
 #include <Xm/XmAll.h>
 int main() {
-printf("namespace TonNurako.Native.Motif {\\n");
+printf("using TonNurako.Native;\\n\\n");
+printf("namespace TonNurako.Motif {\\n");
 printf("    public enum Constant {\\n");
 '''
 

@@ -34,7 +34,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateSimplePopupMenu, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateSimplePopupMenu, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -43,18 +43,18 @@ namespace TonNurako.Widgets.Xm
 		#endregion
 
         #region 固有
-        public void  SetPopupPosition(Native.Xt.XEventStruct.XButtonEvent ev) {
-            TonNurako.Native.Motif.XmSports.XmMenuPosition(this, ev);
+        public void  SetPopupPosition(TonNurako.X11.Event.XButtonEvent ev) {
+            TonNurako.Motif.XmSports.XmMenuPosition(this, ev);
         }
 
         public void  Popup(int x, int y) {
-            Native.Xt.XEventStruct.XButtonEvent ev =new Native.Xt.XEventStruct.XButtonEvent();
+            TonNurako.X11.Event.XButtonEvent ev =new TonNurako.X11.Event.XButtonEvent();
             ev.x_root = x;
             ev.y_root = y;
             Popup(ev);
         }
 
-        public void  Popup(Native.Xt.XEventStruct.XButtonEvent ev) {
+        public void  Popup(TonNurako.X11.Event.XButtonEvent ev) {
             SetPopupPosition(ev);
             Popup();
         }

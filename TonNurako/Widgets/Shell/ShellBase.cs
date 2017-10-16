@@ -2,7 +2,7 @@ using System;
 
 using TonNurako.Events;
 using TonNurako.Native;
-using TonNurako.Native.Xt;
+using TonNurako.Xt;
 namespace TonNurako.Widgets {
 
 	/// <summary>
@@ -66,7 +66,7 @@ namespace TonNurako.Widgets {
 			this.CallbackQueue.AaddWMCallback( "WM_DELETE_WINDOW", new G.XtCallBack( this.WMCloseCallBack ));
 
 			//閉じられないように設定
-			ToolkitResources.Add( Native.Motif.ResourceId.XmNdeleteResponse, Native.Motif.Constant.XmDO_NOTHING );
+			ToolkitResources.Add( TonNurako.Motif.ResourceId.XmNdeleteResponse, TonNurako.Motif.Constant.XmDO_NOTHING );
 			ToolkitResources.SetWidget(true );
             return 0;
 		}
@@ -130,7 +130,7 @@ namespace TonNurako.Widgets {
 		/// </summary>
 		virtual public void Realize()
 		{
-			Native.Xt.XtSports.XtRealizeWidget(this);
+			TonNurako.Xt.XtSports.XtRealizeWidget(this);
             UIeventTable.CallHandler(TonNuraEventId.Realized, this);
 		}
 
@@ -197,7 +197,7 @@ namespace TonNurako.Widgets {
 		public int ColorDepth
 		{
 			get {
-				int depth = XSports.GetInt(Native.Motif.ResourceId.XmNdepth, 0);
+				int depth = XSports.GetInt(TonNurako.Motif.ResourceId.XmNdepth, 0);
 				return depth;
 			}
 

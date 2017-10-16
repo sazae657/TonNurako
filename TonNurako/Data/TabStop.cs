@@ -5,8 +5,8 @@ using TonNurako.Widgets.Xm;
 namespace TonNurako.Data
 {
     public enum OffsetModel {
-        ABSOLUTE = Native.Motif.Constant.XmABSOLUTE,
-        RELATIVE = Native.Motif.Constant.XmRELATIVE,
+        ABSOLUTE = TonNurako.Motif.Constant.XmABSOLUTE,
+        RELATIVE = TonNurako.Motif.Constant.XmRELATIVE,
     }
     public class Tab : IDisposable {
         internal static class NativeMethods {
@@ -25,7 +25,7 @@ namespace TonNurako.Data
 
         public Tab(float value, UnitType units, OffsetModel offset_model) {
             handle = NativeMethods.XmTabCreate(value,
-                (byte)units, (byte)offset_model, (byte)Native.Motif.Constant.XmALIGNMENT_BEGINNING, ".");
+                (byte)units, (byte)offset_model, (byte)TonNurako.Motif.Constant.XmALIGNMENT_BEGINNING, ".");
         }
 
         #region IDisposable Support

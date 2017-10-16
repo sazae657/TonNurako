@@ -42,7 +42,7 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.G)]
         public virtual int NumChildren {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNnumChildren, 0, Data.Resource.Access.G);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNnumChildren, 0, Data.Resource.Access.G);
             }
         }
 		#endregion

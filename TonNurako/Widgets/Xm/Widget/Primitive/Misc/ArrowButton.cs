@@ -27,7 +27,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateArrowButton, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateArrowButton, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -38,10 +38,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual ArrowDirection ArrowDirection {
             get {
-                return XSports.GetValue<ArrowDirection>(Native.Motif.ResourceId.XmNarrowDirection, ArrowDirection.Up);
+                return XSports.GetValue<ArrowDirection>(TonNurako.Motif.ResourceId.XmNarrowDirection, ArrowDirection.Up);
             }
             set {
-                XSports.SetValue<ArrowDirection>(Native.Motif.ResourceId.XmNarrowDirection, value);
+                XSports.SetValue<ArrowDirection>(TonNurako.Motif.ResourceId.XmNarrowDirection, value);
             }
         }
 
@@ -50,10 +50,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int DetailShadowThickness {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNdetailShadowThickness, 2);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNdetailShadowThickness, 2);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNdetailShadowThickness, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNdetailShadowThickness, value);
             }
         }
 
@@ -62,10 +62,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual MultiClick MultiClick {
             get {
-                return XSports.GetValue<MultiClick>(Native.Motif.ResourceId.XmNmultiClick, MultiClick.Discard);
+                return XSports.GetValue<MultiClick>(TonNurako.Motif.ResourceId.XmNmultiClick, MultiClick.Discard);
             }
             set {
-                XSports.SetValue<MultiClick>(Native.Motif.ResourceId.XmNmultiClick, value);
+                XSports.SetValue<MultiClick>(TonNurako.Motif.ResourceId.XmNmultiClick, value);
             }
         }
 
@@ -79,10 +79,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.PushButtonEventArgs> ActivateEvent
         {
             add {
-                PushButtonEventTable.AddHandler(this, Native.Motif.EventId.XmNactivateCallback ,  value );
+                PushButtonEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNactivateCallback ,  value );
             }
             remove {
-                PushButtonEventTable.RemoveHandler(Native.Motif.EventId.XmNactivateCallback ,  value );
+                PushButtonEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNactivateCallback ,  value );
             }
         }
 
@@ -91,10 +91,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.PushButtonEventArgs> ArmEvent
         {
             add {
-                PushButtonEventTable.AddHandler(this, Native.Motif.EventId.XmNarmCallback ,  value );
+                PushButtonEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNarmCallback ,  value );
             }
             remove {
-                PushButtonEventTable.RemoveHandler(Native.Motif.EventId.XmNarmCallback ,  value );
+                PushButtonEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNarmCallback ,  value );
             }
         }
 
@@ -103,10 +103,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.PushButtonEventArgs> DisarmEvent
         {
             add {
-                PushButtonEventTable.AddHandler(this, Native.Motif.EventId.XmNdisarmCallback ,  value );
+                PushButtonEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNdisarmCallback ,  value );
             }
             remove {
-                PushButtonEventTable.RemoveHandler(Native.Motif.EventId.XmNdisarmCallback ,  value );
+                PushButtonEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNdisarmCallback ,  value );
             }
         }
 

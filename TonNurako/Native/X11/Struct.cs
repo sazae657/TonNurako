@@ -6,47 +6,37 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace TonNurako.Native.X11
+namespace TonNurako.X11
 {
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct XCharStruct {
-        public Int16 lbearing; // short
-        public Int16 rbearing; // short
-        public Int16 width; // short
-        public Int16 ascent; // short
-        public Int16 descent; // short
-    }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XFontProp {
-        public ulong name; // Atom
-        public ulong card32; // unsigned long
+    internal struct XWindowChanges{
+            int x, y;
+            int width, height;
+            int border_width;
+            IntPtr sibling; //Window
+            int stack_mode;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XChar2b {
-        public byte byte1; // unsigned char
-        public byte byte2; // unsigned char
-    }
+    internal struct XModifierKeymap {
+            int max_keypermod;
+            IntPtr modifiermap;  // KeyCode *
+    } ;
 
 
-	[StructLayout(LayoutKind.Sequential)]
-    internal struct XFontStruct {
-        public IntPtr ext_data; // XExtData*
-        public int fid; // Font
-        public uint direction; // unsigned
-        public uint min_char_or_byte2; // unsigned
-        public uint max_char_or_byte2; // unsigned
-        public uint min_byte1; // unsigned
-        public uint max_byte1; // unsigned
-        [MarshalAs(UnmanagedType.U1)] public bool all_chars_exist; // Bool
-        public uint default_char; // unsigned
-        public int n_properties; // int
-        public IntPtr properties; // XFontProp*
-        public TonNurako.Native.X11.XCharStruct min_bounds; // XCharStruct
-        public TonNurako.Native.X11.XCharStruct max_bounds; // XCharStruct
-        public IntPtr per_char; // XCharStruct*
-        public int ascent; // int
-        public int descent; // int
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct XTimeCoord{
+        uint time;
+        short x, y;
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct XTextProperty {
+        IntPtr value;   // unsigned char*
+        Atom encoding;  /* type of property */
+        int format;     /* 8, 16, or 32 */
+        ulong nitems;   /* number of items in value */
+    }
+
 }

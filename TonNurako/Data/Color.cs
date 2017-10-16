@@ -4,9 +4,20 @@
 // 色
 //
 
-namespace TonNurako.Data
+using System;
+using System.Runtime.InteropServices;
+using TonNurako.Native;
+
+namespace TonNurako.GC
 {
     public class Color {
+        internal static class NativeMethods {
+
+            // int: TNK_IMP_Xt_XAllocColorD [{'type': 'int*', 'name': 'color'}, {'type': 'Display*', 'name': 'd'}, {'type': 'Colormap', 'name': 'cm'}, {'type': 'int', 'name': 'r'}, {'type': 'int', 'name': 'g'}, {'type': 'int', 'name': 'b'}, {'type': 'int', 'name': 'a'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint="TNK_IMP_Xt_XAllocColorD", CharSet=CharSet.Auto)]
+            internal static extern int TNK_IMP_Xt_XAllocColorD(out TonNurako.X11.XColor color, IntPtr d, int cm, int r, int g, int b, int a);
+        }
+
         public byte R { get; set;}
         public byte G { get; set;}
         public byte B { get; set;}
@@ -15,34 +26,48 @@ namespace TonNurako.Data
             get; set;
         }
 
-        private Widgets.IWidget Widget {
-            get; set;
+        private X11.Display Display {
+            get;
         }
+
+        //private Widgets.IWidget Widget {
+        //    get; set;
+        //}
 
         public Color(Widgets.IWidget widget) {
-            this.Widget = widget;
+            this.Display = widget.Handle.Display;
         }
 
-        public Color(TonNurako.Native.Xt.XColor xcolor) {
-                //((koror >> 24) & 0xff),
-                R = (byte)((xcolor.pixel >> 16) & 0xff);
-                G = (byte)((xcolor.pixel >> 8) & 0xff);
-                B = (byte)((xcolor.pixel) & 0xff);
-                Pixel = (uint)xcolor.pixel;
+        public Color(byte r, byte g, byte b) {
+            R = r;
+            G = g;
+            B = b;
+            Pixel =(uint)(((R & 0xff) << 16) | ((G & 0xff) << 8) | (B & 0xff));
         }
 
         public Color(TonNurako.Widgets.IWidget widget, string xcolor) {
-            Native.Xt.XColor c = Native.ExtremeSports.XParseColor(widget, xcolor);
+            TonNurako.X11.XColor c = Native.ExtremeSports.XParseColor(widget, xcolor);
             SetWidgetColor((uint)c.pixel);
-            this.Widget = widget;
+            this.Display = widget.Handle.Display;
         }
 
         public static Color FromName(TonNurako.Widgets.IWidget widget, string name) {
             return new Color(widget, name);
         }
 
-        public TonNurako.Native.Xt.XColor ToXColor(TonNurako.Widgets.IWidget widget) {
-            return Native.ExtremeSports.XAllocColor((null == widget.Handle) ? this.Widget : widget, R, G, B, 255);
+        public TonNurako.X11.XColor ToXColor(TonNurako.Widgets.IWidget widget) {
+            int cm = 0;
+            widget.ToolkitResources.GetValue(TonNurako.Motif.ResourceId.XmNcolormap, out cm);
+            var color = new TonNurako.X11.XColor();
+            NativeMethods.TNK_IMP_Xt_XAllocColorD(out color, Display.Handle, cm,  R, G, B, 255);
+            return color;
+            //return Native.ExtremeSports.XAllocColor((null == widget.Handle) ? this.Widget : widget, R, G, B, 255);
+        }
+
+        public TonNurako.X11.XColor ToXColor(X11.Display d, X11.Colormap cm) {
+            var color = new TonNurako.X11.XColor();
+            NativeMethods.TNK_IMP_Xt_XAllocColorD(out color, d.Handle, cm.Handle, R, G, B, 255);
+            return color;
         }
 
         public override string ToString() {

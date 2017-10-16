@@ -29,7 +29,7 @@ namespace TonNurako.Widgets.Xm
 		public override int Create(IWidget parent)
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreatePanedWindow, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreatePanedWindow, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -40,10 +40,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int MarginHeight {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNmarginHeight, 3);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNmarginHeight, 3);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNmarginHeight, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNmarginHeight, value);
             }
         }
 
@@ -51,10 +51,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int MarginWidth {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNmarginWidth, 3);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNmarginWidth, 3);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNmarginWidth, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNmarginWidth, value);
             }
         }
 
@@ -62,10 +62,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual Orientation Orientation {
             get {
-                return XSports.GetValue<Orientation>(Native.Motif.ResourceId.XmNorientation, Orientation.Vertical);
+                return XSports.GetValue<Orientation>(TonNurako.Motif.ResourceId.XmNorientation, Orientation.Vertical);
             }
             set {
-                XSports.SetValue<Orientation>(Native.Motif.ResourceId.XmNorientation, value);
+                XSports.SetValue<Orientation>(TonNurako.Motif.ResourceId.XmNorientation, value);
             }
         }
 
@@ -73,10 +73,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool RefigureMode {
             get {
-                return XSports.GetBool(Native.Motif.ResourceId.XmNrefigureMode, true);
+                return XSports.GetBool(TonNurako.Motif.ResourceId.XmNrefigureMode, true);
             }
             set {
-            XSports.SetBool(Native.Motif.ResourceId.XmNrefigureMode, value);
+            XSports.SetBool(TonNurako.Motif.ResourceId.XmNrefigureMode, value);
             }
         }
 
@@ -84,10 +84,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int SashHeight {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNsashHeight, 10);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNsashHeight, 10);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNsashHeight, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNsashHeight, value);
             }
         }
 
@@ -95,10 +95,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int SashIndent {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNsashIndent, -10);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNsashIndent, -10);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNsashIndent, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNsashIndent, value);
             }
         }
 
@@ -106,10 +106,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int SashShadowThickness {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNsashShadowThickness, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNsashShadowThickness, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNsashShadowThickness, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNsashShadowThickness, value);
             }
         }
 
@@ -117,10 +117,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int SashWidth {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNsashWidth, 10);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNsashWidth, 10);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNsashWidth, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNsashWidth, value);
             }
         }
 
@@ -128,10 +128,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool SeparatorOn {
             get {
-                return XSports.GetBool(Native.Motif.ResourceId.XmNseparatorOn, true);
+                return XSports.GetBool(TonNurako.Motif.ResourceId.XmNseparatorOn, true);
             }
             set {
-            XSports.SetBool(Native.Motif.ResourceId.XmNseparatorOn, value);
+            XSports.SetBool(TonNurako.Motif.ResourceId.XmNseparatorOn, value);
             }
         }
 
@@ -139,10 +139,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Spacing {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNspacing, 8);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNspacing, 8);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNspacing, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNspacing, value);
             }
         }
 

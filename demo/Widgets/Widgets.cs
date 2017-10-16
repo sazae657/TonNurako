@@ -568,7 +568,7 @@ namespace Widgets {
                 else if (info.PropertyType.Equals(typeof(int))) {
                     result = CreateIntForm(ifr, prop);
                 }
-                else if (info.PropertyType.Equals(typeof(TonNurako.Data.Color))) {
+                else if (info.PropertyType.Equals(typeof(TonNurako.GC.Color))) {
                     result = CreateColorRWForm(ifr, prop);
                 }
                 else if (info.PropertyType.Equals(typeof(TonNurako.Data.KeySym))) {
@@ -754,7 +754,7 @@ namespace Widgets {
             cb.ValueChangedEvent += (x, y) => {
                 PropHolder p = (PropHolder)y.Sender.UserData;
                 try {
-                    var color = TonNurako.Data.Color.FromName(this, cb.Value);
+                    var color = TonNurako.GC.Color.FromName(this, cb.Value);
                     p.info.SetValue(p.instance, color, null);
                 }
                 catch {

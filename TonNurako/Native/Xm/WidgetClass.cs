@@ -3,7 +3,9 @@
 // 
 // Motif
 //
-namespace TonNurako.Native.Motif
+using TonNurako.Native;
+
+namespace TonNurako.Motif
 {
     /// <summary>
     /// ｳｲｼﾞｪｯﾄｸﾗｽ

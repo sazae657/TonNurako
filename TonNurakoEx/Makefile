@@ -6,10 +6,12 @@ BUILD := Debug
 LINKER := $(CC)
 BINDIR := ../bin/$(BUILD)/
 
+
 CFLAGS := $(CFLAGS) -Iimport.app $(MOTF_HEADER_ARGS) $(X11_HEADER_ARGS)
 LINK_LIBS := -Limport.app/lib $(MOTF_LIBRARY_ARGS) $(MOTIF_LIBS) $(X11_LIBRARY_ARGS) $(X11_LIBS)
 LINK_FLAGS := -g -shared
 OPT := -g -D_DEBUG
+GEN_CFLAGS := -Wno-format
 
 # チェック
 CHECK_ARGS=Check Args
@@ -44,19 +46,23 @@ XM_RESOURCEID_CS_TPL=$(TEMPLATE_DIR)/ResourceId.iso
 XM_STRINGCONSTANT_CS=$(GEN_SRC_DIR)/Xm.StringConstant.cs
 XM_STRINGCONSTANT_CS_TPL=$(TEMPLATE_DIR)/StringConstant.iso
 
+X_CONSTANT_CS=$(GEN_SRC_DIR)/X.Constant.cs
+X_CONSTANT_CS_TPL=$(TEMPLATE_DIR)/X.Constant.cbl $(TEMPLATE_DIR)/X.Constant.iso
+X_CONSTANT_CS_MAP=$(GEN_SRC_DIR)/X.Constant.map
 
 .if "${BUILD}" == "Release"
 OPT = -O2 -DNDEBUG
 .endif
 
 
-OBJ=DlSym.o  \
- ClassDef.o  \
- XmImport.o  \
- XtImport.o  \
- X11Import.o \
- TonNurako.o \
- XmCreateFuncs.o
+OBJ=DlSym.o	\
+ 	ClassDef.o \
+ 	XmImport.o \
+	XtImport.o  \
+	X11Import.o \
+	X11ImportMacro.o \
+    TonNurako.o \
+	XmCreateFuncs.o
 
 TARGET = $(BINDIR)libTonNurako.extremesports
 
@@ -101,29 +107,31 @@ $(IMP_CHECK_E): $(IMP_CHECK_C)
 
 # ほほほ
 
-GenSrc: $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
+GenSrc: $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS) $(X_CONSTANT_CS)
 
 $(TEMP_BIN):
 	mkdir -p $(TEMP_BIN)
 
 $(XM_CONSTANT_CS): $(XM_CONSTANT_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/const.py $(XM_CONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
+	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
 	$(GEN_EXE) >$(XM_CONSTANT_CS)
-	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS)  $(COMMON_I) -o $(GEN_EXE) $(LIB_CHECK_C)  $(LINK_LIBS)
 
 $(XM_RESOURCEID_CS): $(XM_RESOURCEID_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/resource.py $(XM_RESOURCEID_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)  $(LINK_LIBS)
+	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)  $(LINK_LIBS)
 	$(GEN_EXE) >$(XM_RESOURCEID_CS)
-	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(LIB_CHECK_C)  $(LINK_LIBS)
 
 $(XM_STRINGCONSTANT_CS): $(XM_STRINGCONSTANT_CS_TPL)
 	$(PYTHON) $(SCRIPT_DIR)/str_const.py $(XM_STRINGCONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
+	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
 	$(GEN_EXE) >$(XM_STRINGCONSTANT_CS)
-	$(CC) $(CFLAGS) $(EXE_LINK_FLAGS)  $(COMMON_I) -o $(GEN_EXE) $(LIB_CHECK_C) $(LINK_LIBS)
 
+$(X_CONSTANT_CS): $(X_CONSTANT_CS_TPL)
+	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(X_CONSTANT_CS_TPL) >$(GEN_C)
+	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
+	$(GEN_EXE) >$(X_CONSTANT_CS)
+	$(PYTHON) $(SCRIPT_DIR)/map.py $(X_CONSTANT_CS_TPL) >$(X_CONSTANT_CS_MAP)
 
 clean.lib:
 	- rm -rf *.o
@@ -133,7 +141,7 @@ clean.lib:
 
 clean: clean.lib
 	- rm $(MOTIF_CHECK_E) $(LIB_CHECK_E) $(IMP_CHECK_E) $(RULES_OK_DIR)/*file
-	- rm $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS)
+	- rm $(XM_CONSTANT_CS) $(XM_RESOURCEID_CS) $(XM_STRINGCONSTANT_CS) $(X_CONSTANT_CS)
 
 install: clean
 

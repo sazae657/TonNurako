@@ -4,54 +4,137 @@
 // Xlibﾗｯﾊﾟー
 //
 using System;
-namespace TonNurako.Native.X11
+namespace TonNurako.X11
 {
+
+
+    public static class XStatus {
+        public static int True => 1;
+        public static int False => 0; 
+    }
+
+    /// <summary>
+    /// ﾊﾞｯｷﾝｸﾞｽﾄｱー
+    /// </summary>
+    public enum BackingStoreHint : int {
+        NotUseful   = TonNurako.X11.Constant.NotUseful,
+        WhenMapped  = TonNurako.X11.Constant.WhenMapped,
+        Always      = TonNurako.X11.Constant.Always,
+    }
+
+
+    /// <summary>
+    /// ChangeCloseDownModeの定数
+    /// </summary>
+    public enum CloseDownMode : int {
+        DestroyAll = TonNurako.X11.Constant.DestroyAll,
+        RetainPermanent = TonNurako.X11.Constant.RetainPermanent,
+        RetainTemporary = TonNurako.X11.Constant.RetainTemporary
+    }
+
+    /// <summary>
+    /// MapState
+    /// </summary>
+    public enum MapState : int {
+        IsUnmapped = TonNurako.X11.Constant.IsUnmapped,
+        IsUnviewable = TonNurako.X11.Constant.IsUnviewable,
+        IsViewable = TonNurako.X11.Constant.IsViewable,
+    }
+
+    /// <summary>
+    /// Grab
+    /// </summary>
+    public enum GrabMode : int {
+        GrabModeSync = TonNurako.X11.Constant.GrabModeSync,
+        GrabModeAsync = TonNurako.X11.Constant.GrabModeAsync,
+    }
+
+
+    /// <summary>
+    /// ChangeWindowAttributes
+    /// </summary>
+    [Flags]
+    public enum ChangeWindowAttributes : int {
+        CWBackPixmap = TonNurako.X11.Constant.CWBackPixmap,
+        CWBackPixel = TonNurako.X11.Constant.CWBackPixel,
+        CWBorderPixmap = TonNurako.X11.Constant.CWBorderPixmap,
+        CWBorderPixel = TonNurako.X11.Constant.CWBorderPixel,
+        CWBitGravity = TonNurako.X11.Constant.CWBitGravity,
+        CWWinGravity = TonNurako.X11.Constant.CWWinGravity,
+        CWBackingStore = TonNurako.X11.Constant.CWBackingStore,
+        CWBackingPlanes = TonNurako.X11.Constant.CWBackingPlanes,
+        CWBackingPixel = TonNurako.X11.Constant.CWBackingPixel,
+        CWOverrideRedirect = TonNurako.X11.Constant.CWOverrideRedirect,
+        CWSaveUnder = TonNurako.X11.Constant.CWSaveUnder,
+        CWEventMask = TonNurako.X11.Constant.CWEventMask,
+        CWDontPropagate = TonNurako.X11.Constant.CWDontPropagate,
+        CWColormap = TonNurako.X11.Constant.CWColormap,
+        CWCursor = TonNurako.X11.Constant.CWCursor
+    }
+
+    /// <summary>
+    /// Gravity
+    /// </summary>
+    [Flags]
+    public enum Gravity : int {
+        ForgetGravity = TonNurako.X11.Constant.ForgetGravity,
+        NorthWestGravity = TonNurako.X11.Constant.NorthWestGravity,
+        NorthGravity = TonNurako.X11.Constant.NorthGravity,
+        NorthEastGravity = TonNurako.X11.Constant.NorthEastGravity,
+        WestGravity = TonNurako.X11.Constant.WestGravity,
+        CenterGravity = TonNurako.X11.Constant.CenterGravity,
+        EastGravity = TonNurako.X11.Constant.EastGravity,
+        SouthWestGravity = TonNurako.X11.Constant.SouthWestGravity,
+        SouthGravity = TonNurako.X11.Constant.SouthGravity,
+        SouthEastGravity = TonNurako.X11.Constant.SouthEastGravity,
+        StaticGravity = TonNurako.X11.Constant.StaticGravity,
+    }
+
+
+    public enum UnmapGravity : int {
+        UnmapGravity = TonNurako.X11.Constant.UnmapGravity,
+        NorthWestGravity = TonNurako.X11.Constant.NorthWestGravity,
+        NorthGravity = TonNurako.X11.Constant.NorthGravity,
+        NorthEastGravity = TonNurako.X11.Constant.NorthEastGravity,
+        WestGravity = TonNurako.X11.Constant.WestGravity,
+        CenterGravity = TonNurako.X11.Constant.CenterGravity,
+        EastGravity = TonNurako.X11.Constant.EastGravity,
+        SouthWestGravity = TonNurako.X11.Constant.SouthWestGravity,
+        SouthGravity = TonNurako.X11.Constant.SouthGravity,
+        SouthEastGravity = TonNurako.X11.Constant.SouthEastGravity,
+        StaticGravity = TonNurako.X11.Constant.StaticGravity,
+    }
+
     /// <summary>
     /// ｲﾍﾞﾝﾄﾏｽｸ
     /// </summary>
     [Flags]
-    public enum Masks {
-        NoEventMask	= 0x0,
-        KeyPressMask	= 0x1,
-        KeyReleaseMask	= 0x2,
-        ButtonPressMask	= 0x4,
-        ButtonReleaseMask	= 0x8,
-        EnterWindowMask	= 0x10,
-        LeaveWindowMask	= 0x20,
-        PointerMotionMask	= 0x40,
-        PointerMotionHintMask	= 0x80,
-        Button1MotionMask	= 0x100,
-        Button2MotionMask	= 0x200,
-        Button3MotionMask	= 0x400,
-        Button4MotionMask	= 0x800,
-        Button5MotionMask	= 0x1000,
-        ButtonMotionMask	= 0x2000,
-        KeymapStateMask	= 0x4000,
-        ExposureMask	= 0x8000,
-        VisibilityChangeMask	= 0x10000,
-        StructureNotifyMask	= 0x20000,
-        ResizeRedirectMask	= 0x40000,
-        SubstructureNotifyMask	= 0x80000,
-        SubstructureRedirectMask	= 0x100000,
-        FocusChangeMask	= 0x200000,
-        PropertyChangeMask	= 0x400000,
-        ColormapChangeMask	= 0x800000,
-        OwnerGrabButtonMask	= 0x1000000,
-        ShiftMask	= 0x1,
-        LockMask	= 0x2,
-        ControlMask	= 0x4,
-        Mod1Mask	= 0x8,
-        Mod2Mask	= 0x10,
-        Mod3Mask	= 0x20,
-        Mod4Mask	= 0x40,
-        Mod5Mask	= 0x80,
-        Button1Mask	= 0x100,
-        Button2Mask	= 0x200,
-        Button3Mask	= 0x400,
-        Button4Mask	= 0x800,
-        Button5Mask	= 0x1000,
-        CWEventMask	= 0x800,
-        GCPlaneMask	= 0x2,
-        GCClipMask	= 0x80000,
+    public enum EventMask : int {
+        NoEventMask             = TonNurako.X11.Constant.NoEventMask,
+        KeyPressMask            = TonNurako.X11.Constant.KeyPressMask,
+        KeyReleaseMask          = TonNurako.X11.Constant.KeyReleaseMask,
+        ButtonPressMask         = TonNurako.X11.Constant.ButtonPressMask,
+        ButtonReleaseMask       = TonNurako.X11.Constant.ButtonReleaseMask,
+        EnterWindowMask         = TonNurako.X11.Constant.EnterWindowMask,
+        LeaveWindowMask         = TonNurako.X11.Constant.LeaveWindowMask,
+        PointerMotionMask       = TonNurako.X11.Constant.PointerMotionMask,
+        PointerMotionHintMask   = TonNurako.X11.Constant.PointerMotionHintMask,
+        Button1MotionMask       = TonNurako.X11.Constant.Button1MotionMask,
+        Button2MotionMask       = TonNurako.X11.Constant.Button2MotionMask,
+        Button3MotionMask       = TonNurako.X11.Constant.Button3MotionMask,
+        Button4MotionMask       = TonNurako.X11.Constant.Button4MotionMask,
+        Button5MotionMask       = TonNurako.X11.Constant.Button5MotionMask,
+        ButtonMotionMask        = TonNurako.X11.Constant.ButtonMotionMask,
+        KeymapStateMask         = TonNurako.X11.Constant.KeymapStateMask,
+        ExposureMask            = TonNurako.X11.Constant.ExposureMask,
+        VisibilityChangeMask    = TonNurako.X11.Constant.VisibilityChangeMask,
+        StructureNotifyMask     = TonNurako.X11.Constant.StructureNotifyMask,
+        ResizeRedirectMask      = TonNurako.X11.Constant.ResizeRedirectMask,
+        SubstructureNotifyMask  = TonNurako.X11.Constant.SubstructureNotifyMask,
+        SubstructureRedirectMask = TonNurako.X11.Constant.SubstructureRedirectMask,
+        FocusChangeMask         = TonNurako.X11.Constant.FocusChangeMask,
+        PropertyChangeMask      = TonNurako.X11.Constant.PropertyChangeMask,
+        ColormapChangeMask      = TonNurako.X11.Constant.ColormapChangeMask,
+        OwnerGrabButtonMask     = TonNurako.X11.Constant.OwnerGrabButtonMask,
     }
 }

@@ -15,8 +15,8 @@ namespace TonNurako.Events {
         }
         
         internal override void ParseXEvent(System.IntPtr call, System.IntPtr client) {
-            var callData = (Native.Motif.XmStruct.XmFileSelectionBoxCallbackStruct)
-            Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmFileSelectionBoxCallbackStruct) );
+            var callData = (TonNurako.Motif.XmStruct.XmFileSelectionBoxCallbackStruct)
+            Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmFileSelectionBoxCallbackStruct) );
 
             Reason = ConvertReason(callData.reason);
         }

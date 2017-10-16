@@ -1,5 +1,9 @@
 Site.mp3
 *.o
+*.pyc
+CMake*
+cmake*
+Config/*
 import.app/*
 !import.app/Contents
 check.localized/rules.*

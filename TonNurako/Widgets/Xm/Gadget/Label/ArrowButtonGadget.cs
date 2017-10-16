@@ -26,7 +26,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifGadget(Native.Motif.CreateSymbol.XmCreateArrowButtonGadget, parent, ToolkitResources);
+				this.CreateMotifGadget(TonNurako.Motif.CreateSymbol.XmCreateArrowButtonGadget, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -38,11 +38,11 @@ namespace TonNurako.Widgets.Xm
         public virtual ArrowDirection ArrowDirection {
             get {
                 return XSports.GetValue<ArrowDirection>(
-                    Native.Motif.ResourceId.XmNarrowDirection, ArrowDirection.Up, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNarrowDirection, ArrowDirection.Up, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetValue<ArrowDirection>(
-                    Native.Motif.ResourceId.XmNarrowDirection, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNarrowDirection, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -51,11 +51,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int DetailShadowThickness {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNdetailShadowThickness, 2, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNdetailShadowThickness, 2, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetInt(
-                Native.Motif.ResourceId.XmNdetailShadowThickness, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNdetailShadowThickness, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -64,11 +64,11 @@ namespace TonNurako.Widgets.Xm
         public virtual MultiClick MultiClick {
             get {
                 return XSports.GetValue<MultiClick>(
-                    Native.Motif.ResourceId.XmNmultiClick, MultiClick.Discard, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNmultiClick, MultiClick.Discard, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetValue<MultiClick>(
-                    Native.Motif.ResourceId.XmNmultiClick, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNmultiClick, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -77,10 +77,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> ActivateEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNactivateCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNactivateCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNactivateCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNactivateCallback ,  value );
             }
         }
 
@@ -88,10 +88,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> ArmEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNarmCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNarmCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNarmCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNarmCallback ,  value );
             }
         }
 
@@ -99,10 +99,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> DisarmEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNdisarmCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNdisarmCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNdisarmCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNdisarmCallback ,  value );
             }
         }
     }

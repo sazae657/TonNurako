@@ -5,7 +5,7 @@
 //
 using System;
 using System.Collections.Generic;
-using TonNurako.Native.Xt;
+using TonNurako.Xt;
 using System.Linq;
 
 namespace TonNurako.Native {
@@ -82,7 +82,7 @@ namespace TonNurako.Native {
 
 			foreach (var q in cbs)
 			{
-				Native.Xt.XtSports.XtRemoveEventHandler(target,
+				TonNurako.Xt.XtSports.XtRemoveEventHandler(target,
 						q.EventMask,false, q.Proc, IntPtr.Zero);
 			}
             activeCallbacks.RemoveAll(x => x.EventMask == mask);
@@ -106,7 +106,7 @@ namespace TonNurako.Native {
 
 			//既出ｷー
             foreach (var q in callbacks) {
-                Native.Xt.XtSports.XtAddEventHandler(target,
+                TonNurako.Xt.XtSports.XtAddEventHandler(target,
                     q.EventMask,false, q.Proc, IntPtr.Zero);
                 //追加済みに追加
                 activeCallbacks.Add(q);
@@ -124,7 +124,7 @@ namespace TonNurako.Native {
         public void RemoveAll() {
             foreach(var q in activeCallbacks) {
                 System.Diagnostics.Debug.WriteLine($"XEventQueueM<{target.GetType()}>: Remove{q.EventMask}");
-                Native.Xt.XtSports.XtRemoveEventHandler(target, q.EventMask, false, q.Proc, IntPtr.Zero);
+                TonNurako.Xt.XtSports.XtRemoveEventHandler(target, q.EventMask, false, q.Proc, IntPtr.Zero);
             }
             activeCallbacks.Clear();
         }

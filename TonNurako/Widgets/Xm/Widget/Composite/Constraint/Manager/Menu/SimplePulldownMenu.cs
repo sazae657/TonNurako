@@ -35,7 +35,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateSimplePulldownMenu, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateSimplePulldownMenu, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);

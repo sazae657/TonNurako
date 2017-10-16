@@ -65,6 +65,24 @@ namespace TonNurako {
         public delegate void Delegaty();
 
         /// <summary>
+        /// ﾗｲﾌﾞﾗﾘーの登録
+        /// </summary>
+        public static void RegisterGlobals() {
+            TonNurako.Xt.XtSports.Register("Xt");
+            TonNurako.Motif.XmSports.Register("Xm");
+            TonNurako.X11.X11Sports.Register("X11");
+        }
+
+        /// <summary>
+        /// ﾗｲﾌﾞﾗﾘーの登録解除
+        /// </summary>
+        public static void UnregisterGlobals() {
+            TonNurako.Motif.XmSports.Unregister();
+            TonNurako.Xt.XtSports.Unregister();
+            TonNurako.X11.X11Sports.Unregister();
+        }
+
+        /// <summary>
         /// 実行
         /// </summary>
         /// <param name="_Ctx">ﾄﾝﾇﾗｺﾝﾃｷｽﾄ</param>
@@ -77,9 +95,7 @@ namespace TonNurako {
 
             GlobalContext = _Ctx;
 
-            Native.Xt.XtSports.Register("Xt");
-            Native.Motif.XmSports.Register("Xm");
-            Native.X11.X11Sports.Register("X11");
+            RegisterGlobals();
 
             if (_Ctx.Name == "") {
                 Assembly running = Assembly.GetEntryAssembly();
@@ -115,10 +131,7 @@ namespace TonNurako {
                 });
             }
 
-            Native.Motif.XmSports.Unregister();
-            Native.Xt.XtSports.Unregister();
-            Native.X11.X11Sports.Unregister();
-
+            UnregisterGlobals();
 
             return retVal;
         }

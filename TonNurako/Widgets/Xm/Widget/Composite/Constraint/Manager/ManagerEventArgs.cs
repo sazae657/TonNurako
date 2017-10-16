@@ -14,8 +14,8 @@ namespace TonNurako.Events
         }
 
         internal override void ParseXEvent(System.IntPtr call, System.IntPtr client)  {
-            var callData = (Native.Motif.XmStruct.XmPopupHandlerCallbackStruct)
-                Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmPopupHandlerCallbackStruct ) );
+            var callData = (TonNurako.Motif.XmStruct.XmPopupHandlerCallbackStruct)
+                Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmPopupHandlerCallbackStruct ) );
 
             System.Diagnostics.Debug.WriteLine(DumpStruct(callData));
             Reason = ConvertReason(callData.reason);
@@ -37,8 +37,8 @@ namespace TonNurako.Events
         }
 
         internal override void ParseXEvent(System.IntPtr call, System.IntPtr client) {
-            var callData = (Native.Motif.XmStruct.XmComboBoxCallbackStruct)
-                Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmComboBoxCallbackStruct ) );
+            var callData = (TonNurako.Motif.XmStruct.XmComboBoxCallbackStruct)
+                Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmComboBoxCallbackStruct ) );
 
             this.Reason = ConvertReason(callData.reason);
             this.Item = Data.CompoundString.AsString(callData.item_or_text);
@@ -59,8 +59,8 @@ namespace TonNurako.Events
         }
 
         internal override void ParseXEvent(System.IntPtr call, System.IntPtr client) {
-            var callData = (Native.Motif.XmStruct.XmComboBoxCallbackStruct)
-                Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmComboBoxCallbackStruct ) );
+            var callData = (TonNurako.Motif.XmStruct.XmComboBoxCallbackStruct)
+                Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmComboBoxCallbackStruct ) );
 
             this.Reason = ConvertReason(callData.reason);
             this.Item = Data.CompoundString.AsString(callData.item_or_text);

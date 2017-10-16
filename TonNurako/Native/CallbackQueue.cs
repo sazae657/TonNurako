@@ -6,7 +6,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using TonNurako.Native.Xt;
+using TonNurako.Xt;
 
 namespace TonNurako.Native {
 
@@ -121,7 +121,7 @@ namespace TonNurako.Native {
                 switch( q.type )
                 {
                     case CallbackType.Xt:
-                        Native.Xt.XtSports.XtRemoveCallback( target,
+                        TonNurako.Xt.XtSports.XtRemoveCallback( target,
                             q.eventName, q.proc );
                         break;
                     case CallbackType.WM:
@@ -148,7 +148,7 @@ namespace TonNurako.Native {
             foreach(var w in activeCallbacks) {
                 switch(w.type) {
                     case CallbackType.Xt:
-                        Native.Xt.XtSports.XtRemoveCallback( target,
+                        TonNurako.Xt.XtSports.XtRemoveCallback( target,
                             w.eventName, w.proc );
                         break;
                     case CallbackType.WM:
@@ -180,7 +180,7 @@ namespace TonNurako.Native {
                 switch( q.type )
                 {
                     case CallbackType.Xt:
-                        Native.Xt.XtSports.XtAddCallback( target,
+                        TonNurako.Xt.XtSports.XtAddCallback( target,
                             q.eventName, q.proc );
                         break;
                     case CallbackType.WM:

@@ -21,9 +21,8 @@
 ### 必要なもの
 
 * 広い心
-* mono
+* mono 4.x
 * OpenMotif 2.3+
-* libXpm
 * Python2
 
 *Mac OSXで動かす場合は32bit版のﾗｲﾌﾞﾗﾘーを用意するかmono64のｲﾝｽﾄーﾙが必要な模様です
@@ -43,27 +42,38 @@
 
 該当しない場合はこの手順をすっ飛ばして構いません
 
-#### 1. ﾊﾟｽを指定する場合
+1. 依存ﾗｲﾌﾞﾗﾘーを自動検索させる場合
+    TonNurako/TonNurakoExで *make audio* を叩いてください
 
-TonNurako/TonNurakoEx/Config.mp3 を TonNurako/TonNurakoEx/Site.mp3にｺﾋﾟーしてﾊﾟｽを調整してください
-```
-% cd TonNurakoEx
-% cp -i Config.mp3 Site.mp3
-% dtpad Site.mp3
-```
+    *AUDIO OK*と表示されれば成功です
+    ```
+    % make audio
+    (中略)
+    -- AUDIO OK --
+    %
+    ```
 
-#### 2. Config.mp3編集するのが面倒くさい場合
+1. ﾊﾟｽを指定する場合
 
-TonNurako/TonNurakoEx/import.app フォルダー直下にX11とXmへのｼﾝﾎﾞﾘｯｸﾘﾝｸを作成してください
+    TonNurako/TonNurakoEx/Config.mp3 を TonNurako/TonNurakoEx/Site.mp3にｺﾋﾟーしてﾊﾟｽを調整してください
+    ```
+    % cd TonNurakoEx
+    % cp -i Config.mp3 Site.mp3
+    % dtpad Site.mp3
+    ```
 
-```
-# 例: Motifがｳｲﾙｽ並の扱いを受けて検疫ﾌｫﾙﾀﾞーに移動されてしまっている不自由ｼｽﾃﾑの場合
+1. Config.mp3編集するのが面倒くさい場合
 
-% cd TonNurako/TonNurakoEx/import.app
-% ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/include/X11 .
-% ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/include/Xm .
-% ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/lib .
-```
+    TonNurako/TonNurakoEx/import.app フォルダー直下にX11とXmへのｼﾝﾎﾞﾘｯｸﾘﾝｸを作成してください
+
+    ```
+    # 例: Motifがｳｲﾙｽ並の扱いを受けて検疫ﾌｫﾙﾀﾞーに移動されてしまっている不自由ｼｽﾃﾑの場合
+
+    % cd TonNurako/TonNurakoEx/import.app
+    % ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/include/X11 .
+    % ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/include/Xm .
+    % ln -sv /Library/SystemMigration/History/Migration-{UUID}/QuarantineRoot/usr/lib .
+    ```
 
 ﾋﾞﾙﾄﾞ出来る事の確認
 ```
@@ -73,7 +83,7 @@ TonNurako/TonNurakoEx/import.app フォルダー直下にX11とXmへのｼﾝﾎ
 ## ﾄﾝﾇﾗｺ本体とﾃﾞﾓのﾋﾞﾙﾄﾞ
 ```
 % cd ..
-% xbuild
+% msbuild
 ---
 % ls bin/Debug/*Ton*
  bin/Debug/TonNurako.dll

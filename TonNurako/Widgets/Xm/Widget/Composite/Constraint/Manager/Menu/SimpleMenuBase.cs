@@ -48,10 +48,10 @@ namespace TonNurako.Widgets.Xm
         }
 
         internal void delegaty( IntPtr w, IntPtr client, IntPtr call ){
-            if(! MotifAnyEventTable.HasHandler(Native.Motif.EventId.XmNsimpleCallback)) {
+            if(! MotifAnyEventTable.HasHandler(TonNurako.Motif.EventId.XmNsimpleCallback)) {
                 return;
             }
-            MotifAnyEventTable.CallHandler(Native.Motif.EventId.XmNsimpleCallback, this,
+            MotifAnyEventTable.CallHandler(TonNurako.Motif.EventId.XmNsimpleCallback, this,
                 ((Func<AnyEventArgs>)(() => {
                     var t = new AnyEventArgs();
                     t.Sender = this;
@@ -61,7 +61,7 @@ namespace TonNurako.Widgets.Xm
         }
 
         internal void AddInternalEventHandler() {
-            //ToolkitResources.Add(Native.Motif.EventId.XmNsimpleCallback, delegaty);
+            //ToolkitResources.Add(TonNurako.Motif.EventId.XmNsimpleCallback, delegaty);
         }
 
 
@@ -72,7 +72,7 @@ namespace TonNurako.Widgets.Xm
         public virtual string[] ButtonAcceleratorText {
             set {
                 XSports.SetStringTable(
-                    Native.Motif.ResourceId.XmNbuttonAcceleratorText, new CompoundStringTable(value), Data.Resource.Access.C);
+                    TonNurako.Motif.ResourceId.XmNbuttonAcceleratorText, new CompoundStringTable(value), Data.Resource.Access.C);
             }
         }
 
@@ -80,7 +80,7 @@ namespace TonNurako.Widgets.Xm
         public virtual int ButtonCount {
             set {
                 XSports.SetInt(
-                    Native.Motif.ResourceId.XmNbuttonCount, value, Data.Resource.Access.C);
+                    TonNurako.Motif.ResourceId.XmNbuttonCount, value, Data.Resource.Access.C);
             }
         }
         // ### UNKOWN TYPE
@@ -94,7 +94,7 @@ namespace TonNurako.Widgets.Xm
         public virtual string[] Buttons {
             set {
                 XSports.SetStringTable(
-                    Native.Motif.ResourceId.XmNbuttons, new CompoundStringTable(value), Data.Resource.Access.C);
+                    TonNurako.Motif.ResourceId.XmNbuttons, new CompoundStringTable(value), Data.Resource.Access.C);
             }
         }
 
@@ -103,7 +103,7 @@ namespace TonNurako.Widgets.Xm
         public virtual int ButtonSet {
             set {
                 XSports.SetInt(
-                    Native.Motif.ResourceId.XmNbuttonSet, value, Data.Resource.Access.C);
+                    TonNurako.Motif.ResourceId.XmNbuttonSet, value, Data.Resource.Access.C);
             }
         }
 
@@ -116,10 +116,10 @@ namespace TonNurako.Widgets.Xm
                 for(int i = 0; i < value.Length; i++) {
                     w[i] = (byte)value[i];
                 }
-                ToolkitResources.Add(Native.Motif.ResourceId.XmNbuttonType, w);
+                ToolkitResources.Add(TonNurako.Motif.ResourceId.XmNbuttonType, w);
                 ToolkitResources.SetWidget(true);
                 //XSports.SetIntArray(
-                //    Native.Motif.ResourceId.XmNbuttonType, value, Data.Resource.Access.C);
+                //    TonNurako.Motif.ResourceId.XmNbuttonType, value, Data.Resource.Access.C);
             }
         }
 
@@ -128,7 +128,7 @@ namespace TonNurako.Widgets.Xm
         public virtual string OptionLabel {
             set {
                 XSports.SetString(
-                    Native.Motif.ResourceId.XmNoptionLabel, value, Data.Resource.Access.C);
+                    TonNurako.Motif.ResourceId.XmNoptionLabel, value, Data.Resource.Access.C);
             }
         }
 
@@ -138,7 +138,7 @@ namespace TonNurako.Widgets.Xm
 
             set {
                 XSports.SetKeySym(
-                    Native.Motif.ResourceId.XmNoptionMnemonic, value, Data.Resource.Access.C);
+                    TonNurako.Motif.ResourceId.XmNoptionMnemonic, value, Data.Resource.Access.C);
             }
         }
 
@@ -148,7 +148,7 @@ namespace TonNurako.Widgets.Xm
 
             set {
                 XSports.SetInt(
-                    Native.Motif.ResourceId.XmNpostFromButton, value, Data.Resource.Access.C);
+                    TonNurako.Motif.ResourceId.XmNpostFromButton, value, Data.Resource.Access.C);
             }
         }
 		#endregion
@@ -162,10 +162,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.SimpleEventArgs> SimpleEvent
         {
             add {
-                SimpleEventTable.AddHandlerToRes(this, Native.Motif.EventId.XmNsimpleCallback ,  value );
+                SimpleEventTable.AddHandlerToRes(this, TonNurako.Motif.EventId.XmNsimpleCallback ,  value );
             }
             remove {
-                SimpleEventTable.RemoveHandler(Native.Motif.EventId.XmNsimpleCallback ,  value );
+                SimpleEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNsimpleCallback ,  value );
             }
         }
 

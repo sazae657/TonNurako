@@ -19,19 +19,19 @@ namespace TonNurako.Widgets.Xm
         /// 子のID
         /// </summary>
         internal enum ChildId {
-            XmDIALOG_CANCEL_BUTTON = Native.Motif.Constant.XmDIALOG_CANCEL_BUTTON,
+            XmDIALOG_CANCEL_BUTTON = TonNurako.Motif.Constant.XmDIALOG_CANCEL_BUTTON,
 
-            XmDIALOG_DEFAULT_BUTTON = Native.Motif.Constant.XmDIALOG_DEFAULT_BUTTON,
+            XmDIALOG_DEFAULT_BUTTON = TonNurako.Motif.Constant.XmDIALOG_DEFAULT_BUTTON,
 
-            XmDIALOG_HELP_BUTTON = Native.Motif.Constant.XmDIALOG_HELP_BUTTON,
+            XmDIALOG_HELP_BUTTON = TonNurako.Motif.Constant.XmDIALOG_HELP_BUTTON,
 
-            XmDIALOG_MESSAGE_LABEL = Native.Motif.Constant.XmDIALOG_MESSAGE_LABEL,
+            XmDIALOG_MESSAGE_LABEL = TonNurako.Motif.Constant.XmDIALOG_MESSAGE_LABEL,
 
-            XmDIALOG_OK_BUTTON = Native.Motif.Constant.XmDIALOG_OK_BUTTON,
+            XmDIALOG_OK_BUTTON = TonNurako.Motif.Constant.XmDIALOG_OK_BUTTON,
 
-            XmDIALOG_SEPARATOR = Native.Motif.Constant.XmDIALOG_SEPARATOR,
+            XmDIALOG_SEPARATOR = TonNurako.Motif.Constant.XmDIALOG_SEPARATOR,
 
-            XmDIALOG_SYMBOL_LABEL = Native.Motif.Constant.XmDIALOG_SYMBOL_LABEL
+            XmDIALOG_SYMBOL_LABEL = TonNurako.Motif.Constant.XmDIALOG_SYMBOL_LABEL
         }
 
 		#region 固有
@@ -131,7 +131,7 @@ namespace TonNurako.Widgets.Xm
 		public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateMessageBox, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateMessageBox, parent, ToolkitResources);
 			}
             RegisterChildren();
 
@@ -197,10 +197,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual GC.Pixmap SymbolPixmap {
             get {
-                return XSports.GetPixmap(Native.Motif.ResourceId.XmNsymbolPixmap);
+                return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNsymbolPixmap);
             }
             set {
-                XSports.SetPixmap(Native.Motif.ResourceId.XmNsymbolPixmap, value);
+                XSports.SetPixmap(TonNurako.Motif.ResourceId.XmNsymbolPixmap, value);
             }
         }
 
@@ -208,10 +208,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual string CancelLabelString {
             get {
-                return XSports.GetString(Native.Motif.ResourceId.XmNcancelLabelString, "");
+                return XSports.GetString(TonNurako.Motif.ResourceId.XmNcancelLabelString, "");
             }
             set {
-                XSports.SetString(Native.Motif.ResourceId.XmNcancelLabelString, value);
+                XSports.SetString(TonNurako.Motif.ResourceId.XmNcancelLabelString, value);
             }
         }
 
@@ -220,10 +220,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual DefaultButtonType DefaultButtonType {
             get {
-                return XSports.GetValue(Native.Motif.ResourceId.XmNdefaultButtonType, DefaultButtonType.Ok);
+                return XSports.GetValue(TonNurako.Motif.ResourceId.XmNdefaultButtonType, DefaultButtonType.Ok);
             }
             set {
-                XSports.SetValue(Native.Motif.ResourceId.XmNdefaultButtonType, value);
+                XSports.SetValue(TonNurako.Motif.ResourceId.XmNdefaultButtonType, value);
             }
         }
 
@@ -232,10 +232,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual MessageDialogType DialogType {
             get {
-                return XSports.GetValue(Native.Motif.ResourceId.XmNdialogType, MessageDialogType.Message);
+                return XSports.GetValue(TonNurako.Motif.ResourceId.XmNdialogType, MessageDialogType.Message);
             }
             set {
-                XSports.SetValue(Native.Motif.ResourceId.XmNdialogType, value);
+                XSports.SetValue(TonNurako.Motif.ResourceId.XmNdialogType, value);
             }
         }
 
@@ -244,10 +244,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual string HelpLabelString {
             get {
-                return XSports.GetString(Native.Motif.ResourceId.XmNhelpLabelString, "");
+                return XSports.GetString(TonNurako.Motif.ResourceId.XmNhelpLabelString, "");
             }
             set {
-                XSports.SetString(Native.Motif.ResourceId.XmNhelpLabelString, value);
+                XSports.SetString(TonNurako.Motif.ResourceId.XmNhelpLabelString, value);
             }
         }
 
@@ -256,10 +256,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual Alignment MessageAlignment {
             get {
-                return XSports.GetValue(Native.Motif.ResourceId.XmNmessageAlignment, Alignment.Beginning);
+                return XSports.GetValue(TonNurako.Motif.ResourceId.XmNmessageAlignment, Alignment.Beginning);
             }
             set {
-                XSports.SetValue(Native.Motif.ResourceId.XmNmessageAlignment, value);
+                XSports.SetValue(TonNurako.Motif.ResourceId.XmNmessageAlignment, value);
             }
         }
 
@@ -268,10 +268,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual string MessageString {
             get {
-                return XSports.GetString(Native.Motif.ResourceId.XmNmessageString, "");
+                return XSports.GetString(TonNurako.Motif.ResourceId.XmNmessageString, "");
             }
             set {
-                XSports.SetString(Native.Motif.ResourceId.XmNmessageString, value);
+                XSports.SetString(TonNurako.Motif.ResourceId.XmNmessageString, value);
             }
         }
 
@@ -291,10 +291,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool MinimizeButtons {
             get {
-                return XSports.GetBool(Native.Motif.ResourceId.XmNminimizeButtons, false);
+                return XSports.GetBool(TonNurako.Motif.ResourceId.XmNminimizeButtons, false);
             }
             set {
-                XSports.SetBool(Native.Motif.ResourceId.XmNminimizeButtons, value);
+                XSports.SetBool(TonNurako.Motif.ResourceId.XmNminimizeButtons, value);
             }
         }
 
@@ -303,10 +303,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual string OkLabelString {
             get {
-                return XSports.GetString(Native.Motif.ResourceId.XmNokLabelString, "");
+                return XSports.GetString(TonNurako.Motif.ResourceId.XmNokLabelString, "");
             }
             set {
-                XSports.SetString(Native.Motif.ResourceId.XmNokLabelString, value);
+                XSports.SetString(TonNurako.Motif.ResourceId.XmNokLabelString, value);
             }
         }
 
@@ -316,10 +316,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> CancelEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNcancelCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNcancelCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNcancelCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNcancelCallback ,  value );
             }
         }
 
@@ -328,10 +328,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> OkEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNokCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNokCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNokCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNokCallback ,  value );
             }
         }
 	}

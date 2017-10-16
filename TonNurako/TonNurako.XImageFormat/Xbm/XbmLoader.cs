@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,7 +43,7 @@ namespace TonNurako.XImageFormat {
         /// <summary>
         /// 読み込む
         /// </summary>
-        /// <param name="path">ファイル名</param>
+        /// <param name="path">ﾌｧｲﾙ名</param>
         /// <returns>XBM</returns>
         public Xbm Load(string path) {
             var lines = new List<string>();

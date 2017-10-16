@@ -26,7 +26,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateForm, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateForm, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -40,10 +40,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int FractionBase {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNfractionBase, 100);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNfractionBase, 100);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNfractionBase, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNfractionBase, value);
             }
         }
 
@@ -52,10 +52,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int HorizontalSpacing {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNhorizontalSpacing, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNhorizontalSpacing, 0);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNhorizontalSpacing, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNhorizontalSpacing, value);
             }
         }
 
@@ -64,10 +64,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool RubberPositioning {
             get {
-                return XSports.GetBool(Native.Motif.ResourceId.XmNrubberPositioning, false);
+                return XSports.GetBool(TonNurako.Motif.ResourceId.XmNrubberPositioning, false);
             }
             set {
-                XSports.SetBool(Native.Motif.ResourceId.XmNrubberPositioning, value);
+                XSports.SetBool(TonNurako.Motif.ResourceId.XmNrubberPositioning, value);
             }
         }
 
@@ -76,10 +76,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int VerticalSpacing {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNverticalSpacing, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNverticalSpacing, 0);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNverticalSpacing, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNverticalSpacing, value);
             }
         }
         #endregion

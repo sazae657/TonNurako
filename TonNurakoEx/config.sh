@@ -24,5 +24,7 @@ cp ${KWD}/check.localized/Template.mp3 ${SITE_MP3}
 SITE_MP3=${SITE_MP3} ${KWD}/check.localized/find_Xlib.sh || error_exit "Xlibが見つからないよう"
 SITE_MP3=${SITE_MP3} ${KWD}/check.localized/find_Motif.sh || error_exit "Motifが見つからないよう"
 
-echo "OK"
+echo
+echo "-- AUDIO OK --"
+echo
 cleanup

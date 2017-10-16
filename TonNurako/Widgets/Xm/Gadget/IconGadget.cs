@@ -16,12 +16,12 @@ namespace TonNurako.Widgets.Xm
     {
         #region 定数(どっかに追い出したい)
         public enum IconType {
-            LargeIcon = Native.Motif.Constant.XmLARGE_ICON,
-            SmallIcon = Native.Motif.Constant.XmSMALL_ICON,
+            LargeIcon = TonNurako.Motif.Constant.XmLARGE_ICON,
+            SmallIcon = TonNurako.Motif.Constant.XmSMALL_ICON,
         }
         public enum SelectState {
-            Selected = Native.Motif.Constant.XmSELECTED,
-            NotSelected = Native.Motif.Constant.XmNOT_SELECTED,
+            Selected = TonNurako.Motif.Constant.XmSELECTED,
+            NotSelected = TonNurako.Motif.Constant.XmNOT_SELECTED,
         }
         #endregion
 
@@ -40,7 +40,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifGadget(Native.Motif.CreateSymbol.XmCreateIconGadget, parent, ToolkitResources);
+				this.CreateMotifGadget(TonNurako.Motif.CreateSymbol.XmCreateIconGadget, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -52,11 +52,11 @@ namespace TonNurako.Widgets.Xm
         public virtual Data.RenderTable RenderTable {
             get {
                 return XSports.GetRenderTable(
-                    Native.Motif.ResourceId.XmNrenderTable, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNrenderTable, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetRenderTable(
-                    Native.Motif.ResourceId.XmNrenderTable, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNrenderTable, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -65,11 +65,11 @@ namespace TonNurako.Widgets.Xm
         public virtual Alignment Lignment {
             get {
                 return XSports.GetValue<Alignment>(
-                    Native.Motif.ResourceId.XmNalignment, Alignment.Center, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNalignment, Alignment.Center, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetValue<Alignment>(
-                Native.Motif.ResourceId.XmNalignment, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNalignment, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -78,11 +78,11 @@ namespace TonNurako.Widgets.Xm
         public virtual CompoundStringTable Detail {
             get {
                 return XSports.GetStringTable(
-                    Native.Motif.ResourceId.XmNdetail, DetailCount, true, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNdetail, DetailCount, true, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetStringTable(
-                    Native.Motif.ResourceId.XmNdetail, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNdetail, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -91,11 +91,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int DetailCount {
             get {
                 return XSports.GetInt(
-                    Native.Motif.ResourceId.XmNdetailCount, 0, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNdetailCount, 0, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetInt(
-                    Native.Motif.ResourceId.XmNdetailCount, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNdetailCount, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -107,11 +107,11 @@ namespace TonNurako.Widgets.Xm
         public virtual string LabelString {
             get {
                 return XSports.GetString(
-                    Native.Motif.ResourceId.XmNlabelString, "", Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlabelString, "", Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetString(
-                    Native.Motif.ResourceId.XmNlabelString, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlabelString, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -120,11 +120,11 @@ namespace TonNurako.Widgets.Xm
         public virtual GC.Pixmap LargeIconMask {
             get {
                 return XSports.GetPixmap(
-                Native.Motif.ResourceId.XmNlargeIconMask, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNlargeIconMask, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetPixmap(
-                    Native.Motif.ResourceId.XmNlargeIconMask, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlargeIconMask, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -133,11 +133,11 @@ namespace TonNurako.Widgets.Xm
         public virtual GC.Pixmap LargeIconPixmap {
             get {
                 return XSports.GetPixmap(
-                    Native.Motif.ResourceId.XmNlargeIconPixmap, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlargeIconPixmap, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetPixmap(
-                    Native.Motif.ResourceId.XmNlargeIconPixmap, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlargeIconPixmap, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -146,11 +146,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int MarginHeight {
             get {
                 return XSports.GetInt(
-                    Native.Motif.ResourceId.XmNmarginHeight, 2, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNmarginHeight, 2, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetInt(
-                    Native.Motif.ResourceId.XmNmarginHeight, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNmarginHeight, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -159,11 +159,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int MarginWidth {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNmarginWidth, 2, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNmarginWidth, 2, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetInt(
-                    Native.Motif.ResourceId.XmNmarginWidth, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNmarginWidth, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -172,11 +172,11 @@ namespace TonNurako.Widgets.Xm
         public virtual GC.Pixmap SmallIconMask {
             get {
                 return XSports.GetPixmap(
-                Native.Motif.ResourceId.XmNsmallIconMask, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNsmallIconMask, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetPixmap(
-                Native.Motif.ResourceId.XmNsmallIconMask, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNsmallIconMask, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -185,11 +185,11 @@ namespace TonNurako.Widgets.Xm
         public virtual GC.Pixmap SmallIconPixmap {
             get {
                 return XSports.GetPixmap(
-                    Native.Motif.ResourceId.XmNsmallIconPixmap, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNsmallIconPixmap, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetPixmap(
-                    Native.Motif.ResourceId.XmNsmallIconPixmap, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNsmallIconPixmap, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -198,11 +198,11 @@ namespace TonNurako.Widgets.Xm
         public virtual IconType ViewType {
             get {
                 return XSports.GetValue<IconType>(
-                Native.Motif.ResourceId.XmNviewType, IconType.LargeIcon, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNviewType, IconType.LargeIcon, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetValue<IconType>(
-                Native.Motif.ResourceId.XmNviewType, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNviewType, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -211,11 +211,11 @@ namespace TonNurako.Widgets.Xm
         public virtual SelectState VisualEmphasis {
             get {
                 return XSports.GetValue<SelectState>(
-                Native.Motif.ResourceId.XmNvisualEmphasis, SelectState.NotSelected, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNvisualEmphasis, SelectState.NotSelected, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetValue<SelectState>(
-                    Native.Motif.ResourceId.XmNvisualEmphasis, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNvisualEmphasis, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -224,11 +224,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int Spacing {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNspacing, 4, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNspacing, 4, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetInt(
-                Native.Motif.ResourceId.XmNspacing, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNspacing, value, Data.Resource.Access.CSG);
             }
         }
     }

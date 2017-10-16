@@ -6,8 +6,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Drawing;
-using TonNurako.Native.X11;
-using TonNurako.Native.Xt;
+using TonNurako.X11;
+using TonNurako.Xt;
 
 
 namespace TonNurako.GC

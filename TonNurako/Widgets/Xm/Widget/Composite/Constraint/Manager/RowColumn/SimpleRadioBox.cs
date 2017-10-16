@@ -22,7 +22,7 @@ namespace TonNurako.Widgets.Xm
 
 		public override int Create(IWidget parent) {
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateSimpleRadioBox, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateSimpleRadioBox, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}

@@ -91,13 +91,13 @@ namespace TonNurako.Events
         }
 
 
-        internal AnyEventArgs(Native.Motif.XmStruct.XmAnyCallbackStruct call) : base() {
+        internal AnyEventArgs(TonNurako.Motif.XmStruct.XmAnyCallbackStruct call) : base() {
             Reason = ConvertReason(call.reason);
         }
 
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
-            Native.Motif.XmStruct.XmAnyCallbackStruct callData = (Native.Motif.XmStruct.XmAnyCallbackStruct)
-            Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmAnyCallbackStruct ) );
+            TonNurako.Motif.XmStruct.XmAnyCallbackStruct callData = (TonNurako.Motif.XmStruct.XmAnyCallbackStruct)
+            Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmAnyCallbackStruct ) );
 
             Reason = ConvertReason(callData.reason);
         }

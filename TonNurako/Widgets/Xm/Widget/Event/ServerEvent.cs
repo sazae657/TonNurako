@@ -33,12 +33,12 @@ namespace TonNurako.Events
         }
 
 
-        public void AddButtonEvent(Native.X11.Masks _Mask, EventHandler<Events.Server.ButtonEventArgs> listener) {
+        public void AddButtonEvent(TonNurako.X11.EventMask _Mask, EventHandler<Events.Server.ButtonEventArgs> listener) {
             ulong mask = (ulong)_Mask;
             ButtonEventTable.AddHandler(Widget, mask , listener);
         }
 
-        public void AddMotionEvent(Native.X11.Masks _Mask, EventHandler<Events.Server.MotionEventArgs> listener) {
+        public void AddMotionEvent(TonNurako.X11.EventMask _Mask, EventHandler<Events.Server.MotionEventArgs> listener) {
             ulong mask = (ulong)_Mask;
             MotionEventTable.AddHandler(Widget, mask , listener);
         }
@@ -46,10 +46,10 @@ namespace TonNurako.Events
         public virtual event EventHandler<Events.Server.ButtonEventArgs> ButtonPressEvent
         {
             add {
-                ButtonEventTable.AddHandler(Widget, (ulong)Native.X11.Masks.ButtonPressMask ,  value );
+                ButtonEventTable.AddHandler(Widget, (ulong)TonNurako.X11.EventMask.ButtonPressMask ,  value );
             }
             remove {
-                ButtonEventTable.RemoveHandler((ulong)Native.X11.Masks.ButtonPressMask ,  value );
+                ButtonEventTable.RemoveHandler((ulong)TonNurako.X11.EventMask.ButtonPressMask ,  value );
             }
         }
 
@@ -57,20 +57,20 @@ namespace TonNurako.Events
         public virtual event EventHandler<Events.Server.ButtonEventArgs> ButtonReleaseEvent
         {
             add {
-                ButtonEventTable.AddHandler(Widget, (ulong)Native.X11.Masks.ButtonReleaseMask ,  value );
+                ButtonEventTable.AddHandler(Widget, (ulong)TonNurako.X11.EventMask.ButtonReleaseMask ,  value );
             }
             remove {
-                ButtonEventTable.RemoveHandler((ulong)Native.X11.Masks.ButtonReleaseMask ,  value );
+                ButtonEventTable.RemoveHandler((ulong)TonNurako.X11.EventMask.ButtonReleaseMask ,  value );
             }
         }
 
         public virtual event EventHandler<Events.Server.MotionEventArgs> PointerMotionEvent
         {
             add {
-                MotionEventTable.AddHandler(Widget, (ulong)Native.X11.Masks.PointerMotionMask ,  value );
+                MotionEventTable.AddHandler(Widget, (ulong)TonNurako.X11.EventMask.PointerMotionMask ,  value );
             }
             remove {
-                MotionEventTable.RemoveHandler((ulong)Native.X11.Masks.PointerMotionMask ,  value );
+                MotionEventTable.RemoveHandler((ulong)TonNurako.X11.EventMask.PointerMotionMask ,  value );
             }
         }
     }

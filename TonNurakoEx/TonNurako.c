@@ -10,6 +10,10 @@ unsigned int TNK_GetVersion()
     return (TONNURAKO_EX_MAJOR_VERSION * 1000 + TONNURAKO_EX_MINOR_VERSION);
 }
 
+TNK_EXPORT void PrintWCS_TNK(wchar_t *str) {
+    printf("%ls\n", str);
+}
+
 TNK_EXPORT
 unsigned int TNK_GetMotifVersion() {
     return xmUseVersion;
@@ -18,6 +22,16 @@ unsigned int TNK_GetMotifVersion() {
 TNK_EXPORT
 const char* TNK_GetMotifVersionString() {
     return XmVERSION_STRING;
+}
+
+typedef int(*Arg1ReturnInt)(void*);
+TNK_EXPORT
+int TNK_CallPtrArg1ReturnInt(Arg1ReturnInt fn, void* p) {
+    return fn(p);
+}
+
+TNK_EXPORT char *setlocale_TNK(int category, const char *locale) {
+    return setlocale(category, locale);
 }
 
 // ﾄﾝﾇﾗﾌﾟﾗｲﾍﾞーﾄﾊﾝﾄﾞﾗー
@@ -170,6 +184,19 @@ void TNK_IMP_TriggerPrivateEvent(LPTNK_APP_CONTEXT app, Widget widget) {
 void TNK_IMP_Flush(LPTNK_APP_CONTEXT app, Widget widget) {
     XFlush(XtDisplay(widget));
 }
+
+void TNK_IMP_SplitXClientMessageEventData(
+    const XClientMessageEvent* src, TNK_XClientMessageEventData* ev)
+{
+
+    memset(&ev->data, 0xcc, sizeof(ev->data));
+
+    memcpy(&ev->event, src, sizeof(XClientMessageEvent) - sizeof(src->data));
+    memcpy(ev->data.b, src->data.b, sizeof(src->data.b));
+    memcpy(ev->data.s, src->data.s, sizeof(src->data.s));
+    memcpy(ev->data.l, src->data.l, sizeof(src->data.l));
+}
+
 
 void
 dumpbin(const void* p, size_t len, const char* fs)

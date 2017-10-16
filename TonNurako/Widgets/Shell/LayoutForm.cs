@@ -78,7 +78,7 @@ namespace TonNurako.Widgets {
 		{
             if(IsShellAvalible) {
                 System.Diagnostics.Debug.WriteLine($"Realize: {this.GetType()}");
-                Native.Xt.XtSports.XtRealizeWidget(new ﾄﾝﾇﾗｼﾞｪｯﾄ(selfWidget.Widget, null));
+                TonNurako.Xt.XtSports.XtRealizeWidget(new ﾄﾝﾇﾗｼﾞｪｯﾄ(selfWidget.Widget, null));
                 UIeventTable.CallHandler(TonNuraEventId.Realized, this);
             }
 		}
