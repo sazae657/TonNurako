@@ -73,7 +73,7 @@ namespace TonNurako.Data {
 		{
             Release();
             isReference = false;
-            xmString = Native.Motif.XmSports.XmStringCreateLocalized( src );
+            xmString = TonNurako.Motif.XmSports.XmStringCreateLocalized( src );
 		}
 
         public string AsString() {
@@ -95,13 +95,13 @@ namespace TonNurako.Data {
             }
             System.Diagnostics.Debug.WriteLine("CompoundString: KONVERT Xm -> String");
 
-            IntPtr pStr =  Native.Motif.XmSports.XmStringUnparse(_Xm,
-                (int)Native.Motif.Constant.XmCHARSET_TEXT,
-                (int)Native.Motif.Constant.XmCHARSET_TEXT,
-                (int)Native.Motif.Constant.XmOUTPUT_ALL);
+            IntPtr pStr =  TonNurako.Motif.XmSports.XmStringUnparse(_Xm,
+                (int)TonNurako.Motif.Constant.XmCHARSET_TEXT,
+                (int)TonNurako.Motif.Constant.XmCHARSET_TEXT,
+                (int)TonNurako.Motif.Constant.XmOUTPUT_ALL);
 
             string ret = Marshal.PtrToStringAnsi(pStr);
-            Native.Xt.XtSports.XtFree(pStr);
+            TonNurako.Xt.XtSports.XtFree(pStr);
 
             return ret;
         }
@@ -117,7 +117,7 @@ namespace TonNurako.Data {
             }
 
 			if( xmString != IntPtr.Zero ) {
-				Native.Motif.XmSports.XmStringFree( xmString );
+				TonNurako.Motif.XmSports.XmStringFree( xmString );
                 xmString = IntPtr.Zero;
 			}
             lastConvertStr = IntPtr.Zero;

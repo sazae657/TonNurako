@@ -21,7 +21,7 @@ namespace TonNurako.Widgets.Xm
 
 		public override int Create(IWidget parent) {
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateRadioBox, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateRadioBox, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}

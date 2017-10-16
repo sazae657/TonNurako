@@ -22,8 +22,8 @@ namespace TonNurako.Events
         }
         public bool DoIt {
             set {
-                var wsb = (Native.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct)
-                    Marshal.PtrToStructure(rawCallData, typeof(Native.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct ) );
+                var wsb = (TonNurako.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct)
+                    Marshal.PtrToStructure(rawCallData, typeof(TonNurako.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct ) );
                 wsb.doit = value;
                 Marshal.StructureToPtr(wsb, rawCallData, false);
             }
@@ -34,8 +34,8 @@ namespace TonNurako.Events
         internal override void ParseXEvent(System.IntPtr call, System.IntPtr client)  {
             rawCallData = call;
 
-            var callData = (Native.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct)
-                Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct ) );
+            var callData = (TonNurako.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct)
+                Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmSimpleSpinBoxCallbackStruct ) );
 
             Value = CompoundString.AsString(callData.value);
             Position = callData.position;

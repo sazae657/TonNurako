@@ -109,7 +109,7 @@ namespace TonNurako.Data
 		//#region ｲﾝｽﾀﾝｽ変数
 
 		//保持するﾘｿーｽ
-		private List<Native.Xt.XtArg> resources;
+		private List<TonNurako.Xt.XtArg> resources;
 
 		//完成待ちのｳｲｼﾞｪｯﾄ参照
 		private List<WaitWidget> waitWidget;
@@ -117,7 +117,7 @@ namespace TonNurako.Data
 		//参照保持
 		private List<IDisposable> retainObjects;
 
-        private List<Native.Xt.G.XtCallBack> callbacks;
+        private List<TonNurako.Xt.G.XtCallBack> callbacks;
 
 
         // ﾍﾟﾝﾃﾞｨﾝｸﾞ？
@@ -162,13 +162,13 @@ namespace TonNurako.Data
 		public XResource(IWidget widget)
 		{
 			//保持用ﾘｿーｽの確保
-			resources = new List<Native.Xt.XtArg>();
+			resources = new List<TonNurako.Xt.XtArg>();
 
 			waitWidget = new List<WaitWidget>();
 
 			retainObjects = new List<IDisposable>();
 
-            callbacks = new List<Native.Xt.G.XtCallBack>();
+            callbacks = new List<TonNurako.Xt.G.XtCallBack>();
 
             isPending = false;
 
@@ -186,7 +186,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, int val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -201,7 +201,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, uint val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -215,7 +215,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, long val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -229,7 +229,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, ulong val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg), val);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -243,7 +243,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, IntPtr val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -258,7 +258,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, Native.NativeWidget val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.Widget.Handle);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.Widget.Handle);
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -273,7 +273,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, Enum val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , Convert.ToInt32(val));
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , Convert.ToInt32(val));
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -287,7 +287,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, bool val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val ? 1 : 0 );
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val ? 1 : 0 );
 
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
@@ -301,7 +301,7 @@ namespace TonNurako.Data
 		public void Add(Enum arg, ushort val )
 		{
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , (int)val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , (int)val);
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
 		}
@@ -311,14 +311,14 @@ namespace TonNurako.Data
 		/// </summary>
 		/// <param name="arg">ｾｯﾄするﾘｿーｽ</param>
 		/// <param name="val">値</param>
-		public void Add(Enum arg, TonNurako.Data.Color val)
+		public void Add(Enum arg, TonNurako.GC.Color val)
 		{
             ulong pixel = val.Pixel;
             if (null != Widget) {
                 pixel = val.ToXColor(Widget).pixel;
             }
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , pixel);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , pixel);
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
 		}
@@ -350,7 +350,7 @@ namespace TonNurako.Data
 			//保持
 			retainObjects.Add(val);
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val);
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
 		}
@@ -365,7 +365,7 @@ namespace TonNurako.Data
 			//保持
 			retainObjects.Add(val);
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.ToPointer());
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.ToPointer());
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
 		}
@@ -380,7 +380,7 @@ namespace TonNurako.Data
 			//保持
 			retainObjects.Add(val);
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.FontList);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , val.FontList);
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
 		}
@@ -397,7 +397,7 @@ namespace TonNurako.Data
 			//保持
 			retainObjects.Add(arr);
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , arr.Array);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(ToolkitOptionAttribute.GetToolkitName(arg) , arr.Array);
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
 		}
@@ -413,7 +413,7 @@ namespace TonNurako.Data
             var str = new StringPtrResource(val);
             retainObjects.Add(str);
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(
                 ToolkitOptionAttribute.GetToolkitName(arg) , str.String
             );
 			//ﾃーﾌﾞﾙに追加
@@ -425,12 +425,12 @@ namespace TonNurako.Data
 		/// </summary>
 		/// <param name="arg">ｾｯﾄするﾘｿーｽ</param>
 		/// <param name="val">値</param>
-		public void Add(Enum arg, Native.Xt.G.XtCallBack val )
+		public void Add(Enum arg, TonNurako.Xt.G.XtCallBack val )
 		{
-            callbacks.Add(new Native.Xt.G.XtCallBack(val));
+            callbacks.Add(new TonNurako.Xt.G.XtCallBack(val));
 
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(
                 ToolkitOptionAttribute.GetToolkitName(arg) , val
             );
 			//ﾃーﾌﾞﾙに追加
@@ -450,7 +450,7 @@ namespace TonNurako.Data
             //retainObjects.Add(str);
 
 			//ﾘｿーｽの保持用
-			Native.Xt.XtArg args = new Native.Xt.XtArg(arg , val);
+			TonNurako.Xt.XtArg args = new TonNurako.Xt.XtArg(arg , val);
 			//ﾃーﾌﾞﾙに追加
 			resources.Add(args);
 		}
@@ -578,12 +578,12 @@ namespace TonNurako.Data
 			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out val );
 		}
 
-		public void GetValue(Enum arg, out TonNurako.Data.Color val )
+		public void GetValue(Enum arg, out TonNurako.GC.Color val )
 		{
             long pixel = 0;
 			ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out pixel);
 
-            val = new TonNurako.Data.Color((uint)pixel);
+            val = new TonNurako.GC.Color((uint)pixel);
 		}
 
 		/// <summary>
@@ -642,8 +642,8 @@ namespace TonNurako.Data
 	   /// <summary>
 	   /// Argに変換
 	   /// </summary>
-        public Native.Xt.XtArg[] ToXtArg() {
-			Native.Xt.XtArg [] res = new Native.Xt.XtArg[ resources.Count ];
+        public TonNurako.Xt.XtArg[] ToXtArg() {
+			TonNurako.Xt.XtArg [] res = new TonNurako.Xt.XtArg[ resources.Count ];
 			for(int i = 0 ; i < resources.Count ; i++) {
 				res[i] = resources[i];
 			}

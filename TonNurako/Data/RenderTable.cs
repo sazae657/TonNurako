@@ -5,11 +5,11 @@ namespace TonNurako.Data
 {
     public class RenderTable : IDisposable {
         public enum MergeMode {
-            SKIP = Native.Motif.Constant.XmSKIP,
-            REPLACE = Native.Motif.Constant.XmMERGE_REPLACE,
-            OLD = Native.Motif.Constant.XmMERGE_OLD,
-            NEW = Native.Motif.Constant.XmMERGE_NEW,
-            DUPLICATE = Native.Motif.Constant.XmDUPLICATE,
+            SKIP = TonNurako.Motif.Constant.XmSKIP,
+            REPLACE = TonNurako.Motif.Constant.XmMERGE_REPLACE,
+            OLD = TonNurako.Motif.Constant.XmMERGE_OLD,
+            NEW = TonNurako.Motif.Constant.XmMERGE_NEW,
+            DUPLICATE = TonNurako.Motif.Constant.XmDUPLICATE,
         }
 
         internal static class NativeMethods {

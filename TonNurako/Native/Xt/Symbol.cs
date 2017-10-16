@@ -3,7 +3,7 @@
 // 
 // XToolkit
 //
-namespace TonNurako.Native.Xt
+namespace TonNurako.Xt
 {
 
 }

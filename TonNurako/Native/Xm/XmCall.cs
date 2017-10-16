@@ -5,8 +5,9 @@
 //
 using System;
 using System.Runtime.InteropServices;
+using TonNurako.Native;
 
-namespace TonNurako.Native.Motif
+namespace TonNurako.Motif
 {
     /// <summary>
     /// Motifﾛーﾀﾞー
@@ -34,7 +35,7 @@ namespace TonNurako.Native.Motif
 
         internal class Functions
         {
-            public delegate System.IntPtr XmCreateFunc(IntPtr parent,string name, Native.Xt.NativeXtArg[] arg, int argc );
+            public delegate System.IntPtr XmCreateFunc(IntPtr parent,string name, TonNurako.Xt.NativeXtArg[] arg, int argc );
         }
 
         internal static class NativeMethods
@@ -66,7 +67,7 @@ namespace TonNurako.Native.Motif
                 );
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XmMenuPosition_TNK", CharSet=CharSet.Auto)]
-            internal static extern void XmMenuPosition(IntPtr menu, [In]TonNurako.Native.Xt.XEventStruct.XButtonEvent xevent);
+            internal static extern void XmMenuPosition(IntPtr menu, [In]TonNurako.X11.Event.XButtonEvent xevent);
             
             
             [ DllImport(ExtremeSports.Lib, EntryPoint="XmRedisplayWidget_TNK", CharSet=CharSet.Auto) ]
@@ -102,7 +103,7 @@ namespace TonNurako.Native.Motif
                 return NativeMethods.XmStringUnparse(str, 0, tag_type, output_type, IntPtr.Zero, 0, parse_model);
             }
 
-        public static void XmMenuPosition(Widgets.IWidget menu, TonNurako.Native.Xt.XEventStruct.XButtonEvent xevent) {
+        public static void XmMenuPosition(Widgets.IWidget menu, TonNurako.X11.Event.XButtonEvent xevent) {
             NativeMethods.XmMenuPosition(menu.Handle.Widget.Handle, xevent);
         }
         
@@ -118,14 +119,14 @@ namespace TonNurako.Native.Motif
         /// <summary>
         /// XmCreateXXの呼び出し
         /// </summary>
-        public static IntPtr CallCreate2P(Native.Motif.CreateSymbol sym, Widgets.IWidget parent,string name, Native.Xt.XtArg[] args) {
+        public static IntPtr CallCreate2P(TonNurako.Motif.CreateSymbol sym, Widgets.IWidget parent,string name, TonNurako.Xt.XtArg[] args) {
             if (null ==args || 0 == args.Length) {
                 return Instance.xmCreateFuncs[(int)sym](parent.Handle.Widget.Handle, name, null, 0);
             }
 
-            Native.Xt.NativeXtArg[] au = new Native.Xt.NativeXtArg[args.Length];
+            TonNurako.Xt.NativeXtArg[] au = new TonNurako.Xt.NativeXtArg[args.Length];
             int argc = ExtremeSports.TnkConvertResourceEx(args, au, true);
-            foreach(Native.Xt.NativeXtArg k in au) {
+            foreach(TonNurako.Xt.NativeXtArg k in au) {
                 System.Diagnostics.Debug.WriteLine($"NA<A>: {k.Name} : {k.Value}");
             }
             System.Diagnostics.Debug.WriteLine($"XM_CVT {au.Length} -> {argc}");

@@ -27,7 +27,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifGadget(Native.Motif.CreateSymbol.XmCreateSeparatorGadget, parent, ToolkitResources);
+				this.CreateMotifGadget(TonNurako.Motif.CreateSymbol.XmCreateSeparatorGadget, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -39,11 +39,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int Margin {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNmargin, 0, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNmargin, 0, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetInt(
-                Native.Motif.ResourceId.XmNmargin, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNmargin, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -52,11 +52,11 @@ namespace TonNurako.Widgets.Xm
         public virtual Orientation Orientation {
             get {
                 return XSports.GetValue<Orientation>(
-                Native.Motif.ResourceId.XmNorientation, Orientation.Horizontal, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNorientation, Orientation.Horizontal, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetValue<Orientation>(
-                    Native.Motif.ResourceId.XmNorientation, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNorientation, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -65,11 +65,11 @@ namespace TonNurako.Widgets.Xm
         public virtual SeparatorType SeparatorType {
             get {
                 return XSports.GetValue<SeparatorType>(
-                Native.Motif.ResourceId.XmNseparatorType, SeparatorType.ShadowEtchedIn, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNseparatorType, SeparatorType.ShadowEtchedIn, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetValue<SeparatorType>(
-                    Native.Motif.ResourceId.XmNseparatorType, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNseparatorType, value, Data.Resource.Access.CSG);
             }
         }
     }

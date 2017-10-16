@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <WarningsAsErrors>0114</WarningsAsErrors>
+    <LangVersion>6</LangVersion>
     <!-- DocumentationFile>bin\Debug\TonNurako.XML</DocumentationFile -->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -61,20 +63,38 @@
     <Compile Include="TonNurako\GC\GraphicsContext.cs" />
     <Compile Include="TonNurako\GC\Pixmap.cs" />
     <Compile Include="TonNurako\GC\XImage.cs" />
+    <Compile Include="TonNurako\Misc\Inutility.cs" />
     <Compile Include="TonNurako\Native\Attribute.cs" />
     <Compile Include="TonNurako\Native\CallbackQueue.cs" />
     <Compile Include="TonNurako\Native\DlSym.cs" />
     <Compile Include="TonNurako\Native\ExtremeSports.cs" />
+    <Compile Include="TonNurako\Native\GEN\X.Atom.cs" />
+    <Compile Include="TonNurako\Native\GEN\X.Constant.cs" />
+    <Compile Include="TonNurako\Native\GEN\X.KeySym.cs" />
+    <Compile Include="TonNurako\Native\GEN\X.Proto.cs" />
+    <Compile Include="TonNurako\Native\GEN\X.StringConstant.cs" />
     <Compile Include="TonNurako\Native\GEN\Xm.Constant.cs" />
     <Compile Include="TonNurako\Native\GEN\Xm.ResourceId.cs" />
     <Compile Include="TonNurako\Native\GEN\Xm.StringConstant.cs" />
     <Compile Include="TonNurako\Native\Types.cs" />
+    <Compile Include="TonNurako\Native\X11\Atom.cs" />
+    <Compile Include="TonNurako\Native\X11\Color.cs" />
+    <Compile Include="TonNurako\Native\X11\Colormap.cs" />
+    <Compile Include="TonNurako\Native\X11\Display.cs" />
+    <Compile Include="TonNurako\Native\X11\Error.cs" />
+    <Compile Include="TonNurako\Native\X11\Event.cs" />
+    <Compile Include="TonNurako\Native\X11\Font.cs" />
     <Compile Include="TonNurako\Native\X11\GC.cs" />
     <Compile Include="TonNurako\Native\X11\Mask.cs" />
     <Compile Include="TonNurako\Native\X11\Mui.cs" />
+    <Compile Include="TonNurako\Native\X11\Screen.cs" />
     <Compile Include="TonNurako\Native\X11\Struct.cs" />
+    <Compile Include="TonNurako\Native\X11\Visual.cs" />
+    <Compile Include="TonNurako\Native\X11\Window.cs" />
+    <Compile Include="TonNurako\Native\X11\WindowAttributes.cs" />
     <Compile Include="TonNurako\Native\X11\X11Call.cs" />
     <Compile Include="TonNurako\Native\XEventQueue.cs" />
+    <Compile Include="TonNurako\Native\Xft\Struct.cs" />
     <Compile Include="TonNurako\Native\Xm\EventId.cs" />
     <Compile Include="TonNurako\Native\Xm\Symbol.cs" />
     <Compile Include="TonNurako\Native\Xm\Types.cs" />
@@ -83,6 +103,7 @@
     <Compile Include="TonNurako\Native\Xm\XmCall.cs" />
     <Compile Include="TonNurako\Native\Xm\XmCall.gen.cs" />
     <Compile Include="TonNurako\Native\Xt\Symbol.cs" />
+    <Compile Include="TonNurako\Native\Xt\Widget.cs" />
     <Compile Include="TonNurako\Native\Xt\Xt.cs" />
     <Compile Include="TonNurako\Native\Xt\XtCall.cs" />
     <Compile Include="TonNurako\Native\Xt\XtTypes.cs" />

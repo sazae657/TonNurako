@@ -4,14 +4,32 @@
 // Xlibﾗｯﾊﾟー
 //
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using TonNurako.Native;
 
-namespace TonNurako.Native.X11
+namespace TonNurako.X11
 {
-	/// <summary>
-	/// Xlibﾛーﾀﾞー
-	/// </summary>
-	public class X11Sports : Native.ExtremeSportsLoader {
+    public enum XLocale : int {
+        LC_CTYPE = TonNurako.X11.Constant.LC_CTYPE,
+        LC_NUMERIC = TonNurako.X11.Constant.LC_NUMERIC,
+        LC_TIME = TonNurako.X11.Constant.LC_TIME,
+        LC_COLLATE = TonNurako.X11.Constant.LC_COLLATE,
+        LC_MONETARY = TonNurako.X11.Constant.LC_MONETARY,
+        LC_MESSAGES = TonNurako.X11.Constant.LC_MESSAGES,
+        LC_ALL = TonNurako.X11.Constant.LC_ALL,
+        LC_PAPER = TonNurako.X11.Constant.LC_PAPER,
+        LC_NAME = TonNurako.X11.Constant.LC_NAME,
+        LC_ADDRESS = TonNurako.X11.Constant.LC_ADDRESS,
+        LC_TELEPHONE = TonNurako.X11.Constant.LC_TELEPHONE,
+        LC_MEASUREMENT = TonNurako.X11.Constant.LC_MEASUREMENT,
+        LC_IDENTIFICATION = TonNurako.X11.Constant.LC_IDENTIFICATION,
+    }
+
+    /// <summary>
+    /// Xlibﾛーﾀﾞー
+    /// </summary>
+    public class X11Sports : Native.ExtremeSportsLoader {
         private static X11Sports Instance {
             get;
             set;
@@ -32,101 +50,102 @@ namespace TonNurako.Native.X11
             Instance.Dispose();
             Instance = null;
         }
+        private Stack<IntPtr> XErrorHandlerStack = new Stack<IntPtr>();
+        private Stack<IntPtr> XIOErrorHandlerStack = new Stack<IntPtr>();
         private X11Sports(string lib) : base(lib) {
 
         }
-		#region 描画関連
 
         internal static class NativeMethods {
-            [DllImport(ExtremeSports.Lib, EntryPoint="RootWindowOfScreen_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "RootWindowOfScreen_TNK", CharSet = CharSet.Auto)]
             public static extern IntPtr RootWindowOfScreen(IntPtr screen);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XCreateGC_TNK", CharSet=CharSet.Auto)]
-            public static extern IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, [In,Out]ref XGCValues values);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateGC_TNK", CharSet = CharSet.Auto)]
+            public static extern IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, [In, Out]ref XGCValuesRec values);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XCreateGC_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateGC_TNK", CharSet = CharSet.Auto)]
             public static extern IntPtr XCreateGC(IntPtr display, IntPtr d, GCMask valuemask, IntPtr values);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XFreeGC_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeGC_TNK", CharSet = CharSet.Auto)]
             public static extern int XFreeGC(IntPtr display, IntPtr gc);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XGetGCValues_TNK", CharSet=CharSet.Auto)]
-            internal static extern int XGetGCValues(IntPtr display, IntPtr gc, GCMask valuemask, out XGCValues values_return);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetGCValues_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XGetGCValues(IntPtr display, IntPtr gc, GCMask valuemask, out XGCValuesRec values_return);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XCreatePixmap_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCreatePixmap_TNK", CharSet = CharSet.Auto)]
             public static extern IntPtr XCreatePixmap(IntPtr display, IntPtr d, uint width, uint height, uint depth);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XFreePixmap_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFreePixmap_TNK", CharSet = CharSet.Auto)]
             public static extern int XFreePixmap(IntPtr display, IntPtr pixmap);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XSetForeground_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetForeground_TNK", CharSet = CharSet.Auto)]
             public static extern int XSetForeground(IntPtr display, IntPtr gc, ulong foreground);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XSetBackground_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetBackground_TNK", CharSet = CharSet.Auto)]
             public static extern int XSetBackground(IntPtr display, IntPtr gc, ulong background);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XCopyPlane_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCopyPlane_TNK", CharSet = CharSet.Auto)]
             public static extern int XCopyPlane(IntPtr display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y, uint width, uint height, int dest_x, int dest_y, ulong plane);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XCopyArea_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCopyArea_TNK", CharSet = CharSet.Auto)]
             public static extern int XCopyArea(IntPtr display, IntPtr src, IntPtr dest, IntPtr gc, int src_x, int src_y, uint width, uint height, int dest_x, int dest_y);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XClearWindow_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XClearWindow_TNK", CharSet = CharSet.Auto)]
             public static extern int XClearWindow(IntPtr display, IntPtr w);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XClearArea_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XClearArea_TNK", CharSet = CharSet.Auto)]
             public static extern int XClearArea(IntPtr display, IntPtr w, int x, int y, uint width, uint height, [MarshalAs(UnmanagedType.U1)] bool exposures);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawPoint_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawPoint_TNK", CharSet = CharSet.Auto)]
             public static extern int XDrawPoint(IntPtr display, IntPtr d, IntPtr gc, int x, int y);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawPoints_TNK", CharSet=CharSet.Auto)]
-            public static extern int XDrawPoints(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawPoints_TNK", CharSet = CharSet.Auto)]
+            public static extern int XDrawPoints(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XPoint[] points, int npoints, int mode);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawLine_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawLine_TNK", CharSet = CharSet.Auto)]
             public static extern int XDrawLine(IntPtr display, IntPtr d, IntPtr gc, int x1, int y1, int x2, int y2);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawLines_TNK", CharSet=CharSet.Auto)]
-            public static extern int XDrawLines(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawLines_TNK", CharSet = CharSet.Auto)]
+            public static extern int XDrawLines(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XPoint[] points, int npoints, int mode);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawSegments_TNK", CharSet=CharSet.Auto)]
-            public static extern int XDrawSegments(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XSegment [] segments, int nsegments);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawSegments_TNK", CharSet = CharSet.Auto)]
+            public static extern int XDrawSegments(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XSegment[] segments, int nsegments);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawRectangle_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawRectangle_TNK", CharSet = CharSet.Auto)]
             public static extern int XDrawRectangle(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawRectangles_TNK", CharSet=CharSet.Auto)]
-            public static extern int XDrawRectangles(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawRectangles_TNK", CharSet = CharSet.Auto)]
+            public static extern int XDrawRectangles(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XRectangle[] rectangles, int nrectangles);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XFillRectangle_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFillRectangle_TNK", CharSet = CharSet.Auto)]
             public static extern int XFillRectangle(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XFillRectangles_TNK", CharSet=CharSet.Auto)]
-            public static extern int XFillRectangles(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFillRectangles_TNK", CharSet = CharSet.Auto)]
+            public static extern int XFillRectangles(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XRectangle[] rectangles, int nrectangles);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XFillPolygon_TNK", CharSet=CharSet.Auto)]
-            public static extern int XFillPolygon(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int shape, int mode);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFillPolygon_TNK", CharSet = CharSet.Auto)]
+            public static extern int XFillPolygon(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XPoint[] points, int npoints, int shape, int mode);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XFillArc_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFillArc_TNK", CharSet = CharSet.Auto)]
             public static extern int XFillArc(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height, int angle1, int angle2);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XFillArcs_TNK", CharSet=CharSet.Auto)]
-            public static extern int XFillArcs(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFillArcs_TNK", CharSet = CharSet.Auto)]
+            public static extern int XFillArcs(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XArc[] arcs, int narcs);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawArc_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawArc_TNK", CharSet = CharSet.Auto)]
             public static extern int XDrawArc(IntPtr display, IntPtr d, IntPtr gc, int x, int y, uint width, uint height, int angle1, int angle2);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XDrawArcs_TNK", CharSet=CharSet.Auto)]
-            public static extern int XDrawArcs(IntPtr display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs);
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDrawArcs_TNK", CharSet = CharSet.Auto)]
+            public static extern int XDrawArcs(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XArc[] arcs, int narcs);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XSetLineAttributes_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetLineAttributes_TNK", CharSet = CharSet.Auto)]
             public static extern int XSetLineAttributes(IntPtr display, IntPtr gc, uint line_width, int line_style, int cap_style, int join_style);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XSetDashes_TNK", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetDashes_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern int XSetDashes(IntPtr display, IntPtr gc, int dash_offset, [MarshalAs(UnmanagedType.LPStr)] string dash_list, int n);
 
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XGetGeometry_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetGeometry_TNK", CharSet = CharSet.Auto)]
             public static extern int XGetGeometry(IntPtr display, IntPtr d, out IntPtr root_return, out IntPtr x_return,
                 out IntPtr y_return, out IntPtr width_return, out IntPtr height_return, out IntPtr border_width_return, out IntPtr depth_return);
 
@@ -134,32 +153,156 @@ namespace TonNurako.Native.X11
             //public static extern int XGetWindowAttributes(IntPtr display, IntPtr w, out XWindowAttributes window_attributes_return);
 
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XStringToKeysym_TNK", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XStringToKeysym_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern int XStringToKeysym([MarshalAs(UnmanagedType.LPStr)] string xstring);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint="XKeysymToString_TNK", CharSet=CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XKeysymToString_TNK", CharSet = CharSet.Auto)]
             public static extern IntPtr XKeysymToString(int keysym);
 
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFree_TNK", CharSet = CharSet.Auto)]
+            public static extern int XFree([In, Out] IntPtr data);
+
+            // Bool: XSupportsLocale []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSupportsLocale_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XSupportsLocale();
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetLocaleModifiers_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            internal static extern IntPtr XSetLocaleModifiers([MarshalAs(UnmanagedType.LPStr)] string modifier_list);
+
+
+            // int*: XSetErrorHandler []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetErrorHandler([MarshalAs(UnmanagedType.FunctionPtr)] XErrorHandlerInt handler);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetErrorHandler([In]IntPtr handler);
+
+
+            // int*: XSetIOErrorHandler []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIOErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetIOErrorHandler([MarshalAs(UnmanagedType.FunctionPtr)] XIOErrorHandlerInt handler);
+
+            // int*: XSetIOErrorHandler []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIOErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetIOErrorHandler([In]IntPtr handler);
+
+
+            // int: XSetInputFocus [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'focus'}, {'type': 'int', 'name': 'revert_to'}, {'type': 'Time', 'name': 'time'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetInputFocus_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XSetInputFocus(IntPtr display, IntPtr focus, int revert_to, uint time);
+
+            // int: XGetInputFocus [{'type': 'Display*', 'name': 'display'}, {'type': 'Window*', 'name': 'focus_return'}, {'type': 'int*', 'name': 'revert_to_return'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetInputFocus_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XGetInputFocus(IntPtr display, out IntPtr focus_return, out IntPtr revert_to_return);
+
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XStringListToTextProperty_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XStringListToTextProperty(IntPtr list, int count, out IntPtr text_prop_return);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XTextPropertyToStringList_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XTextPropertyToStringList(ref XTextProperty text_prop, out IntPtr list_return, out IntPtr count_return);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeStringList_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XFreeStringList([In]IntPtr list);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "setlocale_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr setlocale_TNK(XLocale category, [MarshalAs(UnmanagedType.LPStr)] string locale);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "PrintWCS_TNK", CharSet = CharSet.Auto)]
+            internal static extern void PrintWCS_TNK([MarshalAs(UnmanagedType.LPWStr)] string locale);
         }
+
+        public static void XSetErrorHandler(XErrorHandler handler) {
+            if (null == handler) {
+                if (0 == Instance.XErrorHandlerStack.Count) {
+                    return;
+                }
+                NativeMethods.XSetErrorHandler(Instance.XErrorHandlerStack.Pop());
+                return;
+            }
+            var h = NativeMethods.XSetErrorHandler((dpy, code) => {
+                return handler(new Display(dpy, false), code);
+            });
+            Instance.XErrorHandlerStack.Push(h);
+        }
+
+        public static void XSetIOErrorHandler(XIOErrorHandler handler) {
+            if (null == handler) {
+                if (0 == Instance.XIOErrorHandlerStack.Count) {
+                    return;
+                }
+                NativeMethods.XSetIOErrorHandler(Instance.XIOErrorHandlerStack.Pop());
+                return;
+            }
+            var h = NativeMethods.XSetIOErrorHandler((dpy) => {
+                return handler(new Display(dpy, false));
+            });
+            Instance.XIOErrorHandlerStack.Push(h);
+        }
+
+        public static int XFree(IntPtr data) {
+            return NativeMethods.XFree(data);
+        }
+
+        public static void PrintWCS_TNK(string data) {
+            NativeMethods.PrintWCS_TNK(data);
+        }
+
 
         public static IntPtr RootWindowOfScreen(IntPtr screen) {
             return NativeMethods.RootWindowOfScreen(screen);
-		}
-
-		public static IntPtr XCreateGC(Display display, IntPtr d, GCMask valuemask, ref XGCValues values) {
-            return NativeMethods.XCreateGC(display.Handle,d,valuemask,ref values);
         }
+
+        public static string SetLocale(XLocale category, string locale) {
+            var r = NativeMethods.setlocale_TNK(category, locale);
+            if (IntPtr.Zero == r) {
+                return null;
+            }
+            return Marshal.PtrToStringAnsi(r);
+        }
+
+        public static string SetLocaleModifiers(string modifier_list) {
+            var r = NativeMethods.XSetLocaleModifiers(modifier_list);
+            if (IntPtr.Zero == r) {
+                return null;
+            }
+            return Marshal.PtrToStringAnsi(r);
+        }
+
+        public static bool XSupportsLocale() => NativeMethods.XSupportsLocale();
+
+        public static int XStringListToTextProperty(IntPtr list, int count, out IntPtr text_prop_return)
+            => NativeMethods.XStringListToTextProperty(list, count, out text_prop_return);
         
+
+        public static int XTextPropertyToStringList(XTextProperty text_prop, out IntPtr list_return, out IntPtr count_return) 
+            => NativeMethods.XTextPropertyToStringList(ref text_prop, out list_return, out count_return);
+
+
+        public static void XFreeStringList(IntPtr list) => NativeMethods.XFreeStringList(list);
+
+        #region 描画関連
+        public static IntPtr XCreateGC(Display display, IntPtr d, GCMask valuemask, XGCValues values) {
+            var v = new XGCValuesRec();
+            var r = NativeMethods.XCreateGC(display.Handle,d,valuemask,ref v);
+            values.Record = v;
+            return r;
+        }
+
         public static IntPtr XCreateGC(Display display, IntPtr d) {
             return NativeMethods.XCreateGC(display.Handle, d, 0, IntPtr.Zero);
-        }        
+        }
 
         public static int XFreeGC(Display display, IntPtr gc) {
             return NativeMethods.XFreeGC(display.Handle, gc);
         }
 
-        public static int XGetGCValues(Display display, IntPtr gc, GCMask valuemask, out XGCValues values_return) {
-            return NativeMethods.XGetGCValues(display.Handle, gc, valuemask, out values_return);
+        public static int XGetGCValues(Display display, IntPtr gc, GCMask valuemask, XGCValues values_return) {
+            var v = new XGCValuesRec();
+            var r = NativeMethods.XGetGCValues(display.Handle, gc, valuemask, out v);
+            values_return.Record = v;
+            return r;
         }
 
         public static IntPtr XCreatePixmap(Display display, IntPtr d, uint width, uint height, uint depth) {
@@ -198,7 +341,7 @@ namespace TonNurako.Native.X11
             return NativeMethods.XDrawPoint(display.Handle, d,gc,x,y);
         }
 
-        public static int XDrawPoints(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode) {
+        public static int XDrawPoints(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XPoint [] points, int npoints, int mode) {
             return NativeMethods.XDrawPoints(display.Handle, d,gc,points,npoints,mode);
         }
 
@@ -206,12 +349,12 @@ namespace TonNurako.Native.X11
             return NativeMethods.XDrawLine(display.Handle, d,gc,x1,y1,x2,y2);
         }
 
-        public static int XDrawLines(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int mode) {
+        public static int XDrawLines(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XPoint [] points, int npoints, int mode) {
             return NativeMethods.XDrawLines(display.Handle, d,gc,points,npoints,mode);
         }
 
 
-        public static int XDrawSegments(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XSegment [] segments, int nsegments) {
+        public static int XDrawSegments(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XSegment [] segments, int nsegments) {
             return NativeMethods.XDrawSegments(display.Handle, d,gc,segments,nsegments);
         }
 
@@ -221,7 +364,7 @@ namespace TonNurako.Native.X11
         }
 
 
-        public static int XDrawRectangles(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles) {
+        public static int XDrawRectangles(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XRectangle [] rectangles, int nrectangles) {
             return NativeMethods.XDrawRectangles(display.Handle, d,gc,rectangles,nrectangles);
         }
 
@@ -231,12 +374,12 @@ namespace TonNurako.Native.X11
         }
 
 
-        public static int XFillRectangles(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XRectangle [] rectangles, int nrectangles) {
+        public static int XFillRectangles(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XRectangle [] rectangles, int nrectangles) {
             return NativeMethods.XFillRectangles(display.Handle, d,gc,rectangles,nrectangles);
         }
 
 
-        public static int XFillPolygon(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XPoint [] points, int npoints, int shape, int mode) {
+        public static int XFillPolygon(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XPoint [] points, int npoints, int shape, int mode) {
             return NativeMethods.XFillPolygon(display.Handle, d,gc,points,npoints,shape,mode);
         }
 
@@ -246,7 +389,7 @@ namespace TonNurako.Native.X11
         }
 
 
-        public static int XFillArcs(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs) {
+        public static int XFillArcs(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XArc [] arcs, int narcs) {
             return NativeMethods.XFillArcs(display.Handle, d,gc,arcs,narcs);
         }
 
@@ -256,7 +399,7 @@ namespace TonNurako.Native.X11
         }
 
 
-        public static int XDrawArcs(Display display, IntPtr d, IntPtr gc, TonNurako.Native.X11.XArc [] arcs, int narcs) {
+        public static int XDrawArcs(Display display, IntPtr d, IntPtr gc, TonNurako.X11.XArc [] arcs, int narcs) {
             return NativeMethods.XDrawArcs(display.Handle, d,gc,arcs,narcs);
         }
 
@@ -306,7 +449,6 @@ namespace TonNurako.Native.X11
         public static string XKeysymToString(int keysym) {
             return Marshal.PtrToStringAnsi(NativeMethods.XKeysymToString(keysym));
         }
-
-		#endregion
-	}
+        #endregion
+    }
 }

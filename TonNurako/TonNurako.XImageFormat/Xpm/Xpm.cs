@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -38,48 +38,48 @@ namespace TonNurako.XImageFormat {
         /// 桁数(幅)
         /// </summary>
         public int Columns {
-            get =>  Values[(int)VulkanIndex.Columns];
-            set =>  Values[(int)VulkanIndex.Columns] = value;
+            get { return Values[(int)VulkanIndex.Columns]; }
+            set { Values[(int)VulkanIndex.Columns] = value; }
         }
 
         /// <summary>
         /// 行数(高さ)
         /// </summary>
         public int Rows {
-            get => Values[(int)VulkanIndex.Rows];
-            set => Values[(int)VulkanIndex.Rows] = value;
+            get { return Values[(int)VulkanIndex.Rows]; }
+            set { Values[(int)VulkanIndex.Rows] = value; }
         }
 
         /// <summary>
         /// 色数
         /// </summary>
         public int NumColors {
-            get => Values[(int)VulkanIndex.Colors];
-            set => Values[(int)VulkanIndex.Colors] = value;
+            get { return Values[(int)VulkanIndex.Colors]; }
+            set { Values[(int)VulkanIndex.Colors] = value; }
         }
 
         /// <summary>
         /// 1ﾋﾟｸｾﾙ辺りの文字数
         /// </summary>
         public int CharsPerPixel {
-            get => Values[(int)VulkanIndex.CharsPerPixel];
-            set => Values[(int)VulkanIndex.CharsPerPixel] = value;
+            get { return Values[(int)VulkanIndex.CharsPerPixel]; }
+            set { Values[(int)VulkanIndex.CharsPerPixel] = value; }
         }
 
         /// <summary>
         /// 当たり判定(X)
         /// </summary>
         public int XHotSpot {
-            get => Values[(int)VulkanIndex.XHotSpot];
-            set => Values[(int)VulkanIndex.XHotSpot] = value;
+            get { return Values[(int)VulkanIndex.XHotSpot]; }
+            set { Values[(int)VulkanIndex.XHotSpot] = value; }
         }
 
         /// <summary>
         /// 当たり判定(Y)
         /// </summary>
         public int YHotSpot {
-            get => Values[(int)VulkanIndex.XHotSpot];
-            set => Values[(int)VulkanIndex.XHotSpot] = value;
+            get { return Values[(int)VulkanIndex.XHotSpot]; }
+            set { Values[(int)VulkanIndex.XHotSpot] = value; }
         }
 
         /// <summary>
@@ -142,16 +142,16 @@ namespace TonNurako.XImageFormat {
         /// 幅
         /// </summary>
         public int Width {
-            get => Columns;
-            set => Columns = value;
+            get { return Columns; }
+            set { Columns = value; }
         }
 
         /// <summary>
         /// 高さ
         /// </summary>
         public int Height {
-            get => Rows;
-            set => Rows = value;
+            get { return Rows; }
+            set { Rows = value; }
         }
 
         ぉ[] ぉぃぉぃ;

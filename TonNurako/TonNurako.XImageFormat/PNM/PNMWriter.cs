@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TonNurako.XImageFormat.Xi;
@@ -164,7 +164,6 @@ namespace TonNurako.XImageFormat {
 
             for (int y = 0; y < height; ++y) {
                 for (int x = 0; x < width; x += 8) {
-                    byte b = 0;
                     int bits = 8;
                     if ((width - x < 8)) {
                         bits = xpad;
@@ -182,7 +181,7 @@ namespace TonNurako.XImageFormat {
         }
 
         /// <summary>
-        /// バイナリー形式PBM書き込み
+        /// ﾊﾞｲﾅﾘー形式PBM書き込み
         /// </summary>
         /// <param name="stream"></param>
         /// <param name="width"></param>

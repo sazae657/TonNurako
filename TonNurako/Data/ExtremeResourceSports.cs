@@ -118,22 +118,22 @@ namespace TonNurako.Data
         //
         // Color
         //
-        internal Data.Color GetColor(Enum key, Resource.Access access = Resource.Access.CSG) {
+        internal GC.Color GetColor(Enum key, Resource.Access access = Resource.Access.CSG) {
             if (! widget.IsAvailable) {
                 return null;
             }
-            Data.Color ret;
+            GC.Color ret;
             widget.ToolkitResources.GetValue(key, out ret);
             return ret;
         }
 
-        internal void SetColor(Enum key, Data.Color color, Resource.Access access = Resource.Access.CSG) {
+        internal void SetColor(Enum key, GC.Color color, Resource.Access access = Resource.Access.CSG) {
             widget.ToolkitResources.Add(key, color);
             widget.ToolkitResources.SetWidget(true);
         }
 
         internal void SetPixmap(Enum key, GC.Pixmap pixmap, Resource.Access accessa = Resource.Access.CSG) {
-            widget.ToolkitResources.Add(key, (ulong)pixmap.Drawable.Target);
+            widget.ToolkitResources.Add(key, (ulong)pixmap.Drawable);
             widget.ToolkitResources.SetWidget(true);
         }
 
@@ -315,7 +315,7 @@ namespace TonNurako.Data
             if (! widget.IsAvailable) {
                 return null;
             }
-            IntPtr ptr = widget.ToolkitResources.GetPointerValue(Native.Motif.ResourceId.XmNitems);
+            IntPtr ptr = widget.ToolkitResources.GetPointerValue(TonNurako.Motif.ResourceId.XmNitems);
             if (IntPtr.Zero == ptr) {
                 return null;
             }
@@ -382,7 +382,7 @@ namespace TonNurako.Data
         //
         // Callback
         //
-        internal void SetCallback(Enum key, Native.Xt.G.XtCallBack val, Resource.Access access = Resource.Access.CSG) {
+        internal void SetCallback(Enum key, TonNurako.Xt.G.XtCallBack val, Resource.Access access = Resource.Access.CSG) {
             widget.ToolkitResources.Add(key, val);
    			widget.ToolkitResources.SetWidget(true);
         }

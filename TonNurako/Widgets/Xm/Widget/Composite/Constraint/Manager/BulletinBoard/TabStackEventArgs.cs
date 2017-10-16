@@ -19,8 +19,8 @@ namespace TonNurako.Events {
         }
 
         internal override void ParseXEvent(System.IntPtr call, System.IntPtr client) {
-            var callData = (Native.Motif.XmStruct.XmTabStackCallbackStruct)
-            Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmTabStackCallbackStruct ) );
+            var callData = (TonNurako.Motif.XmStruct.XmTabStackCallbackStruct)
+            Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmTabStackCallbackStruct ) );
 
             Reason = ConvertReason(callData.reason);
             Widget = Sender.AppContext.FindWidgetByHandle(callData.selected_child);

@@ -11,30 +11,30 @@ namespace TonNurako.Widgets.Xm
     ///
     /// </summary>
     public enum ProcessingDirection{
-        Top = Native.Motif.Constant.XmMAX_ON_TOP,
-        Bottom = Native.Motif.Constant.XmMAX_ON_BOTTOM,
-        Left = Native.Motif.Constant.XmMAX_ON_LEFT,
-        Right = Native.Motif.Constant.XmMAX_ON_RIGHT,
+        Top = TonNurako.Motif.Constant.XmMAX_ON_TOP,
+        Bottom = TonNurako.Motif.Constant.XmMAX_ON_BOTTOM,
+        Left = TonNurako.Motif.Constant.XmMAX_ON_LEFT,
+        Right = TonNurako.Motif.Constant.XmMAX_ON_RIGHT,
     }
 
     /// <summary>
     ///
     /// </summary>
     public enum ShowArrows {
-        None = Native.Motif.Constant.XmNONE,
-        EachSide = Native.Motif.Constant.XmEACH_SIDE,
-        MaxSide = Native.Motif.Constant.XmMAX_SIDE,
-        MinSide = Native.Motif.Constant.XmMIN_SIDE,
+        None = TonNurako.Motif.Constant.XmNONE,
+        EachSide = TonNurako.Motif.Constant.XmEACH_SIDE,
+        MaxSide = TonNurako.Motif.Constant.XmMAX_SIDE,
+        MinSide = TonNurako.Motif.Constant.XmMIN_SIDE,
     }
 
     /// <summary>
     ///
     /// </summary>
     public enum SliderMark {
-        EtchedLine    = Native.Motif.Constant.XmETCHED_LINE,
-        None          = Native.Motif.Constant.XmNONE,
-        RoundMark    = Native.Motif.Constant.XmROUND_MARK,
-        ThumbMark    = Native.Motif.Constant.XmTHUMB_MARK,
+        EtchedLine    = TonNurako.Motif.Constant.XmETCHED_LINE,
+        None          = TonNurako.Motif.Constant.XmNONE,
+        RoundMark    = TonNurako.Motif.Constant.XmROUND_MARK,
+        ThumbMark    = TonNurako.Motif.Constant.XmTHUMB_MARK,
 
     }
 
@@ -42,18 +42,18 @@ namespace TonNurako.Widgets.Xm
     ///
     /// </summary>
     public enum SliderVisual {
-        BackgroundColor = Native.Motif.Constant.XmBACKGROUND_COLOR,
-        ForegroundColor = Native.Motif.Constant.XmFOREGROUND_COLOR,
-        ShadowedBackground = Native.Motif.Constant.XmSHADOWED_BACKGROUND,
-        TroughColor = Native.Motif.Constant.XmTROUGH_COLOR,
+        BackgroundColor = TonNurako.Motif.Constant.XmBACKGROUND_COLOR,
+        ForegroundColor = TonNurako.Motif.Constant.XmFOREGROUND_COLOR,
+        ShadowedBackground = TonNurako.Motif.Constant.XmSHADOWED_BACKGROUND,
+        TroughColor = TonNurako.Motif.Constant.XmTROUGH_COLOR,
     }
 
     /// <summary>
     ///
     /// </summary>
     public enum SlidingMode {
-        Slider = Native.Motif.Constant.XmSLIDER,
-        Thermometer = Native.Motif.Constant.XmTHERMOMETER,
+        Slider = TonNurako.Motif.Constant.XmSLIDER,
+        Thermometer = TonNurako.Motif.Constant.XmTHERMOMETER,
     }
 
 	/// <summary>
@@ -80,7 +80,7 @@ namespace TonNurako.Widgets.Xm
 		public override int Create(IWidget parent)
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateScrollBar, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateScrollBar, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -91,10 +91,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool Editable {
             get {
-                return XSports.GetBool(Native.Motif.ResourceId.XmNeditable, true);
+                return XSports.GetBool(TonNurako.Motif.ResourceId.XmNeditable, true);
             }
             set {
-            XSports.SetBool(Native.Motif.ResourceId.XmNeditable, value);
+            XSports.SetBool(TonNurako.Motif.ResourceId.XmNeditable, value);
             }
         }
 
@@ -102,10 +102,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Increment {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNincrement, 1);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNincrement, 1);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNincrement, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNincrement, value);
             }
         }
 
@@ -113,10 +113,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int InitialDelay {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNinitialDelay, 250);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNinitialDelay, 250);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNinitialDelay, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNinitialDelay, value);
             }
         }
 
@@ -124,10 +124,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Maximum {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNmaximum, 100);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNmaximum, 100);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNmaximum, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNmaximum, value);
             }
         }
 
@@ -135,10 +135,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Minimum {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNminimum, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNminimum, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNminimum, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNminimum, value);
             }
         }
 
@@ -146,10 +146,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual Orientation Orientation {
             get {
-                return XSports.GetValue<Orientation>(Native.Motif.ResourceId.XmNorientation, Orientation.Vertical);
+                return XSports.GetValue<Orientation>(TonNurako.Motif.ResourceId.XmNorientation, Orientation.Vertical);
             }
             set {
-                XSports.SetValue<Orientation>(Native.Motif.ResourceId.XmNorientation, value);
+                XSports.SetValue<Orientation>(TonNurako.Motif.ResourceId.XmNorientation, value);
             }
         }
 
@@ -157,10 +157,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int PageIncrement {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNpageIncrement, 10);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNpageIncrement, 10);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNpageIncrement, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNpageIncrement, value);
             }
         }
 
@@ -169,10 +169,10 @@ namespace TonNurako.Widgets.Xm
         public virtual ProcessingDirection ProcessingDirection {
             get {
                 return XSports.GetValue<ProcessingDirection>(
-                        Native.Motif.ResourceId.XmNprocessingDirection, ProcessingDirection.Bottom);
+                        TonNurako.Motif.ResourceId.XmNprocessingDirection, ProcessingDirection.Bottom);
             }
             set {
-                XSports.SetValue<ProcessingDirection>(Native.Motif.ResourceId.XmNprocessingDirection, value);
+                XSports.SetValue<ProcessingDirection>(TonNurako.Motif.ResourceId.XmNprocessingDirection, value);
             }
         }
 
@@ -180,10 +180,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int RepeatDelay {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNrepeatDelay, 50);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNrepeatDelay, 50);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNrepeatDelay, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNrepeatDelay, value);
             }
         }
 
@@ -191,10 +191,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual ShowArrows ShowArrows {
             get {
-                return XSports.GetValue<ShowArrows>(Native.Motif.ResourceId.XmNshowArrows, ShowArrows.EachSide);
+                return XSports.GetValue<ShowArrows>(TonNurako.Motif.ResourceId.XmNshowArrows, ShowArrows.EachSide);
             }
             set {
-                XSports.SetValue<ShowArrows>(Native.Motif.ResourceId.XmNshowArrows, value);
+                XSports.SetValue<ShowArrows>(TonNurako.Motif.ResourceId.XmNshowArrows, value);
             }
         }
 
@@ -202,10 +202,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int SliderSize {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNsliderSize, 1);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNsliderSize, 1);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNsliderSize, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNsliderSize, value);
             }
         }
 
@@ -213,10 +213,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual SliderMark SliderMark {
             get {
-                return XSports.GetValue<SliderMark>(Native.Motif.ResourceId.XmNsliderMark, SliderMark.EtchedLine);
+                return XSports.GetValue<SliderMark>(TonNurako.Motif.ResourceId.XmNsliderMark, SliderMark.EtchedLine);
             }
             set {
-            XSports.SetValue<SliderMark>(Native.Motif.ResourceId.XmNsliderMark, value);
+            XSports.SetValue<SliderMark>(TonNurako.Motif.ResourceId.XmNsliderMark, value);
             }
         }
 
@@ -224,10 +224,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual SliderVisual SliderVisual {
             get {
-                return XSports.GetValue<SliderVisual>(Native.Motif.ResourceId.XmNsliderVisual, SliderVisual.ShadowedBackground);
+                return XSports.GetValue<SliderVisual>(TonNurako.Motif.ResourceId.XmNsliderVisual, SliderVisual.ShadowedBackground);
             }
             set {
-            XSports.SetValue<SliderVisual>(Native.Motif.ResourceId.XmNsliderVisual, value);
+            XSports.SetValue<SliderVisual>(TonNurako.Motif.ResourceId.XmNsliderVisual, value);
             }
         }
 
@@ -235,31 +235,31 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual SlidingMode SlidingMode {
             get {
-                return XSports.GetValue<SlidingMode>(Native.Motif.ResourceId.XmNslidingMode, SlidingMode.Slider);
+                return XSports.GetValue<SlidingMode>(TonNurako.Motif.ResourceId.XmNslidingMode, SlidingMode.Slider);
             }
             set {
-            XSports.SetValue<SlidingMode>(Native.Motif.ResourceId.XmNslidingMode, value);
+            XSports.SetValue<SlidingMode>(TonNurako.Motif.ResourceId.XmNslidingMode, value);
             }
         }
         /// XmNsnapBackMultiple XmCSnapBackMultiple unsigned short MaxValue CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int SnapBackMultiple {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNsnapBackMultiple, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNsnapBackMultiple, 0);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNsnapBackMultiple, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNsnapBackMultiple, value);
             }
         }
 
         /// XmNtroughColor XmCTroughColor Pixel dynamic CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual Data.Color TroughColor {
+        public virtual GC.Color TroughColor {
             get {
-                return XSports.GetColor(Native.Motif.ResourceId.XmNtroughColor);
+                return XSports.GetColor(TonNurako.Motif.ResourceId.XmNtroughColor);
             }
             set {
-            XSports.SetColor(Native.Motif.ResourceId.XmNtroughColor, value);
+            XSports.SetColor(TonNurako.Motif.ResourceId.XmNtroughColor, value);
             }
         }
 
@@ -267,10 +267,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Value {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNvalue, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNvalue, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNvalue, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNvalue, value);
             }
         }
 
@@ -286,10 +286,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> DecrementEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNdecrementCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNdecrementCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNdecrementCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNdecrementCallback ,  value );
             }
         }
 
@@ -297,10 +297,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> DragEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNdragCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNdragCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNdragCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNdragCallback ,  value );
             }
         }
 
@@ -308,10 +308,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> IncrementEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNincrementCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNincrementCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNincrementCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNincrementCallback ,  value );
             }
         }
 
@@ -319,10 +319,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> PageDecrementEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNpageDecrementCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNpageDecrementCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNpageDecrementCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNpageDecrementCallback ,  value );
             }
         }
 
@@ -330,10 +330,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> PageIncrementEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNpageIncrementCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNpageIncrementCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNpageIncrementCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNpageIncrementCallback ,  value );
             }
         }
 
@@ -341,10 +341,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> ToBottomEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNtoBottomCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNtoBottomCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNtoBottomCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNtoBottomCallback ,  value );
             }
         }
 
@@ -352,10 +352,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> ToTopEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNtoTopCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNtoTopCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNtoTopCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNtoTopCallback ,  value );
             }
         }
 
@@ -363,10 +363,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.ScrollBarEventArgs> ValueChangedEvent
         {
             add {
-                ScrollBarEventTable.AddHandler(this, Native.Motif.EventId.XmNvalueChangedCallback ,  value );
+                ScrollBarEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNvalueChangedCallback ,  value );
             }
             remove {
-                ScrollBarEventTable.RemoveHandler(Native.Motif.EventId.XmNvalueChangedCallback ,  value );
+                ScrollBarEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNvalueChangedCallback ,  value );
             }
         }
 

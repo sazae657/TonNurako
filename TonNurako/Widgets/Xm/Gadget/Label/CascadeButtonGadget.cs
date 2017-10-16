@@ -33,7 +33,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifGadget(Native.Motif.CreateSymbol.XmCreateCascadeButtonGadget, parent, ToolkitResources);
+				this.CreateMotifGadget(TonNurako.Motif.CreateSymbol.XmCreateCascadeButtonGadget, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -44,11 +44,11 @@ namespace TonNurako.Widgets.Xm
         public virtual GC.Pixmap CascadePixmap {
             get {
                 return XSports.GetPixmap(
-                    Native.Motif.ResourceId.XmNcascadePixmap, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNcascadePixmap, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetPixmap(
-                 Native.Motif.ResourceId.XmNcascadePixmap, value, Data.Resource.Access.CSG);
+                 TonNurako.Motif.ResourceId.XmNcascadePixmap, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -57,11 +57,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int MappingDelay {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNmappingDelay, 180, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNmappingDelay, 180, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetInt(
-                    Native.Motif.ResourceId.XmNmappingDelay, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNmappingDelay, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -70,11 +70,11 @@ namespace TonNurako.Widgets.Xm
         public virtual IMenuWidget SubMenuId {
             get {
                 return XSports.GetWidget<IMenuWidget>(
-                    Native.Motif.ResourceId.XmNsubMenuId, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNsubMenuId, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetWidget<IMenuWidget>(
-                    Native.Motif.ResourceId.XmNsubMenuId, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNsubMenuId, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -83,10 +83,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> ActivateEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNactivateCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNactivateCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNactivateCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNactivateCallback ,  value );
             }
         }
 
@@ -94,10 +94,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> CascadingEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNcascadingCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNcascadingCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNcascadingCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNcascadingCallback ,  value );
             }
         }
     }

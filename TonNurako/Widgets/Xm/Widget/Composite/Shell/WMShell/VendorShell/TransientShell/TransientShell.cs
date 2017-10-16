@@ -33,11 +33,11 @@ namespace TonNurako.Widgets.Xm
         public virtual IWidget TransientFor {
             get {
                 return XSports.GetWidget<IWidget>(
-                    Native.Motif.ResourceId.XmNtransientFor, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNtransientFor, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetWidget<IWidget>(
-                    Native.Motif.ResourceId.XmNtransientFor, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNtransientFor, value, Data.Resource.Access.CSG);
             }
         }
 

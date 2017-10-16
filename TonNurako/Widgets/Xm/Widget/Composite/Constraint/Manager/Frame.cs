@@ -30,7 +30,7 @@ namespace TonNurako.Widgets.Xm
         public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateFrame, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateFrame, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -54,10 +54,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public override int MarginWidth {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNmarginWidth, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNmarginWidth, 0);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNmarginWidth, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNmarginWidth, value);
             }
         }
 
@@ -66,10 +66,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public override int MarginHeight {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNmarginHeight, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNmarginHeight, 0);
             }
             set {
-                XSports.SetInt(Native.Motif.ResourceId.XmNmarginHeight, value);
+                XSports.SetInt(TonNurako.Motif.ResourceId.XmNmarginHeight, value);
             }
         }
 
@@ -78,10 +78,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual ShadowType ShadowType {
             get {
-                return XSports.GetValue<ShadowType>(Native.Motif.ResourceId.XmNshadowType, ShadowType.EtchedIn);
+                return XSports.GetValue<ShadowType>(TonNurako.Motif.ResourceId.XmNshadowType, ShadowType.EtchedIn);
             }
             set {
-                XSports.SetValue<ShadowType>(Native.Motif.ResourceId.XmNshadowType, value);
+                XSports.SetValue<ShadowType>(TonNurako.Motif.ResourceId.XmNshadowType, value);
             }
         }
 

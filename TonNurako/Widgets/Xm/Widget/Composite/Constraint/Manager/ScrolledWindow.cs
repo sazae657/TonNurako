@@ -33,10 +33,10 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateScrolledWindow, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateScrolledWindow, parent, ToolkitResources);
 			}
-            //IWidget cw = XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNclipWindow, Data.Resource.Access.G);
-            IntPtr cw = this.ToolkitResources.GetPointerValue(Native.Motif.ResourceId.XmNclipWindow);
+            //IWidget cw = XSports.GetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNclipWindow, Data.Resource.Access.G);
+            IntPtr cw = this.ToolkitResources.GetPointerValue(TonNurako.Motif.ResourceId.XmNclipWindow);
             if (IntPtr.Zero != cw) {
                 clipWindow = new Form();
                 clipWindow.WrapExistingWidget(cw);
@@ -51,10 +51,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual DragModel AutoDragModel {
             get {
-                return XSports.GetValue<DragModel>(Native.Motif.ResourceId.XmNautoDragModel, DragModel.Enabled);
+                return XSports.GetValue<DragModel>(TonNurako.Motif.ResourceId.XmNautoDragModel, DragModel.Enabled);
             }
             set {
-                XSports.SetValue<DragModel>(Native.Motif.ResourceId.XmNautoDragModel, value);
+                XSports.SetValue<DragModel>(TonNurako.Motif.ResourceId.XmNautoDragModel, value);
             }
         }
 
@@ -63,7 +63,7 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual IChild ClipWindow {
             get {
-                return XSports.GetWidget<IChild>(Native.Motif.ResourceId.XmNclipWindow, Data.Resource.Access.G);
+                return XSports.GetWidget<IChild>(TonNurako.Motif.ResourceId.XmNclipWindow, Data.Resource.Access.G);
             }
 
         }
@@ -73,10 +73,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual IWidget HorizontalScrollBar {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNhorizontalScrollBar);
+                return XSports.GetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNhorizontalScrollBar);
             }
             set {
-            XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNhorizontalScrollBar, value);
+            XSports.SetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNhorizontalScrollBar, value);
             }
         }
 
@@ -86,10 +86,10 @@ namespace TonNurako.Widgets.Xm
         public virtual ScrollBarDisplayPolicy ScrollBarDisplayPolicy {
             get {
                 return XSports.GetValue<ScrollBarDisplayPolicy>(
-                    Native.Motif.ResourceId.XmNscrollBarDisplayPolicy, ScrollBarDisplayPolicy.AsNeeded);
+                    TonNurako.Motif.ResourceId.XmNscrollBarDisplayPolicy, ScrollBarDisplayPolicy.AsNeeded);
             }
             set {
-                XSports.GetValue<ScrollBarDisplayPolicy>(Native.Motif.ResourceId.XmNscrollBarDisplayPolicy, value);
+                XSports.GetValue<ScrollBarDisplayPolicy>(TonNurako.Motif.ResourceId.XmNscrollBarDisplayPolicy, value);
             }
         }
 
@@ -98,10 +98,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual ScrollBarPlacement ScrollBarPlacement {
             get {
-                return XSports.GetValue<ScrollBarPlacement>(Native.Motif.ResourceId.XmNscrollBarPlacement, ScrollBarPlacement.BottomRight);
+                return XSports.GetValue<ScrollBarPlacement>(TonNurako.Motif.ResourceId.XmNscrollBarPlacement, ScrollBarPlacement.BottomRight);
             }
             set {
-            XSports.SetValue<ScrollBarPlacement>(Native.Motif.ResourceId.XmNscrollBarPlacement, value);
+            XSports.SetValue<ScrollBarPlacement>(TonNurako.Motif.ResourceId.XmNscrollBarPlacement, value);
             }
         }
 
@@ -110,10 +110,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int ScrolledWindowMarginHeight {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNscrolledWindowMarginHeight, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNscrolledWindowMarginHeight, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNscrolledWindowMarginHeight, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNscrolledWindowMarginHeight, value);
             }
         }
 
@@ -122,10 +122,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int ScrolledWindowMarginWidth {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNscrolledWindowMarginWidth, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNscrolledWindowMarginWidth, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNscrolledWindowMarginWidth, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNscrolledWindowMarginWidth, value);
             }
         }
 
@@ -135,10 +135,10 @@ namespace TonNurako.Widgets.Xm
         public virtual ScrollingPolicy ScrollingPolicy {
             get {
                 return XSports.GetValue<ScrollingPolicy>(
-                    Native.Motif.ResourceId.XmNscrollingPolicy, ScrollingPolicy.ApplicationDefined, Data.Resource.Access.CG);
+                    TonNurako.Motif.ResourceId.XmNscrollingPolicy, ScrollingPolicy.ApplicationDefined, Data.Resource.Access.CG);
             }
             set {
-            XSports.SetValue<ScrollingPolicy>(Native.Motif.ResourceId.XmNscrollingPolicy, value, Data.Resource.Access.CG);
+            XSports.SetValue<ScrollingPolicy>(TonNurako.Motif.ResourceId.XmNscrollingPolicy, value, Data.Resource.Access.CG);
             }
         }
 
@@ -147,10 +147,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual int Spacing {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNspacing, 4);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNspacing, 4);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNspacing, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNspacing, value);
             }
         }
 
@@ -159,10 +159,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual IWidget VerticalScrollBar {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNverticalScrollBar);
+                return XSports.GetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNverticalScrollBar);
             }
             set {
-            XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNverticalScrollBar, value);
+            XSports.SetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNverticalScrollBar, value);
             }
         }
 
@@ -172,7 +172,7 @@ namespace TonNurako.Widgets.Xm
         public virtual VisualPolicy VisualPolicy {
             get {
                 return XSports.GetValue<VisualPolicy>(
-                    Native.Motif.ResourceId.XmNvisualPolicy, VisualPolicy.Static, Data.Resource.Access.G);
+                    TonNurako.Motif.ResourceId.XmNvisualPolicy, VisualPolicy.Static, Data.Resource.Access.G);
             }
         }
 
@@ -181,10 +181,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual IChild WorkWindow {
             get {
-                return XSports.GetWidget<IChild>(Native.Motif.ResourceId.XmNworkWindow);
+                return XSports.GetWidget<IChild>(TonNurako.Motif.ResourceId.XmNworkWindow);
             }
             set {
-                XSports.SetWidget<IChild>(Native.Motif.ResourceId.XmNworkWindow, value);
+                XSports.SetWidget<IChild>(TonNurako.Motif.ResourceId.XmNworkWindow, value);
             }
         }
 
@@ -194,10 +194,10 @@ namespace TonNurako.Widgets.Xm
         public virtual ScrolledWindowChildType ScrolledWindowChildType {
             get {
                 return XSports.GetValue<ScrolledWindowChildType>(
-                    Native.Motif.ResourceId.XmNscrolledWindowChildType, ScrolledWindowChildType.GenericChild);
+                    TonNurako.Motif.ResourceId.XmNscrolledWindowChildType, ScrolledWindowChildType.GenericChild);
             }
             set {
-                XSports.GetValue<ScrolledWindowChildType>(Native.Motif.ResourceId.XmNscrolledWindowChildType, value);
+                XSports.GetValue<ScrolledWindowChildType>(TonNurako.Motif.ResourceId.XmNscrolledWindowChildType, value);
             }
         }
 
@@ -206,10 +206,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> TraverseObscuredEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNtraverseObscuredCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNtraverseObscuredCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNtraverseObscuredCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNtraverseObscuredCallback ,  value );
             }
         }
 

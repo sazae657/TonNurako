@@ -5,7 +5,7 @@
 //
 using System;
 using System.Runtime.InteropServices;
-using TonNurako.Native.Xt;
+using TonNurako.Xt;
 
 //
 // 全然実装してないよ
@@ -38,358 +38,358 @@ namespace TonNurako.Events.Server
     /// <summary>
     /// 
     /// </summary>
-    public class AnyEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XAnyEvent> {
+    public class AnyEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XAnyEvent> {
         public AnyEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
-            XEvent = (XEventStruct.XAnyEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XAnyEvent));
+            XEvent = (TonNurako.X11.Event.XAnyEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XAnyEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ButtonEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XButtonEvent> {
+    public class ButtonEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XButtonEvent> {
         public ButtonEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
-            XEvent = (XEventStruct.XButtonEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XButtonEvent));
+            XEvent = (TonNurako.X11.Event.XButtonEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XButtonEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class MotionEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XMotionEvent> {
+    public class MotionEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XMotionEvent> {
         public MotionEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
-            XEvent = (XEventStruct.XMotionEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XMotionEvent));
+            XEvent = (TonNurako.X11.Event.XMotionEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XMotionEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class CrossingEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XCrossingEvent> {
+    public class CrossingEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XCrossingEvent> {
         public CrossingEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XCrossingEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XCrossingEvent));
+                (TonNurako.X11.Event.XCrossingEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XCrossingEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class FocusChangeEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XFocusChangeEvent> {
+    public class FocusChangeEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XFocusChangeEvent> {
         public FocusChangeEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XFocusChangeEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XFocusChangeEvent));
+                (TonNurako.X11.Event.XFocusChangeEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XFocusChangeEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ExposeEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XExposeEvent> {
+    public class ExposeEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XExposeEvent> {
         public ExposeEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XExposeEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XExposeEvent));
+                (TonNurako.X11.Event.XExposeEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XExposeEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class GraphicsExposeEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XGraphicsExposeEvent> {
+    public class GraphicsExposeEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XGraphicsExposeEvent> {
         public GraphicsExposeEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XGraphicsExposeEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XGraphicsExposeEvent));
+                (TonNurako.X11.Event.XGraphicsExposeEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XGraphicsExposeEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class NoExposeEventEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XNoExposeEvent> {
+    public class NoExposeEventEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XNoExposeEvent> {
         public NoExposeEventEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XNoExposeEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XNoExposeEvent));
+                (TonNurako.X11.Event.XNoExposeEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XNoExposeEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class VisibilityEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XVisibilityEvent> {
+    public class VisibilityEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XVisibilityEvent> {
         public VisibilityEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XVisibilityEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XVisibilityEvent));
+                (TonNurako.X11.Event.XVisibilityEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XVisibilityEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class CreateWindowEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XCreateWindowEvent> {
+    public class CreateWindowEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XCreateWindowEvent> {
         public CreateWindowEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XCreateWindowEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XCreateWindowEvent));
+                (TonNurako.X11.Event.XCreateWindowEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XCreateWindowEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class DestroyWindowEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XDestroyWindowEvent> {
+    public class DestroyWindowEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XDestroyWindowEvent> {
         public DestroyWindowEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XDestroyWindowEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XDestroyWindowEvent));
+                (TonNurako.X11.Event.XDestroyWindowEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XDestroyWindowEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class MapEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XMapEvent> {
+    public class MapEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XMapEvent> {
         public MapEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XMapEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XMapEvent));
+                (TonNurako.X11.Event.XMapEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XMapEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class MapRequestEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XMapRequestEvent> {
+    public class MapRequestEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XMapRequestEvent> {
         public MapRequestEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XMapRequestEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XMapRequestEvent));
+                (TonNurako.X11.Event.XMapRequestEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XMapRequestEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class UnmapEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XUnmapEvent> {
+    public class UnmapEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XUnmapEvent> {
         public UnmapEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XUnmapEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XUnmapEvent));
+                (TonNurako.X11.Event.XUnmapEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XUnmapEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ReparentEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XReparentEvent> {
+    public class ReparentEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XReparentEvent> {
         public ReparentEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XReparentEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XReparentEvent));
+                (TonNurako.X11.Event.XReparentEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XReparentEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ConfigureEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XConfigureEvent> {
+    public class ConfigureEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XConfigureEvent> {
         public ConfigureEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XConfigureEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XConfigureEvent));
+                (TonNurako.X11.Event.XConfigureEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XConfigureEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class GravityEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XGravityEvent> {
+    public class GravityEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XGravityEvent> {
         public GravityEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XGravityEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XGravityEvent));
+                (TonNurako.X11.Event.XGravityEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XGravityEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ResizeRequestEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XResizeRequestEvent> {
+    public class ResizeRequestEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XResizeRequestEvent> {
         public ResizeRequestEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XResizeRequestEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XResizeRequestEvent));
+                (TonNurako.X11.Event.XResizeRequestEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XResizeRequestEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ConfigureRequestEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XConfigureRequestEvent> {
+    public class ConfigureRequestEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XConfigureRequestEvent> {
         public ConfigureRequestEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XConfigureRequestEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XConfigureRequestEvent));
+                (TonNurako.X11.Event.XConfigureRequestEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XConfigureRequestEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class CirculateEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XCirculateEvent> {
+    public class CirculateEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XCirculateEvent> {
         public CirculateEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XCirculateEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XCirculateEvent));
+                (TonNurako.X11.Event.XCirculateEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XCirculateEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class CirculateRequestEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XCirculateRequestEvent> {
+    public class CirculateRequestEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XCirculateRequestEvent> {
         public CirculateRequestEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XCirculateRequestEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XCirculateRequestEvent));
+                (TonNurako.X11.Event.XCirculateRequestEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XCirculateRequestEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class PropertyEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XPropertyEvent> {
+    public class PropertyEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XPropertyEvent> {
         public PropertyEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XPropertyEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XPropertyEvent));
+                (TonNurako.X11.Event.XPropertyEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XPropertyEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class SelectionClearEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XSelectionClearEvent> {
+    public class SelectionClearEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XSelectionClearEvent> {
         public SelectionClearEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XSelectionClearEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XSelectionClearEvent));
+                (TonNurako.X11.Event.XSelectionClearEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XSelectionClearEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class SelectionRequestEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XSelectionRequestEvent> {
+    public class SelectionRequestEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XSelectionRequestEvent> {
         public SelectionRequestEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XSelectionRequestEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XSelectionRequestEvent));
+                (TonNurako.X11.Event.XSelectionRequestEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XSelectionRequestEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class SelectionEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XSelectionEvent> {
+    public class SelectionEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XSelectionEvent> {
         public SelectionEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XSelectionEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XSelectionEvent));
+                (TonNurako.X11.Event.XSelectionEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XSelectionEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ColormapEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XColormapEvent> {
+    public class ColormapEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XColormapEvent> {
         public ColormapEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XColormapEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XColormapEvent));
+                (TonNurako.X11.Event.XColormapEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XColormapEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ClientMessageEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XClientMessageEvent> {
+    public class ClientMessageEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XClientMessageEvent> {
         public ClientMessageEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             // 中に XClientMessageEventDataが入ってる
             XEvent =
-                (XEventStruct.XClientMessageEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XClientMessageEvent));
+                (TonNurako.X11.Event.XClientMessageEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XClientMessageEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class MappingEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XMappingEvent> {
+    public class MappingEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XMappingEvent> {
         public MappingEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XMappingEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XMappingEvent));
+                (TonNurako.X11.Event.XMappingEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XMappingEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class ErrorEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XErrorEvent> {
+    public class ErrorEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XErrorEvent> {
         public ErrorEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XErrorEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XErrorEvent));
+                (TonNurako.X11.Event.XErrorEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XErrorEvent));
         }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public class KeymapEventArgs :TnkServerEventArgs<Native.Xt.XEventStruct.XKeymapEvent> {
+    public class KeymapEventArgs :TnkServerEventArgs<TonNurako.X11.Event.XKeymapEvent> {
         public KeymapEventArgs() : base() {
         }
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             XEvent =
-                (XEventStruct.XKeymapEvent)Marshal.PtrToStructure(call, typeof(XEventStruct.XKeymapEvent));
+                (TonNurako.X11.Event.XKeymapEvent)Marshal.PtrToStructure(call, typeof(TonNurako.X11.Event.XKeymapEvent));
         }
     }
 }

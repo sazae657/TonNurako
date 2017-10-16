@@ -5,8 +5,9 @@
 //
 using System;
 using System.Runtime.InteropServices;
+using TonNurako.Native;
 
-namespace TonNurako.Native.Xt
+namespace TonNurako.Xt
 {
     /// <summary>
     /// Xtﾛーﾀﾞー
@@ -127,11 +128,11 @@ namespace TonNurako.Native.Xt
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtAddEventHandler_TNK", CharSet=CharSet.Auto)]
             internal static extern void XtAddEventHandler(IntPtr w, ulong event_mask,
-                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data);
+                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtRemoveEventHandler_TNK", CharSet=CharSet.Auto)]
             internal static extern void XtRemoveEventHandler(IntPtr w, ulong event_mask,
-                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data);
+                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtInitializeWidgetClass_TNK", CharSet=CharSet.Auto)]
             internal static extern void XtInitializeWidgetClass(IntPtr glass);
@@ -140,7 +141,7 @@ namespace TonNurako.Native.Xt
             internal static extern IntPtr TNK_GetWidgetClass(Motif.WidgetClass glass);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtGetGC_TNK", CharSet=CharSet.Auto)]
-            internal static extern IntPtr XtGetGC(IntPtr w, X11.GCMask value_mask, [In,Out]ref X11.XGCValues values);
+            internal static extern IntPtr XtGetGC(IntPtr w, X11.GCMask value_mask, [In,Out]ref X11.XGCValuesRec values);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtGetGC_TNK", CharSet=CharSet.Auto)]
             internal static extern IntPtr XtGetGC(IntPtr w, X11.GCMask value_mask, IntPtr values);
@@ -269,18 +270,21 @@ namespace TonNurako.Native.Xt
         }
 
         public static void XtAddEventHandler(Widgets.IWidget w, ulong event_mask, bool nonmaskable,
-                     TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data) {
+                     TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data) {
             NativeMethods.XtAddEventHandler(w.Handle.Widget.Handle, event_mask,nonmaskable,proc,client_data);
         }
 
 
         public static void XtRemoveEventHandler(Widgets.IWidget w, ulong event_mask, bool nonmaskable,
-            TonNurako.Native.Xt.G.XtEventHandler proc, IntPtr client_data) {
+            TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data) {
             NativeMethods.XtRemoveEventHandler(w.Handle.Widget.Handle,event_mask,nonmaskable,proc,client_data);
         }
 
-        public static IntPtr XtGetGC(Widgets.IWidget w, X11.GCMask value_mask, ref X11.XGCValues values) {
-            return NativeMethods.XtGetGC(w.Handle.Widget.Handle, value_mask, ref values);
+        public static IntPtr XtGetGC(Widgets.IWidget w, X11.GCMask value_mask, X11.XGCValues values) {
+            var v = new X11.XGCValuesRec();
+            var r = NativeMethods.XtGetGC(w.Handle.Widget.Handle, value_mask, ref v);
+            values.Record = v;
+            return r;
         }
 
         public static IntPtr XtGetGC(Widgets.IWidget w) {
@@ -292,7 +296,7 @@ namespace TonNurako.Native.Xt
         }
 
         // 一時的
-        public static void XtInitializeWidgetClass(Native.Motif.WidgetClass glass) {
+        public static void XtInitializeWidgetClass(TonNurako.Motif.WidgetClass glass) {
             var ptr = NativeMethods.TNK_GetWidgetClass(glass);
             if (IntPtr.Zero == ptr) {
                 throw new Exception($"NullWidget {glass.ToString()}");

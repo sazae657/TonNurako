@@ -43,50 +43,50 @@ namespace TonNurako.Widgets.Xm
 		public virtual int ShadowThickness
 		{
 			get {
-				return XSports.GetInt(Native.Motif.ResourceId.XmNshadowThickness, 0);
+				return XSports.GetInt(TonNurako.Motif.ResourceId.XmNshadowThickness, 0);
 			}
 			set{
-				XSports.SetInt( Native.Motif.ResourceId.XmNshadowThickness, value );
+				XSports.SetInt( TonNurako.Motif.ResourceId.XmNshadowThickness, value );
 			}
 		}
 
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual Data.Color BottomShadowColor {
+        public virtual GC.Color BottomShadowColor {
             get {
-                return XSports.GetColor(Native.Motif.ResourceId.XmNbottomShadowColor);
+                return XSports.GetColor(TonNurako.Motif.ResourceId.XmNbottomShadowColor);
             }
             set {
-                XSports.SetColor(Native.Motif.ResourceId.XmNbottomShadowColor, value);
+                XSports.SetColor(TonNurako.Motif.ResourceId.XmNbottomShadowColor, value);
             }
         }
 
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual Data.Color ForegroundColor {
+        public virtual GC.Color ForegroundColor {
             get {
-                return XSports.GetColor(Native.Motif.ResourceId.XmNforeground);
+                return XSports.GetColor(TonNurako.Motif.ResourceId.XmNforeground);
             }
             set {
-                XSports.SetColor(Native.Motif.ResourceId.XmNforeground, value);
+                XSports.SetColor(TonNurako.Motif.ResourceId.XmNforeground, value);
             }
         }
 
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual Data.Color HighlightColor {
+        public virtual GC.Color HighlightColor {
             get {
-                return XSports.GetColor(Native.Motif.ResourceId.XmNhighlightColor);
+                return XSports.GetColor(TonNurako.Motif.ResourceId.XmNhighlightColor);
             }
             set {
-                XSports.SetColor(Native.Motif.ResourceId.XmNhighlightColor, value);
+                XSports.SetColor(TonNurako.Motif.ResourceId.XmNhighlightColor, value);
             }
         }
 
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual Data.Color TopShadowColor {
+        public virtual GC.Color TopShadowColor {
             get {
-                return XSports.GetColor(Native.Motif.ResourceId.XmNtopShadowColor);
+                return XSports.GetColor(TonNurako.Motif.ResourceId.XmNtopShadowColor);
             }
             set {
-                XSports.SetColor(Native.Motif.ResourceId.XmNtopShadowColor, value);
+                XSports.SetColor(TonNurako.Motif.ResourceId.XmNtopShadowColor, value);
             }
         }
 
@@ -94,10 +94,10 @@ namespace TonNurako.Widgets.Xm
 		public NavigationType NavigationType
 		{
 			get {
-                return XSports.GetValue<NavigationType>(Native.Motif.ResourceId.XmNnavigationType, NavigationType.TabGroup);
+                return XSports.GetValue<NavigationType>(TonNurako.Motif.ResourceId.XmNnavigationType, NavigationType.TabGroup);
 			}
 			set {
-                XSports.SetValue<NavigationType>(Native.Motif.ResourceId.XmNnavigationType, value );
+                XSports.SetValue<NavigationType>(TonNurako.Motif.ResourceId.XmNnavigationType, value );
 			}
 		}
 
@@ -105,10 +105,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual GC.Pixmap BottomShadowPixmap {
             get {
-                return XSports.GetPixmap(Native.Motif.ResourceId.XmNbottomShadowPixmap);
+                return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNbottomShadowPixmap);
             }
             set {
-            XSports.SetPixmap(Native.Motif.ResourceId.XmNbottomShadowPixmap, value);
+            XSports.SetPixmap(TonNurako.Motif.ResourceId.XmNbottomShadowPixmap, value);
             }
         }
 
@@ -117,10 +117,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual GC.Pixmap HighlightPixmap {
             get {
-                return XSports.GetPixmap(Native.Motif.ResourceId.XmNhighlightPixmap);
+                return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNhighlightPixmap);
             }
             set {
-            XSports.SetPixmap(Native.Motif.ResourceId.XmNhighlightPixmap, value);
+            XSports.SetPixmap(TonNurako.Motif.ResourceId.XmNhighlightPixmap, value);
             }
         }
 
@@ -129,10 +129,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual IWidget InitialFocus {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNinitialFocus);
+                return XSports.GetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNinitialFocus);
             }
             set {
-                XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNinitialFocus, value);
+                XSports.SetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNinitialFocus, value);
             }
         }
 
@@ -142,10 +142,10 @@ namespace TonNurako.Widgets.Xm
         public virtual Direction LayoutDirection {
             get {
                 return XSports.GetValue<Direction>(
-                    Native.Motif.ResourceId.XmNlayoutDirection, Direction.DefaultDirection, Data.Resource.Access.CG);
+                    TonNurako.Motif.ResourceId.XmNlayoutDirection, Direction.DefaultDirection, Data.Resource.Access.CG);
             }
             set {
-            XSports.SetValue<Direction>(Native.Motif.ResourceId.XmNlayoutDirection, value, Data.Resource.Access.CG);
+            XSports.SetValue<Direction>(TonNurako.Motif.ResourceId.XmNlayoutDirection, value, Data.Resource.Access.CG);
             }
         }
 
@@ -155,10 +155,10 @@ namespace TonNurako.Widgets.Xm
         public virtual StringDirection StringDirection {
             get {
                 return XSports.GetValue<StringDirection>(
-                    Native.Motif.ResourceId.XmNstringDirection, StringDirection.LtoR, Data.Resource.Access.CG);
+                    TonNurako.Motif.ResourceId.XmNstringDirection, StringDirection.LtoR, Data.Resource.Access.CG);
             }
             set {
-            XSports.SetValue<StringDirection>(Native.Motif.ResourceId.XmNstringDirection, value, Data.Resource.Access.CG);
+            XSports.SetValue<StringDirection>(TonNurako.Motif.ResourceId.XmNstringDirection, value, Data.Resource.Access.CG);
             }
         }
 
@@ -167,10 +167,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual GC.Pixmap TopShadowPixmap {
             get {
-                return XSports.GetPixmap(Native.Motif.ResourceId.XmNtopShadowPixmap);
+                return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNtopShadowPixmap);
             }
             set {
-            XSports.SetPixmap(Native.Motif.ResourceId.XmNtopShadowPixmap, value);
+            XSports.SetPixmap(TonNurako.Motif.ResourceId.XmNtopShadowPixmap, value);
             }
         }
 
@@ -179,10 +179,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual bool TraversalOn {
             get {
-                return XSports.GetBool(Native.Motif.ResourceId.XmNtraversalOn, true);
+                return XSports.GetBool(TonNurako.Motif.ResourceId.XmNtraversalOn, true);
             }
             set {
-            XSports.SetBool(Native.Motif.ResourceId.XmNtraversalOn, value);
+            XSports.SetBool(TonNurako.Motif.ResourceId.XmNtraversalOn, value);
             }
         }
 
@@ -191,10 +191,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual UnitType UnitType {
             get {
-                return XSports.GetValue<UnitType>(Native.Motif.ResourceId.XmNunitType, UnitType.Pixels);
+                return XSports.GetValue<UnitType>(TonNurako.Motif.ResourceId.XmNunitType, UnitType.Pixels);
             }
             set {
-                XSports.SetValue<UnitType>(Native.Motif.ResourceId.XmNunitType, value);
+                XSports.SetValue<UnitType>(TonNurako.Motif.ResourceId.XmNunitType, value);
             }
         }
 
@@ -205,10 +205,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> HelpEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNhelpCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNhelpCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNhelpCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNhelpCallback ,  value );
             }
         }
 
@@ -217,10 +217,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.PopupHandlerEventArgs> PopupHandlerEvent
         {
             add {
-                PopupHandlerEventTable.AddHandler(this, Native.Motif.EventId.XmNpopupHandlerCallback ,  value );
+                PopupHandlerEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNpopupHandlerCallback ,  value );
             }
             remove {
-                PopupHandlerEventTable.RemoveHandler(Native.Motif.EventId.XmNpopupHandlerCallback ,  value );
+                PopupHandlerEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNpopupHandlerCallback ,  value );
             }
         }
 

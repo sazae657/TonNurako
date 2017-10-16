@@ -3,7 +3,7 @@
 // 
 // Motif
 //
-namespace TonNurako.Native.Motif
+namespace TonNurako.Motif
 {
 
 }

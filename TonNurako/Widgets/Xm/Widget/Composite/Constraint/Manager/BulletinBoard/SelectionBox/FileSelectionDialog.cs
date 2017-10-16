@@ -28,7 +28,7 @@ namespace TonNurako.Widgets.Xm
 		public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateFileSelectionDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateFileSelectionDialog, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);

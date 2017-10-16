@@ -22,7 +22,7 @@ namespace TonNurako.Widgets.Xm
 
 		public override int Create(IWidget parent) {
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateMenuShell, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateMenuShell, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -34,11 +34,11 @@ namespace TonNurako.Widgets.Xm
         public virtual SportyFontList ButtonFontList {
             get {
                 return XSports.GetFontList(
-                    Native.Motif.ResourceId.XmNbuttonFontList, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNbuttonFontList, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetFontList(
-                    Native.Motif.ResourceId.XmNbuttonFontList, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNbuttonFontList, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -47,11 +47,11 @@ namespace TonNurako.Widgets.Xm
         public virtual Data.RenderTable ButtonRenderTable  {
             get {
                 return XSports.GetRenderTable(
-                    Native.Motif.ResourceId.XmNbuttonRenderTable, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNbuttonRenderTable, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetRenderTable(
-                    Native.Motif.ResourceId.XmNbuttonRenderTable, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNbuttonRenderTable, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -60,11 +60,11 @@ namespace TonNurako.Widgets.Xm
         public virtual SportyFontList DefaultFontList {
             get {
                 return XSports.GetFontList(
-                    Native.Motif.ResourceId.XmNdefaultFontList, Data.Resource.Access.CG);
+                    TonNurako.Motif.ResourceId.XmNdefaultFontList, Data.Resource.Access.CG);
             }
             set {
             XSports.SetFontList(
-                Native.Motif.ResourceId.XmNdefaultFontList, value, Data.Resource.Access.CG);
+                TonNurako.Motif.ResourceId.XmNdefaultFontList, value, Data.Resource.Access.CG);
             }
         }
 
@@ -73,11 +73,11 @@ namespace TonNurako.Widgets.Xm
         public virtual SportyFontList LabelFontList {
             get {
                 return XSports.GetFontList(
-                    Native.Motif.ResourceId.XmNlabelFontList, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlabelFontList, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetFontList(
-                Native.Motif.ResourceId.XmNlabelFontList, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNlabelFontList, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -86,11 +86,11 @@ namespace TonNurako.Widgets.Xm
         public virtual Data.RenderTable LabelRenderTable  {
             get {
                 return XSports.GetRenderTable(
-                    Native.Motif.ResourceId.XmNlabelRenderTable, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlabelRenderTable, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetRenderTable(
-                    Native.Motif.ResourceId.XmNlabelRenderTable, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNlabelRenderTable, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -100,11 +100,11 @@ namespace TonNurako.Widgets.Xm
         public virtual Direction LayoutDirection {
             get {
                 return XSports.GetValue<Direction>(
-                Native.Motif.ResourceId.XmNlayoutDirection, Direction.LeftToRight, Data.Resource.Access.CG);
+                TonNurako.Motif.ResourceId.XmNlayoutDirection, Direction.LeftToRight, Data.Resource.Access.CG);
             }
             set {
             XSports.SetValue<Direction>(
-                Native.Motif.ResourceId.XmNlayoutDirection, value, Data.Resource.Access.CG);
+                TonNurako.Motif.ResourceId.XmNlayoutDirection, value, Data.Resource.Access.CG);
             }
         }
 
@@ -113,11 +113,11 @@ namespace TonNurako.Widgets.Xm
         public virtual bool Animate {
             get {
                 return XSports.GetBool(
-                Native.Motif.ResourceId.XmNanimate, false, Data.Resource.Access.CG);
+                TonNurako.Motif.ResourceId.XmNanimate, false, Data.Resource.Access.CG);
             }
             set {
             XSports.SetBool(
-                Native.Motif.ResourceId.XmNanimate, value, Data.Resource.Access.CG);
+                TonNurako.Motif.ResourceId.XmNanimate, value, Data.Resource.Access.CG);
             }
         }
 

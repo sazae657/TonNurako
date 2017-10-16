@@ -25,7 +25,7 @@ namespace TonNurako.Widgets.Xm
 		{
 			if( !IsAvailable )
 			{
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateMainWindow, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateMainWindow, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -35,10 +35,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
         public virtual IWidget CommandWindow {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNcommandWindow);
+                return XSports.GetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNcommandWindow);
             }
             set {
-            XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNcommandWindow, value);
+            XSports.SetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNcommandWindow, value);
             }
         }
 
@@ -48,10 +48,10 @@ namespace TonNurako.Widgets.Xm
         public virtual CommandWindowLocation CommandWindowLocation {
             get {
                 return XSports.GetValue<CommandWindowLocation>(
-                    Native.Motif.ResourceId.XmNcommandWindowLocation, CommandWindowLocation.AboveWorkspace, Data.Resource.Access.CG);
+                    TonNurako.Motif.ResourceId.XmNcommandWindowLocation, CommandWindowLocation.AboveWorkspace, Data.Resource.Access.CG);
             }
             set {
-                XSports.SetValue<CommandWindowLocation>(Native.Motif.ResourceId.XmNcommandWindowLocation, value, Data.Resource.Access.CG);
+                XSports.SetValue<CommandWindowLocation>(TonNurako.Motif.ResourceId.XmNcommandWindowLocation, value, Data.Resource.Access.CG);
             }
         }
 
@@ -60,10 +60,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CG)]
         public virtual int MainWindowMarginHeight {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNmainWindowMarginHeight, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNmainWindowMarginHeight, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNmainWindowMarginHeight, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNmainWindowMarginHeight, value);
             }
         }
 
@@ -72,10 +72,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CG)]
         public virtual int MainWindowMarginWidth {
             get {
-                return XSports.GetInt(Native.Motif.ResourceId.XmNmainWindowMarginWidth, 0);
+                return XSports.GetInt(TonNurako.Motif.ResourceId.XmNmainWindowMarginWidth, 0);
             }
             set {
-            XSports.SetInt(Native.Motif.ResourceId.XmNmainWindowMarginWidth, value);
+            XSports.SetInt(TonNurako.Motif.ResourceId.XmNmainWindowMarginWidth, value);
             }
         }
 
@@ -84,10 +84,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CG)]
         public virtual IWidget MenuBar {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNmenuBar);
+                return XSports.GetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNmenuBar);
             }
             set {
-                XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNmenuBar, value);
+                XSports.SetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNmenuBar, value);
             }
         }
 
@@ -96,10 +96,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CG)]
         public virtual IWidget MessageWindow {
             get {
-                return XSports.GetWidget<IWidget>(Native.Motif.ResourceId.XmNmessageWindow);
+                return XSports.GetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNmessageWindow);
             }
             set {
-            XSports.SetWidget<IWidget>(Native.Motif.ResourceId.XmNmessageWindow, value);
+            XSports.SetWidget<IWidget>(TonNurako.Motif.ResourceId.XmNmessageWindow, value);
             }
         }
 
@@ -108,10 +108,10 @@ namespace TonNurako.Widgets.Xm
         [Data.Resource.SportyResource(Data.Resource.Access.CG)]
         public virtual bool ShowSeparator {
             get {
-                return XSports.GetBool(Native.Motif.ResourceId.XmNshowSeparator, false);
+                return XSports.GetBool(TonNurako.Motif.ResourceId.XmNshowSeparator, false);
             }
             set {
-                XSports.SetBool(Native.Motif.ResourceId.XmNshowSeparator, value);
+                XSports.SetBool(TonNurako.Motif.ResourceId.XmNshowSeparator, value);
             }
         }
 

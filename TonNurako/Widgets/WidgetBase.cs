@@ -293,11 +293,11 @@ namespace TonNurako.Widgets
         public virtual SportyFontList FontList {
             get {
                 return XSports.GetFontList(
-                    Native.Motif.ResourceId.XmNfontList, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNfontList, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetFontList(
-                    Native.Motif.ResourceId.XmNfontList, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNfontList, value, Data.Resource.Access.CSG);
             }
         }
         #endregion
@@ -479,7 +479,7 @@ namespace TonNurako.Widgets
                 UIeventTable.CallHandler(TonNuraEventId.Destroy, this);
 
                 if(null != selfWidget) {
-                    Native.Xt.XtSports.XtDestroyWidget(this);
+                    TonNurako.Xt.XtSports.XtDestroyWidget(this);
                 }
                 XEventQueue.RemoveAll();
                 CallbackQueue.RemoveAlll();

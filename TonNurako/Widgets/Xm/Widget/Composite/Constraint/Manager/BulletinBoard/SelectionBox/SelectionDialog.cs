@@ -28,7 +28,7 @@ namespace TonNurako.Widgets.Xm
 		public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateSelectionDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateSelectionDialog, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -59,7 +59,7 @@ namespace TonNurako.Widgets.Xm
         public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreatePromptDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreatePromptDialog, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);

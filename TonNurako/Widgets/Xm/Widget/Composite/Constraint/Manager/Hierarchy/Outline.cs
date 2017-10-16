@@ -33,7 +33,7 @@ namespace TonNurako.Widgets.Xm
 		/// <returns></returns>
 		public override int Create(IWidget parent) {
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateOutline, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateOutline, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -46,11 +46,11 @@ namespace TonNurako.Widgets.Xm
         public virtual bool ConnectNodes {
             get {
                 return XSports.GetBool(
-                	    Native.Motif.ResourceId.XmNconnectNodes, false, Data.Resource.Access.CSG);
+                	    TonNurako.Motif.ResourceId.XmNconnectNodes, false, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetBool(
-                    Native.Motif.ResourceId.XmNconnectNodes, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNconnectNodes, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -59,11 +59,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int IndentSpace {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNindentSpace, 30, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNindentSpace, 30, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetInt(
-                Native.Motif.ResourceId.XmNindentSpace, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNindentSpace, value, Data.Resource.Access.CSG);
             }
         }
 

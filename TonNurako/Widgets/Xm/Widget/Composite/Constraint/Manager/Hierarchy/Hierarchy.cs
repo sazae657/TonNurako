@@ -14,10 +14,10 @@ namespace TonNurako.Widgets.Xm
 	public abstract class Hierarchy : Manager
 	{
         public enum NodeState : byte {
-            AlwaysOpen = Native.Motif.Constant.XmAlwaysOpen,
-            Open   = Native.Motif.Constant.XmOpen,
-            Closed  = Native.Motif.Constant.XmClosed,
-            Hidden = Native.Motif.Constant.XmHidden,
+            AlwaysOpen = TonNurako.Motif.Constant.XmAlwaysOpen,
+            Open   = TonNurako.Motif.Constant.XmOpen,
+            Closed  = TonNurako.Motif.Constant.XmClosed,
+            Hidden = TonNurako.Motif.Constant.XmHidden,
         }
 
 		public Hierarchy() : base() {
@@ -39,11 +39,11 @@ namespace TonNurako.Widgets.Xm
         public virtual bool AutoClose {
             get {
                 return XSports.GetBool(
-                Native.Motif.ResourceId.XmNautoClose, true, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNautoClose, true, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetBool(
-                Native.Motif.ResourceId.XmNautoClose, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNautoClose, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -52,11 +52,11 @@ namespace TonNurako.Widgets.Xm
         public virtual GC.Pixmap CloseFolderPixmap {
             get {
                 return XSports.GetPixmap(
-                Native.Motif.ResourceId.XmNcloseFolderPixmap, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNcloseFolderPixmap, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetPixmap(
-                Native.Motif.ResourceId.XmNcloseFolderPixmap, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNcloseFolderPixmap, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -65,11 +65,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int HorizontalMargin {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNhorizontalMargin, 2, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNhorizontalMargin, 2, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetInt(
-                Native.Motif.ResourceId.XmNhorizontalMargin, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNhorizontalMargin, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -78,11 +78,11 @@ namespace TonNurako.Widgets.Xm
         public virtual GC.Pixmap OpenFolderPixmap {
             get {
                 return XSports.GetPixmap(
-                Native.Motif.ResourceId.XmNopenFolderPixmap, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNopenFolderPixmap, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetPixmap(
-                Native.Motif.ResourceId.XmNopenFolderPixmap, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNopenFolderPixmap, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -91,11 +91,11 @@ namespace TonNurako.Widgets.Xm
         public virtual bool RefigureMode {
             get {
                 return XSports.GetBool(
-                Native.Motif.ResourceId.XmNrefigureMode, true, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNrefigureMode, true, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetBool(
-                Native.Motif.ResourceId.XmNrefigureMode, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNrefigureMode, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -104,11 +104,11 @@ namespace TonNurako.Widgets.Xm
         public virtual int VerticalMargin {
             get {
                 return XSports.GetInt(
-                Native.Motif.ResourceId.XmNverticalMargin, 2, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNverticalMargin, 2, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetInt(
-                Native.Motif.ResourceId.XmNverticalMargin, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNverticalMargin, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -125,10 +125,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.HierarchyEventArgs> NodeStateEvent
         {
             add {
-                HierarchyEventTable.AddHandler(this, Native.Motif.EventId.XmNnodeStateCallback ,  value );
+                HierarchyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNnodeStateCallback ,  value );
             }
             remove {
-                HierarchyEventTable.RemoveHandler(Native.Motif.EventId.XmNnodeStateCallback ,  value );
+                HierarchyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNnodeStateCallback ,  value );
             }
         }
 

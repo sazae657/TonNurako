@@ -25,7 +25,7 @@ namespace TonNurako.Widgets.Xm
 		public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateBulletinBoardDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateBulletinBoardDialog, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}

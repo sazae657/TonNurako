@@ -18,8 +18,8 @@ namespace TonNurako.Events
 
         public bool DoIt {
             set {
-                var wsb = (Native.Motif.XmStruct.XmTextVerifyCallbackStruct)
-                    Marshal.PtrToStructure(rawCallData, typeof(Native.Motif.XmStruct.XmTextVerifyCallbackStruct ) );
+                var wsb = (TonNurako.Motif.XmStruct.XmTextVerifyCallbackStruct)
+                    Marshal.PtrToStructure(rawCallData, typeof(TonNurako.Motif.XmStruct.XmTextVerifyCallbackStruct ) );
                 wsb.doit = value;
                 Marshal.StructureToPtr(wsb, rawCallData, false);
             }
@@ -37,8 +37,8 @@ namespace TonNurako.Events
 
         internal override void ParseXEvent(IntPtr call, IntPtr client) {
             rawCallData = call;
-            var callData = (Native.Motif.XmStruct.XmTextVerifyCallbackStruct)
-                Marshal.PtrToStructure(call, typeof(Native.Motif.XmStruct.XmTextVerifyCallbackStruct ) );
+            var callData = (TonNurako.Motif.XmStruct.XmTextVerifyCallbackStruct)
+                Marshal.PtrToStructure(call, typeof(TonNurako.Motif.XmStruct.XmTextVerifyCallbackStruct ) );
 
             System.Diagnostics.Debug.WriteLine(DumpStruct(callData));
 
@@ -47,8 +47,8 @@ namespace TonNurako.Events
             if (IntPtr.Zero != callData.textBlock &&
                 Reason != CallReason.MOVING_INSERT_CURSOR)
             {
-                var block = (Native.Motif.XmStruct.XmTextBlockRec)
-                    Marshal.PtrToStructure(callData.textBlock, typeof(Native.Motif.XmStruct.XmTextBlockRec ) );
+                var block = (TonNurako.Motif.XmStruct.XmTextBlockRec)
+                    Marshal.PtrToStructure(callData.textBlock, typeof(TonNurako.Motif.XmStruct.XmTextBlockRec ) );
 
                 System.Diagnostics.Debug.WriteLine(DumpStruct(block));
                 InputLength = block.length;

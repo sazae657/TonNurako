@@ -129,9 +129,9 @@ namespace TonNurako.Widgets {
     /// ｶーｿﾙの挙動
     /// </summary>
     public enum GrabOption {
-        None = TonNurako.Native.Motif.Constant.XtGrabNone,
-        NonExclusive = TonNurako.Native.Motif.Constant.XtGrabNonexclusive,
-        Exclusive = TonNurako.Native.Motif.Constant.XtGrabExclusive
+        None = TonNurako.Motif.Constant.XtGrabNone,
+        NonExclusive = TonNurako.Motif.Constant.XtGrabNonexclusive,
+        Exclusive = TonNurako.Motif.Constant.XtGrabExclusive
     }
 
     /// <summary>
@@ -231,7 +231,7 @@ namespace TonNurako.Widgets {
             }
         }
 
-        public ﾄﾝﾇﾗｼﾞｪｯﾄ(TonNurako.Native.X11.Widget _WdgRef, IWidget _Parent) {
+        public ﾄﾝﾇﾗｼﾞｪｯﾄ(TonNurako.Xt.Widget _WdgRef, IWidget _Parent) {
             Handle = new Native.NativeWidget(_WdgRef.Handle);
             Children = new WidgetCollection(this);
             xresource = new XResource(this);

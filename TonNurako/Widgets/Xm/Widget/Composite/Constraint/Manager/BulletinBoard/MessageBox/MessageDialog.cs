@@ -28,7 +28,7 @@ namespace TonNurako.Widgets.Xm
 		public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateMessageDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateMessageDialog, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -55,7 +55,7 @@ namespace TonNurako.Widgets.Xm
         public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateErrorDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateErrorDialog, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -81,7 +81,7 @@ namespace TonNurako.Widgets.Xm
         public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateInformationDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateInformationDialog, parent, ToolkitResources);
 			}
 
 			return base.Create (parent);
@@ -104,7 +104,7 @@ namespace TonNurako.Widgets.Xm
         public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateQuestionDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateQuestionDialog, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -127,7 +127,7 @@ namespace TonNurako.Widgets.Xm
         public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateTemplateDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateTemplateDialog, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -152,7 +152,7 @@ namespace TonNurako.Widgets.Xm
          public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateWarningDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateWarningDialog, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}
@@ -176,7 +176,7 @@ namespace TonNurako.Widgets.Xm
         public override int Create( IWidget parent )
 		{
 			if( !IsAvailable ) {
-				this.CreateMotifWidget(Native.Motif.CreateSymbol.XmCreateWorkingDialog, parent, ToolkitResources);
+				this.CreateMotifWidget(TonNurako.Motif.CreateSymbol.XmCreateWorkingDialog, parent, ToolkitResources);
 			}
 			return base.Create (parent);
 		}

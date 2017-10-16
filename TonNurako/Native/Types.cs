@@ -5,13 +5,15 @@
 //
 using System;
 using System.Collections.Generic;
+using TonNurako.X11;
 
 namespace TonNurako.Native {
 
     /// <summary>
     /// ﾈーﾁﾌﾞなﾊﾝﾄﾞﾙへのｱｸｾｯｻー
     /// </summary>
-    public class NativeWidget {
+    public class NativeWidget :
+     TonNurako.X11.IDrawable {
         /// <summary>
         /// ｺﾝｽﾄﾗｸﾀー
         /// </summary>
@@ -20,11 +22,11 @@ namespace TonNurako.Native {
             if (IntPtr.Zero == ptr) {
                 throw new NullReferenceException("Null Widget!!");
             }
-            Widget = new X11.Widget(ptr);
+            Widget = new TonNurako.Xt.Widget(ptr);
 
-            Display = new X11.Display(Widget);
-            Window = new X11.Window(Widget);
-            Screen = new X11.Screen(Widget);
+            Display = new X11.Display(()=> TonNurako.Xt.XtSports.XtDisplay(Widget.Handle));
+            Window = new X11.Window(()=> TonNurako.Xt.XtSports.XtWindow(Widget.Handle), Display);
+            Screen = new X11.Screen(()=>TonNurako.Xt.XtSports.XtScreen(Widget.Handle));
 
             Hash = ptr.ToInt64().ToString().GetHashCode();
         }
@@ -33,7 +35,7 @@ namespace TonNurako.Native {
         /// Widget
         /// </summary>
         /// <returns>Widget</returns>
-        public X11.Widget Widget {
+        public TonNurako.Xt.Widget Widget {
             get;
         }
 
@@ -50,6 +52,12 @@ namespace TonNurako.Native {
         public X11.Window Window { get; }
 
         /// <summary>
+        /// ﾄﾞﾛﾜﾎﾞー
+        /// </summary>
+        public IntPtr Drawable => Window.Handle;
+
+
+        /// <summary>
         /// Screen
         /// </summary>
         /// <returns>Screen</returns>
@@ -59,16 +67,16 @@ namespace TonNurako.Native {
         /// RootWindowOfScreen
         /// </summary>
         /// <returns>RootWindowOfScreen</returns>
-        public X11.Window RootWindowOfScreen => 
-            new X11.Window(TonNurako.Native.X11.X11Sports.RootWindowOfScreen(Screen.Handle));
+        public X11.Window RootWindowOfScreen =>
+            new X11.Window(TonNurako.X11.X11Sports.RootWindowOfScreen(Screen.Handle), Display);
 
-                /// <summary>
+        /// <summary>
         /// Name
         /// </summary>
         /// <returns>Name</returns>
         public string XtName =>
-            Native.Xt.XtSports.XtName(Widget.Handle);
-        
+            TonNurako.Xt.XtSports.XtName(Widget.Handle);
+
 
         /// <summary>
         /// 比較
@@ -76,7 +84,7 @@ namespace TonNurako.Native {
         /// <param name="with">比較元</param>
         /// <returns>比較結果</returns>
         public bool Equals(NativeWidget with) => (this.Widget == with.Widget);
-        
+
         /// <summary>
         /// ﾊｯｼｭ
         /// </summary>
@@ -99,7 +107,7 @@ namespace TonNurako.Native {
         /// <param name="y">y</param>
         /// <returns></returns>
         public bool Equals(NativeWidget x, NativeWidget y) => x.Equals(y);
-        
+
         /// <summary>
         /// ﾊｯｼｭ
         /// </summary>

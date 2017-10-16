@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -119,32 +119,32 @@ namespace TonNurako.XImageFormat.Xi {
         /// 赤
         /// </summary>
         public int R {
-            get => ﾄ[(int)画素.R];
-            set => ﾄ[(int)画素.R] = value;
+            get { return ﾄ[(int)画素.R]; }
+            set { ﾄ[(int)画素.R] = value; }
         }
 
         /// <summary>
         /// 緑
         /// </summary>
         public int G {
-            get => ﾄ[(int)画素.G];
-            set => ﾄ[(int)画素.G] = value;
+            get { return ﾄ[(int)画素.G]; }
+            set { ﾄ[(int)画素.G] = value; }
         }
 
         /// <summary>
         /// 青
         /// </summary>
         public int B {
-            get => ﾄ[(int)画素.B];
-            set => ﾄ[(int)画素.B] = value;
+            get { return ﾄ[(int)画素.B]; }
+            set { ﾄ[(int)画素.B] = value; }
         }
 
         /// <summary>
         /// 透
         /// </summary>
         public int A {
-            get => ﾄ[(int)画素.A];
-            set => ﾄ[(int)画素.A] = value;
+            get { return ﾄ[(int)画素.A]; }
+            set { ﾄ[(int)画素.A] = value; }
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace TonNurako.XImageFormat.Xi {
         public string ToXRGB16() => $"#{R:X2}{R:X2}{G:X2}{G:X2}{B:X2}{B:X2}";
 
         /// <summary>
-        /// RGBAにパッキングして返す
+        /// RGBAにﾊﾟｯｷﾝｸﾞして返す
         /// </summary>
         /// <returns></returns>
         public int ToARGBi386() => ((A & 0xff) << 24) | ((R & 0xff) << 16) | ((G & 0xff) << 8) | (B & 0xff);

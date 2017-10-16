@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using TonNurako.Data;
 using TonNurako.Events;
 using TonNurako.Native;
-using TonNurako.Native.Motif;
+using TonNurako.Motif;
 
 namespace TonNurako.Widgets.Xm
 {
@@ -20,7 +20,7 @@ namespace TonNurako.Widgets.Xm
 	{
 
 		public Shell() : base() {
-            PopupChildEventTable = new TnkEvents<Native.Motif.ResourceId, TnkEventArgs>();
+            PopupChildEventTable = new TnkEvents<TonNurako.Motif.ResourceId, TnkEventArgs>();
 		}
 
         internal override void InitalizeLocals() {
@@ -66,11 +66,11 @@ namespace TonNurako.Widgets.Xm
         public virtual bool AllowShellResize {
             get {
                 return XSports.GetBool(
-                Native.Motif.ResourceId.XmNallowShellResize, false, Data.Resource.Access.CG);
+                TonNurako.Motif.ResourceId.XmNallowShellResize, false, Data.Resource.Access.CG);
             }
             set {
             XSports.SetBool(
-                Native.Motif.ResourceId.XmNallowShellResize, value, Data.Resource.Access.CG);
+                TonNurako.Motif.ResourceId.XmNallowShellResize, value, Data.Resource.Access.CG);
             }
         }
 
@@ -79,11 +79,11 @@ namespace TonNurako.Widgets.Xm
         public virtual string Geometry {
             get {
                 return XSports.GetAnsiString(
-                    Native.Motif.ResourceId.XmNgeometry, "", false, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNgeometry, "", false, Data.Resource.Access.CSG);
             }
             set {
                 XSports.SetAnsiString(
-                    Native.Motif.ResourceId.XmNgeometry, value, Data.Resource.Access.CSG);
+                    TonNurako.Motif.ResourceId.XmNgeometry, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -92,11 +92,11 @@ namespace TonNurako.Widgets.Xm
         public virtual bool OverrideRedirect {
             get {
                 return XSports.GetBool(
-                Native.Motif.ResourceId.XmNoverrideRedirect, false, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNoverrideRedirect, false, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetBool(
-                Native.Motif.ResourceId.XmNoverrideRedirect, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNoverrideRedirect, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -105,11 +105,11 @@ namespace TonNurako.Widgets.Xm
         public virtual bool SaveUnder {
             get {
                 return XSports.GetBool(
-                Native.Motif.ResourceId.XmNsaveUnder, false, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNsaveUnder, false, Data.Resource.Access.CSG);
             }
             set {
             XSports.SetBool(
-                Native.Motif.ResourceId.XmNsaveUnder, value, Data.Resource.Access.CSG);
+                TonNurako.Motif.ResourceId.XmNsaveUnder, value, Data.Resource.Access.CSG);
             }
         }
 
@@ -124,10 +124,10 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> PopdownEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNpopdownCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNpopdownCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNpopdownCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNpopdownCallback ,  value );
             }
         }
 
@@ -135,20 +135,20 @@ namespace TonNurako.Widgets.Xm
         public virtual event EventHandler<Events.AnyEventArgs> PopupEvent
         {
             add {
-                MotifAnyEventTable.AddHandler(this, Native.Motif.EventId.XmNpopupCallback ,  value );
+                MotifAnyEventTable.AddHandler(this, TonNurako.Motif.EventId.XmNpopupCallback ,  value );
             }
             remove {
-                MotifAnyEventTable.RemoveHandler(Native.Motif.EventId.XmNpopupCallback ,  value );
+                MotifAnyEventTable.RemoveHandler(TonNurako.Motif.EventId.XmNpopupCallback ,  value );
             }
         }
 
-        internal TnkEvents<Native.Motif.ResourceId, TnkEventArgs> PopupChildEventTable;
+        internal TnkEvents<TonNurako.Motif.ResourceId, TnkEventArgs> PopupChildEventTable;
         /// <summary>
         /// Popupが作られたら呼ばれる
         /// </summary> <summary>
         public event EventHandler<TnkEventArgs> CreatePopupChildEvent {
             add{
-                if (! PopupChildEventTable.HasHandler(Native.Motif.ResourceId.XmNcreatePopupChildProc)) {
+                if (! PopupChildEventTable.HasHandler(TonNurako.Motif.ResourceId.XmNcreatePopupChildProc)) {
                     XSports.SetCallback(ResourceId.XmNcreatePopupChildProc,
                         (w, client, call ) =>{
                             PopupChildEventTable.CallHandler(ResourceId.XmNcreatePopupChildProc, this);
