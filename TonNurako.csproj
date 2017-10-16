@@ -93,6 +93,7 @@
     <Compile Include="TonNurako\Native\X11\Window.cs" />
     <Compile Include="TonNurako\Native\X11\WindowAttributes.cs" />
     <Compile Include="TonNurako\Native\X11\X11Call.cs" />
+    <Compile Include="TonNurako\Native\X11\XTextProperty.cs" />
     <Compile Include="TonNurako\Native\XEventQueue.cs" />
     <Compile Include="TonNurako\Native\Xft\Struct.cs" />
     <Compile Include="TonNurako\Native\Xm\EventId.cs" />

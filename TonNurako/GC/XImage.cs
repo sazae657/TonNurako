@@ -50,9 +50,9 @@ namespace TonNurako.GC
         /// XImageﾌｫーﾏｯﾄ
         /// </summary>
         public enum Format : int{
-            XYBitmap = 0,
-            XYPixmap = 1,
-            ZPixmap = 2
+            XYBitmap = TonNurako.X11.Constant.XYBitmap,
+            XYPixmap = TonNurako.X11.Constant.XYPixmap,
+            ZPixmap = TonNurako.X11.Constant.ZPixmap,
         }
 
         /// <summary>

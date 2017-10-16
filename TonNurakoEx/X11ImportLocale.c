@@ -4,6 +4,58 @@ TNK_EXPORT Bool XSupportsLocale_TNK() {
     return XSupportsLocale();
 }
 
+TNK_EXPORT void XSetWMIconName_TNK(Display* display, Window w, XTextProperty* text_prop) {
+    XSetWMIconName(display,w,text_prop);
+}
+
+TNK_EXPORT Status XGetWMIconName_TNK(Display* display, Window w, XTextProperty* text_prop_return) {
+    return XGetWMIconName(display,w,text_prop_return);
+}
+
+TNK_EXPORT int XSetIconName_TNK(Display* display, Window w, char* icon_name) {
+    return XSetIconName(display,w,icon_name);
+}
+
+TNK_EXPORT Status XGetIconName_TNK(Display* display, Window w, char* *icon_name_return) {
+    return XGetIconName(display,w,icon_name_return);
+}
+
+TNK_EXPORT void XSetWMName_TNK(Display* display, Window w, XTextProperty* text_prop) {
+    XSetWMName(display,w,text_prop);
+}
+
+TNK_EXPORT Status XGetWMName_TNK(Display* display, Window w, XTextProperty* text_prop_return) {
+    return XGetWMName(display,w,text_prop_return);
+}
+
+TNK_EXPORT int XStoreName_TNK(Display* display, Window w, char* window_name) {
+    return XStoreName(display,w,window_name);
+}
+
+TNK_EXPORT Status XFetchName_TNK(Display* display, Window w, char* *window_name_return) {
+    return XFetchName(display,w,window_name_return);
+}
+
+TNK_EXPORT int XmbTextListToTextProperty_TNK(Display* display, char* *list, int count, XICCEncodingStyle style, XTextProperty* text_prop_return) {
+    return XmbTextListToTextProperty(display,list,count,style,text_prop_return);
+}
+
+TNK_EXPORT int XwcTextListToTextProperty_TNK(Display* display, wchar_t* *list, int count, XICCEncodingStyle style, XTextProperty* text_prop_return) {
+    return XwcTextListToTextProperty(display,list,count,style,text_prop_return);
+}
+
+TNK_EXPORT int XmbTextPropertyToTextList_TNK(Display* display, XTextProperty* text_prop, char* **list_return, int* count_return) {
+    return XmbTextPropertyToTextList(display,text_prop,list_return,count_return);
+}
+
+TNK_EXPORT int XwcTextPropertyToTextList_TNK(Display* display, XTextProperty* text_prop, wchar_t* **list_return, int* count_return) {
+    return XwcTextPropertyToTextList(display,text_prop,list_return,count_return);
+}
+
+TNK_EXPORT void XwcFreeStringList_TNK(wchar_t** list) {
+    XwcFreeStringList(list);
+}
+
 TNK_EXPORT void XmbSetWMProperties_TNK(Display* display, Window w, char* window_name, char* icon_name, char* argv[], int argc, XSizeHints* normal_hints, XWMHints* wm_hints, XClassHint* class_hints) {
     XmbSetWMProperties(display,w,window_name,icon_name,argv,argc,normal_hints,wm_hints,class_hints);
 }

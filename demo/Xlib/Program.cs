@@ -63,6 +63,7 @@ namespace Xlib {
                 DumpProperty(d);
                 return -1;
             });
+            TonNurako.X11.X11Sports.XSetIOErrorHandler(null);
 
             var dpy = TonNurako.X11.Display.Open(null);
             if (dpy.Handle == IntPtr.Zero) {
@@ -105,6 +106,7 @@ namespace Xlib {
             rw.SelectInput(TonNurako.X11.EventMask.SubstructureRedirectMask|TonNurako.X11.EventMask.SubstructureNotifyMask);
             dpy.Sync(false);
 
+
             var c = TonNurako.X11.XClassHint.Alloc();
             c.Dispose();
 
@@ -127,6 +129,15 @@ namespace Xlib {
             var attr = new TonNurako.X11.XSetWindowAttributes();
             attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
             win.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr);
+
+
+            var rpr = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "たいとる" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
+            DumpProperty(rpr);
+            win.SetWMName(rpr);
+
+            var rpr2 = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "エイコン" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
+            win.SetWMIconName(rpr2);
+            //win.SetWMProperties("なまえ", "ダイコン", args);
 
             win.MapWindow();
             dpy.Flush();

@@ -197,9 +197,50 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetTextProperty_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetTextProperty(IntPtr display, IntPtr w, IntPtr text_prop_return, ulong property);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XmbSetWMProperties_TNK", CharSet = CharSet.Auto)]
-            internal static extern void XmbSetWMProperties(
-                IntPtr display, IntPtr w, [In] byte[] window_name, [In] byte[] icon_name, string[] argv, int argc, ref XSizeHints normal_hints, ref XWMHintsRec wm_hints, ref XClassHintRec class_hints);
+            /* [DllImport(ExtremeSports.Lib, EntryPoint = "XmbSetWMProperties_TNK", CharSet = CharSet.Auto)]
+             internal static extern void XmbSetWMProperties(
+                 IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string window_name, [MarshalAs(UnmanagedType.LPStr)] string icon_name, [MarshalAs(UnmanagedType.LPStr)] string[] argv, int argc, ref XSizeHints normal_hints, ref XWMHintsRec wm_hints, ref XClassHintRec class_hints);
+
+             [DllImport(ExtremeSports.Lib, EntryPoint = "XmbSetWMProperties_TNK", CharSet = CharSet.Auto)]
+             internal static extern void XmbSetWMProperties(
+                 IntPtr display, IntPtr w, 
+                 [In] byte[] window_name, [In] byte[] icon_name, [MarshalAs(UnmanagedType.LPStr)] string[] argv, int argc,
+                 IntPtr normal_hints, IntPtr wm_hints, IntPtr class_hints);
+                 */
+
+
+            // void: XSetWMName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'XTextProperty*', 'name': 'text_prop'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMName_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XSetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop);
+
+            // Status: XGetWMName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'XTextProperty*', 'name': 'text_prop_return'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMName_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XGetWMName(IntPtr display, IntPtr w, out XTextPropertyRec text_prop_return);
+
+            // int: XStoreName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': 'window_name'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XStoreName_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XStoreName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string window_name);
+
+            // Status: XFetchName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': '*window_name_return'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFetchName_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XFetchName(IntPtr display, IntPtr w, out IntPtr window_name_return);
+
+            
+            
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMIconName_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XSetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop);
+
+            // Status: XGetWMIconName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'XTextProperty*', 'name': 'text_prop_return'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMIconName_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XGetWMIconName(IntPtr display, IntPtr w, out XTextPropertyRec text_prop_return);
+
+            // int: XSetIconName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': 'icon_name'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIconName_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XSetIconName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string icon_name);
+
+            // Status: XGetIconName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': '*icon_name_return'}]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetIconName_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XGetIconName(IntPtr display, IntPtr w, out IntPtr icon_name_return);
 
         }
 
@@ -272,6 +313,17 @@ namespace TonNurako.X11 {
             }
             return ret;
         }
+
+        public void SetWMName(XTextProperty property){
+            TonNurako.Inutility.DumpStruct(property.record, (s) => Console.WriteLine($"SetWMName: {s}"));
+            NativeMethods.XSetWMName(display.Handle, Handle, ref property.record);
+        }
+
+        public void SetWMIconName(XTextProperty property) {
+            TonNurako.Inutility.DumpStruct(property.record, (s) => Console.WriteLine($"XSetWMIconName: {s}"));
+            NativeMethods.XSetWMIconName(display.Handle, Handle, ref property.record);
+        }
+
 
         public int MapWindow() => NativeMethods.XMapWindow(display.Handle, Handle);
         public int MapRaised() => NativeMethods.XMapRaised(display.Handle, Handle);
@@ -359,16 +411,27 @@ namespace TonNurako.X11 {
             return g;
         }
 
-        public void SetWMProperties(string window_name, string icon_name, string[] argv, XSizeHints normal_hints, XWMHints wm_hints, ref XClassHint class_hints) {
+        /*public void SetWMProperties(string window_name, string icon_name, string[] argv, XSizeHints normal_hints, XWMHints wm_hints, ref XClassHint class_hints) {
             NativeMethods.XmbSetWMProperties(
                 this.Display.Handle, Handle,
-                Encoding.Default.GetBytes(window_name),
-                Encoding.Default.GetBytes(icon_name),
+                window_name,
+                icon_name,
                 argv,
                 argv.Length, 
                 ref normal_hints, 
                 ref wm_hints.record, ref class_hints.classHint);
         }
+
+        public void SetWMProperties(string window_name, string icon_name, string[] argv) {
+            NativeMethods.XmbSetWMProperties(
+                this.Display.Handle, Handle,
+                Encoding.Default.GetBytes(window_name),
+                Encoding.Default.GetBytes(icon_name),
+                argv,
+                argv.Length,
+                IntPtr.Zero,
+                IntPtr.Zero, IntPtr.Zero);
+        }*/
     }
 
     [StructLayout(LayoutKind.Sequential)]

@@ -18,12 +18,6 @@ namespace TonNurako.X11
         LC_MONETARY = TonNurako.X11.Constant.LC_MONETARY,
         LC_MESSAGES = TonNurako.X11.Constant.LC_MESSAGES,
         LC_ALL = TonNurako.X11.Constant.LC_ALL,
-        LC_PAPER = TonNurako.X11.Constant.LC_PAPER,
-        LC_NAME = TonNurako.X11.Constant.LC_NAME,
-        LC_ADDRESS = TonNurako.X11.Constant.LC_ADDRESS,
-        LC_TELEPHONE = TonNurako.X11.Constant.LC_TELEPHONE,
-        LC_MEASUREMENT = TonNurako.X11.Constant.LC_MEASUREMENT,
-        LC_IDENTIFICATION = TonNurako.X11.Constant.LC_IDENTIFICATION,
     }
 
     /// <summary>
@@ -274,9 +268,9 @@ namespace TonNurako.X11
 
         public static int XStringListToTextProperty(IntPtr list, int count, out IntPtr text_prop_return)
             => NativeMethods.XStringListToTextProperty(list, count, out text_prop_return);
-        
 
-        public static int XTextPropertyToStringList(XTextProperty text_prop, out IntPtr list_return, out IntPtr count_return) 
+
+        public static int XTextPropertyToStringList(XTextProperty text_prop, out IntPtr list_return, out IntPtr count_return)
             => NativeMethods.XTextPropertyToStringList(ref text_prop, out list_return, out count_return);
 
 
