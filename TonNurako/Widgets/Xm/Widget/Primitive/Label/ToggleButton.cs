@@ -110,7 +110,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNindeterminatePixmap XmCIndeterminatePixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap IndeterminatePixmap {
+        public virtual X11.Pixmap IndeterminatePixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNindeterminatePixmap, Data.Resource.Access.CSG);
@@ -175,7 +175,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNselectInsensitivePixmap XmCSelectInsensitivePixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap SelectInsensitivePixmap {
+        public virtual X11.Pixmap SelectInsensitivePixmap {
             get {
                 return XSports.GetPixmap(
                     TonNurako.Motif.ResourceId.XmNselectInsensitivePixmap, Data.Resource.Access.CSG);
@@ -188,7 +188,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNselectPixmap XmCSelectPixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap SelectPixmap {
+        public virtual X11.Pixmap SelectPixmap {
             get {
                 return XSports.GetPixmap(
                     TonNurako.Motif.ResourceId.XmNselectPixmap, Data.Resource.Access.CSG);

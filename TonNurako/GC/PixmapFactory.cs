@@ -9,9 +9,11 @@ using System.Runtime.InteropServices;
 using TonNurako.X11;
 using TonNurako.Xt;
 using TonNurako.XImageFormat;
+using TonNurako.Native;
 
 namespace TonNurako.GC
 {
+#region I原色
     /// <summary>
     /// XPM用の原色実装
     /// </summary>
@@ -61,117 +63,12 @@ namespace TonNurako.GC
         }
 
     }
+    #endregion
 
-    /// <summary>
-    /// Pixmap
-    /// </summary>
-    public class Pixmap : IDrawable, IDisposable {
-
-        public delegate void DestroyPixmapDelegaty();
-
-        internal DestroyPixmapDelegaty DestroyPixmapFunc = null;
-
-#if TNK_USE_LIBXPM
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct TNK_PIXMAX
-        {
-            public IntPtr display;
-            public IntPtr pix;
-            public IntPtr mask;
-            public IntPtr attr;
-        };
-        internal TNK_PIXMAX PixMax = new TNK_PIXMAX();
-#endif
-
-        internal static class NativeMethods {
-#if TNK_USE_LIBXPM
-            [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_LoadPixmapFromBuffer", CharSet=CharSet.Auto)]
-            internal static extern int TNK_LoadPixmapFromBuffer(
-                        IntPtr display,
-                        IntPtr widget,
-                        [In,Out]ref TNK_PIXMAX pixmax,
-                        [In]IntPtr buffer
-                        );
-
-            [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_FreePixmapBuffer", CharSet=CharSet.Auto)]
-            internal static extern void TNK_FreePixmapBuffer([In,Out]ref TNK_PIXMAX pixmax);
-#endif
+    public class PixmapFactory {
+        PixmapFactory() {
         }
 
-        #region ﾄﾞﾛﾜﾎﾞー
-        IntPtr drawable;
-        public IntPtr Drawable => drawable;
-
-        Display display;
-        public Display Display => display;
-        #endregion
-
-
-        internal Pixmap() {
-            display = null;
-            drawable = IntPtr.Zero;
-        }
-
-
-        /// <summary>
-        /// 新規生成
-        /// </summary>
-        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
-        /// <param name="width">幅</param>
-        /// <param name="height">高さ</param>
-        /// <param name="depth">色深度</param>
-        public Pixmap(Widgets.IWidget w, int width, int height, int depth) {
-
-            display = w.Handle.Display;
-
-			//Window取得
-			IntPtr window = w.Handle.Window.Handle;
-
-			System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.Handle.Widget.Handle:x}> width={width} height={height} depth={depth}");
-
-            drawable =
-                X11Sports.XCreatePixmap(display, window, (uint)width, (uint)height, (uint)depth);
-            System.Diagnostics.Debug.WriteLine($"Pixmap {drawable}");
-
-
-            DestroyPixmapFunc = () => {
-                X11Sports.XFreePixmap(display, drawable);
-            };
-        }
-
-		/// <summary>
-        /// 新規生成2
-        /// </summary>
-        /// <param name="display">ﾃﾞｽﾌﾟﾚー</param>
-        /// <param name="window">ｳｲﾝﾄﾞー</param>
-        /// <param name="width">幅</param>
-        /// <param name="height">高さ</param>
-        /// <param name="depth">色深度</param>
-        public Pixmap(Display display, Window window, int width, int height, int depth) {
-            this.display = display;
-
-            //window=<0x{window.Handle:x}> 
-            System.Diagnostics.Debug.WriteLine($"Pixmap(N) window=<0x{window.Handle:x}> display=<0x{display.Handle:x}> width={width} height={height} depth={depth}");
-
-			drawable =
-                X11Sports.XCreatePixmap(Display, window.Handle, (uint)width, (uint)height, (uint)depth);
-            System.Diagnostics.Debug.WriteLine($"Pixmap(N) <{drawable}>");
-
-            DestroyPixmapFunc = () => {
-				System.Diagnostics.Debug.WriteLine($"Pixmap(N) Dispose <{drawable}>");
-                X11Sports.XFreePixmap(Display, drawable);
-            };
-        }
-
-        public Pixmap(IntPtr ptr, DestroyPixmapDelegaty delegaty) {
-            this.drawable = ptr;
-            this.display = null;
-            this.DestroyPixmapFunc = delegaty;
-        }
-
-        public static Pixmap FromPixmap(IntPtr pixmap, DestroyPixmapDelegaty delegaty) {
-            return (new Pixmap(pixmap, delegaty));
-        }
 
         /// <summary>
         /// ﾌｧｲﾙから生成(Motif)
@@ -181,7 +78,7 @@ namespace TonNurako.GC
         /// <returns></returns>
         public static Pixmap FromFile(Widgets.Xm.Primitive w, string path) {
             Pixmap pm = new Pixmap();
-            pm.display = new TonNurako.X11.Display(()=> TonNurako.Xt.XtSports.XtDisplay(w));
+            pm.display = new TonNurako.X11.Display(() => TonNurako.Xt.XtSports.XtDisplay(w));
             //pm.drawable.Screen = new TonNurako.X11.Screen(()=>TonNurako.Xt.XtSports.XtScreen(w));
 
             pm.drawable = (IntPtr)TonNurako.Motif.XmSports.XmGetPixmap(w.Handle.Screen.Handle, path,
@@ -202,7 +99,7 @@ namespace TonNurako.GC
         /// <returns></returns>
         public static Pixmap FromFile(Widgets.Xm.Manager w, string path) {
             Pixmap pm = new Pixmap();
-            pm.display = new Display(()=> TonNurako.Xt.XtSports.XtDisplay(w));
+            pm.display = new Display(() => TonNurako.Xt.XtSports.XtDisplay(w));
             //pm.drawable.Screen = new Screen(() => TonNurako.Xt.XtSports.XtScreen(w));
             var xpm = TonNurako.Motif.XmSports.XmGetPixmap(w.Handle.Screen.Handle, path,
                 w.BackgroundColor.Pixel,
@@ -234,28 +131,12 @@ namespace TonNurako.GC
                     XImageFormat.Xi.ぉ.画素.G,
                     XImageFormat.Xi.ぉ.画素.R,
                     XImageFormat.Xi.ぉ.画素.A, ref buf);
-            TonNurako.GC.Pixmap pixmap = null;
+            TonNurako.X11.Pixmap pixmap = null;
             using (
                 var img = TonNurako.GC.XImage.FromBuffer(w, mp, 画像.Width, 画像.Height, 24, 32)) {
-                pixmap = TonNurako.GC.Pixmap.FromXImageEx(w, img);
+                pixmap = PixmapFactory.FromXImageEx(w, img);
             }
             return pixmap;
-
-#if TNK_USE_LIBXPM
-            IntPtr buf = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buffer.Length+1));
-            Marshal.Copy(buffer, 0, buf, buffer.Length);
-	        int r = NativeMethods.TNK_LoadPixmapFromBuffer(pm.drawable.Display.Handle, w.Handle.Widget.Handle, ref pm.PixMax, buf);
-            Marshal.FreeCoTaskMem(buf);
-            if ( 0 != r) {
-                pm = null;
-                return null;
-            }
-
-	        pm.drawable.Target = pm.PixMax.pix;
-            pm.DestroyPixmapFunc = () => {
-                NativeMethods.TNK_FreePixmapBuffer(ref pm.PixMax);
-            };
-#endif
         }
 
         /// <summary>
@@ -277,10 +158,10 @@ namespace TonNurako.GC
                     XImageFormat.Xi.ぉ.画素.G,
                     XImageFormat.Xi.ぉ.画素.R,
                     XImageFormat.Xi.ぉ.画素.A, ref buf);
-            TonNurako.GC.Pixmap pixmap = null;
+            TonNurako.X11.Pixmap pixmap = null;
             using (
                 var img = TonNurako.GC.XImage.FromBuffer(w, mp, 画像.Width, 画像.Height, 24, 32)) {
-                pixmap = TonNurako.GC.Pixmap.FromXImageEx(w, img);
+                pixmap = PixmapFactory.FromXImageEx(w, img);
             }
             return pixmap;
         }
@@ -299,7 +180,7 @@ namespace TonNurako.GC
             return pm;
         }
 
-		/// <summary>
+        /// <summary>
         /// XImageから生成 (Root)
         /// </summary>
         /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
@@ -323,36 +204,28 @@ namespace TonNurako.GC
         /// <returns></returns>
         public static Pixmap FromBitmap(Widgets.IWidget w, System.Drawing.Bitmap bitmap) {
             var pm = new Pixmap(w, bitmap.Width, bitmap.Height, 24);
-            using(var image = XImage.FromBitmap(w, bitmap))
-            using(var gc = new GraphicsContext(pm)) {
+            using (var image = XImage.FromBitmap(w, bitmap))
+            using (var gc = new GraphicsContext(pm)) {
                 gc.PutImage(image);
             }
             return pm;
         }
-        
-        #region IDisposable
 
-        public void Dispose()
-        {
-            Dispose(true);
-            System.GC.SuppressFinalize(this);
-        }
-
-        ~Pixmap() {
-            Dispose(false);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (IntPtr.Zero != drawable) {
-                if (null != DestroyPixmapFunc) {
-                    DestroyPixmapFunc();
-                }
-                display = null;
-                drawable = IntPtr.Zero;
-                //drawable.Screen = null;
+        /// <summary>
+        /// Bitmapから生成
+        /// </summary>
+        /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
+        /// <param name="path">ﾌｧｲﾙ</param>
+        /// <returns></returns>
+        public static Pixmap FromBitmap(IDrawable drawable, System.Drawing.Bitmap bitmap) {
+            var pm = new Pixmap(drawable, bitmap.Width, bitmap.Height, 24);
+            using (var image = XImage.FromBitmap(drawable, bitmap))
+            using (var gc = new GraphicsContext(pm)) {
+                gc.PutImage(image);
             }
+            return pm;
         }
-#endregion
+
     }
+
 }

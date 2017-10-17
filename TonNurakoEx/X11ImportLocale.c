@@ -56,6 +56,10 @@ TNK_EXPORT void XwcFreeStringList_TNK(wchar_t** list) {
     XwcFreeStringList(list);
 }
 
+TNK_EXPORT void XFreeStringList_TNK(char** list) {
+    XFreeStringList(list);
+}
+
 TNK_EXPORT void XmbSetWMProperties_TNK(Display* display, Window w, char* window_name, char* icon_name, char* argv[], int argc, XSizeHints* normal_hints, XWMHints* wm_hints, XClassHint* class_hints) {
     XmbSetWMProperties(display,w,window_name,icon_name,argv,argc,normal_hints,wm_hints,class_hints);
 }

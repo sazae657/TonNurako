@@ -6,6 +6,7 @@
 .include <X11/Xlib.h>
 .include <X11/Xlocale.h>
 .include <X11/Xutil.h>
+.include <X11/extensions/shape.h>
 
 //locale
 LC_CTYPE
@@ -22,7 +23,27 @@ LC_ALL
 #LC_MEASUREMENT
 #LC_IDENTIFICATION
 
-// XICCEncodingStyle
+// CursorShape
+ShapeSet
+ShapeUnion
+ShapeIntersect
+ShapeSubtract
+ShapeInvert
+
+ShapeBounding
+ShapeClip
+ShapeInput
+
+ShapeNotifyMask
+ShapeNotify
+ShapeNumberEvents
+
+//region
+RectangleOut
+RectangleIn
+RectanglePart
+
+//XICCEncodingStyle
 XNoMemory
 XLocaleNotSupported
 XConverterNotFound

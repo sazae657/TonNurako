@@ -49,7 +49,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNcloseFolderPixmap XmCPixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap CloseFolderPixmap {
+        public virtual X11.Pixmap CloseFolderPixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNcloseFolderPixmap, Data.Resource.Access.CSG);
@@ -75,7 +75,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNopenFolderPixmap XmCPixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap OpenFolderPixmap {
+        public virtual X11.Pixmap OpenFolderPixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNopenFolderPixmap, Data.Resource.Access.CSG);

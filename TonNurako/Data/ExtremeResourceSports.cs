@@ -132,7 +132,7 @@ namespace TonNurako.Data
             widget.ToolkitResources.SetWidget(true);
         }
 
-        internal void SetPixmap(Enum key, GC.Pixmap pixmap, Resource.Access accessa = Resource.Access.CSG) {
+        internal void SetPixmap(Enum key, X11.Pixmap pixmap, Resource.Access accessa = Resource.Access.CSG) {
             widget.ToolkitResources.Add(key, (ulong)pixmap.Drawable);
             widget.ToolkitResources.SetWidget(true);
         }
@@ -141,7 +141,7 @@ namespace TonNurako.Data
         // pixmap
         //
 
-        internal GC.Pixmap GetPixmap(Enum key, Resource.Access access = Resource.Access.CSG) {
+        internal X11.Pixmap GetPixmap(Enum key, Resource.Access access = Resource.Access.CSG) {
             if (! widget.IsAvailable) {
                 return null;
             }

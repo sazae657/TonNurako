@@ -76,7 +76,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNlabelInsensitivePixmap XmCLabelInsensitivePixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap LabelInsensitivePixmap {
+        public virtual X11.Pixmap LabelInsensitivePixmap {
             get {
                 return XSports.GetPixmap(
                     TonNurako.Motif.ResourceId.XmNlabelInsensitivePixmap, Data.Resource.Access.CSG);
@@ -89,7 +89,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNlabelPixmap XmCLabelPixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap LabelPixmap {
+        public virtual X11.Pixmap LabelPixmap {
             get {
                 return XSports.GetPixmap(
                     TonNurako.Motif.ResourceId.XmNlabelPixmap, Data.Resource.Access.CSG);

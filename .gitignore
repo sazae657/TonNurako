@@ -1,5 +1,6 @@
 .DS_*
 .swp
+.bak
 a.out
 bin/
 .vs/

@@ -455,7 +455,7 @@ namespace TonNurako.Widgets.Xm {
         /// XmNiconMask
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap IconMask {
+        public virtual X11.Pixmap IconMask {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNiconMask, Data.Resource.Access.CSG);
@@ -470,7 +470,7 @@ namespace TonNurako.Widgets.Xm {
         /// XmNiconPixmap
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap IconPixmap {
+        public virtual X11.Pixmap IconPixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNiconPixmap, Data.Resource.Access.CSG);
@@ -906,7 +906,7 @@ namespace TonNurako.Widgets.Xm {
         /// XmNbackgroundPixmap
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap BackgroundPixmap {
+        public virtual X11.Pixmap BackgroundPixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNbackgroundPixmap, Data.Resource.Access.CSG);
@@ -936,7 +936,7 @@ namespace TonNurako.Widgets.Xm {
         /// XmNborderPixmap
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap BorderPixmap {
+        public virtual X11.Pixmap BorderPixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNborderPixmap, Data.Resource.Access.CSG);

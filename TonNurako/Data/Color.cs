@@ -12,8 +12,6 @@ namespace TonNurako.GC
 {
     public class Color {
         internal static class NativeMethods {
-
-            // int: TNK_IMP_Xt_XAllocColorD [{'type': 'int*', 'name': 'color'}, {'type': 'Display*', 'name': 'd'}, {'type': 'Colormap', 'name': 'cm'}, {'type': 'int', 'name': 'r'}, {'type': 'int', 'name': 'g'}, {'type': 'int', 'name': 'b'}, {'type': 'int', 'name': 'a'}]
             [DllImport(ExtremeSports.Lib, EntryPoint="TNK_IMP_Xt_XAllocColorD", CharSet=CharSet.Auto)]
             internal static extern int TNK_IMP_Xt_XAllocColorD(out TonNurako.X11.XColor color, IntPtr d, int cm, int r, int g, int b, int a);
         }

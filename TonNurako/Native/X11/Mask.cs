@@ -22,6 +22,15 @@ namespace TonNurako.X11
         Always      = TonNurako.X11.Constant.Always,
     }
 
+    /// <summary>
+    /// ordering
+    /// </summary>
+    public enum Ordering : int{
+        Unsorted = TonNurako.X11.Constant.Unsorted,
+        YSorted = TonNurako.X11.Constant.YSorted,
+        YXSorted = TonNurako.X11.Constant.YXSorted,
+        YXBanded = TonNurako.X11.Constant.YXBanded,
+    }
 
     /// <summary>
     /// ChangeCloseDownModeの定数

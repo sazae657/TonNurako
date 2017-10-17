@@ -103,7 +103,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNbackgroundPixmap
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap BackgroundPixmap {
+        public virtual X11.Pixmap BackgroundPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNbackgroundPixmap);
             }
@@ -115,7 +115,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNborderPixmap
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap BorderPixmap {
+        public virtual X11.Pixmap BorderPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNborderPixmap);
             }

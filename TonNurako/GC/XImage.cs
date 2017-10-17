@@ -122,6 +122,36 @@ namespace TonNurako.GC
         }
 
         /// <summary>
+        /// System.Drawing.Bitmapから生成(2)
+        /// </summary>
+        /// <param name="w">IDrawable</param>
+        /// <param name="bitmap">bitmap</param>
+        /// <returns>XImageのｲﾝｽﾀﾝｽ</returns>
+        public static XImage FromBitmap(IDrawable w, System.Drawing.Bitmap bitmap) {
+            var im = new XImage();
+
+            var data = bitmap.LockBits(
+                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            int bytes = bitmap.Width * bitmap.Height * 4;
+            byte[] buf = new byte[bytes];
+            Marshal.Copy(data.Scan0, buf, 0, buf.Length);
+            bitmap.UnlockBits(data);
+
+            im.convertBuffer = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(byte)) * (buf.Length + 1));
+            Marshal.Copy(buf, 0, im.convertBuffer, buf.Length);
+
+            im.image = NativeMethods.XCreateImage(w.Display.Handle,
+                0, 24, Format.ZPixmap, 0, im.convertBuffer, (uint)bitmap.Width, (uint)bitmap.Height, 32, 0);
+
+            im.Width = bitmap.Width;
+            im.Height = bitmap.Height;
+            im.Depth = 24;
+            return im;
+        }
+
+        /// <summary>
         /// ﾊﾞｯﾌｧーから生成
         /// </summary>
         /// <param name="w">ｳｲｼﾞｪｯﾄ</param>

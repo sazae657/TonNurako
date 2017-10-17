@@ -72,7 +72,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNiconMask XmCIconMask Pixmap NULL CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap IconMask {
+        public virtual X11.Pixmap IconMask {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNiconMask, Data.Resource.Access.CSG);
@@ -85,7 +85,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNiconPixmap XmCIconPixmap Pixmap NULL CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap IconPixmap {
+        public virtual X11.Pixmap IconPixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNiconPixmap, Data.Resource.Access.CSG);

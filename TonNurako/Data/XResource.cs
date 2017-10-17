@@ -622,7 +622,7 @@ namespace TonNurako.Data
 		/// Pixmap
 		/// </summary>
 		/// <param name="arg">取得するﾘｿーｽ</param>
-		public GC.Pixmap GetPixmapValue(Enum arg)
+		public X11.Pixmap GetPixmapValue(Enum arg)
 		{
             throw new NotImplementedException();
 		}

@@ -130,7 +130,7 @@ namespace TonNurako.Widgets.Xm
         /// XmNcollapsedStatePixmap XmCCollapsedStatePixmap Pixmap dynamic CSG
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap CollapsedStatePixmap
+        public virtual X11.Pixmap CollapsedStatePixmap
         {
             get
             {
@@ -274,7 +274,7 @@ namespace TonNurako.Widgets.Xm
         /// XmNexpandedStatePixmap XmCExpandedStatePixmap Pixmap dynamic CSG
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap ExpandedStatePixmap
+        public virtual X11.Pixmap ExpandedStatePixmap
         {
             get
             {

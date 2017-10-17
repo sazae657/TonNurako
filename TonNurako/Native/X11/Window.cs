@@ -209,36 +209,27 @@ namespace TonNurako.X11 {
                  */
 
 
-            // void: XSetWMName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'XTextProperty*', 'name': 'text_prop'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMName_TNK", CharSet = CharSet.Auto)]
             internal static extern void XSetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop);
 
-            // Status: XGetWMName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'XTextProperty*', 'name': 'text_prop_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMName_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetWMName(IntPtr display, IntPtr w, out XTextPropertyRec text_prop_return);
+            internal static extern int XGetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
-            // int: XStoreName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': 'window_name'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XStoreName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XStoreName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string window_name);
 
-            // Status: XFetchName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': '*window_name_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFetchName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XFetchName(IntPtr display, IntPtr w, out IntPtr window_name_return);
 
-            
-            
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern void XSetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop);
 
-            // Status: XGetWMIconName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'XTextProperty*', 'name': 'text_prop_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMIconName_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetWMIconName(IntPtr display, IntPtr w, out XTextPropertyRec text_prop_return);
+            internal static extern int XGetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
-            // int: XSetIconName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': 'icon_name'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XSetIconName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string icon_name);
 
-            // Status: XGetIconName [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'char*', 'name': '*icon_name_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetIconName(IntPtr display, IntPtr w, out IntPtr icon_name_return);
 
@@ -314,14 +305,51 @@ namespace TonNurako.X11 {
             return ret;
         }
 
-        public void SetWMName(XTextProperty property){
-            TonNurako.Inutility.DumpStruct(property.record, (s) => Console.WriteLine($"SetWMName: {s}"));
+        public void SetWMName(XTextProperty property) {
             NativeMethods.XSetWMName(display.Handle, Handle, ref property.record);
         }
 
         public void SetWMIconName(XTextProperty property) {
-            TonNurako.Inutility.DumpStruct(property.record, (s) => Console.WriteLine($"XSetWMIconName: {s}"));
             NativeMethods.XSetWMIconName(display.Handle, Handle, ref property.record);
+        }
+
+        public XTextProperty GetWMName() {
+            var r = new XTextProperty();
+            NativeMethods.XGetWMName(display.Handle, Handle, ref r.record);
+            return r;
+        }
+
+        public XTextProperty XGetWMIconName() {
+            var r = new XTextProperty();
+            NativeMethods.XGetWMIconName(display.Handle, Handle, ref r.record);
+            return r;
+        }
+
+        public int StoreName(string window_name) =>
+            NativeMethods.XStoreName(display.Handle, Handle, window_name);
+
+        string sfr(IntPtr str) {
+            if (str == IntPtr.Zero) {
+                return null;
+            }
+            var r = Marshal.PtrToStringAnsi(str);
+            X11Sports.Free(str);
+            return r;
+        }
+
+        public string FetchName() {
+            IntPtr rw = IntPtr.Zero;
+            NativeMethods.XFetchName(display.Handle, Handle, out rw);
+            return sfr(rw);
+        }
+
+        public int SetIconName(string window_name) =>
+            NativeMethods.XSetIconName(display.Handle, Handle, window_name);
+
+        public string GetIconName() {
+            IntPtr rw = IntPtr.Zero;
+            NativeMethods.XGetIconName(display.Handle, Handle, out rw);
+            return sfr(rw);
         }
 
 
@@ -343,10 +371,10 @@ namespace TonNurako.X11 {
         public int SetWindowBorder(Color color) => NativeMethods.XSetWindowBorder(display.Handle, Handle, color.Pixel);
 
 
-        public int SetWindowBackgroundPixmap(TonNurako.GC.Pixmap pixmap) =>
+        public int SetWindowBackgroundPixmap(TonNurako.X11.Pixmap pixmap) =>
             NativeMethods.XSetWindowBackgroundPixmap(display.Handle, Handle, pixmap.Drawable);
 
-        public int SetWindowBorderPixmap(TonNurako.GC.Pixmap pixmap) =>
+        public int SetWindowBorderPixmap(TonNurako.X11.Pixmap pixmap) =>
             NativeMethods.XSetWindowBorderPixmap(display.Handle, Handle, pixmap.Drawable);
 
         public int MoveWindow(int x, int y)
@@ -494,7 +522,7 @@ namespace TonNurako.X11 {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (handle != IntPtr.Zero) {
-                    X11Sports.XFree(handle);
+                    X11Sports.Free(handle);
                     handle = IntPtr.Zero;
                 }
                 disposedValue = true;
@@ -554,16 +582,16 @@ namespace TonNurako.X11 {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (allocRoot != IntPtr.Zero) {
-                    X11Sports.XFree(allocRoot);
+                    X11Sports.Free(allocRoot);
                     allocRoot = IntPtr.Zero;
                 }
                 else {
                     if (classHint.res_class != IntPtr.Zero) {
-                        X11Sports.XFree(classHint.res_class);
+                        X11Sports.Free(classHint.res_class);
                         classHint.res_class = IntPtr.Zero;
                     }
                     if (classHint.res_name != IntPtr.Zero) {
-                        X11Sports.XFree(classHint.res_name);
+                        X11Sports.Free(classHint.res_name);
                         classHint.res_name = IntPtr.Zero;
                     }
                 }

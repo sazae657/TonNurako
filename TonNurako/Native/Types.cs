@@ -67,8 +67,7 @@ namespace TonNurako.Native {
         /// RootWindowOfScreen
         /// </summary>
         /// <returns>RootWindowOfScreen</returns>
-        public X11.Window RootWindowOfScreen =>
-            new X11.Window(TonNurako.X11.X11Sports.RootWindowOfScreen(Screen.Handle), Display);
+        public X11.Window RootWindowOfScreen => Screen.RootWindowOfScreen;
 
         /// <summary>
         /// Name

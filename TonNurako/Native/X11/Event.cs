@@ -621,7 +621,7 @@ namespace TonNurako.X11.Event {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong display;
-        public ulong resourceid;
+        public int resourceid;
         public ulong serial;
 
         [MarshalAs(UnmanagedType.U1)]
