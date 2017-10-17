@@ -67,7 +67,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNbackgroundPixmap XmCPixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap BackgroundPixmap {
+        public virtual X11.Pixmap BackgroundPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNbackgroundPixmap);
             }
@@ -91,7 +91,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNbottomShadowPixmap XmCBottomShadowPixmap Pixmap dynamic CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap BottomShadowPixmap {
+        public virtual X11.Pixmap BottomShadowPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNbottomShadowPixmap);
             }
@@ -139,7 +139,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNhighlightPixmap XmCHighlightPixmap Pixmap dynamic CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap HighlightPixmap {
+        public virtual X11.Pixmap HighlightPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNhighlightPixmap);
             }
@@ -212,7 +212,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNtopShadowPixmap XmCTopShadowPixmap Pixmap dynamic CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap TopShadowPixmap {
+        public virtual X11.Pixmap TopShadowPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNtopShadowPixmap);
             }

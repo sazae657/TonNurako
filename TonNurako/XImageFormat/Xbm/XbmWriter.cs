@@ -11,7 +11,7 @@ namespace TonNurako.XImageFormat {
         /// <summary>
         /// ﾏｽｸ
         /// </summary>
-        readonly byte[] masken = new byte[] {
+        static readonly byte[] masken = new byte[] {
             0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
         };
 
@@ -92,6 +92,46 @@ namespace TonNurako.XImageFormat {
             sb.Append("};\n");
             var mp3 = System.Text.Encoding.UTF8.GetBytes(sb.ToString());
             stream.Write(mp3, 0, mp3.Length);
+        }
+
+
+        /// <summary>
+        /// ぉをﾍﾞｯﾄﾑｯﾌﾟに変換する
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="channel"></param>
+        /// <param name="反転"></param>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static byte[] ToBitmap(int width, int height, ぉ.画素 channel, bool 反転, ぉ[] arr) {
+            int bo = 0;
+            int po = 0;
+            var xpad = width % 8;
+            var bufw = ((width / 8) + (xpad != 0 ? 1 : 0)) * height;
+            var buf = new byte[bufw];
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width; x += 8) {
+                    byte b = 0;
+                    int bits = 8;
+                    if ((width - x < 8)) {
+                        bits = xpad;
+                    }
+                    for (int i = 0; i < bits; ++i) {
+                        var a = arr[po++].ほ(channel);
+                        bool k = (a == 0);
+                        if (反転) {
+                            k = !k;
+                        }
+                        if (k) {
+                            continue;
+                        }
+                        b |= masken[i];
+                    }
+                    buf[bo++] = b;
+                }
+            }
+            return buf;
         }
     }
 }

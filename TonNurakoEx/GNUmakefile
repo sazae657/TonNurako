@@ -85,7 +85,9 @@ OBJ=DlSym.o	\
 	X11ImportLocale.o \
 	XkbImport.o \
     TonNurako.o \
-	XmCreateFuncs.o
+	XmCreateFuncs.o \
+	X11ExtShapeImp.o \
+	X11ImpGC.o \
 
 TARGET = $(BINDIR)libTonNurako.extremesports
 

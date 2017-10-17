@@ -66,7 +66,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNarmPixmap
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap ArmPixmap {
+        public virtual X11.Pixmap ArmPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNarmPixmap);
             }

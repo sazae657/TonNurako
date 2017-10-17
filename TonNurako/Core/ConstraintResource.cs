@@ -78,7 +78,7 @@ namespace TonNurako.Widgets.Xm
         /// XmNtabBackgroundPixmap
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap TabBackgroundPixmap {
+        public virtual X11.Pixmap TabBackgroundPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNtabBackgroundPixmap);
             }
@@ -104,7 +104,7 @@ namespace TonNurako.Widgets.Xm
         /// XmNtabLabelPixmap
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap TabLabelPixmap {
+        public virtual X11.Pixmap TabLabelPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNtabLabelPixmap);
             }

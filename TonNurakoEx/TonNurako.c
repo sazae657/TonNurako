@@ -256,4 +256,5 @@ TNK_FreeCompoundTextProperty(XTextProperty* tprop) {
         tprop->value = NULL;
     }
 }
+
 TNK_DECLARE_END

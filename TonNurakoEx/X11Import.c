@@ -79,14 +79,9 @@ TNK_EXPORT int XUngrabServer_TNK(Display* display) {
     return XUngrabServer(display);
 }
 
-
-
-
 TNK_EXPORT int XWarpPointer_TNK(Display* display, Window src_w, Window dest_w, int src_x, int src_y, unsigned int src_width, unsigned int src_height, int dest_x, int dest_y) {
     return XWarpPointer(display,src_w,dest_w,src_x,src_y,src_width,src_height,dest_x,dest_y);
 }
-
-
 
 TNK_EXPORT Status XSendEvent_TNK(Display* display, Window w, Bool propagate, long event_mask, XEvent* event_send) {
     return XSendEvent(display,w,propagate,event_mask,event_send);

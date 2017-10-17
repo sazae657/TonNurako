@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -61,9 +61,10 @@
     <Compile Include="TonNurako\Data\WidgetList.cs" />
     <Compile Include="TonNurako\Data\XResource.cs" />
     <Compile Include="TonNurako\GC\GraphicsContext.cs" />
-    <Compile Include="TonNurako\GC\Pixmap.cs" />
+    <Compile Include="TonNurako\GC\PixmapFactory.cs" />
     <Compile Include="TonNurako\GC\XImage.cs" />
     <Compile Include="TonNurako\Misc\Inutility.cs" />
+    <Compile Include="TonNurako\Misc\Unity.cs" />
     <Compile Include="TonNurako\Native\Attribute.cs" />
     <Compile Include="TonNurako\Native\CallbackQueue.cs" />
     <Compile Include="TonNurako\Native\DlSym.cs" />
@@ -83,16 +84,20 @@
     <Compile Include="TonNurako\Native\X11\Display.cs" />
     <Compile Include="TonNurako\Native\X11\Error.cs" />
     <Compile Include="TonNurako\Native\X11\Event.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Shape.cs" />
     <Compile Include="TonNurako\Native\X11\Font.cs" />
     <Compile Include="TonNurako\Native\X11\GC.cs" />
     <Compile Include="TonNurako\Native\X11\Mask.cs" />
     <Compile Include="TonNurako\Native\X11\Mui.cs" />
+    <Compile Include="TonNurako\Native\X11\Pixmap.cs" />
+    <Compile Include="TonNurako\Native\X11\Region.cs" />
     <Compile Include="TonNurako\Native\X11\Screen.cs" />
     <Compile Include="TonNurako\Native\X11\Struct.cs" />
     <Compile Include="TonNurako\Native\X11\Visual.cs" />
     <Compile Include="TonNurako\Native\X11\Window.cs" />
     <Compile Include="TonNurako\Native\X11\WindowAttributes.cs" />
     <Compile Include="TonNurako\Native\X11\X11Call.cs" />
+    <Compile Include="TonNurako\Native\X11\TextProperty.cs" />
     <Compile Include="TonNurako\Native\XEventQueue.cs" />
     <Compile Include="TonNurako\Native\Xft\Struct.cs" />
     <Compile Include="TonNurako\Native\Xm\EventId.cs" />
@@ -107,21 +112,21 @@
     <Compile Include="TonNurako\Native\Xt\Xt.cs" />
     <Compile Include="TonNurako\Native\Xt\XtCall.cs" />
     <Compile Include="TonNurako\Native\Xt\XtTypes.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\PNM\PNM.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\PNM\PNMLoader.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\PNM\PNMWriter.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xbm\Xbm.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xbm\XbmLoader.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xbm\XbmWriter.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xi\GIF.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xi\GS.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xi\IPU.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xi\VU0.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xi\VU1.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xpm\Color.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xpm\Xpm.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xpm\XpmLoader.cs" />
-    <Compile Include="TonNurako\TonNurako.XImageFormat\Xpm\XpmWriter.cs" />
+    <Compile Include="TonNurako\XImageFormat\PNM\PNM.cs" />
+    <Compile Include="TonNurako\XImageFormat\PNM\PNMLoader.cs" />
+    <Compile Include="TonNurako\XImageFormat\PNM\PNMWriter.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xbm\Xbm.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xbm\XbmLoader.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xbm\XbmWriter.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xi\GIF.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xi\GS.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xi\IPU.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xi\VU0.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xi\VU1.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xpm\Color.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xpm\Xpm.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xpm\XpmLoader.cs" />
+    <Compile Include="TonNurako\XImageFormat\Xpm\XpmWriter.cs" />
     <Compile Include="TonNurako\Types\Constant.cs" />
     <Compile Include="TonNurako\Types\EventArgs.cs" />
     <Compile Include="TonNurako\Widgets\IWidget.cs" />

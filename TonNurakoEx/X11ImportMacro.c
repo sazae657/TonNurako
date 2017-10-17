@@ -8,9 +8,6 @@ TNK_EXPORT Status XTextPropertyToStringList_TNK(XTextProperty* text_prop, char *
     return XTextPropertyToStringList(text_prop,list_return,count_return);
 }
 
-TNK_EXPORT void XFreeStringList_TNK(char **list) {
-    XFreeStringList(list);
-}
 
 TNK_EXPORT int ConnectionNumber_TNK(Display* dpy) {
     return ConnectionNumber(dpy);

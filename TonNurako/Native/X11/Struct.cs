@@ -31,12 +31,6 @@ namespace TonNurako.X11
         short x, y;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct XTextProperty {
-        IntPtr value;   // unsigned char*
-        Atom encoding;  /* type of property */
-        int format;     /* 8, 16, or 32 */
-        ulong nitems;   /* number of items in value */
-    }
+
 
 }

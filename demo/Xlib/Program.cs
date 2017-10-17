@@ -46,7 +46,7 @@ namespace Xlib {
             Console.WriteLine($"SetLocale=>{loc}");
             TonNurako.X11.X11Sports.PrintWCS_TNK("PrintWCS_TNK");
 
-            if (!TonNurako.X11.X11Sports.XSupportsLocale()) {
+            if (!TonNurako.X11.X11Sports.SupportsLocale()) {
                 Console.WriteLine("Current locale is not supported");
                 return;
             }
@@ -58,11 +58,12 @@ namespace Xlib {
             }
             Console.WriteLine($"SetLocale=>{loc}");
 
-            TonNurako.X11.X11Sports.XSetIOErrorHandler((d) => {
+            TonNurako.X11.X11Sports.SetIOErrorHandler((d) => {
                 Console.WriteLine("IOE");
                 DumpProperty(d);
                 return -1;
             });
+            TonNurako.X11.X11Sports.SetIOErrorHandler(null);
 
             var dpy = TonNurako.X11.Display.Open(null);
             if (dpy.Handle == IntPtr.Zero) {
@@ -73,7 +74,7 @@ namespace Xlib {
             DumpProperty(dpy.DefaultScreenOfDisplay);
             DumpProperty(dpy);
 
-            TonNurako.X11.X11Sports.XSetErrorHandler((d, e) => {
+            TonNurako.X11.X11Sports.SetErrorHandler((d, e) => {
                 Console.WriteLine("*** E ***");
                 DumpProperty(d);
                 DumpProperty(e);
@@ -88,8 +89,8 @@ namespace Xlib {
             }
 
             var fe = fs.XExtentsOfFontSet();
-            TonNurako.Inutility.DumpProperty(fe.MaxInkExtent, (s) => Console.WriteLine($"MaxInkExtent: {s}"));
-            TonNurako.Inutility.DumpProperty(fe.MaxLogicalExtent, (s) => Console.WriteLine($"MaxLogicalExtent: {s}"));
+            TonNurako.Inutility.Dumper.DumpProperty(fe.MaxInkExtent, (s) => Console.WriteLine($"MaxInkExtent: {s}"));
+            TonNurako.Inutility.Dumper.DumpProperty(fe.MaxLogicalExtent, (s) => Console.WriteLine($"MaxLogicalExtent: {s}"));
 
             var rc1 = new TonNurako.X11.TextExtents();
             fs.TextExtents("ゆゆ式", rc1);
@@ -104,6 +105,7 @@ namespace Xlib {
             var rw = dpy.DefaultRootWindow;
             rw.SelectInput(TonNurako.X11.EventMask.SubstructureRedirectMask|TonNurako.X11.EventMask.SubstructureNotifyMask);
             dpy.Sync(false);
+
 
             var c = TonNurako.X11.XClassHint.Alloc();
             c.Dispose();
@@ -128,8 +130,58 @@ namespace Xlib {
             attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
             win.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr);
 
+
+            var rpr = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "たいとる" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
+            DumpProperty(rpr);
+            win.SetWMName(rpr);
+
+            var rpr2 = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "エイコン" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
+            win.SetWMIconName(rpr2);
+            //win.SetWMProperties("なまえ", "ダイコン", args);
+            win.StoreName("UNPO");
+
+            var loader = new TonNurako.XImageFormat.XbmLoader();
+            TonNurako.XImageFormat.Xbm xbm = null;
+            using (var ms = new System.IO.MemoryStream(Properties.Resources.logo)) {
+                xbm = loader.Load(String.Empty, ms);
+            }
+
+            var bitmap = TonNurako.X11.Pixmap.FromBitmapData(win, xbm.Width, xbm.Height, xbm.RawPixels);
+            DumpProperty(bitmap);
+
+            Console.WriteLine($"InputSelected(1): {TonNurako.X11.Extension.Shape.InputSelected(dpy, win)}");
+
+            //TonNurako.X11.Extension.Shape.CombineMask(dpy, win,
+            //    TonNurako.X11.Extension.ShapeKind.ShapeClip, 0, 0, bitmap, TonNurako.X11.Extension.ShapeOp.ShapeSet);
+
+            TonNurako.X11.Extension.Shape.SelectInput(dpy, win, TonNurako.X11.Extension.ShapeEventMask.ShapeNotifyMask);
+            Console.WriteLine($"InputSelected(2): {TonNurako.X11.Extension.Shape.InputSelected(dpy, win)}");
+            TonNurako.X11.Region region = null;
+            {
+                var pl = new List<TonNurako.X11.XPoint> {
+                    new TonNurako.X11.XPoint(10, 10),
+                    new TonNurako.X11.XPoint(300, 100),
+                    new TonNurako.X11.XPoint(525, 500),
+                    new TonNurako.X11.XPoint(50, 225),
+                    new TonNurako.X11.XPoint(575, 225),
+                    new TonNurako.X11.XPoint(75, 500),
+                };
+                region = TonNurako.X11.Region.PolygonRegion(pl.ToArray(), TonNurako.X11.FillRule.WindingRule);
+                DumpProperty(region);
+                TonNurako.X11.Extension.Shape.CombineRegion(dpy, win,
+                    TonNurako.X11.Extension.ShapeKind.ShapeClip, 0, 0, region, TonNurako.X11.Extension.ShapeOp.ShapeSet);
+               // rgn.Dispose();
+            }
+
             win.MapWindow();
             dpy.Flush();
+
+            win.GetWMName();
+            foreach (var k in win.XGetWMIconName().TextPropertyToTextList(dpy)) {
+                Console.WriteLine($"XGetWMIconName: {k}");
+            }
+
+            Console.WriteLine($"FetchName: {win.FetchName()}");
 
             var green = TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "Green");
             TonNurako.X11.GC gc = null;
@@ -139,6 +191,8 @@ namespace Xlib {
                 dpy.NextEvent(ev);
                 Console.WriteLine($"NextEvent ev={ev.Type}");
                 switch (ev.Type) {
+                    case TonNurako.X11.Event.XEventType.CreateNotify:
+                        break;
                     case TonNurako.X11.Event.XEventType.Expose:
                         DumpStruct(ev.Expose);
                         if (null == gc) {
@@ -179,6 +233,7 @@ namespace Xlib {
                             gc.Dispose();
                         }
                         fs.Dispose();
+                        region.Dispose();
                         dpy.SetCloseDownMode(TonNurako.X11.CloseDownMode.DestroyAll);
                         dpy.Close();
                         return;

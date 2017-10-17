@@ -195,7 +195,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNsymbolPixmap	XmCPixmap	Pixmap	dynamic	CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap SymbolPixmap {
+        public virtual X11.Pixmap SymbolPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNsymbolPixmap);
             }

@@ -187,7 +187,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNtabSelectPixmap XmCTabSelectPixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap TabSelectPixmap {
+        public virtual X11.Pixmap TabSelectPixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNtabSelectPixmap);
             }

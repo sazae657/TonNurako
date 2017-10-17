@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TonNurako {
-    public class Inutility {
+namespace TonNurako.Inutility {
+    public class Dumper {
         public delegate void Delegaty(string p);
 
         public static void DumpProperty(object obzekt, Delegaty delegaty) {

@@ -116,5 +116,50 @@ namespace TonNurako.XImageFormat.Xi {
             }
             return ret;
         }
+
+        /// <summary>
+        /// XBM形式の配列に詰め込む
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="ch"></param>
+        /// <param name="反転"></param>
+        /// <param name="arr"></param>
+        /// <returns>byte配列</returns>
+        public static byte[] XBM配列に変換(int width, int height, ぉ.画素 ch, bool 反転, ぉ[] arr) {
+            return XbmWriter.ToBitmap(width, height, ch, 反転, arr);
+        }
+
+
+        /// <summary>
+        /// System.Drawing.Bitmapから変換
+        /// </summary>
+        /// <param name="bitmap">ﾍﾞｯﾄﾑｯﾌﾟ</param>
+        /// <returns>XPM</returns>
+        public static ぉ[] ぉに変換(System.Drawing.Bitmap bitmap) {
+            var arr = new ぉ[bitmap.Width * bitmap.Height];
+
+            BitmapData data = bitmap.LockBits(
+                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                ImageLockMode.ReadOnly,
+                PixelFormat.Format32bppArgb);
+            int bytes = bitmap.Width * bitmap.Height * 4;
+            for (int i = 0, j = 0; i < bytes; i += 4, j++) {
+                Int32 value = Marshal.ReadInt32(data.Scan0, i);
+                byte b = (byte)(value & 0xff);
+                byte g = (byte)((value >> 8) & 0xff);
+                byte r = (byte)((value >> 16) & 0xff);
+                byte a = (byte)((value >> 24) & 0xff);
+                if (a == 0) {
+                    r = g = b = 0;
+                }
+                else {
+                    a = 0xff;
+                }
+                arr[j] = new ぉ(r, g, b, a);
+            }
+            bitmap.UnlockBits(data);
+            return arr;
+        }
     }
 }

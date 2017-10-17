@@ -18,12 +18,6 @@ namespace TonNurako.X11
         LC_MONETARY = TonNurako.X11.Constant.LC_MONETARY,
         LC_MESSAGES = TonNurako.X11.Constant.LC_MESSAGES,
         LC_ALL = TonNurako.X11.Constant.LC_ALL,
-        LC_PAPER = TonNurako.X11.Constant.LC_PAPER,
-        LC_NAME = TonNurako.X11.Constant.LC_NAME,
-        LC_ADDRESS = TonNurako.X11.Constant.LC_ADDRESS,
-        LC_TELEPHONE = TonNurako.X11.Constant.LC_TELEPHONE,
-        LC_MEASUREMENT = TonNurako.X11.Constant.LC_MEASUREMENT,
-        LC_IDENTIFICATION = TonNurako.X11.Constant.LC_IDENTIFICATION,
     }
 
     /// <summary>
@@ -34,6 +28,9 @@ namespace TonNurako.X11
             get;
             set;
         }
+
+        private Stack<IntPtr> XErrorHandlerStack = new Stack<IntPtr>();
+        private Stack<IntPtr> XIOErrorHandlerStack = new Stack<IntPtr>();
 
         public static void Register(string libXtName) {
             if (null != Instance) {
@@ -50,13 +47,54 @@ namespace TonNurako.X11
             Instance.Dispose();
             Instance = null;
         }
-        private Stack<IntPtr> XErrorHandlerStack = new Stack<IntPtr>();
-        private Stack<IntPtr> XIOErrorHandlerStack = new Stack<IntPtr>();
+
         private X11Sports(string lib) : base(lib) {
 
         }
 
         internal static class NativeMethods {
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XStringToKeysym_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            public static extern int XStringToKeysym([MarshalAs(UnmanagedType.LPStr)] string xstring);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XKeysymToString_TNK", CharSet = CharSet.Auto)]
+            public static extern IntPtr XKeysymToString(int keysym);
+
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFree_TNK", CharSet = CharSet.Auto)]
+            public static extern int XFree([In] IntPtr data);
+
+            // Bool: XSupportsLocale []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSupportsLocale_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XSupportsLocale();
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetLocaleModifiers_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            internal static extern IntPtr XSetLocaleModifiers([MarshalAs(UnmanagedType.LPStr)] string modifier_list);
+
+            // int*: XSetErrorHandler []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetErrorHandler([MarshalAs(UnmanagedType.FunctionPtr)] XErrorHandlerInt handler);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetErrorHandler([In]IntPtr handler);
+
+
+            // int*: XSetIOErrorHandler []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIOErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetIOErrorHandler([MarshalAs(UnmanagedType.FunctionPtr)] XIOErrorHandlerInt handler);
+
+            // int*: XSetIOErrorHandler []
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIOErrorHandler_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetIOErrorHandler([In]IntPtr handler);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "setlocale_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr setlocale_TNK(XLocale category, [MarshalAs(UnmanagedType.LPStr)] string locale);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeStringList_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XFreeStringList([In]IntPtr list);
+
+
+
+
             [DllImport(ExtremeSports.Lib, EntryPoint = "RootWindowOfScreen_TNK", CharSet = CharSet.Auto)]
             public static extern IntPtr RootWindowOfScreen(IntPtr screen);
 
@@ -152,42 +190,6 @@ namespace TonNurako.X11
             //[DllImport(ExtremeSports.Lib, EntryPoint="XGetWindowAttributes_TNK", CharSet=CharSet.Auto)]
             //public static extern int XGetWindowAttributes(IntPtr display, IntPtr w, out XWindowAttributes window_attributes_return);
 
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XStringToKeysym_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            public static extern int XStringToKeysym([MarshalAs(UnmanagedType.LPStr)] string xstring);
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XKeysymToString_TNK", CharSet = CharSet.Auto)]
-            public static extern IntPtr XKeysymToString(int keysym);
-
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XFree_TNK", CharSet = CharSet.Auto)]
-            public static extern int XFree([In, Out] IntPtr data);
-
-            // Bool: XSupportsLocale []
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSupportsLocale_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool XSupportsLocale();
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetLocaleModifiers_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern IntPtr XSetLocaleModifiers([MarshalAs(UnmanagedType.LPStr)] string modifier_list);
-
-
-            // int*: XSetErrorHandler []
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetErrorHandler_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr XSetErrorHandler([MarshalAs(UnmanagedType.FunctionPtr)] XErrorHandlerInt handler);
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetErrorHandler_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr XSetErrorHandler([In]IntPtr handler);
-
-
-            // int*: XSetIOErrorHandler []
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIOErrorHandler_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr XSetIOErrorHandler([MarshalAs(UnmanagedType.FunctionPtr)] XIOErrorHandlerInt handler);
-
-            // int*: XSetIOErrorHandler []
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIOErrorHandler_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr XSetIOErrorHandler([In]IntPtr handler);
-
-
             // int: XSetInputFocus [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'focus'}, {'type': 'int', 'name': 'revert_to'}, {'type': 'Time', 'name': 'time'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetInputFocus_TNK", CharSet = CharSet.Auto)]
             internal static extern int XSetInputFocus(IntPtr display, IntPtr focus, int revert_to, uint time);
@@ -197,7 +199,7 @@ namespace TonNurako.X11
             internal static extern int XGetInputFocus(IntPtr display, out IntPtr focus_return, out IntPtr revert_to_return);
 
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XStringListToTextProperty_TNK", CharSet = CharSet.Auto)]
+            /*[DllImport(ExtremeSports.Lib, EntryPoint = "XStringListToTextProperty_TNK", CharSet = CharSet.Auto)]
             internal static extern int XStringListToTextProperty(IntPtr list, int count, out IntPtr text_prop_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XTextPropertyToStringList_TNK", CharSet = CharSet.Auto)]
@@ -206,14 +208,19 @@ namespace TonNurako.X11
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeStringList_TNK", CharSet = CharSet.Auto)]
             internal static extern void XFreeStringList([In]IntPtr list);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "setlocale_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr setlocale_TNK(XLocale category, [MarshalAs(UnmanagedType.LPStr)] string locale);
+            */
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "PrintWCS_TNK", CharSet = CharSet.Auto)]
             internal static extern void PrintWCS_TNK([MarshalAs(UnmanagedType.LPWStr)] string locale);
         }
 
-        public static void XSetErrorHandler(XErrorHandler handler) {
+
+
+        public static void PrintWCS_TNK(string data) {
+            NativeMethods.PrintWCS_TNK(data);
+        }
+
+        public static void SetErrorHandler(XErrorHandler handler) {
             if (null == handler) {
                 if (0 == Instance.XErrorHandlerStack.Count) {
                     return;
@@ -227,7 +234,7 @@ namespace TonNurako.X11
             Instance.XErrorHandlerStack.Push(h);
         }
 
-        public static void XSetIOErrorHandler(XIOErrorHandler handler) {
+        public static void SetIOErrorHandler(XIOErrorHandler handler) {
             if (null == handler) {
                 if (0 == Instance.XIOErrorHandlerStack.Count) {
                     return;
@@ -241,18 +248,9 @@ namespace TonNurako.X11
             Instance.XIOErrorHandlerStack.Push(h);
         }
 
-        public static int XFree(IntPtr data) {
-            return NativeMethods.XFree(data);
-        }
+        public static int Free(IntPtr data) =>
+            NativeMethods.XFree(data);
 
-        public static void PrintWCS_TNK(string data) {
-            NativeMethods.PrintWCS_TNK(data);
-        }
-
-
-        public static IntPtr RootWindowOfScreen(IntPtr screen) {
-            return NativeMethods.RootWindowOfScreen(screen);
-        }
 
         public static string SetLocale(XLocale category, string locale) {
             var r = NativeMethods.setlocale_TNK(category, locale);
@@ -270,17 +268,30 @@ namespace TonNurako.X11
             return Marshal.PtrToStringAnsi(r);
         }
 
-        public static bool XSupportsLocale() => NativeMethods.XSupportsLocale();
+        public static bool SupportsLocale() => NativeMethods.XSupportsLocale();
 
-        public static int XStringListToTextProperty(IntPtr list, int count, out IntPtr text_prop_return)
+
+        public static int StringToKeysym(string _String) =>
+            NativeMethods.XStringToKeysym(_String);
+
+
+        public static string KeysymToString(int keysym) =>
+            Marshal.PtrToStringAnsi(NativeMethods.XKeysymToString(keysym));
+
+
+        public static void FreeStringList(IntPtr list) => NativeMethods.XFreeStringList(list);
+
+
+
+        /*public static int XStringListToTextProperty(IntPtr list, int count, out IntPtr text_prop_return)
             => NativeMethods.XStringListToTextProperty(list, count, out text_prop_return);
-        
 
-        public static int XTextPropertyToStringList(XTextProperty text_prop, out IntPtr list_return, out IntPtr count_return) 
+
+        public static int XTextPropertyToStringList(XTextProperty text_prop, out IntPtr list_return, out IntPtr count_return)
             => NativeMethods.XTextPropertyToStringList(ref text_prop, out list_return, out count_return);
 
 
-        public static void XFreeStringList(IntPtr list) => NativeMethods.XFreeStringList(list);
+        public static void XFreeStringList(IntPtr list) => NativeMethods.XFreeStringList(list);*/
 
         #region 描画関連
         public static IntPtr XCreateGC(Display display, IntPtr d, GCMask valuemask, XGCValues values) {
@@ -442,13 +453,6 @@ namespace TonNurako.X11
         //    return NativeMethods.XGetWindowAttributes(display,w,window_attributes_return);
         //}
 
-        public static int XStringToKeysym(string _String) {
-            return NativeMethods.XStringToKeysym(_String);
-        }
-
-        public static string XKeysymToString(int keysym) {
-            return Marshal.PtrToStringAnsi(NativeMethods.XKeysymToString(keysym));
-        }
         #endregion
     }
 }

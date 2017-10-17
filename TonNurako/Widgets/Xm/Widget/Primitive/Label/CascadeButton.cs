@@ -55,7 +55,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNcascadePixmap XmCPixmap Pixmap dynamic CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap CascadePixmap {
+        public virtual X11.Pixmap CascadePixmap {
             get {
                 return XSports.GetPixmap(TonNurako.Motif.ResourceId.XmNcascadePixmap);
             }

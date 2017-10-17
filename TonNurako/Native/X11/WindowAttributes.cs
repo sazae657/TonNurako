@@ -88,18 +88,18 @@ namespace TonNurako.X11 {
             set { record.background_pixel = value; }
         }
 
-        public TonNurako.GC.Pixmap background_pixmap {
+        public TonNurako.X11.Pixmap background_pixmap {
             get {
-                return TonNurako.GC.Pixmap.FromPixmap(record.background_pixmap, null);
+                return TonNurako.X11.Pixmap.FromPixmap(record.background_pixmap, null);
             }
             set {
                 record.background_pixmap = value.Drawable;
             }
         }
 
-        public TonNurako.GC.Pixmap border_pixmap {
+        public TonNurako.X11.Pixmap border_pixmap {
             get {
-                return TonNurako.GC.Pixmap.FromPixmap(record.border_pixmap, null);
+                return TonNurako.X11.Pixmap.FromPixmap(record.border_pixmap, null);
             }
             set {
                 record.border_pixmap = value.Drawable;

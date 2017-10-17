@@ -5,6 +5,8 @@
 .include <X11/X.h>
 .include <X11/Xlib.h>
 .include <X11/Xlocale.h>
+.include <X11/Xutil.h>
+.include <X11/extensions/shape.h>
 
 //locale
 LC_CTYPE
@@ -14,12 +16,43 @@ LC_COLLATE
 LC_MONETARY
 LC_MESSAGES
 LC_ALL
-LC_PAPER
-LC_NAME
-LC_ADDRESS
-LC_TELEPHONE
-LC_MEASUREMENT
-LC_IDENTIFICATION
+#LC_PAPER
+#LC_NAME
+#LC_ADDRESS
+#LC_TELEPHONE
+#LC_MEASUREMENT
+#LC_IDENTIFICATION
+
+// CursorShape
+ShapeSet
+ShapeUnion
+ShapeIntersect
+ShapeSubtract
+ShapeInvert
+
+ShapeBounding
+ShapeClip
+ShapeInput
+
+ShapeNotifyMask
+ShapeNotify
+ShapeNumberEvents
+
+//region
+RectangleOut
+RectangleIn
+RectanglePart
+
+//XICCEncodingStyle
+XNoMemory
+XLocaleNotSupported
+XConverterNotFound
+
+XStringStyle
+XCompoundTextStyle
+XTextStyle
+XStdICCTextStyle
+XUTF8StringStyle
 
 //ｸﾞﾛｰﾊﾞﾙ
 PointerWindow

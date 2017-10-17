@@ -136,7 +136,7 @@ namespace TonNurako.Widgets.Xm
         /// XmNbindingPixmap XmCBindingPixmap Pixmap XmUNSPECIFIED_PIXMAP CSG
         /// </summary>
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual GC.Pixmap BindingPixmap {
+        public virtual X11.Pixmap BindingPixmap {
             get {
                 return XSports.GetPixmap(
                 TonNurako.Motif.ResourceId.XmNbindingPixmap, Data.Resource.Access.CSG);
