@@ -16,6 +16,8 @@ cc ${CFLAGS} ${KWD}/check.localized/check_motif.c -o ${KWD}/a.out ${LIBS} || exi
 
 echo "Xm:LIBS=$LIBS"
 echo "Xm:CFLAGS=$CFLAGS"
+echo "-- Motif check OK --"
+
 echo "MOTF_HEADER_ARGS := ${CFLAGS}" >>${SITE_MP3}
 echo "MOTIF_LIBS := ${LIBS}" >>${SITE_MP3}
 

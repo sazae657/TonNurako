@@ -10,7 +10,7 @@ X11_LIBRARY_ARGS:=-L/usr/X11R6/lib
 MOTIF_LIBS=-lXm -lXmu
 
 # X11のﾗｲﾌﾞﾗﾘー
-X11_LIBS=-lXt -lX11
+X11_LIBS=-lXt -lXrender -lXext -lX11
 
 # Cｺﾝﾊﾟｲﾗー
 CC := cc
