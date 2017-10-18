@@ -219,6 +219,11 @@ TNK_EXPORT Window XCreateSimpleWindow_TNK(Display* display, Window parent, int x
     return XCreateSimpleWindow(display,parent,x,y,width,height,border_width,border,background);
 }
 
+TNK_EXPORT Window XCreateWindow_TNK(Display* display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width, int depth, unsigned int class, Visual* visual, unsigned long valuemask, XSetWindowAttributes* attributes) {
+    return XCreateWindow(display,parent,x,y,width,height,border_width,depth,class,visual,valuemask,attributes);
+}
+
+
 TNK_EXPORT void XSetTextProperty_TNK(Display* display, Window w, XTextProperty* text_prop, Atom property) {
     XSetTextProperty(display,w,text_prop,property);
 }
@@ -237,6 +242,18 @@ TNK_EXPORT int XCloseDisplay_TNK(Display *screen) {
 
 TNK_EXPORT char* XDisplayName_TNK(char* string) {
     return XDisplayName(string);
+}
+
+typedef int (*XSynchronizeDelegaty)(Display*);
+//int (*XSynchronize(Display *display, Bool onoff))();
+XSynchronizeDelegaty XSynchronize_TNK(Display* display, Bool onoff) {
+    return XSynchronize(display, onoff);
+}
+
+//int (*XSetAfterFunction(Display *display, int (*procedure)()))();
+typedef int(*XSetAfterFunctionDelegaty)();
+XSetAfterFunctionDelegaty XSetAfterFunction_TNK(Display* display, XSetAfterFunctionDelegaty proc) {
+    return XSetAfterFunction(display, proc);
 }
 
 TNK_EXPORT XErrorHandler XSetErrorHandler_TNK(XErrorHandler handler) {

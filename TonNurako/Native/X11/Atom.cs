@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TonNurako.Native;
 
 namespace TonNurako.X11 {
-    public class Atom : IX11Interop, IEqualityComparer<Atom> {
+    public class Atom : IX11Interop, IEquatable<Atom> {
 
         internal static class NativeMethods {
             // Atom: XInternAtom [{'type': 'Display*', 'name': 'display'}, {'type': 'char*', 'name': 'atom_name'}, {'type': 'Bool', 'name': 'only_if_exists'}]
@@ -31,11 +31,16 @@ namespace TonNurako.X11 {
         public Atom() {
         }
 
+        public Atom(IntPtr handle) {
+            this.atom = handle;
+            this.display = new Display();
+        }
+
         public Atom(IntPtr handle, Display dpy) {
             this.atom = handle;
             this.display = dpy;
         }
-
+        
         public static Atom InternAtom(Display display, string name, bool only_if_exists) {
             var r = NativeMethods.XInternAtom(display.Handle, name, only_if_exists);
             if (r == IntPtr.Zero) {
@@ -44,17 +49,17 @@ namespace TonNurako.X11 {
             return (new Atom(r, display));
         }
 
-        public bool Equals(Atom x, Atom y) {
-            return (x.Handle == y.Handle &&
-                    x.display.Handle == y.display.Handle);
+        public bool Equals(Atom y) {
+            return (Handle == y.Handle &&
+                    display.Handle == y.display.Handle);
         }
 
         public bool Equals(long atom) {
             return ((long)this.Handle == atom);
         }
 
-        public int GetHashCode(Atom obj) {
-            return (int)display.Handle ^ (int)atom;
+        public override int GetHashCode() {
+            return obzekt.GetHashCode();
         }
 
         public string Name => 

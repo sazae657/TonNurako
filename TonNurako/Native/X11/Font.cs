@@ -284,7 +284,7 @@ namespace TonNurako.X11 {
                 for (int i = 0; i < mco; ++i) {
                     fs.MissingCharsetList[i] = Marshal.PtrToStringAnsi(arr[i]);
                 }
-                TonNurako.X11.X11Sports.FreeStringList(mc);
+                TonNurako.X11.Xi.FreeStringList(mc);
             }
 
             fs.DestructFunction = () => {

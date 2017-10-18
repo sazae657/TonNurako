@@ -17,10 +17,14 @@ CFLAGS_Xext=""
 LIBS_Xr=""
 CFLAGS_Xr=""
 
+LIBS_Xft=""
+CFLAGS_Xft=""
+
 XLIB_FOUND="NO"
 XMU_FOUND="NO"
 XEXT_FOUND="NO"
 XR_FOUND="NO"
+XFT_FOUND="NO"
 
 XT_LIBS=$(pkg-config --libs xt)
 if [ "x" != "x${XT_LIBS}" ];then
@@ -50,8 +54,16 @@ XR_LIBS=$(pkg-config --libs xrender)
 if [ "x" != "x${XR_LIBS}" ];then
    echo found Xrender from pkgconfig
    LIBS_Xr="${XR_LIBS}"
-   CFLAGS_Xr=$(pkg-config --cflags xext)
-   XEXT_FOUND="YES"
+   CFLAGS_Xr=$(pkg-config --cflags xrender)
+   XR_FOUND="YES"
+fi
+
+XFT_LIBS=$(pkg-config --libs xft)
+if [ "x" != "x${XFT_LIBS}" ];then
+   echo found Xft from pkgconfig
+   LIBS_Xft="${XFT_LIBS}"
+   CFLAGS_Xft=$(pkg-config --cflags xft)
+   XFT_FOUND="YES"
 fi
 
 if [ "xNO" = "x${XLIB_FOUND}" ];then
@@ -94,6 +106,16 @@ if [ "xNO" = "x${XR_FOUND}" ];then
 	CFLAGS_Xr=$(cat ${RULES_INC})
 fi
 
+if [ "xNO" = "x${XFT_FOUND}" ];then
+	TLIB="-lXft" TSRC=${KWD}/check.localized/check_xft.c ${KWD}/check.localized/try_compile.sh
+	if [ ! -f ${RULES_OK} ];then
+		echo "libXft がないよう"
+		exit 9
+	fi
+	LIBS_Xft=$(cat ${RULES_LIB})
+	CFLAGS_Xft=$(cat ${RULES_INC})
+fi
+
 echo "Xt:LIBS=$LIBS_Xt"
 echo "Xt:CFLAGS=$CFLAGS_Xt"
 
@@ -115,9 +137,13 @@ echo "Xrender:LIBS=$LIBS_Xr"
 cc ${CFLAGS_Xr} -o ${KWD}/a.out ${KWD}/check.localized/check_xrender.c ${LIBS_Xr}  || exit 9
 echo "-- Xrender Check OK --"
 
+echo "Xft:CFLAGS=$CFLAGS_Xft"
+echo "Xft:LIBS=$LIBS_Xft"
+cc ${CFLAGS_Xft} -o ${KWD}/a.out ${KWD}/check.localized/check_xft.c ${LIBS_Xft}  || exit 9
+echo "-- Xft Check OK --"
 
-HA=$(echo ${CFLAGS_Xt} ${CFLAGS_Xmu} ${CFLAGS_Xr} ${CFLAGS_Xext} | perl -pe 's/\s/\n/g' | sort -u | xargs echo)
-LA=$(echo ${LIBS_Xmu} ${LIBS_Xt} ${LIBS_Xr} ${LIBS_Xext} | perl -pe 's/\s/\n/g' | sort -u| xargs echo)
+HA=$(echo ${CFLAGS_Xt} ${CFLAGS_Xmu} ${CFLAGS_Xr} ${CFLAGS_Xext} ${CFLAGS_Xft} | perl -pe 's/\s/\n/g' | sort -u | xargs echo)
+LA=$(echo ${LIBS_Xmu} ${LIBS_Xt} ${LIBS_Xr} ${LIBS_Xext} ${LIBS_Xft} | perl -pe 's/\s/\n/g' | sort -u| xargs echo)
 
 echo "X11_HEADER_ARGS := ${HA}" >>${SITE_MP3}
 echo "X11_LIBS := ${LA}" >>${SITE_MP3}

@@ -87,6 +87,7 @@ OBJ=DlSym.o	\
     TonNurako.o \
 	XmCreateFuncs.o \
 	X11ExtShapeImp.o \
+	X11ExtRenderImp.o \
 	X11ImpGC.o \
 
 TARGET = $(BINDIR)libTonNurako.extremesports

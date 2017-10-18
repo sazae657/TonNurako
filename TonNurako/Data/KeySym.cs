@@ -22,8 +22,8 @@ namespace TonNurako.Data
         public static KeySym FromName(string _Name) {
             var r = new KeySym();
 
-            r.NativeKeySym = X11Sports.StringToKeysym(_Name);
-            r.KeySymStr = X11Sports.KeysymToString(r.NativeKeySym);
+            r.NativeKeySym = Xi.StringToKeysym(_Name);
+            r.KeySymStr = Xi.KeysymToString(r.NativeKeySym);
 
             System.Diagnostics.Debug.WriteLine($"KeySym.FromName<{_Name}> KS={r.NativeKeySym} ST={r.KeySymStr}");
 
@@ -33,7 +33,7 @@ namespace TonNurako.Data
             var r = new KeySym();
 
             r.NativeKeySym = _KeySym;
-            r.KeySymStr = X11Sports.KeysymToString(r.NativeKeySym);
+            r.KeySymStr = Xi.KeysymToString(r.NativeKeySym);
             System.Diagnostics.Debug.WriteLine($"KeySym.FromKeySym<{_KeySym}> KS={r.NativeKeySym} ST={r.KeySymStr}");
 
             return r;
