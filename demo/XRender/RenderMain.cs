@@ -250,8 +250,10 @@ namespace XRender {
                 display, pixmap,
                 TonNurako.X11.Extension.XRender.FindStandardFormat(display, PictStandard.A8), mask, pa);
 
-            TonNurako.X11.Extension.XRender.XRenderFillRectangle(
-                display, PictOp.Src, picture, color, 0, 0, width, height);
+            TonNurako.X11.Extension.XRender.XRenderFillRectangles(
+                display, PictOp.Src, picture, color,
+                    new[]{ new TonNurako.X11.XRectangle(0, 0, (ushort)width, (ushort)height) }
+                );
 
             pixmap.Dispose();
             return picture;

@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using TonNurako.X11;
 
 namespace TonNurako.Data {
 
@@ -25,7 +26,7 @@ namespace TonNurako.Data {
 
         bool isReference = false;
         #endregion
-       
+
 
         #region ｺﾝｽﾄﾗｸﾀー
         /// <summary>
@@ -280,35 +281,28 @@ namespace TonNurako.Data {
         #endregion
     }
 
+#if WINDOWS_XP
     /// <summary>
 	/// ｺﾝﾊﾟｳﾝﾄﾞｽﾄﾘﾝｸﾞ
 	/// </summary>
-	public class TextProperty :IDisposable
-	{
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct XTextProperty {
-            public IntPtr xvalue; // unsigned char*
-            public ulong encoding; // Atom
-            public int format; // int
-            public ulong nitems; // unsigned
-        }
+	public class TextProperty :IDisposable {
         internal static class NativeMethods {
 
             [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_CreateCompoundTextProperty", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true)]
             internal static extern int TNK_CreateCompoundTextProperty(
-                        [In,Out]ref XTextProperty tprop,
+                        [In,Out]ref XTextPropertyRec tprop,
                         IntPtr display,
                         [MarshalAs(UnmanagedType.LPStr)]string text
                         );
 
             [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_FreeCompoundTextProperty", CharSet=CharSet.Auto)]
-            internal static extern void TNK_FreeCompoundTextProperty([In,Out]ref XTextProperty tprop);
+            internal static extern void TNK_FreeCompoundTextProperty([In,Out]ref XTextPropertyRec tprop);
 
         }
-        XTextProperty textProperty;
+        XTextPropertyRec textProperty;
 
         public IntPtr Handle {
-            get {return textProperty.xvalue;}
+            get {return textProperty.value;}
         }
 
         public ulong Encoding {
@@ -323,7 +317,7 @@ namespace TonNurako.Data {
         }
 
         public TextProperty() {
-            textProperty = new XTextProperty();
+            textProperty = new XTextPropertyRec();
         }
 
 
@@ -341,9 +335,9 @@ namespace TonNurako.Data {
             if (disposedValue) {
                 return;
             }
-            if(IntPtr.Zero != textProperty.xvalue) {
+            if(IntPtr.Zero != textProperty.value) {
                 NativeMethods.TNK_FreeCompoundTextProperty(ref textProperty);
-                textProperty.xvalue = IntPtr.Zero;
+                textProperty.value = IntPtr.Zero;
             }
 
             System.Diagnostics.Debug.WriteLine("Dispose:" + this.ToString());
@@ -363,4 +357,5 @@ namespace TonNurako.Data {
         }
         #endregion
     }
+#endif
 }

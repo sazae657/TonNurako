@@ -222,6 +222,19 @@ RectangleOut
 RectangleIn
 RectanglePart
 
+//Visual
+VisualNoMask
+VisualIDMask
+VisualScreenMask
+VisualDepthMask
+VisualClassMask
+VisualRedMaskMask
+VisualGreenMaskMask
+VisualBlueMaskMask
+VisualColormapSizeMask
+VisualBitsPerRGBMask
+VisualAllMask
+
 //XICCEncodingStyle
 XNoMemory
 XLocaleNotSupported

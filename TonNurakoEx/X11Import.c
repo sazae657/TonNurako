@@ -14,7 +14,17 @@ TNK_EXPORT void XmbDrawString_TNK(Display* display, Drawable d, XFontSet font_se
     XmbDrawString(display,d,font_set,gc,x,y,string,num_bytes);
 }
 
+TNK_EXPORT XVisualInfo* XGetVisualInfo_TNK(Display* display, long vinfo_mask, XVisualInfo* vinfo_template, int* nitems_return) {
+    return XGetVisualInfo(display,vinfo_mask,vinfo_template,nitems_return);
+}
 
+TNK_EXPORT Status XMatchVisualInfo_TNK(Display* display, int screen, int depth, int class, XVisualInfo* vinfo_return) {
+    return XMatchVisualInfo(display,screen,depth,class,vinfo_return);
+}
+
+TNK_EXPORT VisualID XVisualIDFromVisual_TNK(Visual* visual) {
+    return XVisualIDFromVisual(visual);
+}
 
 TNK_EXPORT int XFree_TNK(void *data) {
     return XFree(data);

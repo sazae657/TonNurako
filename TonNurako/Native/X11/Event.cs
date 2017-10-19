@@ -712,21 +712,33 @@ namespace TonNurako.X11.Event {
         Window window;
         public Window Window => window;
 
+        Dictionary<Type, object> even;
+
+        bool cmSplitted;
+        XClientMessageEvent clientMessageEvent;
+
         public XEventArg() {
             display = new Display();
             window = new Window();
+            even = new Dictionary<Type, object>();
             handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(XEvent)));
+            cmSplitted = false;
         }
 
         public void Assign() {
             this.xevent = (XAnyEvent)Marshal.PtrToStructure(Handle, typeof(XAnyEvent));
             display.Assign((IntPtr)XEvent.display, false);
             window.Assign((IntPtr)XEvent.window, display);
+            cmSplitted = false;
+            even.Clear();
         }
 
-
         T CastReturn<T>() {
-            return (T)Marshal.PtrToStructure(Handle, typeof(T));
+            Type t = typeof(T);
+            if (! even.ContainsKey(t)) {
+                even[t] = Marshal.PtrToStructure(Handle, typeof(T));
+            }
+            return (T)even[t];
         }
 
         public XAnyEvent            Any => CastReturn<XAnyEvent>();
@@ -762,9 +774,12 @@ namespace TonNurako.X11.Event {
 
         public XClientMessageEvent ClientMessage {
             get {
-                var rawEvent = new XClientMessageEvent();
-                NativeMethods.TNK_IMP_SplitXClientMessageEventData(Handle, out rawEvent);
-                return rawEvent;
+                if (! cmSplitted) {
+                    clientMessageEvent = new XClientMessageEvent();
+                    NativeMethods.TNK_IMP_SplitXClientMessageEventData(Handle, out clientMessageEvent);
+                    cmSplitted = true;
+                }
+                return clientMessageEvent;
             }
         }
 

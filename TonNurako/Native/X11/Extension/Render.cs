@@ -115,6 +115,15 @@ namespace TonNurako.X11.Extension {
         BlendMaximum = TonNurako.X11.Constant.PictOpBlendMaximum,
     }
 
+    public enum SubPixel : int {
+        SubPixelUnknown = TonNurako.X11.Constant.SubPixelUnknown,
+        SubPixelHorizontalRGB = TonNurako.X11.Constant.SubPixelHorizontalRGB,
+        SubPixelHorizontalBGR = TonNurako.X11.Constant.SubPixelHorizontalBGR,
+        SubPixelVerticalRGB = TonNurako.X11.Constant.SubPixelVerticalRGB,
+        SubPixelVerticalBGR = TonNurako.X11.Constant.SubPixelVerticalBGR,
+        SubPixelNone = TonNurako.X11.Constant.SubPixelNone,
+    }
+
     public enum Filter {
         FilterNearest,
         FilterBilinear,
@@ -188,6 +197,19 @@ namespace TonNurako.X11.Extension {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderFindStandardFormat_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XRenderFindStandardFormat([In]IntPtr dpy, PictStandard format);
 
+            // Status: XRenderQueryFormats Display*:dpy
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderQueryFormats_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XRenderQueryFormats(IntPtr dpy);
+
+            // int: XRenderQuerySubpixelOrder Display*:dpy int:screen
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderQuerySubpixelOrder_TNK", CharSet = CharSet.Auto)]
+            internal static extern SubPixel XRenderQuerySubpixelOrder(IntPtr dpy, int screen);
+
+            // Bool: XRenderSetSubpixelOrder Display*:dpy int:screen int:subpixel
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetSubpixelOrder_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XRenderSetSubpixelOrder(IntPtr dpy, int screen, SubPixel subpixel);
+
+
             // void: XRenderFreePicture Display*:dpy Picture:picture
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderFreePicture_TNK", CharSet = CharSet.Auto)]
             internal static extern void XRenderFreePicture([In]IntPtr dpy, int picture);
@@ -245,6 +267,10 @@ namespace TonNurako.X11.Extension {
             internal static extern int XRenderCreateConicalGradient(
                 IntPtr dpy, ref XConicalGradient gradient, int[] stops, [In]XRenderColor[] colors, int nstops);
 
+            // Status: XRenderParseColor Display*:dpy char*:spec XRenderColor*:def
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderParseColor_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XRenderParseColor(IntPtr dpy, [MarshalAs(UnmanagedType.LPStr)] string spec, ref XRenderColor def);
+
         }
 
         public static bool QueryExtension(Display display) {
@@ -258,6 +284,17 @@ namespace TonNurako.X11.Extension {
             return n;
         }
 
+        public static int QueryFormats(Display dpy) =>
+                    NativeMethods.XRenderQueryFormats(dpy.Handle);
+
+        public static SubPixel QuerySubpixelOrder(Display dpy, int screen) =>
+            NativeMethods.XRenderQuerySubpixelOrder(dpy.Handle, screen);
+
+
+        public static bool SetSubpixelOrder(Display dpy, int screen, SubPixel subpixel) =>
+            NativeMethods.XRenderSetSubpixelOrder(dpy.Handle, screen, subpixel);
+
+
         public static XRenderPictFormat FindVisualFormat(Display display, Visual visual) {
             var p = NativeMethods.XRenderFindVisualFormat(display.Handle, visual.Handle);
             return (new XRenderPictFormat(display, p));
@@ -267,6 +304,7 @@ namespace TonNurako.X11.Extension {
             var p = NativeMethods.XRenderFindStandardFormat(display.Handle, format);
             return (new XRenderPictFormat(display, p));
         }
+
 
 
         public static Picture CreatePicture(Display dpy, IDrawable drawable, XRenderPictFormat format, CreatePictureMask valuemask, XRenderPictureAttributes attributes) {
@@ -292,9 +330,16 @@ namespace TonNurako.X11.Extension {
             NativeMethods.XRenderFillRectangle(display.Handle, op, dst.Handle, ref color, x, y, (uint)width, (uint)height);
         }
 
+        public static void XRenderFillRectangles(Display display, PictOp op, Picture dst, XRenderColor color, TonNurako.X11.XRectangle[] rectangles) {
+            NativeMethods.XRenderFillRectangles(display.Handle, op, dst.Handle, ref color, rectangles, rectangles.Length);
+        }
 
-        // internal static extern void XRenderFillRectangles(
-        //    IntPtr dpy, int op, int dst, ref XRenderColor color, [In, MarshalAs(UnmanagedType.LPArray)]TonNurako.X11.XRectangle[] rectangles, int n_rects);
+        public static XRenderColor ParseColor(Display display, string spec) {
+            var def = new XRenderColor();
+            NativeMethods.XRenderParseColor(display.Handle, spec, ref def);
+            return def;
+        }
+
 
         public static void CompositeTrapezoid(Display display, PictOp op, Picture src, Picture dst, XRenderPictFormat maskFormat, int xSrc, int ySrc, XTrapezoid trap) {
             NativeMethods.XRenderCompositeTrapezoid(

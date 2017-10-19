@@ -17,6 +17,22 @@ TNK_EXPORT Status XRenderQueryVersion_TNK(Display* dpy, int* major_versionp, int
     return XRenderQueryVersion(dpy,major_versionp,minor_versionp);
 }
 
+TNK_EXPORT Status XRenderQueryFormats_TNK(Display* dpy) {
+    return XRenderQueryFormats(dpy);
+}
+
+TNK_EXPORT int XRenderQuerySubpixelOrder_TNK(Display* dpy, int screen) {
+    return XRenderQuerySubpixelOrder(dpy,screen);
+}
+
+TNK_EXPORT Bool XRenderSetSubpixelOrder_TNK(Display* dpy, int screen, int subpixel) {
+    return XRenderSetSubpixelOrder(dpy,screen,subpixel);
+}
+
+TNK_EXPORT Status XRenderParseColor_TNK(Display* dpy, char* spec, XRenderColor* def) {
+    return XRenderParseColor(dpy,spec,def);
+}
+
 TNK_EXPORT XRenderPictFormat* XRenderFindVisualFormat_TNK(Display* dpy, Visual* visual) {
     return XRenderFindVisualFormat(dpy,visual);
 }

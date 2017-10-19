@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace TonNurako.X11.Extension {
     [StructLayout(LayoutKind.Sequential)]
     internal struct XRenderDirectFormatRec {
-        public short red;
-        public short redMask;
-        public short green;
-        public short greenMask;
-        public short blue;
-        public short blueMask;
-        public short alpha;
-        public short alphaMask;
+        public short Red;
+        public short RedMask;
+        public short Green;
+        public short GreenMask;
+        public short Blue;
+        public short BlueMask;
+        public short Alpha;
+        public short AlphaMask;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -25,14 +25,14 @@ namespace TonNurako.X11.Extension {
             Record = rec;
         }
 
-        public short red => Record.red;
-        public short redMask => Record.redMask;
-        public short green => Record.green;
-        public short greenMask => Record.greenMask;
-        public short blue => Record.blue;
-        public short blueMask => Record.blueMask;
-        public short alpha => Record.alpha;
-        public short alphaMask => Record.alphaMask;
+        public short Red => Record.Red;
+        public short RedMask => Record.RedMask;
+        public short Green => Record.Green;
+        public short GreenMask => Record.GreenMask;
+        public short Blue => Record.Blue;
+        public short BlueMask => Record.BlueMask;
+        public short Alpha => Record.Alpha;
+        public short AlphaMask => Record.AlphaMask;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -61,7 +61,7 @@ namespace TonNurako.X11.Extension {
             direct = new XRenderDirectFormat(Record.direct);
         }
 
-        public PictFormat id => Record.id;
+        public PictFormat Id => Record.id;
         public int Type => Record.type;
         public int Depth => Record.depth;
         public XRenderDirectFormat Direct => direct;

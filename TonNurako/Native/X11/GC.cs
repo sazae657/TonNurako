@@ -85,20 +85,27 @@ namespace TonNurako.X11
 		/// <summary>
 		/// 左上角のX座標
 		/// </summary>
-		public short x;
+		public short X;
 		/// <summary>
 		/// 左上角のY座標
 		/// </summary>
-		public short y;
+		public short Y;
 		/// <summary>
 		/// 幅
 		/// </summary>
-		public ushort w;
+		public ushort W;
 		/// <summary>
 		/// 高さ
 		/// </summary>
-		public ushort h;
-	}
+		public ushort H;
+
+        public XRectangle(short x, short y, ushort w, ushort h) {
+            this.X = x;
+            this.Y = y;
+            this.W = w;
+            this.H = h;
+        }
+    }
 
 	/// <summary>
 	/// 円弧の定義(XArcに対応)

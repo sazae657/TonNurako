@@ -82,6 +82,11 @@ namespace Xlib {
                 return -1;
             });
 
+            /*TonNurako.X11.XVisualInfo vi = new TonNurako.X11.XVisualInfo();
+            vi.Screen = dpy.DefaultScreen;
+            TonNurako.X11.XVisualInfo.GetVisualInfo(dpy, TonNurako.X11.VisualMask.VisualScreenMask, vi);
+            */
+
             var fs = TonNurako.X11.FontSet.CreateFontSet(dpy, "-*-fixed-medium-r-normal--14-*-*-*");
             int fi = 0;
             foreach (var fk in TonNurako.X11.FontSet.ListFonts(dpy, "*", 10)) {
@@ -140,14 +145,6 @@ namespace Xlib {
             //win.SetWMProperties("なまえ", "ダイコン", args);
             win.StoreName("UNPO");
 
-            var loader = new TonNurako.XImageFormat.XbmLoader();
-            TonNurako.XImageFormat.Xbm xbm = null;
-            using (var ms = new System.IO.MemoryStream(Properties.Resources.logo)) {
-                xbm = loader.Load(String.Empty, ms);
-            }
-
-            var bitmap = TonNurako.X11.Pixmap.FromBitmapData(win, xbm.Width, xbm.Height, xbm.RawPixels);
-            DumpProperty(bitmap);
 
             Console.WriteLine($"InputSelected(1): {TonNurako.X11.Extension.XShape.InputSelected(dpy, win)}");
 
@@ -156,22 +153,6 @@ namespace Xlib {
 
             TonNurako.X11.Extension.XShape.SelectInput(dpy, win, TonNurako.X11.Extension.ShapeEventMask.ShapeNotifyMask);
             Console.WriteLine($"InputSelected(2): {TonNurako.X11.Extension.XShape.InputSelected(dpy, win)}");
-            TonNurako.X11.Region region = null;
-            {
-                var pl = new List<TonNurako.X11.XPoint> {
-                    new TonNurako.X11.XPoint(10, 10),
-                    new TonNurako.X11.XPoint(300, 100),
-                    new TonNurako.X11.XPoint(525, 500),
-                    new TonNurako.X11.XPoint(50, 225),
-                    new TonNurako.X11.XPoint(575, 225),
-                    new TonNurako.X11.XPoint(75, 500),
-                };
-                region = TonNurako.X11.Region.PolygonRegion(pl.ToArray(), TonNurako.X11.FillRule.WindingRule);
-                DumpProperty(region);
-                TonNurako.X11.Extension.XShape.CombineRegion(dpy, win,
-                    TonNurako.X11.Extension.ShapeKind.ShapeClip, 0, 0, region, TonNurako.X11.Extension.ShapeOp.ShapeSet);
-               // rgn.Dispose();
-            }
 
             win.MapWindow();
             dpy.Flush();
@@ -233,7 +214,6 @@ namespace Xlib {
                             gc.Dispose();
                         }
                         fs.Dispose();
-                        region.Dispose();
                         dpy.SetCloseDownMode(TonNurako.X11.CloseDownMode.DestroyAll);
                         dpy.Close();
                         return;
