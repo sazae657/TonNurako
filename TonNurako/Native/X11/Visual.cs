@@ -32,6 +32,12 @@ namespace TonNurako.X11 {
     }
 
     public class Visual : IX11Interop {
+        internal static class NativeMethods {
+            // VisualID: XVisualIDFromVisual Visual*:visual
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XVisualIDFromVisual_TNK", CharSet = CharSet.Auto)]
+            internal static extern ulong XVisualIDFromVisual(ref VisualC visual);
+        }
+
         [StructLayout(LayoutKind.Sequential)]
         internal class VisualC {
             public IntPtr ext_data; // XExtData*
@@ -79,6 +85,9 @@ namespace TonNurako.X11 {
             }
         }
 
+        public ulong VisualIDFromVisual
+            => NativeMethods.XVisualIDFromVisual(ref visual);
+
         public int Free() {
             return TonNurako.Native.ExtremeSports.CallPtrArg1ReturnInt(extdata.free_private, visual.ext_data);
         }
@@ -90,7 +99,7 @@ namespace TonNurako.X11 {
         public ulong visualid; // VisualID
         public int screen; // int
         public int depth; // int
-        public int qlass; // int
+        public VisualClass qlass; // int
         public ulong red_mask; // unsigned long
         public ulong green_mask; // unsigned long
         public ulong blue_mask; // unsigned long
@@ -106,11 +115,7 @@ namespace TonNurako.X11 {
 
             // Status: XMatchVisualInfo Display*:display int:screen int:depth int:class XVisualInfo*:vinfo_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMatchVisualInfo_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMatchVisualInfo(IntPtr display, int screen, int depth, int klass, ref XVisualInfoRec vinfo_return);
-
-            // VisualID: XVisualIDFromVisual Visual*:visual
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XVisualIDFromVisual_TNK", CharSet = CharSet.Auto)]
-            internal static extern ulong XVisualIDFromVisual(out IntPtr visual);
+            internal static extern int XMatchVisualInfo(IntPtr display, int screen, int depth, VisualClass klass, ref XVisualInfoRec vinfo_return);
         }
 
         internal XVisualInfoRec Record;
@@ -125,10 +130,27 @@ namespace TonNurako.X11 {
                 visual = new Visual(Record.visual);
             }
         }
+        internal XVisualInfo(IntPtr ptr, int seq) {
+            sequence = seq;
+            Record = Marshal.PtrToStructure<XVisualInfoRec>(ptr);
+            if (IntPtr.Zero != Record.visual) {
+                visual = new Visual(Record.visual);
+            }
+        }
+
+        internal XVisualInfo(XVisualInfoRec ptr, bool parse) {
+            Record = ptr;
+            if (parse && IntPtr.Zero != Record.visual) {
+                visual = new Visual(Record.visual);
+            }
+        }
+        int sequence = 0;
+        public int Sequence => sequence;
+
 
         //public IntPtr visual; // Visual*
         public Visual Visual {
-            get => visual;           
+            get => visual;
         }
 
         public ulong Visualid {
@@ -143,7 +165,7 @@ namespace TonNurako.X11 {
             get => Record.depth;
             set => Record.depth = value;
         }
-        public int Class {
+        public VisualClass Class {
             get => Record.qlass;
             set => Record.qlass = value;
         }
@@ -171,21 +193,26 @@ namespace TonNurako.X11 {
         public static XVisualInfo[] GetVisualInfo(Display display, VisualMask vinfo_mask, XVisualInfo vinfo_template) {
             int nitems_return = 0;
             var k = NativeMethods.XGetVisualInfo(display.Handle, vinfo_mask, ref vinfo_template.Record, out nitems_return);
-            Console.WriteLine($"XGetVisualInfo: R={nitems_return}");
-            Console.WriteLine($"XGetVisualInfo: K={k:X8}");
 
             var arr = new IntPtr[nitems_return];
-            var ret = new XVisualInfo[nitems_return];
+            var tr = new XVisualInfo[nitems_return];
+            int size = Marshal.SizeOf(typeof(XVisualInfoRec));
             Marshal.Copy(k, arr, 0, nitems_return);
-            /*for (int i = 0; i < nitems_return; ++i) {
-                if (arr[i] == IntPtr.Zero) {
-                    throw new NullReferenceException($"arr[{i}] == NULL!!");
-                }
-                Console.WriteLine($"Konv:{i} => {arr[i]}");
-                //ret[i] = new XVisualInfo(arr[i]); 
-            }*/
+            for (int i = 0; i < nitems_return; ++i) {
+                IntPtr current = new IntPtr(k.ToInt64() + (size * i));
+                tr[i] = new XVisualInfo(current, i);
+            }
 
-            return null;
+            return tr;
+        }
+
+        public static XVisualInfo MatchVisualInfo(Display display, int screen, int depth, VisualClass klass)
+        {
+            XVisualInfoRec vinfo_return = new XVisualInfoRec();
+            if(XStatus.True != NativeMethods.XMatchVisualInfo(display.Handle, screen, depth, klass, ref vinfo_return)) {
+                return null;
+            }
+            return new XVisualInfo(vinfo_return, true);
         }
     }
 }

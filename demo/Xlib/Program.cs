@@ -82,10 +82,8 @@ namespace Xlib {
                 return -1;
             });
 
-            /*TonNurako.X11.XVisualInfo vi = new TonNurako.X11.XVisualInfo();
-            vi.Screen = dpy.DefaultScreen;
-            TonNurako.X11.XVisualInfo.GetVisualInfo(dpy, TonNurako.X11.VisualMask.VisualScreenMask, vi);
-            */
+            //TonNurako.X11.XVisualInfo vi = new TonNurako.X11.XVisualInfo();
+            //vi.Screen = dpy.DefaultScreen;
 
             var fs = TonNurako.X11.FontSet.CreateFontSet(dpy, "-*-fixed-medium-r-normal--14-*-*-*");
             int fi = 0;
