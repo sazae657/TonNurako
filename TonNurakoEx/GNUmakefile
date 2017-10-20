@@ -101,6 +101,7 @@ ExtremeSports: check $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(LINKER) $(LINK_FLAGS) -o $(TARGET) $(OBJ) $(LINK_LIBS)
+	echo "-- $(TARGET) OK --"
 
 $(OBJ): $(BINDIR)
 
