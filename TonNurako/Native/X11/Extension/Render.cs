@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.Inutility;
 using TonNurako.Native;
 
 namespace TonNurako.X11.Extension {
@@ -226,9 +227,22 @@ namespace TonNurako.X11.Extension {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureFilter_TNK", CharSet = CharSet.Auto)]
             internal static extern void XRenderSetPictureFilter(IntPtr dpy, int picture, [MarshalAs(UnmanagedType.LPStr)] string filter, int[] fk_params, int nparams);
 
+            // void: XRenderSetPictureClipRectangles Display*:dpy Picture:picture int:xOrigin int:yOrigin XRectangle*:rects int:n
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureClipRectangles_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XRenderSetPictureClipRectangles(IntPtr dpy, int picture, int xOrigin, int yOrigin, [In, MarshalAs(UnmanagedType.LPArray)]TonNurako.X11.XRectangle[] rects, int n);
+
+            // void: XRenderSetPictureClipRegion Display*:dpy Picture:picture Region:r
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureClipRegion_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XRenderSetPictureClipRegion(IntPtr dpy, int picture, [In]IntPtr r);
+
+            // void: XRenderSetPictureTransform Display*:dpy Picture:picture XTransform*:transform
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureTransform_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XRenderSetPictureTransform(IntPtr dpy, int picture, ref XTransform transform);
+
             // void: XRenderFillRectangle Display*:dpy int:op Picture:dst XRenderColor*:color int:x int:y unsigned int:width unsigned int:height
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderFillRectangle_TNK", CharSet = CharSet.Auto)]
             internal static extern void XRenderFillRectangle(IntPtr dpy, PictOp op, int dst, ref XRenderColor color, int x, int y, uint width, uint height);
+
 
             // void: XRenderFillRectangles Display*:dpy int:op Picture:dst XRenderColor*:color XRectangle*:rectangles int:n_rects
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderFillRectangles_TNK", CharSet = CharSet.Auto)]
@@ -271,6 +285,34 @@ namespace TonNurako.X11.Extension {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderParseColor_TNK", CharSet = CharSet.Auto)]
             internal static extern int XRenderParseColor(IntPtr dpy, [MarshalAs(UnmanagedType.LPStr)] string spec, ref XRenderColor def);
 
+            // XIndexValue*: XRenderQueryPictIndexValues Display*:dpy XRenderPictFormat*:format int*:num
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderQueryPictIndexValues_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XRenderQueryPictIndexValues(IntPtr dpy, ref XRenderPictFormatRec format, out int num);
+
+            // XFilters*: XRenderQueryFilters Display*:dpy Drawable:drawable
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderQueryFilters_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XRenderQueryFilters(IntPtr dpy, IntPtr drawable);
+
+
+            // void: XRenderCompositeTriangles Display*:dpy int:op Picture:src Picture:dst XRenderPictFormat*:maskFormat int:xSrc int:ySrc XTriangle*:triangles int:ntriangle
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderCompositeTriangles_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XRenderCompositeTriangles(
+                IntPtr dpy, PictOp op, int src, int dst, ref XRenderPictFormatRec maskFormat, int xSrc, int ySrc, [In, MarshalAs(UnmanagedType.LPArray)]XTriangle[] triangles, int ntriangle);
+
+            // void: XRenderCompositeTriStrip Display*:dpy int:op Picture:src Picture:dst XRenderPictFormat*:maskFormat int:xSrc int:ySrc XPointFixed*:points int:npoint
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderCompositeTriStrip_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XRenderCompositeTriStrip(
+                IntPtr dpy, PictOp op, int src, int dst, ref XRenderPictFormatRec maskFormat, int xSrc, int ySrc, [In, MarshalAs(UnmanagedType.LPArray)]XPointFixed[] points, int npoint);
+
+            // void: XRenderCompositeTriFan Display*:dpy int:op Picture:src Picture:dst XRenderPictFormat*:maskFormat int:xSrc int:ySrc XPointFixed*:points int:npoint
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderCompositeTriFan_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XRenderCompositeTriFan(
+                IntPtr dpy, PictOp op, int src, int dst, ref XRenderPictFormatRec maskFormat, int xSrc, int ySrc, [In, MarshalAs(UnmanagedType.LPArray)]XPointFixed[] points, int npoint);
+
+            // void: XRenderCompositeDoublePoly Display*:dpy int:op Picture:src Picture:dst XRenderPictFormat*:maskFormat int:xSrc int:ySrc int:xDst int:yDst XPointDouble*:fpoints int:npoints int:winding
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderCompositeDoublePoly_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XRenderCompositeDoublePoly(
+                IntPtr dpy, PictOp op, int src, int dst, ref XRenderPictFormatRec maskFormat, int xSrc, int ySrc, int xDst, int yDst, [In, MarshalAs(UnmanagedType.LPArray)]XPointDouble [] fpoints, int npoints, int winding);
         }
 
         public static bool QueryExtension(Display display) {
@@ -305,6 +347,24 @@ namespace TonNurako.X11.Extension {
             return (new XRenderPictFormat(display, p));
         }
 
+        public static XIndexValue [] QueryPictIndexValues(Display display, XRenderPictFormat format) {
+            var f = format.Assemble();
+            var k = NativeMethods.XRenderQueryPictIndexValues(display.Handle, ref f, out int num);
+            if (0 == num) {
+                return (new XIndexValue[0]);
+            }
+            return MarshalHelper.ToStructArray<XIndexValue>(k, num);
+        }
+
+        public static XFilters QueryFilters(Display display, IDrawable drawable) {
+            var r = NativeMethods.XRenderQueryFilters(display.Handle, drawable.Drawable);
+            if (IntPtr.Zero == r) {
+                return null;
+            }
+            return (new XFilters(Marshal.PtrToStructure<XFiltersRec>(r)));
+
+        }
+
 
 
         public static Picture CreatePicture(Display dpy, IDrawable drawable, XRenderPictFormat format, CreatePictureMask valuemask, XRenderPictureAttributes attributes) {
@@ -326,11 +386,24 @@ namespace TonNurako.X11.Extension {
             NativeMethods.XRenderSetPictureFilter(display.Handle, picture.Handle, filter.AsString(), fk_params, fk_params.Length);
         }
 
-        public static void XRenderFillRectangle(Display display, PictOp op, Picture dst, XRenderColor color, int x, int y, int width, int height) {
+        public static void SetPictureClipRectangles(Display display, Picture picture, int xOrigin, int yOrigin, XRectangle[] rects) {
+            NativeMethods.XRenderSetPictureClipRectangles(display.Handle, picture.Handle, xOrigin, yOrigin, rects, rects.Length);
+        }
+
+        public static void SetPictureClipRectangles(Display display, Picture picture, Region region) {
+            NativeMethods.XRenderSetPictureClipRegion(display.Handle, picture.Handle, region.Handle);
+        }
+
+        public static void SetPictureClipRectangles(Display display, Picture picture, XTransform transform) {
+            NativeMethods.XRenderSetPictureTransform(display.Handle, picture.Handle, ref transform);
+        }
+
+
+        public static void FillRectangle(Display display, PictOp op, Picture dst, XRenderColor color, int x, int y, int width, int height) {
             NativeMethods.XRenderFillRectangle(display.Handle, op, dst.Handle, ref color, x, y, (uint)width, (uint)height);
         }
 
-        public static void XRenderFillRectangles(Display display, PictOp op, Picture dst, XRenderColor color, TonNurako.X11.XRectangle[] rectangles) {
+        public static void FillRectangles(Display display, PictOp op, Picture dst, XRenderColor color, TonNurako.X11.XRectangle[] rectangles) {
             NativeMethods.XRenderFillRectangles(display.Handle, op, dst.Handle, ref color, rectangles, rectangles.Length);
         }
 
@@ -350,6 +423,31 @@ namespace TonNurako.X11.Extension {
             NativeMethods.XRenderCompositeTrapezoids(
                 display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, trap, trap.Length);
         }
+        
+        public static void CompositeTriangles(Display display, PictOp op, Picture src, Picture dst, XRenderPictFormat maskFormat, int xSrc, int ySrc, XTriangle[] triangles) {
+            NativeMethods.XRenderCompositeTriangles(
+                display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, triangles, triangles.Length);
+        }
+
+        public static void CompositeTriStrip(Display display, PictOp op, Picture src, Picture dst, XRenderPictFormat maskFormat, int xSrc, int ySrc, XPointFixed[] points) {
+            NativeMethods.XRenderCompositeTriStrip(
+                display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc,  points, points.Length);
+        }
+
+        public static void CompositeTriFan(Display display, PictOp op, Picture src, Picture dst, XRenderPictFormat maskFormat, int xSrc, int ySrc, XPointFixed[] points) {
+            NativeMethods.XRenderCompositeTriFan(
+                display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, points, points.Length);
+        }
+
+        public static void XRenderCompositeDoublePoly(
+            Display display, PictOp op, Picture src, Picture dst, XRenderPictFormat maskFormat, int xSrc, int ySrc, int xDst, int yDst, XPointDouble[] points, int winding) {
+            NativeMethods.XRenderCompositeDoublePoly(
+                display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, xDst, yDst, points, points.Length, winding);
+        }
+
+        
+
+
 
         public static void Composite(
             Display display, PictOp op, Picture src, Picture mask, Picture dst, int src_x, int src_y, int mask_x, int mask_y, int dst_x, int dst_y, int width, int height) {

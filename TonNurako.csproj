@@ -64,6 +64,7 @@
     <Compile Include="TonNurako\GC\PixmapFactory.cs" />
     <Compile Include="TonNurako\GC\XImage.cs" />
     <Compile Include="TonNurako\Misc\Inutility.cs" />
+    <Compile Include="TonNurako\Misc\MarshalHelper.cs" />
     <Compile Include="TonNurako\Misc\Unity.cs" />
     <Compile Include="TonNurako\Native\Attribute.cs" />
     <Compile Include="TonNurako\Native\CallbackQueue.cs" />
@@ -238,7 +239,7 @@
   <PropertyGroup>
     <PreBuildEvent Condition="'$(OS)' == 'Unix'">
                  cd $(ProjectDir)/TonNurakoEx
-                 make BUILD=$(ConfigurationName) BINDIR=../$(OutputPath) PLATFORM=`uname -s` clean.lib check all
+                 make BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` clean.lib check all
                </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

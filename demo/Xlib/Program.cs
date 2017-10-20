@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.Inutility;
 
 namespace Xlib {
     class Program {
@@ -82,9 +83,6 @@ namespace Xlib {
                 return -1;
             });
 
-            //TonNurako.X11.XVisualInfo vi = new TonNurako.X11.XVisualInfo();
-            //vi.Screen = dpy.DefaultScreen;
-
             var fs = TonNurako.X11.FontSet.CreateFontSet(dpy, "-*-fixed-medium-r-normal--14-*-*-*");
             int fi = 0;
             foreach (var fk in TonNurako.X11.FontSet.ListFonts(dpy, "*", 10)) {
@@ -151,6 +149,7 @@ namespace Xlib {
 
             TonNurako.X11.Extension.XShape.SelectInput(dpy, win, TonNurako.X11.Extension.ShapeEventMask.ShapeNotifyMask);
             Console.WriteLine($"InputSelected(2): {TonNurako.X11.Extension.XShape.InputSelected(dpy, win)}");
+
 
             win.MapWindow();
             dpy.Flush();

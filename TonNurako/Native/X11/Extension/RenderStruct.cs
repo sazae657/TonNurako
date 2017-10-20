@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.Inutility;
 
 namespace TonNurako.X11.Extension {
     [StructLayout(LayoutKind.Sequential)]
@@ -21,18 +22,47 @@ namespace TonNurako.X11.Extension {
     [StructLayout(LayoutKind.Sequential)]
     public class XRenderDirectFormat {
         internal XRenderDirectFormatRec Record;
+
+        public XRenderDirectFormat() {
+            Record = new XRenderDirectFormatRec();
+        }
+
         internal XRenderDirectFormat(XRenderDirectFormatRec rec) {
             Record = rec;
         }
 
-        public short Red => Record.Red;
-        public short RedMask => Record.RedMask;
-        public short Green => Record.Green;
-        public short GreenMask => Record.GreenMask;
-        public short Blue => Record.Blue;
-        public short BlueMask => Record.BlueMask;
-        public short Alpha => Record.Alpha;
-        public short AlphaMask => Record.AlphaMask;
+        public short Red {
+            get => Record.Red;
+            set => Record.Red = value;
+        }
+        public short RedMask {
+            get => Record.RedMask;
+            set => Record.RedMask = value;
+        }
+        public short Green {
+            get => Record.Green;
+            set => Record.Green = value;
+        }
+        public short GreenMask {
+            get => Record.GreenMask;
+            set => Record.GreenMask = value;
+        }
+        public short Blue {
+            get => Record.Blue;
+            set => Record.Blue = value;
+        }
+        public short BlueMask {
+            get => Record.BlueMask;
+            set => Record.BlueMask = value;
+        }
+        public short Alpha {
+            get => Record.Alpha;
+            set => Record.Alpha = value;
+        }
+        public short AlphaMask {
+            get => Record.AlphaMask;
+            set => Record.AlphaMask = value;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -61,11 +91,45 @@ namespace TonNurako.X11.Extension {
             direct = new XRenderDirectFormat(Record.direct);
         }
 
-        public PictFormat Id => Record.id;
-        public int Type => Record.type;
-        public int Depth => Record.depth;
-        public XRenderDirectFormat Direct => direct;
-        public Colormap Colormap => colormap;
+        internal XRenderPictFormatRec Assemble() {
+            var r = new XRenderPictFormatRec();
+            r.colormap = (null != colormap) ? colormap.Handle : 0;
+            r.direct = direct.Record;
+            return r;
+        }
+
+        public XRenderPictFormat() {
+            Record = new XRenderPictFormatRec();
+            direct = new XRenderDirectFormat();
+        }
+
+        public PictFormat Id {
+            get => Record.id;
+            set => Record.id = value;
+        }
+        public int Type {
+            get => Record.type;
+            set => Record.type = value;
+        }
+        public int Depth {
+            get => Record.depth;
+            set => Record.depth = value;
+        }
+        public XRenderDirectFormat Direct {
+            get => direct;
+            set {
+                direct = value;
+                Record.direct = value.Record;
+            }
+        }
+        public Colormap Colormap {
+            get => colormap;
+            set {
+                colormap = value;
+                Record.colormap = value.Handle;
+            }
+        }
+
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -281,23 +345,61 @@ namespace TonNurako.X11.Extension {
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XTransform {
+    public struct XTransform {
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 9)]
-        public int[] matrix; //matrix[3][3]
+        public int[] Matrix; //matrix[3][3]
     }
 
+
     [StructLayout(LayoutKind.Sequential)]
-    public struct XFilters {
+    public struct XFiltersRec {
         public int nfilter;
         public IntPtr filter; //char**
         public int nalias;
         public IntPtr alias; //short*
     }
 
+    public class XFilters {
+
+        internal XFiltersRec Record;
+        string[] filters = null;
+        short[] aliases = null;
+
+        internal XFilters(XFiltersRec rec) {
+            if (0 != rec.nfilter) {
+                filters = MarshalHelper.ToStringArray(rec.filter, rec.nfilter);
+            }
+            if (0 != rec.nalias) {
+                aliases = new short[rec.nalias];
+                Marshal.Copy(rec.alias, aliases, 0, rec.nalias);
+            }
+        }
+
+        public int FilterCount {
+            get => Record.nfilter;
+            set => Record.nfilter = value;
+        }
+        public string[] Filter {
+            get => filters;
+            //set => Record.filter = value;
+        }
+        public int AliasCount {
+            get => Record.nalias;
+            set => Record.nalias = value;
+        }
+        public short [] Alias {
+            get => aliases;
+            //set => Record.alias = value;
+        }
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public struct XIndexValue {
-        public ulong pixel;
-        public ushort red, green, blue, alpha;
+        public ulong Pixel;
+        public ushort Red;
+        public ushort Green;
+        public ushort Blue;
+        public ushort Alpha;
     }
 
     [StructLayout(LayoutKind.Sequential)]

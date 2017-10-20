@@ -44,6 +44,13 @@ TNK_EXPORT XRenderPictFormat* XRenderFindFormat_TNK(Display* dpy, unsigned long 
 TNK_EXPORT XRenderPictFormat* XRenderFindStandardFormat_TNK(Display* dpy, int format) {
     return XRenderFindStandardFormat(dpy,format);
 }
+TNK_EXPORT XIndexValue* XRenderQueryPictIndexValues_TNK(Display* dpy, XRenderPictFormat* format, int* num) {
+    return XRenderQueryPictIndexValues(dpy,format,num);
+}
+
+TNK_EXPORT XFilters* XRenderQueryFilters_TNK(Display* dpy, Drawable drawable) {
+    return XRenderQueryFilters(dpy,drawable);
+}
 
 TNK_EXPORT void XRenderFreePicture_TNK(Display* dpy, Picture picture) {
     XRenderFreePicture(dpy,picture);
@@ -61,6 +68,18 @@ TNK_EXPORT void XRenderSetPictureFilter_TNK(Display* dpy, Picture picture, char*
     XRenderSetPictureFilter(dpy,picture,filter,params,nparams);
 }
 
+TNK_EXPORT void XRenderSetPictureClipRectangles_TNK(Display* dpy, Picture picture, int xOrigin, int yOrigin, XRectangle* rects, int n) {
+    XRenderSetPictureClipRectangles(dpy,picture,xOrigin,yOrigin,rects,n);
+}
+
+TNK_EXPORT void XRenderSetPictureClipRegion_TNK(Display* dpy, Picture picture, Region r) {
+    XRenderSetPictureClipRegion(dpy,picture,r);
+}
+
+TNK_EXPORT void XRenderSetPictureTransform_TNK(Display* dpy, Picture picture, XTransform* transform) {
+    XRenderSetPictureTransform(dpy,picture,transform);
+}
+
 TNK_EXPORT void XRenderFillRectangle_TNK(Display* dpy, int op, Picture dst, XRenderColor* color, int x, int y, unsigned int width, unsigned int height) {
     XRenderFillRectangle(dpy,op,dst,color,x,y,width,height);
 }
@@ -75,6 +94,22 @@ TNK_EXPORT void XRenderComposite_TNK(Display* dpy, int op, Picture src, Picture 
 
 TNK_EXPORT void XRenderCompositeTrapezoids_TNK(Display* dpy, int op, Picture src, Picture dst, XRenderPictFormat* maskFormat, int xSrc, int ySrc, XTrapezoid* traps, int ntrap) {
     XRenderCompositeTrapezoids(dpy,op,src,dst,maskFormat,xSrc,ySrc,traps,ntrap);
+}
+
+TNK_EXPORT void XRenderCompositeTriangles_TNK(Display* dpy, int op, Picture src, Picture dst, XRenderPictFormat* maskFormat, int xSrc, int ySrc, XTriangle* triangles, int ntriangle) {
+    XRenderCompositeTriangles(dpy,op,src,dst,maskFormat,xSrc,ySrc,triangles,ntriangle);
+}
+
+TNK_EXPORT void XRenderCompositeTriStrip_TNK(Display* dpy, int op, Picture src, Picture dst, XRenderPictFormat* maskFormat, int xSrc, int ySrc, XPointFixed* points, int npoint) {
+    XRenderCompositeTriStrip(dpy,op,src,dst,maskFormat,xSrc,ySrc,points,npoint);
+}
+
+TNK_EXPORT void XRenderCompositeTriFan_TNK(Display* dpy, int op, Picture src, Picture dst, XRenderPictFormat* maskFormat, int xSrc, int ySrc, XPointFixed* points, int npoint) {
+    XRenderCompositeTriFan(dpy,op,src,dst,maskFormat,xSrc,ySrc,points,npoint);
+}
+
+TNK_EXPORT void XRenderCompositeDoublePoly_TNK(Display* dpy, int op, Picture src, Picture dst, XRenderPictFormat* maskFormat, int xSrc, int ySrc, int xDst, int yDst, XPointDouble* fpoints, int npoints, int winding) {
+    XRenderCompositeDoublePoly(dpy,op,src,dst,maskFormat,xSrc,ySrc,xDst,yDst,fpoints,npoints,winding);
 }
 
 TNK_EXPORT Picture XRenderCreateSolidFill_TNK(Display* dpy, XRenderColor* color) {
