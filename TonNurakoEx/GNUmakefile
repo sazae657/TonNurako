@@ -80,6 +80,7 @@ OBJ=DlSym.o	\
  	ClassDef.o \
  	XmImport.o \
 	XtImport.o  \
+	XtImportMacro.o \
 	X11Import.o \
 	X11ImportMacro.o \
 	X11ImportLocale.o \

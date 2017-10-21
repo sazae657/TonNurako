@@ -7,6 +7,14 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <sys/types.h>
+
+#include <X11/XKBlib.h>
+#include <X11/Xlocale.h>
+
+#include <X11/Intrinsic.h>
+#include <X11/IntrinsicP.h>
+#include <X11/Xmu/Editres.h>
+
 #include <Xm/XmAll.h>
 #include <Xm/ButtonBox.h>
 #include <Xm/ColorS.h>
@@ -16,13 +24,11 @@
 #include <Xm/MultiList.h>
 #include <Xm/Outline.h>
 #include <Xm/Tree.h>
-#include <X11/Xmu/Editres.h>
+
 #if defined(TNK_USE_LIBXPM)
 #include <X11/xpm.h>
 #endif
-#include <X11/Intrinsic.h>
-#include <X11/XKBlib.h>
-#include <X11/Xlocale.h>
+
 
 #define TONNURAKO_EX_MAJOR_VERSION 1
 #define TONNURAKO_EX_MINOR_VERSION 0
@@ -134,10 +140,10 @@ _tagTNK_COLOR_CONTEXT {
 }TNK_COLOR_CONTEXT, *LPTNK_COLOR_CONTEXT;
 
 /* XClientMessageEvent 分離用　*/
-typedef struct 
+typedef struct
 _tagTNK_XClientMessageEventData
 {
-    XClientMessageEvent event;    
+    XClientMessageEvent event;
     struct {
         char b[20];
         short s[10];

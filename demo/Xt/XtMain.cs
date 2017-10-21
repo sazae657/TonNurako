@@ -13,6 +13,9 @@ namespace Frogram {
             base.ShellCreated();
             var t = Translations.ParseTranslationTable("<Message>WM_PROTOCOLS: quit()");
             TonNurako.Inutility.Dumper.DumpProperty(t, (s)=> Console.WriteLine($"{s}"));
+
+            var k = TonNurako.Xt.Core.CoreWidgetClass.GetDefaultSuperClass();
+            TonNurako.Inutility.Dumper.DumpProperty(k, (s) => Console.WriteLine($"{s}"));
         }
 
 

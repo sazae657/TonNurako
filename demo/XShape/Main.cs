@@ -32,6 +32,7 @@ namespace XShape {
                 Console.WriteLine("IOE");
                 return -1;
             });
+            
             TonNurako.X11.Xi.SetErrorHandler((d, e) => {
                 Console.WriteLine("*** E ***");
                 TonNurako.Inutility.Dumper.DumpStruct(e, (s) => {
@@ -54,8 +55,8 @@ namespace XShape {
             var atom = TonNurako.X11.Atom.InternAtom(dpy, "WM_DELETE_WINDOW", true);         
 
             var win = dpy.CreateSimpleWindow(
-                rw, 0, 0, maskImage.Width, maskImage.Height, 0,
-                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "yellow"),
+                rw, 0, 0, maskImage.Width + 8, maskImage.Height + 8, 0,
+                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "white"),
                 TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "black"));
 
             win.SetWMProtocols(new TonNurako.X11.Atom[] { atom });
@@ -82,10 +83,11 @@ namespace XShape {
             // αﾁｬﾈﾙからﾏｽｸ生成
             var oim = TonNurako.XImageFormat.Xi.おやさい.ぉに変換(maskImage);
             var o = TonNurako.XImageFormat.Xi.おやさい.XBM配列に変換(maskImage.Width, maskImage.Height, TonNurako.XImageFormat.Xi.ぉ.画素.A, false, oim);
-            var bitmap = unity.Store(TonNurako.X11.Pixmap.FromBitmapData(win, maskImage.Width, maskImage.Height, o));
+            var bitmap = unity.Store(TonNurako.X11.Pixmap.FromBitmapData(rw, maskImage.Width, maskImage.Height, o));
             
             TonNurako.X11.Extension.XShape.CombineMask(dpy, win,
-                TonNurako.X11.Extension.ShapeKind.ShapeBounding, 0, 0, bitmap, TonNurako.X11.Extension.ShapeOp.ShapeSet);
+                TonNurako.X11.Extension.ShapeKind.ShapeBounding, 
+                0, 0, bitmap, TonNurako.X11.Extension.ShapeOp.ShapeSet);
 
             // 背景設定
             var bg = unity.Store(TonNurako.GC.PixmapFactory.FromBitmap(win, maskImage));
@@ -94,7 +96,6 @@ namespace XShape {
             win.MapWindow();
             dpy.Flush();
 
-            TonNurako.X11.GC gc = null;
             var ev = new TonNurako.X11.Event.XEventArg();
             while (true) {
                 dpy.NextEvent(ev);
@@ -103,12 +104,7 @@ namespace XShape {
                     case TonNurako.X11.Event.XEventType.CreateNotify:
                         break;
                     case TonNurako.X11.Event.XEventType.Expose:
-                        if (null == gc) {
-                            gc = unity.Store(TonNurako.X11.GC.Create(win));
-                            gc.SetForeground(TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "Green"));
-                        }
-
-                        dpy.Flush();
+                        //dpy.Flush();
                         break;
 
                     case TonNurako.X11.Event.XEventType.ClientMessage:
@@ -132,16 +128,7 @@ namespace XShape {
                             win.DestroyWindow();
                         }
                         break;
-                    /*
-                     case TonNurako.X11.Event.XEventType.ConfigureNotify:
-                        break;
-
-                     case TonNurako.X11.Event.XEventType.MappingNotify:
-                         break;
-                     case TonNurako.X11.Event.XEventType.UnmapNotify:
-                         break;
-                     case TonNurako.X11.Event.XEventType.ReparentNotify:
-                         break;*/
+                    
                     default:
                         break;
                 }
