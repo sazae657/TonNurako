@@ -21,11 +21,6 @@ namespace TonNurako.X11.Extension {
         ShapeInvert = TonNurako.X11.Constant.ShapeInvert,
     }
 
-    public struct ShapeExtVersion {
-        public int Major;
-        public int Minor;
-    }
-
     [Flags]
     public enum ShapeEventMask : ulong {
         None = 0,
@@ -49,7 +44,7 @@ namespace TonNurako.X11.Extension {
     }
 
 
-    public class Shape {
+    public class XShape {
         internal static class NativeMethods {
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XShapeQueryExtension_TNK", CharSet = CharSet.Auto)]
@@ -93,8 +88,8 @@ namespace TonNurako.X11.Extension {
             return NativeMethods.XShapeQueryExtension(display.Handle, out ev, out er);
         }
 
-        public static ShapeExtVersion QueryVersion(Display display) {
-            var n = new ShapeExtVersion();
+        public static ExtensionVersion QueryVersion(Display display) {
+            var n = new ExtensionVersion();
             NativeMethods.XShapeQueryVersion(display.Handle, out n.Major, out n.Minor);
             return n;
         }

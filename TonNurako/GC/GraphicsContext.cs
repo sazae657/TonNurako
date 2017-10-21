@@ -76,12 +76,12 @@ namespace TonNurako.GC
             // 単純なGCを生成
             // 属性は後でｾｯﾄさせる
             //
-            gc = new TonNurako.X11.GC(TonNurako.X11.X11Sports.XCreateGC(Display, Target), w.Display, w, false);
+            gc = new TonNurako.X11.GC(TonNurako.X11.Xi.XCreateGC(Display, Target), w.Display, w, false);
 
             DestroyGcFunc = () => {
                 //GC解放
                 if (gc != null) {
-                    TonNurako.X11.X11Sports.XFreeGC(Display, gc.Handle);
+                    TonNurako.X11.Xi.XFreeGC(Display, gc.Handle);
                     gc = null;
                     System.Diagnostics.Debug.WriteLine("GC : Dispose");
                 }
@@ -126,7 +126,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XClearWindow(Display, Target );
+				TonNurako.X11.Xi.XClearWindow(Display, Target );
 			}
 		}
 
@@ -134,21 +134,21 @@ namespace TonNurako.GC
             if (gc == null) {
                 return;
             }
-            TonNurako.X11.X11Sports.XSetForeground(Display, gc.Handle, color.pixel);
+            TonNurako.X11.Xi.XSetForeground(Display, gc.Handle, color.pixel);
         }
 
         public void SetForeground(TonNurako.GC.Color color) {
             if (gc == null) {
                 return;
             }
-            TonNurako.X11.X11Sports.XSetForeground(Display, gc.Handle, color.Pixel);
+            TonNurako.X11.Xi.XSetForeground(Display, gc.Handle, color.Pixel);
         }
 
         public void CopyArea(TonNurako.X11.IDrawable dest, int x, int y, int w, int h, int dx, int dy) {
             if (gc == null) {
                 return;
             }
-            TonNurako.X11.X11Sports.XCopyArea(Display,
+            TonNurako.X11.Xi.XCopyArea(Display,
                 Target, dest.Drawable,
                 this.gc.Handle,
                 x, y, (uint)w, (uint)h,
@@ -168,7 +168,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawPoint(Display, Target, gc.Handle, x, y );
+				TonNurako.X11.Xi.XDrawPoint(Display, Target, gc.Handle, x, y );
 			}
 		}
 		/// <summary>
@@ -180,7 +180,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawPoints(Display, Target, gc.Handle, points, points.Length, (int)mode );
+				TonNurako.X11.Xi.XDrawPoints(Display, Target, gc.Handle, points, points.Length, (int)mode );
 			}
 
 		}
@@ -196,7 +196,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawLine( Display, Target, gc.Handle, ax, ay, fx, fy );
+				TonNurako.X11.Xi.XDrawLine( Display, Target, gc.Handle, ax, ay, fx, fy );
 			}
 		}
 
@@ -209,7 +209,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawLines( Display, Target, gc.Handle, points, points.Length, (int)mode );
+				TonNurako.X11.Xi.XDrawLines( Display, Target, gc.Handle, points, points.Length, (int)mode );
 			}
 
 		}
@@ -225,7 +225,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawRectangle( Display, Target, gc.Handle, x, y, (uint)w, (uint)h );
+				TonNurako.X11.Xi.XDrawRectangle( Display, Target, gc.Handle, x, y, (uint)w, (uint)h );
 			}
 		}
 
@@ -237,7 +237,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawRectangles( Display, Target, gc.Handle, rects, rects.Length );
+				TonNurako.X11.Xi.XDrawRectangles( Display, Target, gc.Handle, rects, rects.Length );
 			}
 
 		}
@@ -253,7 +253,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XFillRectangle( Display, Target, gc.Handle, x, y, (uint)w, (uint)h );
+				TonNurako.X11.Xi.XFillRectangle( Display, Target, gc.Handle, x, y, (uint)w, (uint)h );
 			}
 		}
 
@@ -265,7 +265,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XFillRectangles( Display, Target, gc.Handle, rects, rects.Length );
+				TonNurako.X11.Xi.XFillRectangles( Display, Target, gc.Handle, rects, rects.Length );
 			}
 
 		}
@@ -283,7 +283,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawArc( Display, Target, gc.Handle,
+				TonNurako.X11.Xi.XDrawArc( Display, Target, gc.Handle,
 					x, y, (uint)w, (uint)h, startAngle, sweepAngle );
 			}
 		}
@@ -296,7 +296,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XDrawArcs( Display, Target, gc.Handle,
+				TonNurako.X11.Xi.XDrawArcs( Display, Target, gc.Handle,
 					arcs, arcs.Length );
 			}
 		}
@@ -314,7 +314,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XFillArc( Display, Target, gc.Handle,
+				TonNurako.X11.Xi.XFillArc( Display, Target, gc.Handle,
 					x, y, (uint)w, (uint)h, startAngle, sweepAngle );
 			}
 		}
@@ -327,7 +327,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XFillArcs( Display, Target, gc.Handle,
+				TonNurako.X11.Xi.XFillArcs( Display, Target, gc.Handle,
 					arcs, arcs.Length );
 			}
 		}
@@ -348,7 +348,7 @@ namespace TonNurako.GC
 		{
 			if( gc != null)
 			{
-				TonNurako.X11.X11Sports.XSetLineAttributes( Display, gc.Handle,
+				TonNurako.X11.Xi.XSetLineAttributes( Display, gc.Handle,
 					w, (int)line, (int)cap, (int)join );
 			}
 		}

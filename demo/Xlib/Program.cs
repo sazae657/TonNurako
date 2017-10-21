@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.Inutility;
 
 namespace Xlib {
     class Program {
@@ -38,32 +39,32 @@ namespace Xlib {
         static void Main(string[] args) {
             TonNurako.Application.RegisterGlobals();
 
-            var loc = TonNurako.X11.X11Sports.SetLocale(TonNurako.X11.XLocale.LC_ALL, "");
+            var loc = TonNurako.X11.Xi.SetLocale(TonNurako.X11.XLocale.LC_ALL, "");
             if (null == loc) {
                 Console.WriteLine("Cannot set the locale.\n");
                 return;
             }
             Console.WriteLine($"SetLocale=>{loc}");
-            TonNurako.X11.X11Sports.PrintWCS_TNK("PrintWCS_TNK");
+            TonNurako.X11.Xi.PrintWCS_TNK("PrintWCS_TNK");
 
-            if (!TonNurako.X11.X11Sports.SupportsLocale()) {
+            if (!TonNurako.X11.Xi.SupportsLocale()) {
                 Console.WriteLine("Current locale is not supported");
                 return;
             }
 
-            loc = TonNurako.X11.X11Sports.SetLocaleModifiers("");
+            loc = TonNurako.X11.Xi.SetLocaleModifiers("");
             if (null == loc) {
                 Console.WriteLine("XSetLocaleModifiers failed");
                 return;
             }
             Console.WriteLine($"SetLocale=>{loc}");
 
-            TonNurako.X11.X11Sports.SetIOErrorHandler((d) => {
+            TonNurako.X11.Xi.SetIOErrorHandler((d) => {
                 Console.WriteLine("IOE");
                 DumpProperty(d);
                 return -1;
             });
-            TonNurako.X11.X11Sports.SetIOErrorHandler(null);
+            TonNurako.X11.Xi.SetIOErrorHandler(null);
 
             var dpy = TonNurako.X11.Display.Open(null);
             if (dpy.Handle == IntPtr.Zero) {
@@ -74,7 +75,7 @@ namespace Xlib {
             DumpProperty(dpy.DefaultScreenOfDisplay);
             DumpProperty(dpy);
 
-            TonNurako.X11.X11Sports.SetErrorHandler((d, e) => {
+            TonNurako.X11.Xi.SetErrorHandler((d, e) => {
                 Console.WriteLine("*** E ***");
                 DumpProperty(d);
                 DumpProperty(e);
@@ -140,38 +141,15 @@ namespace Xlib {
             //win.SetWMProperties("なまえ", "ダイコン", args);
             win.StoreName("UNPO");
 
-            var loader = new TonNurako.XImageFormat.XbmLoader();
-            TonNurako.XImageFormat.Xbm xbm = null;
-            using (var ms = new System.IO.MemoryStream(Properties.Resources.logo)) {
-                xbm = loader.Load(String.Empty, ms);
-            }
 
-            var bitmap = TonNurako.X11.Pixmap.FromBitmapData(win, xbm.Width, xbm.Height, xbm.RawPixels);
-            DumpProperty(bitmap);
-
-            Console.WriteLine($"InputSelected(1): {TonNurako.X11.Extension.Shape.InputSelected(dpy, win)}");
+            Console.WriteLine($"InputSelected(1): {TonNurako.X11.Extension.XShape.InputSelected(dpy, win)}");
 
             //TonNurako.X11.Extension.Shape.CombineMask(dpy, win,
             //    TonNurako.X11.Extension.ShapeKind.ShapeClip, 0, 0, bitmap, TonNurako.X11.Extension.ShapeOp.ShapeSet);
 
-            TonNurako.X11.Extension.Shape.SelectInput(dpy, win, TonNurako.X11.Extension.ShapeEventMask.ShapeNotifyMask);
-            Console.WriteLine($"InputSelected(2): {TonNurako.X11.Extension.Shape.InputSelected(dpy, win)}");
-            TonNurako.X11.Region region = null;
-            {
-                var pl = new List<TonNurako.X11.XPoint> {
-                    new TonNurako.X11.XPoint(10, 10),
-                    new TonNurako.X11.XPoint(300, 100),
-                    new TonNurako.X11.XPoint(525, 500),
-                    new TonNurako.X11.XPoint(50, 225),
-                    new TonNurako.X11.XPoint(575, 225),
-                    new TonNurako.X11.XPoint(75, 500),
-                };
-                region = TonNurako.X11.Region.PolygonRegion(pl.ToArray(), TonNurako.X11.FillRule.WindingRule);
-                DumpProperty(region);
-                TonNurako.X11.Extension.Shape.CombineRegion(dpy, win,
-                    TonNurako.X11.Extension.ShapeKind.ShapeClip, 0, 0, region, TonNurako.X11.Extension.ShapeOp.ShapeSet);
-               // rgn.Dispose();
-            }
+            TonNurako.X11.Extension.XShape.SelectInput(dpy, win, TonNurako.X11.Extension.ShapeEventMask.ShapeNotifyMask);
+            Console.WriteLine($"InputSelected(2): {TonNurako.X11.Extension.XShape.InputSelected(dpy, win)}");
+
 
             win.MapWindow();
             dpy.Flush();
@@ -233,7 +211,6 @@ namespace Xlib {
                             gc.Dispose();
                         }
                         fs.Dispose();
-                        region.Dispose();
                         dpy.SetCloseDownMode(TonNurako.X11.CloseDownMode.DestroyAll);
                         dpy.Close();
                         return;

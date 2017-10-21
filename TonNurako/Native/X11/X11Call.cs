@@ -23,8 +23,8 @@ namespace TonNurako.X11
     /// <summary>
     /// Xlibﾛーﾀﾞー
     /// </summary>
-    public class X11Sports : Native.ExtremeSportsLoader {
-        private static X11Sports Instance {
+    public class Xi : Native.ExtremeSportsLoader {
+        private static Xi Instance {
             get;
             set;
         }
@@ -36,7 +36,7 @@ namespace TonNurako.X11
             if (null != Instance) {
                 return;
             }
-            Instance = new X11Sports(libXtName);
+            Instance = new Xi(libXtName);
         }
 
         public static void Unregister() {
@@ -48,7 +48,7 @@ namespace TonNurako.X11
             Instance = null;
         }
 
-        private X11Sports(string lib) : base(lib) {
+        private Xi(string lib) : base(lib) {
 
         }
 
@@ -92,7 +92,11 @@ namespace TonNurako.X11
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeStringList_TNK", CharSet = CharSet.Auto)]
             internal static extern void XFreeStringList([In]IntPtr list);
 
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDoubleToFixed_TNK", CharSet = CharSet.Auto)]
+            public static extern int XDoubleToFixed(double f);
 
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XFixedToDouble_TNK", CharSet = CharSet.Auto)]
+            public static extern double XFixedToDouble(int f);
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "RootWindowOfScreen_TNK", CharSet = CharSet.Auto)]
@@ -280,6 +284,11 @@ namespace TonNurako.X11
 
 
         public static void FreeStringList(IntPtr list) => NativeMethods.XFreeStringList(list);
+
+        
+        // TODO: 置き場に困る
+        public static int DoubleToFixed(double f) => NativeMethods.XDoubleToFixed(f);
+        public static double FixedToDouble(int f) => NativeMethods.XFixedToDouble(f);
 
 
 

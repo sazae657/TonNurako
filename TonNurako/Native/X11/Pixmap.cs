@@ -68,10 +68,10 @@ namespace TonNurako.X11 {
             IntPtr window = w.Handle.Window.Handle;
             System.Diagnostics.Debug.WriteLine($"Pixmap window={window}<0x{w.Handle.Widget.Handle:x}> width={width} height={height} depth={depth}");
             drawable =
-                X11Sports.XCreatePixmap(display, window, (uint)width, (uint)height, (uint)depth);
+                Xi.XCreatePixmap(display, window, (uint)width, (uint)height, (uint)depth);
             System.Diagnostics.Debug.WriteLine($"Pixmap {drawable}");
             DestroyPixmapFunc = () => {
-                X11Sports.XFreePixmap(display, drawable);
+                Xi.XFreePixmap(display, drawable);
             };
         }
 
@@ -88,12 +88,12 @@ namespace TonNurako.X11 {
             System.Diagnostics.Debug.WriteLine($"Pixmap(N) window=<0x{window.Handle:x}> display=<0x{display.Handle:x}> width={width} height={height} depth={depth}");
 
             drawable =
-                X11Sports.XCreatePixmap(Display, window.Handle, (uint)width, (uint)height, (uint)depth);
+                Xi.XCreatePixmap(Display, window.Handle, (uint)width, (uint)height, (uint)depth);
             System.Diagnostics.Debug.WriteLine($"Pixmap(N) <{drawable}>");
 
             DestroyPixmapFunc = () => {
                 System.Diagnostics.Debug.WriteLine($"Pixmap(N) Dispose <{drawable}>");
-                X11Sports.XFreePixmap(Display, drawable);
+                Xi.XFreePixmap(Display, drawable);
             };
         }
 
@@ -108,12 +108,12 @@ namespace TonNurako.X11 {
             this.display = drm.Display;
 
             drawable =
-                X11Sports.XCreatePixmap(Display, drm.Drawable, (uint)width, (uint)height, (uint)depth);
+                Xi.XCreatePixmap(drm.Display, drm.Drawable, (uint)width, (uint)height, (uint)depth);
             System.Diagnostics.Debug.WriteLine($"Pixmap(N) <{drawable}>");
 
             DestroyPixmapFunc = () => {
                 System.Diagnostics.Debug.WriteLine($"Pixmap(N) Dispose <{drawable}>");
-                X11Sports.XFreePixmap(Display, drawable);
+                Xi.XFreePixmap(Display, drawable);
             };
         }
 
@@ -138,7 +138,7 @@ namespace TonNurako.X11 {
             pm.drawable = NativeMethods.XCreatePixmapFromBitmapData(drawable.Display.Handle, drawable.Drawable, pixel, (uint)width, (uint)height, fg.Pixel, bg.Pixel, (uint)depth);
             pm.display = drawable.Display;
             pm.DestroyPixmapFunc = () => {
-                X11Sports.XFreePixmap(drawable.Display, pm.drawable);
+                Xi.XFreePixmap(drawable.Display, pm.drawable);
             };
             return pm;
         }
@@ -148,7 +148,7 @@ namespace TonNurako.X11 {
             pm.drawable = NativeMethods.XCreateBitmapFromData(drawable.Display.Handle, drawable.Drawable, pixel, (uint)width, (uint)height);
             pm.display = drawable.Display;
             pm.DestroyPixmapFunc = () => {
-                X11Sports.XFreePixmap(drawable.Display, pm.drawable);
+                Xi.XFreePixmap(drawable.Display, pm.drawable);
             };
             return pm;
         }

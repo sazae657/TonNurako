@@ -19,6 +19,7 @@ namespace TonNurako.X11 {
         T Handle { get; }
     }
 
+
     /// <summary>
     /// IntPtrを返すﾃﾞﾘｹﾞーﾃｨー
     /// </summary>

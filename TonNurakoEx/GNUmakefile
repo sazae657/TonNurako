@@ -87,6 +87,7 @@ OBJ=DlSym.o	\
     TonNurako.o \
 	XmCreateFuncs.o \
 	X11ExtShapeImp.o \
+	X11ExtRenderImp.o \
 	X11ImpGC.o \
 
 TARGET = $(BINDIR)libTonNurako.extremesports
@@ -100,6 +101,7 @@ ExtremeSports: check $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(LINKER) $(LINK_FLAGS) -o $(TARGET) $(OBJ) $(LINK_LIBS)
+	echo "-- $(TARGET) OK --"
 
 $(OBJ): $(BINDIR)
 

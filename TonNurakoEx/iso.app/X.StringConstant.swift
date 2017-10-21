@@ -6,6 +6,15 @@
 .using TonNurako.Native
 .include <X11/X.h>
 .include <X11/Xlib.h>
+.include <X11/extensions/Xrender.h>
+
+//Render
+FilterNearest
+FilterBilinear
+FilterConvolution
+FilterFast
+FilterGood
+FilterBest
 
 XNRequiredCharSet
 XNQueryOrientation

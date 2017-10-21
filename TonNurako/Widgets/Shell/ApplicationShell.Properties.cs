@@ -29,8 +29,7 @@ namespace TonNurako.Widgets.Xm {
         internal void SetCompoundStr(
             TonNurako.Motif.ResourceId idStr, TonNurako.Motif.ResourceId idEnc, string text) {
 
-            var ct = new Data.TextProperty();
-            ct.Create(this, text);
+            var ct = X11.XTextProperty.Create(this, text);
             ToolkitResources.RetainCustomObject(ct);
             ToolkitResources.Begin();
             ToolkitResources.Add(idEnc, ct.Encoding);

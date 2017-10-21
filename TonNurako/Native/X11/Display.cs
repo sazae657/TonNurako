@@ -65,7 +65,7 @@ namespace TonNurako.X11 {
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XNextEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XNextEvent(IntPtr display, [In,Out] IntPtr event_return);
+            internal static extern int XNextEvent(IntPtr display, [In, Out] IntPtr event_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XPeekEvent_TNK", CharSet = CharSet.Auto)]
             internal static extern int XPeekEvent(IntPtr display, [In, Out] IntPtr event_return);
@@ -75,6 +75,11 @@ namespace TonNurako.X11 {
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateSimpleWindow_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, uint width, uint height, uint border_width, ulong border, ulong background);
+
+            // Window: XCreateWindow Display*:display Window:parent int:x int:y unsigned int:width unsigned int:height unsigned int:border_width int:depth unsigned int:class Visual*:visual unsigned long:valuemask XSetWindowAttributes*:attributes
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateWindow_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XCreateWindow(IntPtr display, 
+                IntPtr parent, int x, int y, uint width, uint height, uint border_width, int depth, WindowClass qlass, [In]IntPtr visual, ChangeWindowAttributes valuemask, ref XSetWindowAttributesRec attributes);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "DefaultColormap_TNK", CharSet = CharSet.Auto)]
             internal static extern int DefaultColormap(IntPtr display, int screen_num);
@@ -199,7 +204,7 @@ namespace TonNurako.X11 {
             internal static extern int XUngrabServer(IntPtr display);
 
 
-   // int: XGetErrorText [{'type': 'Display*', 'name': 'display'}, {'type': 'int', 'name': 'code'}, {'type': 'char*', 'name': 'buffer_return'}, {'type': 'int', 'name': 'length'}]
+            // int: XGetErrorText [{'type': 'Display*', 'name': 'display'}, {'type': 'int', 'name': 'code'}, {'type': 'char*', 'name': 'buffer_return'}, {'type': 'int', 'name': 'length'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetErrorText_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XGetErrorText(IntPtr display, int code, [MarshalAs(UnmanagedType.LPStr)] string buffer_return, int length);
 
@@ -207,8 +212,15 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetErrorDatabaseText_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XGetErrorDatabaseText(IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string message, [MarshalAs(UnmanagedType.LPStr)] string default_string, [MarshalAs(UnmanagedType.LPStr)] string buffer_return, int length);
 
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetAfterFunction_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSetAfterFunction(IntPtr display, [MarshalAs(UnmanagedType.FunctionPtr)] XSetAfterFunctionDelegaty proc);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSynchronize_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XSynchronize(IntPtr display, bool onoff);
 
         }
+        public delegate int XSetAfterFunctionDelegaty();
+        public delegate int XSynchronizeDelegaty(IntPtr ptr);
 
         public static Display Open(string display) {
             var dp = (null != display) ? NativeMethods.XOpenDisplay(display) : NativeMethods.XOpenDisplayP(IntPtr.Zero);
@@ -266,6 +278,16 @@ namespace TonNurako.X11 {
 
         public int Sync(bool discard) {
             return NativeMethods.XSync(display, discard);
+        }
+
+        // TODO: 元に戻す処理(スタック詰む？)
+        public void SetAfterFunction(XSetAfterFunctionDelegaty proc) {
+            NativeMethods.XSetAfterFunction(Handle, proc);
+        }
+
+        // TODO: 元に戻す処理
+        public void Synchronize(bool onoff) {
+            NativeMethods.XSynchronize(Handle, onoff);
         }
 
         public int Pending() {
@@ -386,6 +408,25 @@ namespace TonNurako.X11 {
                 backgroundColor.Pixel);
             return (new Window(w, this));
         }
+
+        public Window CreateWindow(
+            Window parent, int x, int y, int width, int height, int border_width, int depth, WindowClass windowClass, Visual visual, ChangeWindowAttributes valuemask, XSetWindowAttributes attributes) {
+            var w = NativeMethods.XCreateWindow(
+                Handle,
+                (null != parent) ? parent.Handle : IntPtr.Zero, 
+                x, 
+                y, 
+                (uint)width, 
+                (uint)height, 
+                (uint)border_width, 
+                depth,
+                windowClass, 
+                visual.Handle, 
+                valuemask, 
+                ref attributes.record);
+            return (new Window(w, this));
+        }
+
 
     }
 }

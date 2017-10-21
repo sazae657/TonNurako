@@ -22,7 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <WarningsAsErrors>0114</WarningsAsErrors>
-    <LangVersion>6</LangVersion>
+    <LangVersion>default</LangVersion>
     <!-- DocumentationFile>bin\Debug\TonNurako.XML</DocumentationFile -->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>6</LangVersion>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -64,6 +64,7 @@
     <Compile Include="TonNurako\GC\PixmapFactory.cs" />
     <Compile Include="TonNurako\GC\XImage.cs" />
     <Compile Include="TonNurako\Misc\Inutility.cs" />
+    <Compile Include="TonNurako\Misc\MarshalHelper.cs" />
     <Compile Include="TonNurako\Misc\Unity.cs" />
     <Compile Include="TonNurako\Native\Attribute.cs" />
     <Compile Include="TonNurako\Native\CallbackQueue.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="TonNurako\Native\X11\Display.cs" />
     <Compile Include="TonNurako\Native\X11\Error.cs" />
     <Compile Include="TonNurako\Native\X11\Event.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\ExtCommon.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Render.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\RenderStruct.cs" />
     <Compile Include="TonNurako\Native\X11\Extension\Shape.cs" />
     <Compile Include="TonNurako\Native\X11\Font.cs" />
     <Compile Include="TonNurako\Native\X11\GC.cs" />
@@ -235,7 +239,7 @@
   <PropertyGroup>
     <PreBuildEvent Condition="'$(OS)' == 'Unix'">
                  cd $(ProjectDir)/TonNurakoEx
-                 make BUILD=$(ConfigurationName) BINDIR=../$(OutputPath) PLATFORM=`uname -s` clean.lib check all
+                 make BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` clean.lib check all
                </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -17,22 +17,22 @@ namespace XShape {
             }
             
 
-            var loc = TonNurako.X11.X11Sports.SetLocale(TonNurako.X11.XLocale.LC_ALL, "");
+            var loc = TonNurako.X11.Xi.SetLocale(TonNurako.X11.XLocale.LC_ALL, "");
             if (null == loc) {
                 Console.WriteLine("Cannot set the locale.\n");
                 return;
             }
 
-            if (!TonNurako.X11.X11Sports.SupportsLocale()) {
+            if (!TonNurako.X11.Xi.SupportsLocale()) {
                 Console.WriteLine("Current locale is not supported");
                 return;
             }
 
-            TonNurako.X11.X11Sports.SetIOErrorHandler((d) => {
+            TonNurako.X11.Xi.SetIOErrorHandler((d) => {
                 Console.WriteLine("IOE");
                 return -1;
             });
-            TonNurako.X11.X11Sports.SetErrorHandler((d, e) => {
+            TonNurako.X11.Xi.SetErrorHandler((d, e) => {
                 Console.WriteLine("*** E ***");
                 TonNurako.Inutility.Dumper.DumpStruct(e, (s) => {
                     Console.WriteLine($"XERR: {s}");
@@ -84,7 +84,7 @@ namespace XShape {
             var o = TonNurako.XImageFormat.Xi.おやさい.XBM配列に変換(maskImage.Width, maskImage.Height, TonNurako.XImageFormat.Xi.ぉ.画素.A, false, oim);
             var bitmap = unity.Store(TonNurako.X11.Pixmap.FromBitmapData(win, maskImage.Width, maskImage.Height, o));
             
-            TonNurako.X11.Extension.Shape.CombineMask(dpy, win,
+            TonNurako.X11.Extension.XShape.CombineMask(dpy, win,
                 TonNurako.X11.Extension.ShapeKind.ShapeBounding, 0, 0, bitmap, TonNurako.X11.Extension.ShapeOp.ShapeSet);
 
             // 背景設定

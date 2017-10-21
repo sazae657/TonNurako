@@ -85,20 +85,27 @@ namespace TonNurako.X11
 		/// <summary>
 		/// 左上角のX座標
 		/// </summary>
-		public short x;
+		public short X;
 		/// <summary>
 		/// 左上角のY座標
 		/// </summary>
-		public short y;
+		public short Y;
 		/// <summary>
 		/// 幅
 		/// </summary>
-		public ushort w;
+		public ushort W;
 		/// <summary>
 		/// 高さ
 		/// </summary>
-		public ushort h;
-	}
+		public ushort H;
+
+        public XRectangle(short x, short y, ushort w, ushort h) {
+            this.X = x;
+            this.Y = y;
+            this.W = w;
+            this.H = h;
+        }
+    }
 
 	/// <summary>
 	/// 円弧の定義(XArcに対応)
@@ -285,10 +292,10 @@ namespace TonNurako.X11
         }
 
         public static GC Create(IDrawable d) =>
-            (new GC(X11Sports.XCreateGC(d.Display, d.Drawable), d.Display, d, true));
+            (new GC(Xi.XCreateGC(d.Display, d.Drawable), d.Display, d, true));
 
         public static GC Create(IDrawable d, GCMask mask, XGCValues values) =>
-            (new GC(X11Sports.XCreateGC(d.Display, d.Drawable, mask, values), d.Display, d, true));
+            (new GC(Xi.XCreateGC(d.Display, d.Drawable, mask, values), d.Display, d, true));
 
         public GC(IntPtr gc, Display display, IDrawable drawable, bool boo) {
             this.display = display;
@@ -299,7 +306,7 @@ namespace TonNurako.X11
 
         public XGCValues GetGCValues(GCMask mask) {
             var v = new XGCValues();
-            X11Sports.XGetGCValues(display, handle, mask, v);
+            Xi.XGetGCValues(display, handle, mask, v);
             return v;
         }
         public void DrawStringMultiByte(FontSet fontSet, int x, int y, string str) {
@@ -332,7 +339,7 @@ namespace TonNurako.X11
         /// </summary>
         public void Clear() {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XClearWindow(Display, Drawable.Drawable);
+                TonNurako.X11.Xi.XClearWindow(Display, Drawable.Drawable);
             }
         }
 
@@ -340,21 +347,21 @@ namespace TonNurako.X11
             if (Handle == IntPtr.Zero) {
                 return;
             }
-            TonNurako.X11.X11Sports.XSetForeground(Display, Handle, color.Pixel);
+            TonNurako.X11.Xi.XSetForeground(Display, Handle, color.Pixel);
         }
 
         public void SetForeground(TonNurako.GC.Color color) {
             if (Handle == IntPtr.Zero) {
                 return;
             }
-            TonNurako.X11.X11Sports.XSetForeground(Display, Handle, color.Pixel);
+            TonNurako.X11.Xi.XSetForeground(Display, Handle, color.Pixel);
         }
 
         public void CopyArea(IDrawable dest, int x, int y, int w, int h, int dx, int dy) {
             if (Handle == IntPtr.Zero) {
                 return;
             }
-            TonNurako.X11.X11Sports.XCopyArea(Display,
+            TonNurako.X11.Xi.XCopyArea(Display,
                 Drawable.Drawable, dest.Drawable,
                 this.Handle,
                 x, y, (uint)w, (uint)h,
@@ -374,7 +381,7 @@ namespace TonNurako.X11
         /// <param name="y">Y座標</param>
         public void DrawPoint(int x, int y) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawPoint(Display, drawable.Drawable, Handle, x, y);
+                TonNurako.X11.Xi.XDrawPoint(Display, drawable.Drawable, Handle, x, y);
             }
         }
         /// <summary>
@@ -384,7 +391,7 @@ namespace TonNurako.X11
         /// <param name="mode">点の座標指定ﾓーﾄﾞ</param>
         public void DrawPoints(TonNurako.X11.XPoint[] points, TonNurako.X11.CoordMode mode) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawPoints(Display, drawable.Drawable, Handle, points, points.Length, (int)mode);
+                TonNurako.X11.Xi.XDrawPoints(Display, drawable.Drawable, Handle, points, points.Length, (int)mode);
             }
 
         }
@@ -398,7 +405,7 @@ namespace TonNurako.X11
         /// <param name="fy">終点Y座標</param>
         public void DrawLine(int ax, int ay, int fx, int fy) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawLine(Display, drawable.Drawable, Handle, ax, ay, fx, fy);
+                TonNurako.X11.Xi.XDrawLine(Display, drawable.Drawable, Handle, ax, ay, fx, fy);
             }
         }
 
@@ -409,7 +416,7 @@ namespace TonNurako.X11
         /// <param name="mode">折れ線の座標指定ﾓーﾄﾞ</param>
         public void DrawLines(TonNurako.X11.XPoint[] points, TonNurako.X11.CoordMode mode) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawLines(Display, drawable.Drawable, Handle, points, points.Length, (int)mode);
+                TonNurako.X11.Xi.XDrawLines(Display, drawable.Drawable, Handle, points, points.Length, (int)mode);
             }
 
         }
@@ -423,7 +430,7 @@ namespace TonNurako.X11
         /// <param name="h">高さ</param>
         public void DrawRectangle(int x, int y, int w, int h) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawRectangle(Display, drawable.Drawable, Handle, x, y, (uint)w, (uint)h);
+                TonNurako.X11.Xi.XDrawRectangle(Display, drawable.Drawable, Handle, x, y, (uint)w, (uint)h);
             }
         }
 
@@ -433,7 +440,7 @@ namespace TonNurako.X11
         /// <param name="rects">矩形の定義</param>
         public void DrawRectangle(TonNurako.X11.XRectangle[] rects) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawRectangles(Display, drawable.Drawable, Handle, rects, rects.Length);
+                TonNurako.X11.Xi.XDrawRectangles(Display, drawable.Drawable, Handle, rects, rects.Length);
             }
 
         }
@@ -447,7 +454,7 @@ namespace TonNurako.X11
         /// <param name="h">高さ</param>
         public void FillRectangle(int x, int y, int w, int h) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XFillRectangle(Display, drawable.Drawable, Handle, x, y, (uint)w, (uint)h);
+                TonNurako.X11.Xi.XFillRectangle(Display, drawable.Drawable, Handle, x, y, (uint)w, (uint)h);
             }
         }
 
@@ -457,7 +464,7 @@ namespace TonNurako.X11
         /// <param name="rects">矩形の定義</param>
         public void FillRectangles(TonNurako.X11.XRectangle[] rects) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XFillRectangles(Display, drawable.Drawable, Handle, rects, rects.Length);
+                TonNurako.X11.Xi.XFillRectangles(Display, drawable.Drawable, Handle, rects, rects.Length);
             }
 
         }
@@ -473,7 +480,7 @@ namespace TonNurako.X11
         /// <param name="sweepAngle">角度(度数*64)</param>
         public void DrawArc(int x, int y, int w, int h, int startAngle, int sweepAngle) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawArc(Display, drawable.Drawable, Handle,
+                TonNurako.X11.Xi.XDrawArc(Display, drawable.Drawable, Handle,
                     x, y, (uint)w, (uint)h, startAngle, sweepAngle);
             }
         }
@@ -484,7 +491,7 @@ namespace TonNurako.X11
         /// <param name="arcs">円弧の定義</param>
         public void DrawArcs(TonNurako.X11.XArc[] arcs) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XDrawArcs(Display, drawable.Drawable, Handle,
+                TonNurako.X11.Xi.XDrawArcs(Display, drawable.Drawable, Handle,
                     arcs, arcs.Length);
             }
         }
@@ -500,7 +507,7 @@ namespace TonNurako.X11
         /// <param name="sweepAngle">角度(度数*64)</param>
         public void FillArc(int x, int y, int w, int h, int startAngle, int sweepAngle) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XFillArc(Display, drawable.Drawable, Handle,
+                TonNurako.X11.Xi.XFillArc(Display, drawable.Drawable, Handle,
                     x, y, (uint)w, (uint)h, startAngle, sweepAngle);
             }
         }
@@ -511,7 +518,7 @@ namespace TonNurako.X11
         /// <param name="arcs">円弧の定義</param>
         public void FillArcs(TonNurako.X11.XArc[] arcs) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XFillArcs(Display, drawable.Drawable, Handle,
+                TonNurako.X11.Xi.XFillArcs(Display, drawable.Drawable, Handle,
                     arcs, arcs.Length);
             }
         }
@@ -530,7 +537,7 @@ namespace TonNurako.X11
                 TonNurako.X11.CapStyle cap,
                 TonNurako.X11.JoinStyle join) {
             if (Handle != IntPtr.Zero) {
-                TonNurako.X11.X11Sports.XSetLineAttributes(Display, Handle,
+                TonNurako.X11.Xi.XSetLineAttributes(Display, Handle,
                     w, (int)line, (int)cap, (int)join);
             }
         }
@@ -543,7 +550,7 @@ namespace TonNurako.X11
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (handle != IntPtr.Zero && autoDispose == true) {
-                    X11Sports.XFreeGC(display, handle);
+                    Xi.XFreeGC(display, handle);
                     handle = IntPtr.Zero;
                 }
                 disposedValue = true;

@@ -58,6 +58,12 @@ namespace TonNurako.X11
         GrabModeAsync = TonNurako.X11.Constant.GrabModeAsync,
     }
 
+    public enum WindowClass : int {
+        InputOutput = TonNurako.X11.Constant.InputOutput,
+        InputOnly = TonNurako.X11.Constant.InputOnly,
+        CopyFromParent = TonNurako.X11.Constant.CopyFromParent
+    }
+
 
     /// <summary>
     /// ChangeWindowAttributes

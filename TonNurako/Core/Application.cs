@@ -70,7 +70,7 @@ namespace TonNurako {
         public static void RegisterGlobals() {
             TonNurako.Xt.XtSports.Register("Xt");
             TonNurako.Motif.XmSports.Register("Xm");
-            TonNurako.X11.X11Sports.Register("X11");
+            TonNurako.X11.Xi.Register("X11");
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace TonNurako {
         public static void UnregisterGlobals() {
             TonNurako.Motif.XmSports.Unregister();
             TonNurako.Xt.XtSports.Unregister();
-            TonNurako.X11.X11Sports.Unregister();
+            TonNurako.X11.Xi.Unregister();
         }
 
         /// <summary>

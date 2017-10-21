@@ -20,12 +20,12 @@ namespace TonNurako.X11 {
     [StructLayout(LayoutKind.Sequential)]
     internal struct XTextPropertyRec {
         public IntPtr value;
-        public IntPtr encoding; // ATOM
+        public ulong encoding; // ATOM
         public int format;
         public ulong nitems;
     }
 
-    public class XTextProperty {
+    public class XTextProperty : IX11Interop, IDisposable {
         internal static class NativeMethods {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XwcTextListToTextProperty_TNK", CharSet = CharSet.Auto)]
             internal static extern int XwcTextListToTextProperty(
@@ -43,9 +43,21 @@ namespace TonNurako.X11 {
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeStringList_TNK", CharSet = CharSet.Auto)]
             internal static extern void XFreeStringList([In] IntPtr list);
+
+           [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_CreateCompoundTextProperty", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true)]
+            internal static extern int TNK_CreateCompoundTextProperty(
+                        [In,Out]ref XTextPropertyRec tprop,
+                        IntPtr display,
+                        [MarshalAs(UnmanagedType.LPStr)]string text
+                        );
+
+            [DllImport(Native.ExtremeSports.Lib, EntryPoint="TNK_FreeCompoundTextProperty", CharSet=CharSet.Auto)]
+            internal static extern void TNK_FreeCompoundTextProperty([In,Out]ref XTextPropertyRec tprop);
+
         }
 
         internal XTextPropertyRec record;
+
         public XTextProperty() {
             record = new XTextPropertyRec();
         }
@@ -65,13 +77,45 @@ namespace TonNurako.X11 {
             return ret;
         }
 
+        public IntPtr Handle {
+            get {return record.value;}
+        }
+
+        public ulong Encoding {
+            get {return record.encoding;}
+        }
+        public int Format {
+            get {return record.format;}
+        }
+
+        public ulong Items {
+            get {return record.nitems;}
+        }
+
+
+        /*public int Create(Display dpy, string text) {
+            var result = NativeMethods.TNK_CreateCompoundTextProperty(ref textProperty, dpy.Handle, text);
+            return result;
+        }*/
+
+        public static XTextProperty Create(Display dpy, string text) {
+            var k = new XTextProperty();
+            NativeMethods.TNK_CreateCompoundTextProperty(ref k.record, dpy.Handle, text);
+            return k;
+        }
+
+        public static XTextProperty Create(TonNurako.Widgets.IWidget widget, string text) {
+            return Create(widget.Handle.Display, text);
+        }
+
         public static XTextProperty TextListToTextProperty(Display dpy, string [] list, XICCEncodingStyle style) {
             var r = new XTextProperty();
 
             var arr = new IntPtr[list.Length+1];
             for (int i = 0; i < list.Length; ++i) {
-                byte[] b = 
-                    Encoding.Convert(Encoding.Default, Encoding.UTF32, Encoding.Default.GetBytes(list[i]));
+                byte[] b =
+                    System.Text.Encoding.Convert(
+                        System.Text.Encoding.Default, System.Text.Encoding.UTF32, System.Text.Encoding.Default.GetBytes(list[i]));
 
                 arr[i] = Marshal.AllocCoTaskMem(b.Length+1);
                 Marshal.Copy(b, 0, arr[i], b.Length);
@@ -91,6 +135,36 @@ namespace TonNurako.X11 {
 
             return r;
         }
+
+       #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposedValue) {
+                return;
+            }
+            if(IntPtr.Zero != record.value) {
+                NativeMethods.TNK_FreeCompoundTextProperty(ref record);
+                record.value = IntPtr.Zero;
+            }
+
+            System.Diagnostics.Debug.WriteLine("Dispose:" + this.ToString());
+
+            disposedValue = true;
+        }
+
+
+        public void Dispose()
+        {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+
+        ~XTextProperty() {
+            Dispose(false);
+        }
+        #endregion
 
     }
 }

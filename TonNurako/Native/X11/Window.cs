@@ -333,9 +333,14 @@ namespace TonNurako.X11 {
                 return null;
             }
             var r = Marshal.PtrToStringAnsi(str);
-            X11Sports.Free(str);
+            Xi.Free(str);
             return r;
         }
+
+        public int ClearWindow() {
+            return TonNurako.X11.Xi.XClearWindow(Display, Handle);
+        }
+
 
         public string FetchName() {
             IntPtr rw = IntPtr.Zero;
@@ -522,7 +527,7 @@ namespace TonNurako.X11 {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (handle != IntPtr.Zero) {
-                    X11Sports.Free(handle);
+                    Xi.Free(handle);
                     handle = IntPtr.Zero;
                 }
                 disposedValue = true;
@@ -582,16 +587,16 @@ namespace TonNurako.X11 {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (allocRoot != IntPtr.Zero) {
-                    X11Sports.Free(allocRoot);
+                    Xi.Free(allocRoot);
                     allocRoot = IntPtr.Zero;
                 }
                 else {
                     if (classHint.res_class != IntPtr.Zero) {
-                        X11Sports.Free(classHint.res_class);
+                        Xi.Free(classHint.res_class);
                         classHint.res_class = IntPtr.Zero;
                     }
                     if (classHint.res_name != IntPtr.Zero) {
-                        X11Sports.Free(classHint.res_name);
+                        Xi.Free(classHint.res_name);
                         classHint.res_name = IntPtr.Zero;
                     }
                 }
