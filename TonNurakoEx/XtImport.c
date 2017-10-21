@@ -514,4 +514,18 @@ TNK_EXPORT void XtPopdown_TNK(Widget popup_shell) {
     XtPopdown(popup_shell);
 }
 
+// Windows Phone
+
+TNK_EXPORT XtActionHookId XtAppAddActionHook_TNK(XtAppContext app_context, XtActionHookProc proc, XtPointer client_data) {
+    return XtAppAddActionHook(app_context,proc,client_data);
+}
+
+TNK_EXPORT void XtRemoveActionHook_TNK(XtActionHookId id) {
+    XtRemoveActionHook(id);
+}
+
+TNK_EXPORT void XtAppAddActions_TNK(XtAppContext app_context, XtActionList actions, Cardinal num_actions) {
+    XtAppAddActions(app_context,actions,num_actions);
+}
+
 TNK_DECLARE_END

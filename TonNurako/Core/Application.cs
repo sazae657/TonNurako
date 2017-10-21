@@ -108,14 +108,14 @@ namespace TonNurako {
                 rs.Add($"{v.Key}: {v.Value}");
             }
 
-            _Ctx.NativeContext = new ExtremeSports.TnkAppContext();
+            _Ctx.Handle = new ExtremeSports.TnkAppContext();
             ExtremeSports.TnkCode code =
-                (ExtremeSports.TnkCode)ExtremeSports.XtInitialize(out _Ctx.NativeContext, _Ctx.Name, _Args, rs.ToArray());
+                (ExtremeSports.TnkCode)ExtremeSports.XtInitialize(_Ctx.Handle, _Ctx.Name, _Args, rs.ToArray());
             if (ExtremeSports.TnkCode.Ok != code) {
                 throw new Exception(code.ToString());
             }
 
-            _Ctx.NativeContext.comm = () => {
+            _Ctx.Handle.Comm = () => {
                 _Ctx.SyncContext.Update();
             };
 
@@ -125,8 +125,8 @@ namespace TonNurako {
                 _Ctx.Shell = _Shell;
                 _Shell.Create(_Ctx, _Args);
                 _Shell.Realize();
-                ExtremeSports.TriggerPrivateEvent(_Ctx.NativeContext, _Shell);
-                ExtremeSports.AppMainLoop(_Ctx.NativeContext.context, () => {
+                ExtremeSports.TriggerPrivateEvent(_Ctx.Handle, _Shell);
+                ExtremeSports.AppMainLoop(_Ctx.Handle.Context.Handle, () => {
                     _Ctx.SyncContext.Update();
                 });
             }
@@ -154,7 +154,7 @@ namespace TonNurako {
 		public static void Exit(ApplicationContext _Ctx)
 		{
 			//全ｳｲｼﾞｪｯﾄを優しく殺す
-			ExtremeSports.AppSetExitFlag(_Ctx.NativeContext.context);
+			ExtremeSports.AppSetExitFlag(_Ctx.Handle.Context.Handle);
 		}
 
     }

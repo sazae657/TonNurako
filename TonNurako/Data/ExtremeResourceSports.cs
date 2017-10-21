@@ -226,12 +226,12 @@ namespace TonNurako.Data
         //
         // Translations
         //
-        internal void SetTranslations(Enum key, Data.Translations sym, Resource.Access access = Resource.Access.CSG) {
-            widget.ToolkitResources.Add(key, sym.Binary);
+        internal void SetTranslations(Enum key, Xt.Translations sym, Resource.Access access = Resource.Access.CSG) {
+            widget.ToolkitResources.Add(key, sym.Handle);
             widget.ToolkitResources.SetWidget(true);
         }
 
-        internal Data.Translations GetTranslations(Enum key, Resource.Access access = Resource.Access.CSG) {
+        internal Xt.Translations GetTranslations(Enum key, Resource.Access access = Resource.Access.CSG) {
             throw new System.NotImplementedException("GET XtTranslations");
         }
 

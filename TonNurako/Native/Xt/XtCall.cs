@@ -138,7 +138,7 @@ namespace TonNurako.Xt
             internal static extern void XtInitializeWidgetClass(IntPtr glass);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="TNK_GetWidgetClass", CharSet=CharSet.Auto)]
-            internal static extern IntPtr TNK_GetWidgetClass(Motif.WidgetClass glass);
+            internal static extern IntPtr TNK_GetWidgetClass(Motif.MotifWidgetClass glass);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtGetGC_TNK", CharSet=CharSet.Auto)]
             internal static extern IntPtr XtGetGC(IntPtr w, X11.GCMask value_mask, [In,Out]ref X11.XGCValuesRec values);
@@ -296,7 +296,7 @@ namespace TonNurako.Xt
         }
 
         // 一時的
-        public static void XtInitializeWidgetClass(TonNurako.Motif.WidgetClass glass) {
+        public static void XtInitializeWidgetClass(TonNurako.Motif.MotifWidgetClass glass) {
             var ptr = NativeMethods.TNK_GetWidgetClass(glass);
             if (IntPtr.Zero == ptr) {
                 throw new Exception($"NullWidget {glass.ToString()}");

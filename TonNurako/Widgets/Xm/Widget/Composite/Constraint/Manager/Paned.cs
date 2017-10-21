@@ -132,7 +132,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNsashTranslations Translations XtTranslations see below CSG
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual Translations SashTranslations {
+        public virtual Xt.Translations SashTranslations {
             get {
                 return XSports.GetTranslations(
                     TonNurako.Motif.ResourceId.XmNsashTranslations, Data.Resource.Access.CSG);

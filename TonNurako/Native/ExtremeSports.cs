@@ -98,20 +98,20 @@ namespace TonNurako.Native {
 		    //最上位ｳｲｼﾞｪｯﾄ作成
 		    [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
 		    public static extern int TNK_XtInitialize(
-			     out TnkAppContext context,
+			     out TnkAppContextRec context,
                  [MarshalAs(UnmanagedType.LPStr)]string title,  string[] argv, int argc, string[] res, int resc);
 
 		    //最上位ｳｲｼﾞｪｯﾄ作成
 		    [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
 		    public static extern IntPtr TNK_XtAppCreateShell(
-			[In]ref TnkAppContext context,
+			[In]ref TnkAppContextRec context,
             [MarshalAs(UnmanagedType.LPStr)] string title,  ref string[] argv, int argc , TonNurako.Xt.NativeXtArg[] res, int resc);
 
             [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
-            public static extern void TNK_IMP_TriggerPrivateEvent([In]ref TnkAppContext context,[In] IntPtr widget);
+            public static extern void TNK_IMP_TriggerPrivateEvent([In]ref TnkAppContextRec context,[In] IntPtr widget);
 
             [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
-            public static extern void TNK_IMP_Flush([In]ref TnkAppContext context,[In] IntPtr widget);
+            public static extern void TNK_IMP_Flush([In]ref TnkAppContextRec context,[In] IntPtr widget);
 
 
 
@@ -119,7 +119,7 @@ namespace TonNurako.Native {
             public static extern int TNK_IMP_Xt_XCreateColormap(IntPtr w);
 
             [ DllImport(Lib, CharSet=CharSet.Auto) ]
-            public static extern void TNK_IMP_TnkAssignColorMap([In]TnkAppContext pCtx, int cmap);
+            public static extern void TNK_IMP_TnkAssignColorMap([In]TnkAppContextRec pCtx, int cmap);
 
             [DllImport(Lib, CharSet=CharSet.Auto) ]
             public static extern int TNK_IMP_Xt_XAllocColor(out TonNurako.X11.XColor color,
@@ -216,14 +216,14 @@ namespace TonNurako.Native {
 		/// ﾌﾟﾗｲﾍﾞーﾄｲﾍﾞﾝﾄ発行
 		/// </summary>
         public static void TriggerPrivateEvent(TnkAppContext context, IWidget w) {
-            NativeMethods.TNK_IMP_TriggerPrivateEvent(ref context, w.Handle.Widget.Handle);
+            NativeMethods.TNK_IMP_TriggerPrivateEvent(ref context.Record, w.Handle.Widget.Handle);
         }
 
 		/// <summary>
 		/// XFlushを呼ぶ
 		/// </summary>
         public static void Flush(TnkAppContext context, IWidget w) {
-            NativeMethods.TNK_IMP_Flush(ref context, w.Handle.Widget.Handle);
+            NativeMethods.TNK_IMP_Flush(ref context.Record, w.Handle.Widget.Handle);
         }
 
 
@@ -299,7 +299,7 @@ namespace TonNurako.Native {
 		/// ｱﾌﾟﾘｹーｼｮﾝの情報の保持
 		/// </summary>
 		[StructLayout(LayoutKind.Sequential)]
-		public struct TnkAppContext
+		internal struct TnkAppContextRec
 		{
             internal IntPtr context;
             internal IntPtr display;
@@ -307,24 +307,60 @@ namespace TonNurako.Native {
             internal int   colormap;
 		}
 
+        public class TnkAppContext {
+            internal TnkAppContextRec Record;
 
-		public static int XtInitialize(out TnkAppContext context,string title, string[] argv, string[] res)
+            internal XtAppContext appContext = null;
+
+            public TnkAppContext() {
+                Record = new TnkAppContextRec();
+            }
+
+            internal TnkAppContext(TnkAppContextRec r) {
+                Record = r;
+            }
+
+            internal void Assign() {
+                appContext = new XtAppContext(Record.context);
+            }
+
+            public XtAppContext Context {
+                get => appContext;
+               // set => Record.context = value;
+            }
+            public IntPtr Display {
+                get => Record.display;
+                set => Record.display = value;
+            }
+            public TnkAppRefreshHandler Comm {
+                get => Record.comm;
+                set => Record.comm = value;
+            }
+            public int Colormap {
+                get => Record.colormap;
+                set => Record.colormap = value;
+            }
+        }
+
+        public static int XtInitialize(TnkAppContext context,string title, string[] argv, string[] res)
 		{
-            return NativeMethods.TNK_XtInitialize(out context, title, argv, argv.Length, res, res.Length);
+            int r =  NativeMethods.TNK_XtInitialize(out context.Record, title, argv, argv.Length, res, res.Length);
+            context.Assign();
+            return r;
 		}
 
 
-		public static IntPtr XtAppCreateShell(ref TnkAppContext context,string title, ref string[] argv, TonNurako.Xt.XtArg[] res)
+		public static IntPtr XtAppCreateShell(TnkAppContext context,string title, ref string[] argv, TonNurako.Xt.XtArg[] res)
 		{
             if (null == res || 0 == res.Length) {
-                return NativeMethods.TNK_XtAppCreateShell(ref context, title, ref argv, argv.Length, null, 0);
+                return NativeMethods.TNK_XtAppCreateShell(ref context.Record, title, ref argv, argv.Length, null, 0);
             }
 
             TonNurako.Xt.NativeXtArg[] au = new TonNurako.Xt.NativeXtArg[res.Length];
             int argc = ExtremeSports.TnkConvertResourceEx(res, au, true);
             System.Diagnostics.Debug.WriteLine($"XM_CVT {au.Length} -> {argc}");
 
-            var result = NativeMethods.TNK_XtAppCreateShell(ref context, title, ref argv, argv.Length, au, argc);
+            var result = NativeMethods.TNK_XtAppCreateShell(ref context.Record, title, ref argv, argv.Length, au, argc);
 
             ExtremeSports.TnkFreeDeepCopyArg(au);
 
@@ -337,9 +373,9 @@ namespace TonNurako.Native {
 			return NativeMethods.TNK_IMP_Xt_XCreateColormap(w.Handle.Widget.Handle);
 		}
 
-		public static void TnkAssignColorMap([In,Out]TnkAppContext pCtx, int cmap)
+		public static void TnkAssignColorMap(TnkAppContext pCtx, int cmap)
 		{
-			NativeMethods.TNK_IMP_TnkAssignColorMap(pCtx, cmap);
+			NativeMethods.TNK_IMP_TnkAssignColorMap(pCtx.Record, cmap);
 		}
 
 

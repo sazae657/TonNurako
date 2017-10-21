@@ -1,3 +1,4 @@
+using System;
 using TonNurako.X11;
 using TonNurako.Xt;
 
@@ -60,18 +61,5 @@ namespace TonNurako.Data
         }
     }
 
-    public class Translations {
-        internal Translations() {
-        }
 
-        internal System.IntPtr Binary {
-            get; set;
-        }
-
-        public static Translations Compile(string source) {
-            Translations r = new Translations();
-            r.Binary = XtSports.XtParseTranslationTable(source);
-            return r;
-        }
-    }
 }

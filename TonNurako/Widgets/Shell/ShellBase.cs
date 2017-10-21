@@ -56,11 +56,11 @@ namespace TonNurako.Widgets {
 
 			//ShellWidgetの作成
 			selfWidget = new Native.NativeWidget(
-                ExtremeSports.XtAppCreateShell(ref m_appContext.NativeContext, this.Name, ref args, this.ToolkitResources.ToXtArg()));
+                ExtremeSports.XtAppCreateShell(m_appContext.Handle, this.Name, ref args, this.ToolkitResources.ToXtArg()));
             this.ToolkitResources.Clear();
 
             System.Diagnostics.Debug.WriteLine("CTX: display={0} context={1}",
-                new object[]{context.NativeContext.display, context.NativeContext.context});
+                new object[]{context.Handle.Display, context.Handle.Context});
 
 			//Closeｺーﾙﾊﾞｯｸの追加
 			this.CallbackQueue.AaddWMCallback( "WM_DELETE_WINDOW", new G.XtCallBack( this.WMCloseCallBack ));
