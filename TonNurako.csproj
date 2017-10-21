@@ -115,7 +115,7 @@
     <Compile Include="TonNurako\Native\Xt\Symbol.cs" />
     <Compile Include="TonNurako\Native\Xt\Translation.cs" />
     <Compile Include="TonNurako\Native\Xt\Widget.cs" />
-    <Compile Include="TonNurako\Native\Xt\WidgetClassRec.cs" />
+    <Compile Include="TonNurako\Native\Xt\Core\WidgetClassRec.cs" />
     <Compile Include="TonNurako\Native\Xt\Xt.cs" />
     <Compile Include="TonNurako\Native\Xt\XtCall.cs" />
     <Compile Include="TonNurako\Native\Xt\XtTypes.cs" />
