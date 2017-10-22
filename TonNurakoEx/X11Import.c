@@ -1,8 +1,5 @@
 #include "TonNurako.h"
 //
-TNK_EXPORT Bool XQueryPointer_TNK(Display* display, Window w, Window* root_return, Window* child_return, int* root_x_return, int* root_y_return, int* win_x_return, int* win_y_return, unsigned int* mask_return) {
-    return XQueryPointer(display,w,root_return,child_return,root_x_return,root_y_return,win_x_return,win_y_return,mask_return);
-}
 
 TNK_EXPORT void XwcDrawString_TNK(Display* display, Drawable d, XFontSet font_set, GC gc, int x, int y, wchar_t* string, int num_wchars) {
     XwcDrawString(display,d,font_set,gc,x,y,string,num_wchars);
