@@ -6,7 +6,7 @@ TNK_EXPORT WidgetClass TNK_GetUltraSuperWidgetClass(void) {
 }
 
 // C#ではどーにもならねえので構造体に詰める
-typedef struct 
+typedef struct
 tagXtInheritTNK
 {
     String              InheritTranslations;
@@ -19,7 +19,7 @@ tagXtInheritTNK
     XtStringProc        InheritDisplayAccelerator;
 }XtInheritTNK;
 
-TNK_EXPORT void TNK_GetXtInheritance(XtInheritTNK* p) 
+TNK_EXPORT void TNK_GetXtInheritance(XtInheritTNK* p)
 {
     p->InheritTranslations = XtInheritTranslations;
     p->InheritRealize =XtInheritRealize;
@@ -29,4 +29,12 @@ TNK_EXPORT void TNK_GetXtInheritance(XtInheritTNK* p)
     p->InheritAcceptFocus =XtInheritAcceptFocus;
     p->InheritQueryGeometry =XtInheritQueryGeometry;
     p->InheritDisplayAccelerator =XtInheritDisplayAccelerator;
+}
+
+TNK_EXPORT Widget XtCreateManagedWidget_TNK(String name, WidgetClass widget_class, Widget parent, ArgList args, Cardinal num_args) {
+    return XtCreateManagedWidget(name,widget_class,parent,args,num_args);
+}
+
+TNK_EXPORT Widget XtCreateWidget_TNK(String name, WidgetClass widget_class, Widget parent, ArgList args, Cardinal num_args) {
+    return XtCreateWidget(name,widget_class,parent,args,num_args);
 }

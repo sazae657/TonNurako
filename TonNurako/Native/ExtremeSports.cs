@@ -73,21 +73,21 @@ namespace TonNurako.Native {
 		    //ﾘｿーｽの更新
             [ DllImport(ExtremeSports.Lib, CharSet=CharSet.Auto) ]
             public static extern void TNK_IMP_Xt_XtSetValues( IntPtr wgt,
-                TonNurako.Xt.XtArg [] args, int argc );
+                TonNurako.Xt.Arg [] args, int argc );
 
             [ DllImport(ExtremeSports.Lib, CharSet=CharSet.Auto) ]
             public static extern int TNK_IMP_TnkConvertResource(
-                TonNurako.Xt.XtArg [] inArg, IntPtr outArg, int argc, [MarshalAs(UnmanagedType.U1)] bool deepCopy);
+                TonNurako.Xt.Arg [] inArg, IntPtr outArg, int argc, [MarshalAs(UnmanagedType.U1)] bool deepCopy);
 
             [ DllImport(ExtremeSports.Lib, CharSet=CharSet.Auto, EntryPoint = "TNK_IMP_TnkConvertResource") ]
             public static extern int TNK_IMP_TnkConvertResourceEx(
-                TonNurako.Xt.XtArg [] inArg,
-                [In, Out] NativeXtArg []outArg,
+                TonNurako.Xt.Arg [] inArg,
+                [In, Out] XtArgRec []outArg,
                 int argc,
                 [MarshalAs(UnmanagedType.U1)] bool deepCopy);
 
             [ DllImport(ExtremeSports.Lib, CharSet=CharSet.Auto) ]
-            public static extern IntPtr TNK_IMP_TnkFreeDeepCopyArg([In, Out] NativeXtArg []args, int argc);
+            public static extern IntPtr TNK_IMP_TnkFreeDeepCopyArg([In, Out] XtArgRec []args, int argc);
 
             [ DllImport(ExtremeSports.Lib, CharSet=CharSet.Auto) ]
             public static extern IntPtr TNK_IMP_TnkAllocArg(int argc);
@@ -105,7 +105,7 @@ namespace TonNurako.Native {
 		    [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
 		    public static extern IntPtr TNK_XtAppCreateShell(
 			[In]ref TnkAppContextRec context,
-            [MarshalAs(UnmanagedType.LPStr)] string title,  ref string[] argv, int argc , TonNurako.Xt.NativeXtArg[] res, int resc);
+            [MarshalAs(UnmanagedType.LPStr)] string title,  ref string[] argv, int argc , TonNurako.Xt.XtArgRec[] res, int resc);
 
             [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
             public static extern void TNK_IMP_TriggerPrivateEvent([In]ref TnkAppContextRec context,[In] IntPtr widget);
@@ -257,28 +257,28 @@ namespace TonNurako.Native {
         /// <param name="w">ｳｲｼﾞｪｯﾄ</param>
         /// <param name="args">ﾘｿーｽ</param>
         public static void SetValues(
-			IWidget w,  TonNurako.Xt.XtArg [] args )
+			IWidget w,  TonNurako.Xt.Arg [] args )
 		{
             NativeMethods.TNK_IMP_Xt_XtSetValues( w.Handle.Widget.Handle,  args, args.Length );
 		}
 		public static void SetValues(
-			IntPtr w,  TonNurako.Xt.XtArg [] args )
+			IntPtr w,  TonNurako.Xt.Arg [] args )
 		{
             NativeMethods.TNK_IMP_Xt_XtSetValues( w, args, args.Length );
 		}
 
         public static int TnkConvertResource(
-            TonNurako.Xt.XtArg [] inArg, IntPtr outArg, int argc,  bool deepCopy) {
+            TonNurako.Xt.Arg [] inArg, IntPtr outArg, int argc,  bool deepCopy) {
             return NativeMethods.TNK_IMP_TnkConvertResource(inArg, outArg, argc, deepCopy);
         }
 
-        public static  int TnkConvertResourceEx(
-            TonNurako.Xt.XtArg [] inArg, NativeXtArg []outArg, bool deepCopy) {
+        internal static  int TnkConvertResourceEx(
+            TonNurako.Xt.Arg [] inArg, XtArgRec []outArg, bool deepCopy) {
             return NativeMethods.TNK_IMP_TnkConvertResourceEx(inArg, outArg, inArg.Length, deepCopy);
         }
 
 
-        public static void TnkFreeDeepCopyArg(NativeXtArg []args) {
+        internal static void TnkFreeDeepCopyArg(XtArgRec []args) {
             NativeMethods.TNK_IMP_TnkFreeDeepCopyArg(args, args.Length);
         }
 
@@ -350,13 +350,13 @@ namespace TonNurako.Native {
 		}
 
 
-		public static IntPtr XtAppCreateShell(TnkAppContext context,string title, ref string[] argv, TonNurako.Xt.XtArg[] res)
+		public static IntPtr XtAppCreateShell(TnkAppContext context,string title, ref string[] argv, TonNurako.Xt.Arg[] res)
 		{
             if (null == res || 0 == res.Length) {
                 return NativeMethods.TNK_XtAppCreateShell(ref context.Record, title, ref argv, argv.Length, null, 0);
             }
 
-            TonNurako.Xt.NativeXtArg[] au = new TonNurako.Xt.NativeXtArg[res.Length];
+            TonNurako.Xt.XtArgRec[] au = new TonNurako.Xt.XtArgRec[res.Length];
             int argc = ExtremeSports.TnkConvertResourceEx(res, au, true);
             System.Diagnostics.Debug.WriteLine($"XM_CVT {au.Length} -> {argc}");
 

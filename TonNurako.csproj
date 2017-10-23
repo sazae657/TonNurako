@@ -112,6 +112,7 @@
     <Compile Include="TonNurako\Native\Xm\XmCall.cs" />
     <Compile Include="TonNurako\Native\Xm\XmCall.gen.cs" />
     <Compile Include="TonNurako\Native\Xt\AppContext.cs" />
+    <Compile Include="TonNurako\Native\Xt\Masks.cs" />
     <Compile Include="TonNurako\Native\Xt\Symbol.cs" />
     <Compile Include="TonNurako\Native\Xt\Translation.cs" />
     <Compile Include="TonNurako\Native\Xt\Widget.cs" />

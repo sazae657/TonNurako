@@ -5,40 +5,97 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TonNurako.Native;
+using TonNurako.Widgets;
 
 namespace TonNurako.Xt.Core {
     public delegate void XtProc();
-    public delegate void XtWidgetClassProc(IntPtr widgetClass); //WidgetClass
-    public delegate void XtInitProc(
+
+    //
+    // WidgetClass
+    //
+
+    internal delegate void XtWidgetClassProc(IntPtr widgetClass); //WidgetClass
+    public delegate void XtWidgetClassDelegate(CoreWidgetClass widgetClass);
+
+    //
+    // Init
+    //
+
+    internal delegate void XtInitProc(
       IntPtr request, // Widget
       IntPtr xnew, // Widget
       IntPtr argList, //,
       IntPtr num_args //Cardinal* 
     );
 
-    public delegate void XtArgsProc(
+    public delegate void XtInitDelegate(
+      IWidget request, // Widget
+      IWidget xnew, // Widget
+      XtArg[] argList 
+    );
+
+    //
+    // Args
+    //
+
+    internal delegate void XtArgsProc(
       IntPtr widget, // Widget
       IntPtr argList, // ArgList
       IntPtr num_args //Cardinal* 
     );
 
-    public delegate void XtRealizeProc(
+    public delegate void XtArgsDelegate(
+      IWidget widget, // Widget
+      XtArg[] argList // ArgList
+    );
+
+    //
+    // Realise
+    //
+
+    internal delegate void XtRealizeProc(
           IntPtr widget,
           IntPtr mask, //XtValueMask*
           IntPtr attributes //XSetWindowAttributes
       );
+    public delegate void XtRealizeDelegate(
+          IWidget widget,
+          X11.ChangeWindowAttributes mask, //XtValueMask*
+          X11.XSetWindowAttributes attributes //XSetWindowAttributes
+      );
 
-    public delegate void XtWidgetProc(
+
+    //
+    // Widget
+    //
+
+    internal delegate void XtWidgetProc(
           IntPtr widget
       );
 
-    public delegate void XtExposeProc(
+    public delegate void XtWidgetDelegate(
+          IWidget widget
+      );
+
+    //
+    // Expose
+    // 
+    internal delegate void XtExposeProc(
           IntPtr widget,
           IntPtr xevent, //XEvent
           IntPtr region // Region
       );
 
-    public delegate void XtSetValuesFunc(
+    public delegate void XtExposeDelegate(
+          IWidget widget,
+          X11.Event.XEventArg xevent, //XEvent
+          X11.Region region // Region
+      );
+
+    //
+    // SetValuesFunc
+    // 
+    internal delegate void XtSetValuesFunc(
         IntPtr old, // Widget
         IntPtr request,// Widget
         IntPtr xnew,// Widget
@@ -46,27 +103,67 @@ namespace TonNurako.Xt.Core {
         IntPtr num_args // Cardinal*
     );
 
-    public delegate void XtAlmostProc(
+    public delegate void XtSetValuesDelegate(
+        IWidget old, // Widget
+        IWidget request,// Widget
+        IWidget xnew,// Widget
+        XtArg[] args //ArgList
+    );
+
+    //
+    // Almost
+    // 
+    internal delegate void XtAlmostProc(
           IntPtr old, //Widget
           IntPtr xnew, //Widget
           IntPtr request, //XtWidgetGeometry*
           IntPtr reply //XtWidgetGeometry*
       );
 
-    public delegate bool XtAcceptFocusProc(
+    public delegate XtWidgetGeometry XtAlmostDelegate (
+          IWidget old, //Widget
+          IWidget xnew, //Widget
+          XtWidgetGeometry request //XtWidgetGeometry*
+    );
+
+    //
+    // AcceptFocus
+    //
+
+    internal delegate bool XtAcceptFocusProc(
        IntPtr widget, //Widget
        IntPtr time // Time*
     );
 
-    public delegate void XtGeometryHandler(
+    public delegate bool XtAcceptFocusDelegate(
+        IWidget widget, //Widget
+        int time // Time*
+    );
+
+    //
+    // Geometry
+    //
+    internal delegate void XtGeometryHandler(
           IntPtr widget, //Widget
           IntPtr request, //XtWidgetGeometry*
           IntPtr reply //XtWidgetGeometry*
       );
+    public delegate XtWidgetGeometry XtGeometryHandlerDelegate(
+          IWidget widget, //Widget
+          XtWidgetGeometry request //XtWidgetGeometry*
+      );
 
-    public delegate void XtStringProc(
+    //
+    // String
+    //
+    internal delegate void XtStringProc(
           IntPtr widget,//Widget
           IntPtr str //String
+    );
+
+    public delegate void XtStringProcDelegate(
+          IWidget widget,//Widget
+          string str //String
     );
 
 
@@ -75,34 +172,34 @@ namespace TonNurako.Xt.Core {
         public IntPtr superclass;     // WidgetClassRec
         [MarshalAs(UnmanagedType.LPStr)] public string class_name;
         public int widget_size;   // Cardinal
-        public XtProc class_initialize;
-        public XtWidgetClassProc class_part_initialize;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtProc class_initialize;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtWidgetClassProc class_part_initialize;
         public byte class_inited;     // XtEnum
-        public XtInitProc initialize;
-        public XtArgsProc initialize_hook;
-        public XtRealizeProc realize;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtInitProc initialize;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtArgsProc initialize_hook;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtRealizeProc realize;
         public IntPtr actions;  // XtActionList
         public int num_actions; //Cardinal
         public IntPtr resources;  // XtResource*
         public int num_resources;
         public int xrm_class;     // XrmClass
-        public bool compress_motion;
+        [MarshalAs(UnmanagedType.U1)] public bool compress_motion;
         public byte compress_exposure;  //XtEnum
-        public bool compress_enterleave;
-        public bool visible_interest;
-        public XtWidgetProc destroy;
-        public XtWidgetProc resize;
-        public XtExposeProc expose;
-        public XtSetValuesFunc set_values;
-        public XtArgsProc set_values_hook;
-        public XtAlmostProc set_values_almost;
-        public XtArgsProc get_values_hook;
-        public XtAcceptFocusProc accept_focus;
+        [MarshalAs(UnmanagedType.U1)] public bool compress_enterleave;
+        [MarshalAs(UnmanagedType.U1)] public bool visible_interest;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtWidgetProc destroy;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtWidgetProc resize;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtExposeProc expose;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtSetValuesFunc set_values;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtArgsProc set_values_hook;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtAlmostProc set_values_almost;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtArgsProc get_values_hook;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtAcceptFocusProc accept_focus;
         public ulong version;  //XtVersionType
         public IntPtr callback_private; //XtPointer
         [MarshalAs(UnmanagedType.LPStr)] public string tm_table;
-        public XtGeometryHandler query_geometry;
-        public XtStringProc display_accelerator;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtGeometryHandler query_geometry;
+        [MarshalAs(UnmanagedType.FunctionPtr)] public XtStringProc display_accelerator;
         public IntPtr extension;     // IntPtr
     };
 
@@ -155,6 +252,8 @@ namespace TonNurako.Xt.Core {
         public CoreWidgetClass() {
             isPounterAllocated = true;
             pounter = Marshal.AllocCoTaskMem(Marshal.SizeOf<WidgetClass>());
+            WidgetSize = Marshal.SizeOf<WidgetClass>();
+            Version = (ulong)TonNurako.X11.Constant.XtVersion;
         }
 
         internal CoreWidgetClass(IntPtr ptr) {
@@ -174,15 +273,14 @@ namespace TonNurako.Xt.Core {
             get {
                 if (isPounterAllocated) {
                     Marshal.StructureToPtr<WidgetClass>(Record, pounter, false);
-                    throw new Exception("isPounterAllocated == true");
+                    //throw new Exception("isPounterAllocated == true");
                 }
                 return pounter;
             }
         }
 
-        WidgetClass Record;
+        internal WidgetClass Record;
         CoreWidgetClass superClass = null;
-
         public CoreWidgetClass SuperClass {
             get => superClass;
             set {
@@ -199,30 +297,133 @@ namespace TonNurako.Xt.Core {
             get => Record.core_class.widget_size;
             set => Record.core_class.widget_size = value;
         }
+
         public XtProc ClassInitialize {
             get => Record.core_class.class_initialize;
             set => Record.core_class.class_initialize = value;
         }
-        public XtWidgetClassProc ClassPartInitialize {
-            get => Record.core_class.class_part_initialize;
-            set => Record.core_class.class_part_initialize = value;
+
+
+        XtWidgetClassDelegate classPartInitialize = null;
+        private void xtClassPartInitializeImp(IntPtr widgetClass) {
+            if (null == classPartInitialize) {
+                return;
+            }
+            classPartInitialize(new CoreWidgetClass(widgetClass));
         }
+
+        public XtWidgetClassDelegate ClassPartInitialize {
+            get => classPartInitialize;//Record.core_class.class_part_initialize;
+            set {
+                classPartInitialize = value;
+                if (null != value) {
+                    Record.core_class.class_part_initialize = xtClassPartInitializeImp;
+                }
+                else {
+                    Record.core_class.class_part_initialize = null;
+                }
+            }
+        }
+
+
         public byte ClassInited {
             get => Record.core_class.class_inited;
             set => Record.core_class.class_inited = value;
         }
-        public XtInitProc Initialize {
-            get => Record.core_class.initialize;
-            set => Record.core_class.initialize = value;
+
+        void XtInitProcImp(
+          IntPtr request, // Widget
+          IntPtr xnew, // Widget
+          IntPtr argList, //,
+          IntPtr num_args //Cardinal* 
+        ) {
+            if (null == xtInitialize) {
+                return;
+            }
+            xtInitialize(
+                new ﾄﾝﾇﾗｼﾞｪｯﾄ(request, null),
+                new ﾄﾝﾇﾗｼﾞｪｯﾄ(xnew, null),
+                ConvertArgList(argList, num_args));
         }
-        public XtArgsProc InitializeHook {
-            get => Record.core_class.initialize_hook;
-            set => Record.core_class.initialize_hook = value;
+
+        XtInitDelegate xtInitialize;
+        public XtInitDelegate Initialize {
+            get => xtInitialize;
+            set {
+                xtInitialize = value;
+                if (null != value) {
+                    Record.core_class.initialize = XtInitProcImp;
+                }
+                else {
+                    Record.core_class.initialize = null;
+                }
+
+            }
         }
-        public XtRealizeProc Realize {
-            get => Record.core_class.realize;
-            set => Record.core_class.realize = value;
+
+        XtArg[] ConvertArgList(IntPtr argList, IntPtr num_args) {
+            int cnt = Marshal.ReadInt32(num_args);
+            var ret = new XtArg[cnt];
+            var arr = TonNurako.Inutility.MarshalHelper.ToStructArray<XtArgRec>(argList, cnt);
+            for (int i = 0; i < cnt; ++i) {
+                ret[i] = new XtArg(arr[i]);
+            }
+            return ret;
         }
+
+        XtArgsDelegate initializeHook;
+        private void xtInitializeHookImp(IntPtr widget, IntPtr argList, IntPtr num_args) {
+            if (null == setValuesHook) {
+                return;
+            }
+            initializeHook(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), ConvertArgList(argList, num_args));
+        }
+
+        public XtArgsDelegate InitializeHook {
+            get => initializeHook; // Record.core_class.set_values_hook;
+            set {
+                initializeHook = value;
+                if (null != value) {
+                    Record.core_class.initialize_hook = xtInitializeHookImp;
+                }
+                else {
+                    Record.core_class.initialize_hook = null;
+                }
+            }
+        }
+
+
+        void xtRealizeImp(
+              IntPtr widget,
+              IntPtr mask, //XtValueMask*
+              IntPtr attributes //XSetWindowAttributes
+          ) {
+            //IWidget widget,
+            //X11.ChangeWindowAttributes mask, //XtValueMask*
+            //X11.XSetWindowAttributes attributes //XSetWindowAttributes
+            if (null == xtRealize) {
+                return;
+            }
+            xtRealize(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null),
+                (X11.ChangeWindowAttributes)Marshal.ReadInt32(mask), new X11.XSetWindowAttributes(attributes));
+        }
+
+        XtRealizeDelegate xtRealize;
+        public XtRealizeDelegate Realize {
+            get => xtRealize;//Record.core_class.realize;
+            set {
+                if (null != value) {
+                    xtRealize = value;
+                    Record.core_class.realize = xtRealizeImp;
+                }
+                else {
+                    Record.core_class.realize = null;
+                }
+            }
+        }
+
+
+
         public IntPtr Actions {
             get => Record.core_class.actions;
             set => Record.core_class.actions = value;
@@ -259,58 +460,265 @@ namespace TonNurako.Xt.Core {
             get => Record.core_class.visible_interest;
             set => Record.core_class.visible_interest = value;
         }
-        public XtWidgetProc Destroy {
-            get => Record.core_class.destroy;
-            set => Record.core_class.destroy = value;
+
+        void xtDestroyImp(IntPtr widget){
+            if (null == xtDestroy) {
+                return;
+            }
+            xtDestroy(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null));
         }
-        public XtWidgetProc Resize {
-            get => Record.core_class.resize;
-            set => Record.core_class.resize = value;
+        XtWidgetDelegate xtDestroy;
+        public XtWidgetDelegate Destroy {
+            get => xtDestroy;
+            set {
+                xtDestroy = value;
+                if (null != xtDestroy) {
+                    Record.core_class.destroy = xtDestroyImp;
+                }
+                else {
+                    Record.core_class.destroy = null;
+                }
+            }
         }
-        public XtExposeProc Expose {
-            get => Record.core_class.expose;
-            set => Record.core_class.expose = value;
+
+        void xtResizeImp(IntPtr widget) {
+            if (null == xtResize) {
+                return;
+            }
+            xtResize(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null));
         }
-        public XtSetValuesFunc SetValues {
-            get => Record.core_class.set_values;
-            set => Record.core_class.set_values = value;
+        XtWidgetDelegate xtResize;
+        public XtWidgetDelegate Resize {
+            get => xtResize; // Record.core_class.resize;
+            set {
+                xtResize = value;
+                if (null != xtResize) {
+                    Record.core_class.resize = xtResizeImp;
+                }
+                else {
+                    Record.core_class.resize = null;
+                }
+            }
         }
-        public XtArgsProc SetValuesHook {
-            get => Record.core_class.set_values_hook;
-            set => Record.core_class.set_values_hook = value;
+
+
+        void xtExposeImp(
+              IntPtr widget,
+              IntPtr xevent, //XEvent
+              IntPtr region // Region
+          ) {
+            xtExpose(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null),
+                new X11.Event.XEventArg(xevent),
+                new X11.Region(region));
         }
-        public XtAlmostProc SetValuesAlmost {
-            get => Record.core_class.set_values_almost;
-            set => Record.core_class.set_values_almost = value;
+
+        XtExposeDelegate xtExpose;
+        public XtExposeDelegate Expose {
+            get => xtExpose;
+            set {
+                xtExpose = value;
+                if (null != xtResize) {
+                    Record.core_class.expose = xtExposeImp;
+                }
+                else {
+                    Record.core_class.expose = null;
+                }
+            }
         }
-        public XtArgsProc GetValuesHook {
-            get => Record.core_class.get_values_hook;
-            set => Record.core_class.get_values_hook = value;
+
+
+        void xtSetValuesImp(
+            IntPtr old, // Widget
+            IntPtr request,// Widget
+            IntPtr xnew,// Widget
+            IntPtr args, //ArgList
+            IntPtr num_args // Cardinal*
+        ) {
+            xtSetValues(new ﾄﾝﾇﾗｼﾞｪｯﾄ(old, null),
+                new ﾄﾝﾇﾗｼﾞｪｯﾄ(request, null),
+                new ﾄﾝﾇﾗｼﾞｪｯﾄ(xnew, null),
+                ConvertArgList(args, num_args));
         }
-        public XtAcceptFocusProc AcceptFocus {
-            get => Record.core_class.accept_focus;
-            set => Record.core_class.accept_focus = value;
+
+        XtSetValuesDelegate xtSetValues;
+        public XtSetValuesDelegate SetValues {
+            get => xtSetValues;//Record.core_class.set_values;
+            set  {
+                xtSetValues = value;
+                if (null != xtSetValues) {
+                    Record.core_class.set_values = xtSetValuesImp;
+                }
+                else {
+                    Record.core_class.set_values = null;
+                }
+            }
         }
+
+
+        XtArgsDelegate setValuesHook;
+        private void xtSetValuesHookImp(IntPtr widget, IntPtr argList, IntPtr num_args) {
+            if (null == setValuesHook) {
+                return;
+            }
+            setValuesHook(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), ConvertArgList(argList, num_args));
+        }
+
+        public XtArgsDelegate SetValuesHook {
+            get => setValuesHook; // Record.core_class.set_values_hook;
+            set {
+                setValuesHook = value;
+                if (null != value) {
+                    Record.core_class.set_values_hook = xtSetValuesHookImp;
+                }
+                else {
+                    Record.core_class.set_values_hook = null;
+                }
+            }
+        }
+
+
+        void xtSetValuesAlmostImp(
+              IntPtr old, //Widget
+              IntPtr xnew, //Widget
+              IntPtr request, //XtWidgetGeometry*
+              IntPtr reply //XtWidgetGeometry*
+          ) {
+            //XtWidgetGeometry XtAlmostDelegate(
+            //IWidget old, //Widget
+            //IWidget xnew, //Widget
+            //XtWidgetGeometry request //XtWidgetGeometry*
+
+            // TODO:replyへのﾏーｼｬﾘﾝｸﾞ
+            var k = xtSetValuesAlmost(new ﾄﾝﾇﾗｼﾞｪｯﾄ(old, null), new ﾄﾝﾇﾗｼﾞｪｯﾄ(xnew, null), new XtWidgetGeometry(request));
+            throw new NotImplementedException("replyできてない");
+        }
+
+        XtAlmostDelegate xtSetValuesAlmost;
+        public XtAlmostDelegate SetValuesAlmost {
+            get => xtSetValuesAlmost;
+            set {
+                xtSetValuesAlmost = value;
+                if (null != value) {
+                    Record.core_class.set_values_almost = xtSetValuesAlmostImp;
+                }
+                else {
+                    Record.core_class.set_values_almost = null;
+                }
+            }
+        }
+
+        XtArgsDelegate getValuesHook;
+        private void xtGetValuesHookImp(IntPtr widget, IntPtr argList, IntPtr num_args) {
+            if (null == getValuesHook) {
+                return;
+            }
+            getValuesHook(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), ConvertArgList(argList, num_args));
+        }
+        public XtArgsDelegate GetValuesHook {
+            get => getValuesHook;
+            set {
+                getValuesHook = value;
+                if (null != value) {
+                    Record.core_class.get_values_hook = xtGetValuesHookImp;
+                }
+                else {
+                    Record.core_class.get_values_hook = null;
+                }
+            }
+        }
+
+        bool xtAcceptFocusImp(
+           IntPtr widget, //Widget
+           IntPtr time // Time*
+        ) {
+            return xtAcceptFocus(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), Marshal.ReadInt32(time));
+        }
+
+        XtAcceptFocusDelegate xtAcceptFocus;
+        public XtAcceptFocusDelegate AcceptFocus {
+            get => xtAcceptFocus;
+            set {
+                xtAcceptFocus = value;
+                if (null != value) {
+                    Record.core_class.accept_focus = xtAcceptFocusImp;
+                }
+                else {
+                    Record.core_class.accept_focus = null;
+                }
+            }
+        }
+
+
         public ulong Version {
             get => Record.core_class.version;
             set => Record.core_class.version = value;
         }
+
         public IntPtr CallbackPrivate {
             get => Record.core_class.callback_private;
             set => Record.core_class.callback_private = value;
         }
+
         public string TmTable {
             get => Record.core_class.tm_table;
             set => Record.core_class.tm_table = value;
         }
-        public XtGeometryHandler QueryGeometry {
-            get => Record.core_class.query_geometry;
-            set => Record.core_class.query_geometry = value;
+
+
+        void xtQueryGeometryImp(
+              IntPtr widget, //Widget
+              IntPtr request, //XtWidgetGeometry*
+              IntPtr reply //XtWidgetGeometry*
+          ) {
+            //IWidget widget, //Widget
+            //XtWidgetGeometry request, //XtWidgetGeometry*
+            //XtWidgetGeometry reply //XtWidgetGeometry*
+            xtQueryGeometry(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null),
+                new XtWidgetGeometry(request));
+            throw new NotImplementedException("replyできてない");
         }
-        public XtStringProc DisplayAccelerator {
-            get => Record.core_class.display_accelerator;
-            set => Record.core_class.display_accelerator = value;
+
+        XtGeometryHandlerDelegate xtQueryGeometry;
+        public XtGeometryHandlerDelegate QueryGeometry {
+            get => xtQueryGeometry;
+            set {
+                xtQueryGeometry = value;
+                if (null != value) {
+                    Record.core_class.query_geometry = xtQueryGeometryImp;
+                }
+                else {
+                    Record.core_class.query_geometry = null;
+                }
+            }
         }
+
+
+        //
+        // String
+        //
+        void xtDisplayAcceleratorImp(
+              IntPtr widget,//Widget
+              IntPtr str //String
+        ) {
+            xtDisplayAccelerator(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), Marshal.PtrToStringAnsi(str));
+        }
+
+        XtStringProcDelegate xtDisplayAccelerator;
+
+        public XtStringProcDelegate DisplayAccelerator {
+            get => xtDisplayAccelerator;
+            set {
+                xtDisplayAccelerator = value;
+                if (null != value) {
+                    Record.core_class.display_accelerator = xtDisplayAcceleratorImp;
+                }
+                else {
+                    Record.core_class.display_accelerator = null;
+                }
+            }
+        }
+
+
         public IntPtr Extension {
             get => Record.core_class.extension;
             set => Record.core_class.extension = value;

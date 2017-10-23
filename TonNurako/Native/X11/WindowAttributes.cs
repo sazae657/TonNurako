@@ -79,6 +79,10 @@ namespace TonNurako.X11 {
 
         internal XSetWindowAttributesRec record;
 
+        internal XSetWindowAttributes(IntPtr ptr) {
+            record = Marshal.PtrToStructure<XSetWindowAttributesRec>(ptr);
+        }
+
         public XSetWindowAttributes() {
             record = new XSetWindowAttributesRec();
         }

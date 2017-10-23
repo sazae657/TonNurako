@@ -9,27 +9,25 @@ using System.Runtime.InteropServices;
 //
 // Xt周り
 //
-namespace TonNurako.Xt
-{
+namespace TonNurako.Xt {
     /// <summary>
     /// CallBack
     /// </summary>
-    public sealed class G
-    {
-	    /// <summary>
-	    /// 汎用ｺーﾙﾊﾞｯｸ
-	    /// </summary>
-	    public delegate void XtCallBack( IntPtr w, IntPtr client, IntPtr call );
+    public sealed class G {
+        /// <summary>
+        /// 汎用ｺーﾙﾊﾞｯｸ
+        /// </summary>
+        public delegate void XtCallBack(IntPtr w, IntPtr client, IntPtr call);
 
-	    /// <summary>
-	    /// List widgetの選択項目列挙用
-	    /// </summary>
-	    public delegate void ListEnumCallback( int count, IntPtr list );
+        /// <summary>
+        /// List widgetの選択項目列挙用
+        /// </summary>
+        public delegate void ListEnumCallback(int count, IntPtr list);
 
         /// <summary>
 	    /// EventHandler
 	    /// </summary>
-        public delegate void XtEventHandler( IntPtr widget, IntPtr closure, IntPtr xevent, IntPtr continue_to_dispatch);
+        public delegate void XtEventHandler(IntPtr widget, IntPtr closure, IntPtr xevent, IntPtr continue_to_dispatch);
     }
 
     /// <summary>
@@ -50,21 +48,86 @@ namespace TonNurako.Xt
 
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct XtWidgetGeometryRec {
+        public XtGeometryMask request_mode; // XtGeometryMask
+        public Int16 x; // Position
+        public Int16 y; // Position
+        public int width; // Dimension
+        public int height; // Dimension
+        public int border_width; // Dimension
+        internal IntPtr sibling; // Widget
+        public XtStackMode stack_mode; // int
+    }
+
+    public class XtWidgetGeometry {
+        internal XtWidgetGeometryRec Record;
+
+        internal XtWidgetGeometry(IntPtr ptr) {
+            Record = Marshal.PtrToStructure<XtWidgetGeometryRec>(ptr);
+        }
+        internal XtWidgetGeometry(XtWidgetGeometryRec rec) {
+            Record = rec;
+        }
+
+        public XtGeometryMask RequestMode {
+            get => Record.request_mode;
+            set => Record.request_mode = value;
+        }
+        public Int16 X {
+            get => Record.x;
+            set => Record.x = value;
+        }
+        public Int16 Y {
+            get => Record.y;
+            set => Record.y = value;
+        }
+        public int Width {
+            get => Record.width;
+            set => Record.width = value;
+        }
+        public int Height {
+            get => Record.height;
+            set => Record.height = value;
+        }
+        public int BorderWidth {
+            get => Record.border_width;
+            set => Record.border_width = value;
+        }
+        //public IntPtr Sibling {
+        //    get => Record.sibling;
+        //    set => Record.sibling = value;
+        //}
+        public XtStackMode StackMode {
+            get => Record.stack_mode;
+            set => Record.stack_mode = value;
+        }
+    }
+
+
+
     /// <summary>
     /// Arg 相当
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct NativeXtArg {
+    internal struct XtArgRec {
         internal IntPtr Name ;
         internal IntPtr Value;
     }
+    public class XtArg {
+        internal XtArgRec Record;
+        internal XtArg(XtArgRec rec) {
+            Record = rec;
+        }
+    }
+
 
     /// <summary>
     /// ExtremeSportsにﾘｿーｽの処理を強要する用
     /// 共用体にしたかったけど無理だった
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct XtArg
+    public struct Arg
     {
         [MarshalAs(UnmanagedType.LPStr)] public string name ;
 
@@ -83,7 +146,7 @@ namespace TonNurako.Xt
 
         public G.XtCallBack callback;
 
-        public XtArg(string _Name, int _Val) {
+        public Arg(string _Name, int _Val) {
             name = _Name;
             intVal  = _Val;
             type = XtArgType.Int;
@@ -100,7 +163,7 @@ namespace TonNurako.Xt
             callback = null;
 
         }
-        public XtArg(string _Name, uint _Val) {
+        public Arg(string _Name, uint _Val) {
             name = _Name;
             uintVal  = _Val;
             type = XtArgType.UInt;
@@ -115,7 +178,7 @@ namespace TonNurako.Xt
             callback = null;
         }
 
-        public XtArg(string _Name, long _Val) {
+        public Arg(string _Name, long _Val) {
             name = _Name;
             longVal  = _Val;
             type = XtArgType.Long;
@@ -130,7 +193,7 @@ namespace TonNurako.Xt
             callback = null;
         }
 
-        public XtArg(string _Name, ulong _Val) {
+        public Arg(string _Name, ulong _Val) {
             name = _Name;
             ulongVal  = _Val;
             type = XtArgType.ULong;
@@ -145,7 +208,7 @@ namespace TonNurako.Xt
             callback = null;
         }
 
-        public XtArg(string _Name, IntPtr _Val) {
+        public Arg(string _Name, IntPtr _Val) {
             name = _Name;
             ptrVal = _Val;
             type = XtArgType.Object;
@@ -161,7 +224,7 @@ namespace TonNurako.Xt
             callback = null;
         }
 
-        public XtArg(string _Name, string _Val) {
+        public Arg(string _Name, string _Val) {
             name = _Name;
             strVal = _Val;
             type = XtArgType.String;
@@ -176,7 +239,7 @@ namespace TonNurako.Xt
             color = 0;
             callback = null;
         }
-        public XtArg(string _Name, Data.CompoundString _Val) {
+        public Arg(string _Name, Data.CompoundString _Val) {
             name = _Name;
             compoundStr = _Val.Handle;
             type = XtArgType.CompoundString;
@@ -191,7 +254,7 @@ namespace TonNurako.Xt
             callback = null;
         }
 
-        public XtArg(string _Name, TonNurako.X11.XColor _Val) {
+        public Arg(string _Name, TonNurako.X11.XColor _Val) {
             name = _Name;
             color = _Val.pixel;
 
@@ -207,7 +270,7 @@ namespace TonNurako.Xt
             callback = null;
         }
 
-        public XtArg(string _Name, G.XtCallBack _Val) {
+        public Arg(string _Name, G.XtCallBack _Val) {
             name = _Name;
             callback = _Val;
             type = XtArgType.Callback;

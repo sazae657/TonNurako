@@ -28,7 +28,7 @@ namespace TonNurako.Data
         internal static class NativeMethods {
             [DllImport(Native.ExtremeSports.Lib, EntryPoint="XmRenditionCreate_TNK", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true)]
             internal static extern IntPtr XmRenditionCreate(IntPtr widget,
-                [MarshalAs(UnmanagedType.LPStr)] string tag, TonNurako.Xt.NativeXtArg[] arglist, int argcount);
+                [MarshalAs(UnmanagedType.LPStr)] string tag, TonNurako.Xt.XtArgRec[] arglist, int argcount);
 
             [DllImport(Native.ExtremeSports.Lib, EntryPoint="XmRenditionFree_TNK", CharSet=CharSet.Auto)]
             internal static extern void XmRenditionFree(IntPtr rendition);
@@ -37,7 +37,7 @@ namespace TonNurako.Data
             internal static extern void XmRenditionRetrieve(IntPtr rendition, IntPtr[] arglist, int argcount);
 
             [DllImport(Native.ExtremeSports.Lib, EntryPoint="XmRenditionUpdate_TNK", CharSet=CharSet.Auto)]
-            internal static extern void XmRenditionUpdate(IntPtr rendition, TonNurako.Xt.NativeXtArg[] arglist, int argcount);
+            internal static extern void XmRenditionUpdate(IntPtr rendition, TonNurako.Xt.XtArgRec[] arglist, int argcount);
         }
 
         private XResource resource;
@@ -56,7 +56,7 @@ namespace TonNurako.Data
                 return;
             }
             var args =  Resource.ToXtArg();
-            TonNurako.Xt.NativeXtArg[] au = new TonNurako.Xt.NativeXtArg[args.Length];
+            TonNurako.Xt.XtArgRec[] au = new TonNurako.Xt.XtArgRec[args.Length];
             int argc = Native.ExtremeSports.TnkConvertResourceEx(args, au, true);
 
             NativeMethods.XmRenditionUpdate(handle, au, argc);
@@ -79,18 +79,18 @@ namespace TonNurako.Data
         public Rendition(Widgets.IWidget widget) {
             resource = new XResource(null);
             handle = NativeMethods.XmRenditionCreate(widget.Handle.Widget.Handle,
-                        TonNurako.Motif.StringConstant.XmFONTLIST_DEFAULT_TAG, new TonNurako.Xt.NativeXtArg[]{}, 0);
+                        TonNurako.Motif.StringConstant.XmFONTLIST_DEFAULT_TAG, new TonNurako.Xt.XtArgRec[]{}, 0);
         }
 
         public Rendition(Widgets.IWidget widget, string tag) {
             resource = new XResource(null);
-            handle = NativeMethods.XmRenditionCreate(widget.Handle.Widget.Handle, tag, new TonNurako.Xt.NativeXtArg[]{}, 0);
+            handle = NativeMethods.XmRenditionCreate(widget.Handle.Widget.Handle, tag, new TonNurako.Xt.XtArgRec[]{}, 0);
         }
 
 
         public bool Create(Widgets.IWidget widget, string tag = TonNurako.Motif.StringConstant.XmFONTLIST_DEFAULT_TAG) {
             var args =  Resource.ToXtArg();
-            TonNurako.Xt.NativeXtArg[] au = new TonNurako.Xt.NativeXtArg[args.Length];
+            TonNurako.Xt.XtArgRec[] au = new TonNurako.Xt.XtArgRec[args.Length];
             int argc = args.Length;
             if (argc != 0) {
                 argc = Native.ExtremeSports.TnkConvertResourceEx(args, au, true);
