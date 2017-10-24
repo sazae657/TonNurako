@@ -20,6 +20,7 @@ namespace TonNurako.Xt {
             // Widget: XtCreateWidget String:name WidgetClass:widget_class Widget:parent ArgList:args Cardinal:num_args
             [DllImport(ExtremeSports.Lib, EntryPoint = "XtCreateWidget_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XtCreateWidget([MarshalAs(UnmanagedType.LPStr)] string name, [In]IntPtr widget_class, IntPtr parent, IntPtr args, int num_args);
+
         }
 
         public static Widget CreateWidget(string name, CoreWidgetClass widget_class, IWidget parent) {

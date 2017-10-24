@@ -18,6 +18,47 @@ namespace TonNurako.X11 {
         public ModifierMask Mask;
     }
 
+    public class XPointerInfo {
+        internal XQueryPointerRec Record;
+
+        public XPointerInfo() {
+            Record = new XQueryPointerRec();
+        }
+
+        internal Display Display { get; set; }
+
+        public Window Root {
+            get => new Window(Record.Root, Display);
+            set => Record.Root = value.Handle;
+        }
+        public Window Child {
+            get => new Window(Record.Child, Display);
+            set => Record.Child = value.Handle;
+        }
+        public int RootX {
+            get => Record.RootX;
+            set => Record.RootX = value;
+        }
+        public int RootY {
+            get => Record.RootY;
+            set => Record.RootY = value;
+        }
+        public int WinX {
+            get => Record.WinX;
+            set => Record.WinX = value;
+        }
+        public int WinY {
+            get => Record.WinY;
+            set => Record.WinY = value;
+        }
+        public ModifierMask Mask {
+            get => Record.Mask;
+            set => Record.Mask = value;
+        }
+    }
+
+
+
 
     public class Window : IX11Interop, IDrawable {
         ReturnPointerDelegaty delegaty;
@@ -416,17 +457,14 @@ namespace TonNurako.X11 {
             return (new XClassHint(p));
         }
 
-
-
-
-        public bool QueryPointer() {
-            var q = new XQueryPointerRec();
+        public bool QueryPointer(XPointerInfo info) {
+            info.Display = this.Display;
             var r = NativeMethods.XQueryPointer(
                 this.Display.Handle, this.Handle,
-                out q.Root, out q.Child, 
-                out q.RootX, out q.RootY, 
-                out q.WinX, out q.WinY,
-                out q.Mask);
+                out info.Record.Root, out info.Record.Child, 
+                out info.Record.RootX, out info.Record.RootY, 
+                out info.Record.WinX, out info.Record.WinY,
+                out info.Record.Mask);
             return r;
         }
 

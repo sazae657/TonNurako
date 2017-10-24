@@ -233,6 +233,10 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSynchronize_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XSynchronize(IntPtr display, bool onoff);
 
+            // Bool: XTranslateCoordinates Display*:display  Window:src_w  Window:dest_w  int:src_x  int:src_y  int*:dest_x_return  int*:dest_y_return  Window*:child_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XTranslateCoordinates_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int dest_x_return, out int dest_y_return, out IntPtr child_return);
+
         }
         public delegate int XSetAfterFunctionDelegaty();
         public delegate int XSynchronizeDelegaty(IntPtr ptr);
@@ -423,6 +427,15 @@ namespace TonNurako.X11 {
 
         public int AllowEvents(Event.EventMode mode, uint time) => NativeMethods.XAllowEvents(Handle, mode, time);
 
+        public bool TranslateCoordinates(Window src_w, Window dest_w, int src_x, int src_y, XCoordinates coord) {
+            var r = NativeMethods.XTranslateCoordinates(
+                this.Handle, src_w.Handle, dest_w.Handle, src_x, src_y, out coord.destX, out coord.destY, out coord.child);
+            if (r) {
+                coord.Assign(this);
+            }
+            return r;
+        }
+
 
         public Window CreateSimpleWindow(
             Window parent, int x, int y, int width, int height, int border, TonNurako.X11.Color borderColor, TonNurako.X11.Color backgroundColor) {
@@ -456,7 +469,31 @@ namespace TonNurako.X11 {
                 ref attributes.record);
             return (new Window(w, this));
         }
+    }
+    public class XCoordinates {
+        internal IntPtr child = IntPtr.Zero;
 
+        Window window = null;
+        public Window Child =>
+            (child != IntPtr.Zero) ? window : null;
 
+        internal int destX = 0;
+        public int DestX => destX;
+
+        internal int destY = 0;
+        public int DestY => destY;
+
+        public XCoordinates() {
+        }
+
+        internal void Assign(Display display) {
+            if (IntPtr.Zero == child) {
+                return;
+            }
+            if (null == window) {
+                window = new Window();
+            }
+            window.Assign(child, display);
+        }
     }
 }

@@ -8,165 +8,7 @@ using TonNurako.Native;
 using TonNurako.Widgets;
 
 namespace TonNurako.Xt.Core {
-    public delegate void XtProc();
-
-    //
-    // WidgetClass
-    //
-
-    internal delegate void XtWidgetClassProc(IntPtr widgetClass); //WidgetClass
-    public delegate void XtWidgetClassDelegate(CoreWidgetClass widgetClass);
-
-    //
-    // Init
-    //
-
-    internal delegate void XtInitProc(
-      IntPtr request, // Widget
-      IntPtr xnew, // Widget
-      IntPtr argList, //,
-      IntPtr num_args //Cardinal* 
-    );
-
-    public delegate void XtInitDelegate(
-      IWidget request, // Widget
-      IWidget xnew, // Widget
-      XtArg[] argList 
-    );
-
-    //
-    // Args
-    //
-
-    internal delegate void XtArgsProc(
-      IntPtr widget, // Widget
-      IntPtr argList, // ArgList
-      IntPtr num_args //Cardinal* 
-    );
-
-    public delegate void XtArgsDelegate(
-      IWidget widget, // Widget
-      XtArg[] argList // ArgList
-    );
-
-    //
-    // Realise
-    //
-
-    internal delegate void XtRealizeProc(
-          IntPtr widget,
-          IntPtr mask, //XtValueMask*
-          IntPtr attributes //XSetWindowAttributes
-      );
-    public delegate void XtRealizeDelegate(
-          IWidget widget,
-          X11.ChangeWindowAttributes mask, //XtValueMask*
-          X11.XSetWindowAttributes attributes //XSetWindowAttributes
-      );
-
-
-    //
-    // Widget
-    //
-
-    internal delegate void XtWidgetProc(
-          IntPtr widget
-      );
-
-    public delegate void XtWidgetDelegate(
-          IWidget widget
-      );
-
-    //
-    // Expose
-    // 
-    internal delegate void XtExposeProc(
-          IntPtr widget,
-          IntPtr xevent, //XEvent
-          IntPtr region // Region
-      );
-
-    public delegate void XtExposeDelegate(
-          IWidget widget,
-          X11.Event.XEventArg xevent, //XEvent
-          X11.Region region // Region
-      );
-
-    //
-    // SetValuesFunc
-    // 
-    internal delegate void XtSetValuesFunc(
-        IntPtr old, // Widget
-        IntPtr request,// Widget
-        IntPtr xnew,// Widget
-        IntPtr args, //ArgList
-        IntPtr num_args // Cardinal*
-    );
-
-    public delegate void XtSetValuesDelegate(
-        IWidget old, // Widget
-        IWidget request,// Widget
-        IWidget xnew,// Widget
-        XtArg[] args //ArgList
-    );
-
-    //
-    // Almost
-    // 
-    internal delegate void XtAlmostProc(
-          IntPtr old, //Widget
-          IntPtr xnew, //Widget
-          IntPtr request, //XtWidgetGeometry*
-          IntPtr reply //XtWidgetGeometry*
-      );
-
-    public delegate XtWidgetGeometry XtAlmostDelegate (
-          IWidget old, //Widget
-          IWidget xnew, //Widget
-          XtWidgetGeometry request //XtWidgetGeometry*
-    );
-
-    //
-    // AcceptFocus
-    //
-
-    internal delegate bool XtAcceptFocusProc(
-       IntPtr widget, //Widget
-       IntPtr time // Time*
-    );
-
-    public delegate bool XtAcceptFocusDelegate(
-        IWidget widget, //Widget
-        int time // Time*
-    );
-
-    //
-    // Geometry
-    //
-    internal delegate void XtGeometryHandler(
-          IntPtr widget, //Widget
-          IntPtr request, //XtWidgetGeometry*
-          IntPtr reply //XtWidgetGeometry*
-      );
-    public delegate XtWidgetGeometry XtGeometryHandlerDelegate(
-          IWidget widget, //Widget
-          XtWidgetGeometry request //XtWidgetGeometry*
-      );
-
-    //
-    // String
-    //
-    internal delegate void XtStringProc(
-          IntPtr widget,//Widget
-          IntPtr str //String
-    );
-
-    public delegate void XtStringProcDelegate(
-          IWidget widget,//Widget
-          string str //String
-    );
-
-
+        
     [StructLayout(LayoutKind.Sequential)]
     internal struct CoreClassPart {
         public IntPtr superclass;     // WidgetClassRec
@@ -197,7 +39,7 @@ namespace TonNurako.Xt.Core {
         [MarshalAs(UnmanagedType.FunctionPtr)] public XtAcceptFocusProc accept_focus;
         public ulong version;  //XtVersionType
         public IntPtr callback_private; //XtPointer
-        [MarshalAs(UnmanagedType.LPStr)] public string tm_table;
+        public IntPtr tm_table;
         [MarshalAs(UnmanagedType.FunctionPtr)] public XtGeometryHandler query_geometry;
         [MarshalAs(UnmanagedType.FunctionPtr)] public XtStringProc display_accelerator;
         public IntPtr extension;     // IntPtr
@@ -206,6 +48,7 @@ namespace TonNurako.Xt.Core {
     [StructLayout(LayoutKind.Sequential)]
     internal struct WidgetClass {
         public CoreClassPart core_class;
+        public ulong dummy;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -240,9 +83,12 @@ namespace TonNurako.Xt.Core {
             // void: TNK_GetXtInheritance XtInheritTNK*:p
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_GetXtInheritance", CharSet = CharSet.Auto)]
             internal static extern void TNK_GetXtInheritance(ref XtInheritTNK p);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_InitializeXtWidgetClass", CharSet = CharSet.Auto)]
+            internal static extern void TNK_InitializeXtWidgetClass(ref CoreClassPart p);
+
         }
         public static CoreWidgetClass GetDefaultSuperClass() {
-
             var inh = new XtInheritTNK();
             NativeMethods.TNK_GetXtInheritance(ref inh);
             var p = NativeMethods.TNK_GetUltraSuperWidgetClass();
@@ -252,8 +98,9 @@ namespace TonNurako.Xt.Core {
         public CoreWidgetClass() {
             isPounterAllocated = true;
             pounter = Marshal.AllocCoTaskMem(Marshal.SizeOf<WidgetClass>());
+            Record = new WidgetClass();
+            NativeMethods.TNK_InitializeXtWidgetClass(ref Record.core_class);
             WidgetSize = Marshal.SizeOf<WidgetClass>();
-            Version = (ulong)TonNurako.X11.Constant.XtVersion;
         }
 
         internal CoreWidgetClass(IntPtr ptr) {
@@ -273,7 +120,6 @@ namespace TonNurako.Xt.Core {
             get {
                 if (isPounterAllocated) {
                     Marshal.StructureToPtr<WidgetClass>(Record, pounter, false);
-                    //throw new Exception("isPounterAllocated == true");
                 }
                 return pounter;
             }
@@ -309,6 +155,7 @@ namespace TonNurako.Xt.Core {
             if (null == classPartInitialize) {
                 return;
             }
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             classPartInitialize(new CoreWidgetClass(widgetClass));
         }
 
@@ -335,11 +182,12 @@ namespace TonNurako.Xt.Core {
           IntPtr request, // Widget
           IntPtr xnew, // Widget
           IntPtr argList, //,
-          IntPtr num_args //Cardinal* 
+          IntPtr num_args //Cardinal*
         ) {
             if (null == xtInitialize) {
                 return;
             }
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             xtInitialize(
                 new ﾄﾝﾇﾗｼﾞｪｯﾄ(request, null),
                 new ﾄﾝﾇﾗｼﾞｪｯﾄ(xnew, null),
@@ -362,6 +210,9 @@ namespace TonNurako.Xt.Core {
         }
 
         XtArg[] ConvertArgList(IntPtr argList, IntPtr num_args) {
+            if (argList == IntPtr.Zero) {
+                return null;
+            }
             int cnt = Marshal.ReadInt32(num_args);
             var ret = new XtArg[cnt];
             var arr = TonNurako.Inutility.MarshalHelper.ToStructArray<XtArgRec>(argList, cnt);
@@ -376,6 +227,8 @@ namespace TonNurako.Xt.Core {
             if (null == setValuesHook) {
                 return;
             }
+
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             initializeHook(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), ConvertArgList(argList, num_args));
         }
 
@@ -404,6 +257,7 @@ namespace TonNurako.Xt.Core {
             if (null == xtRealize) {
                 return;
             }
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             xtRealize(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null),
                 (X11.ChangeWindowAttributes)Marshal.ReadInt32(mask), new X11.XSetWindowAttributes(attributes));
         }
@@ -465,6 +319,8 @@ namespace TonNurako.Xt.Core {
             if (null == xtDestroy) {
                 return;
             }
+
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             xtDestroy(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null));
         }
         XtWidgetDelegate xtDestroy;
@@ -485,6 +341,7 @@ namespace TonNurako.Xt.Core {
             if (null == xtResize) {
                 return;
             }
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             xtResize(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null));
         }
         XtWidgetDelegate xtResize;
@@ -493,7 +350,7 @@ namespace TonNurako.Xt.Core {
             set {
                 xtResize = value;
                 if (null != xtResize) {
-                    Record.core_class.resize = xtResizeImp;
+                    Record.core_class.resize =  xtResizeImp;
                 }
                 else {
                     Record.core_class.resize = null;
@@ -507,6 +364,7 @@ namespace TonNurako.Xt.Core {
               IntPtr xevent, //XEvent
               IntPtr region // Region
           ) {
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             xtExpose(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null),
                 new X11.Event.XEventArg(xevent),
                 new X11.Region(region));
@@ -527,14 +385,15 @@ namespace TonNurako.Xt.Core {
         }
 
 
-        void xtSetValuesImp(
+        bool xtSetValuesImp(
             IntPtr old, // Widget
             IntPtr request,// Widget
             IntPtr xnew,// Widget
             IntPtr args, //ArgList
             IntPtr num_args // Cardinal*
         ) {
-            xtSetValues(new ﾄﾝﾇﾗｼﾞｪｯﾄ(old, null),
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
+            return xtSetValues(new ﾄﾝﾇﾗｼﾞｪｯﾄ(old, null),
                 new ﾄﾝﾇﾗｼﾞｪｯﾄ(request, null),
                 new ﾄﾝﾇﾗｼﾞｪｯﾄ(xnew, null),
                 ConvertArgList(args, num_args));
@@ -560,6 +419,7 @@ namespace TonNurako.Xt.Core {
             if (null == setValuesHook) {
                 return;
             }
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             setValuesHook(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), ConvertArgList(argList, num_args));
         }
 
@@ -587,7 +447,7 @@ namespace TonNurako.Xt.Core {
             //IWidget old, //Widget
             //IWidget xnew, //Widget
             //XtWidgetGeometry request //XtWidgetGeometry*
-
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             // TODO:replyへのﾏーｼｬﾘﾝｸﾞ
             var k = xtSetValuesAlmost(new ﾄﾝﾇﾗｼﾞｪｯﾄ(old, null), new ﾄﾝﾇﾗｼﾞｪｯﾄ(xnew, null), new XtWidgetGeometry(request));
             throw new NotImplementedException("replyできてない");
@@ -612,6 +472,7 @@ namespace TonNurako.Xt.Core {
             if (null == getValuesHook) {
                 return;
             }
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             getValuesHook(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), ConvertArgList(argList, num_args));
         }
         public XtArgsDelegate GetValuesHook {
@@ -631,6 +492,7 @@ namespace TonNurako.Xt.Core {
            IntPtr widget, //Widget
            IntPtr time // Time*
         ) {
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             return xtAcceptFocus(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), Marshal.ReadInt32(time));
         }
 
@@ -659,7 +521,7 @@ namespace TonNurako.Xt.Core {
             set => Record.core_class.callback_private = value;
         }
 
-        public string TmTable {
+        public IntPtr TmTable {
             get => Record.core_class.tm_table;
             set => Record.core_class.tm_table = value;
         }
@@ -673,6 +535,7 @@ namespace TonNurako.Xt.Core {
             //IWidget widget, //Widget
             //XtWidgetGeometry request, //XtWidgetGeometry*
             //XtWidgetGeometry reply //XtWidgetGeometry*
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             xtQueryGeometry(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null),
                 new XtWidgetGeometry(request));
             throw new NotImplementedException("replyできてない");
@@ -700,6 +563,7 @@ namespace TonNurako.Xt.Core {
               IntPtr widget,//Widget
               IntPtr str //String
         ) {
+            Console.WriteLine("Call: " + System.Reflection.MethodBase.GetCurrentMethod().Name);
             xtDisplayAccelerator(new ﾄﾝﾇﾗｼﾞｪｯﾄ(widget, null), Marshal.PtrToStringAnsi(str));
         }
 
@@ -727,9 +591,13 @@ namespace TonNurako.Xt.Core {
         #region IDisposable Support
         private bool disposedValue = false;
 
+        public virtual void PrepareDispose() {
+        }
+
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 disposedValue = true;
+                PrepareDispose();
                 if (isPounterAllocated && IntPtr.Zero != Pounter) {
                     Marshal.FreeCoTaskMem(pounter);
                     pounter = IntPtr.Zero;

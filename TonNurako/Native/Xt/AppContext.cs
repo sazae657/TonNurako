@@ -54,9 +54,14 @@ namespace TonNurako.Xt {
         }
     }
 
+    internal delegate void XtTimerCallbackProc(
+        XtTimerCallbackDelegate closure, //XtPointer
+        IntPtr id //XtIntervalId*
+    );
+
+    public delegate void XtTimerCallbackDelegate(ulong id);
+
     public class XtAppContext : IX11Interop {
-
-
         #region NativeMethods
         internal static class NativeMethods {
 
@@ -76,6 +81,17 @@ namespace TonNurako.Xt {
             // void: XtAppAddActions XtAppContext:app_context XtActionList:actions Cardinal:num_actions
             [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppAddActions_TNK", CharSet = CharSet.Auto)]
             internal static extern void XtAppAddActions(IntPtr app_context, [MarshalAs(UnmanagedType.LPArray)]XtActionsRec[] actions, int num_actions);
+
+
+            // XtIntervalId: XtAppAddTimeOut XtAppContext:app_context  long:interval  XtTimerCallbackProc:proc  XtPointer:client_data  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppAddTimeOut_TNK", CharSet = CharSet.Auto)]
+            internal static extern ulong XtAppAddTimeOut(
+                IntPtr app_context, long interval, [MarshalAs(UnmanagedType.FunctionPtr)]XtTimerCallbackProc proc, [MarshalAs(UnmanagedType.FunctionPtr)]XtTimerCallbackDelegate client_data);
+
+            // void: XtRemoveTimeOut XtIntervalId:timer  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtRemoveTimeOut_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XtRemoveTimeOut(ulong timer);
+
 
             /*
             // void: XtAugmentTranslations Widget:w XtTranslations:translations
@@ -102,5 +118,19 @@ namespace TonNurako.Xt {
             handle = ptr;
         }
 
+        void xtTimerCallbackProc(
+            XtTimerCallbackDelegate closure, //XtPointer
+            IntPtr id //XtIntervalId*
+        ) {
+            closure((ulong)Marshal.ReadInt64(id));
+        }
+
+        public ulong XtAppAddTimeOut(long interval, XtTimerCallbackDelegate proc) {
+            return NativeMethods.XtAppAddTimeOut(this.handle, interval, xtTimerCallbackProc, proc);
+        }
+
+        public void XtRemoveTimeOut(ulong timer) {
+            NativeMethods.XtRemoveTimeOut(timer);
+        }
     }
 }

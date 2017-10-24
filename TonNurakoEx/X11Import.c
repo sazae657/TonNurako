@@ -37,6 +37,10 @@ TNK_EXPORT  XWMHints *XAllocWMHints_TNK() {
     return XAllocWMHints();
 }
 
+TNK_EXPORT Bool XTranslateCoordinates_TNK(Display* display, Window src_w, Window dest_w, int src_x, int src_y, int* dest_x_return, int* dest_y_return, Window* child_return) {
+    return XTranslateCoordinates(display,src_w,dest_w,src_x,src_y,dest_x_return,dest_y_return,child_return);
+}
+
 TNK_EXPORT Status XSetClassHint_TNK(Display* display, Window w, XClassHint* class_hints) {
     return XSetClassHint(display,w,class_hints);
 }

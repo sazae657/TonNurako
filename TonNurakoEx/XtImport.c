@@ -397,10 +397,16 @@ XtNameToWidget_TNK(Widget parent, String name)
     return XtNameToWidget(parent, name);
 }
 
-TNK_EXPORT void
-XtRealizeWidget_TNK(Widget w) {
+TNK_EXPORT void XtRealizeWidget_TNK(Widget w) {
     XtRealizeWidget(w);
 }
+TNK_EXPORT Boolean XtIsRealized_TNK(Widget w) {
+    return XtIsRealized(w);
+}
+TNK_EXPORT void XtUnrealizeWidget_TNK(Widget w) {
+    XtUnrealizeWidget(w);
+}
+
 
 TNK_EXPORT void
 XtManageChild_TNK(Widget w) {

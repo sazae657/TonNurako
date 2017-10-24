@@ -157,7 +157,10 @@ namespace TonNurako.X11 {
             set { record.override_redirect = value; }
         }
 
-        //public IntPtr colormap; // Colormap
+        public int colormap { // Colormap
+            get { return record.colormap; }
+            set { record.colormap = value; }
+        }
 
         //public int cursor; // Cursor
         public int cursor {

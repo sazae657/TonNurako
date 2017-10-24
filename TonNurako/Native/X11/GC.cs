@@ -262,6 +262,12 @@ namespace TonNurako.X11
         Display Display { get; } 
     }
 
+    /// <summary>
+    /// gc破棄ﾊﾝﾄﾞﾗー
+    /// </summary>
+    /// <param name="gc"></param>
+    public delegate void DispseGCDelegate(GC gc);
+
     public class GC : IX11Interop, IDisposable {
         internal static class NativeMethods {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XmbDrawString_TNK", CharSet = CharSet.Auto)]
@@ -287,6 +293,9 @@ namespace TonNurako.X11
 
         bool autoDispose = false;
         public bool AutoDispose => autoDispose;
+
+
+        public DispseGCDelegate DispseGCDelegate { get; set; } = null;
 
         public GC() {
         }
@@ -355,6 +364,13 @@ namespace TonNurako.X11
                 return;
             }
             TonNurako.X11.Xi.XSetForeground(Display, Handle, color.Pixel);
+        }
+
+        public void SetForeground(ulong color) {
+            if (Handle == IntPtr.Zero) {
+                return;
+            }
+            TonNurako.X11.Xi.XSetForeground(Display, Handle, color);
         }
 
         public void CopyArea(IDrawable dest, int x, int y, int w, int h, int dx, int dy) {
@@ -459,6 +475,20 @@ namespace TonNurako.X11
         }
 
         /// <summary>
+        /// 塗りつぶし矩形の描画(2)
+        /// </summary>
+        /// <param name="drawable">drawable</param>
+        /// <param name="x">左上角X座標</param>
+        /// <param name="y">左上角Y座標</param>
+        /// <param name="w">幅</param>
+        /// <param name="h">高さ</param>
+        public void FillRectangle(IDrawable drawable, int x, int y, int w, int h) {
+            if (Handle != IntPtr.Zero) {
+                TonNurako.X11.Xi.XFillRectangle(drawable.Display, drawable.Drawable, Handle, x, y, (uint)w, (uint)h);
+            }
+        }
+
+        /// <summary>
         /// 複数の塗りつぶし矩形の描画
         /// </summary>
         /// <param name="rects">矩形の定義</param>
@@ -513,6 +543,23 @@ namespace TonNurako.X11
         }
 
         /// <summary>
+        /// 塗りつぶし円弧の描画(2)
+        /// </summary>
+        /// <param name="drawable">drawable</param>
+        /// <param name="x">左上角X座標</param>
+        /// <param name="y">左上角Y座標</param>
+        /// <param name="w">幅</param>
+        /// <param name="h">高さ</param>
+        /// <param name="startAngle">開始角(度数*64)</param>
+        /// <param name="sweepAngle">角度(度数*64)</param>
+        public void FillArc(IDrawable drawable, int x, int y, int w, int h, int startAngle, int sweepAngle) {
+            if (Handle != IntPtr.Zero) {
+                TonNurako.X11.Xi.XFillArc(drawable.Display, drawable.Drawable, Handle,
+                    x, y, (uint)w, (uint)h, startAngle, sweepAngle);
+            }
+        }
+
+        /// <summary>
         /// 複数の塗りつぶし円弧の描画
         /// </summary>
         /// <param name="arcs">円弧の定義</param>
@@ -550,7 +597,12 @@ namespace TonNurako.X11
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (handle != IntPtr.Zero && autoDispose == true) {
-                    Xi.XFreeGC(display, handle);
+                    if (null != DispseGCDelegate) {
+                        DispseGCDelegate(this);
+                    }
+                    else {
+                        Xi.XFreeGC(display, handle);
+                    }
                     handle = IntPtr.Zero;
                 }
                 disposedValue = true;
@@ -602,119 +654,113 @@ namespace TonNurako.X11
     /// XGCValues
     /// </summary>
     public class XGCValues {
-        private XGCValuesRec values;
-        internal XGCValuesRec Record {
-            get {
-                return values;
-            }
-            set {
-                values = value;
-            }
-        }
+        internal XGCValuesRec Record;
+
+
         public XGCValues() {
-            values = new XGCValuesRec();
+            Record = new XGCValuesRec();
         }
 
         public int Function {
-            get { return values.function; }
-            set { values.function = value; }
+            get { return Record.function; }
+            set { Record.function = value; }
         }
 
         public ulong PlaneMask {
-            get { return values.plane_mask; }
-            set { values.plane_mask = value; }
+            get { return Record.plane_mask; }
+            set { Record.plane_mask = value; }
         }
 
         public ulong Foreground {
-            get { return values.foreground; }
-            set { values.foreground = value; }
+            get { return Record.foreground; }
+            set { Record.foreground = value; }
         }
 
         public ulong Background {
-            get { return values.background; }
-            set { values.background = value; }
+            get { return Record.background; }
+            set { Record.background = value; }
         }
 
         public int LineWidth {
-            get { return values.line_width; }
-            set { values.line_width = value; }
+            get { return Record.line_width; }
+            set { Record.line_width = value; }
         }
 
         public LineStyle line_style {
-            get { return values.line_style; }
-            set { values.line_style = value; }
+            get { return Record.line_style; }
+            set { Record.line_style = value; }
         }
 
         public CapStyle cap_style {
-            get { return values.cap_style; }
-            set { values.cap_style = value; }
+            get { return Record.cap_style; }
+            set { Record.cap_style = value; }
         }
 
         public JoinStyle join_style {
-            get { return values.join_style; }
-            set { values.join_style = value; }
+            get { return Record.join_style; }
+            set { Record.join_style = value; }
         }
 
         public FillStyle fill_style {
-            get { return values.fill_style; }
-            set { values.fill_style = value; }
+            get { return Record.fill_style; }
+            set { Record.fill_style = value; }
         }
 
         public FillRule fill_rule {
-            get { return values.fill_rule; }
-            set { values.fill_rule = value; }
+            get { return Record.fill_rule; }
+            set { Record.fill_rule = value; }
         }
 
         public ArcMode arc_mode {
-            get { return values.arc_mode; }
-            set { values.arc_mode = value; }
+            get { return Record.arc_mode; }
+            set { Record.arc_mode = value; }
         }
 
         //public System.IntPtr tile; // Pixmap
         // public System.IntPtr stipple; // Pixmap
 
         public int ts_x_origin {
-            get { return values.ts_x_origin; }
-            set { values.ts_x_origin = value; }
+            get { return Record.ts_x_origin; }
+            set { Record.ts_x_origin = value; }
         }
 
         public int ts_y_origin {
-            get { return values.ts_y_origin; }
-            set { values.ts_y_origin = value; }
+            get { return Record.ts_y_origin; }
+            set { Record.ts_y_origin = value; }
         }
 
         // public int font; // Font
 
         public SubWindowMode subwindow_mode {
-            get { return values.subwindow_mode; }
-            set { values.subwindow_mode = value; }
+            get { return Record.subwindow_mode; }
+            set { Record.subwindow_mode = value; }
         }
 
         public bool graphics_exposures {
-            get { return values.graphics_exposures; }
-            set { values.graphics_exposures = value; }
+            get { return Record.graphics_exposures; }
+            set { Record.graphics_exposures = value; }
         }
 
         public int clip_x_origin {
-            get { return values.clip_x_origin; }
-            set { values.clip_x_origin = value; }
+            get { return Record.clip_x_origin; }
+            set { Record.clip_x_origin = value; }
         }
 
         public int clip_y_origin {
-            get { return values.clip_y_origin; }
-            set { values.clip_y_origin = value; }
+            get { return Record.clip_y_origin; }
+            set { Record.clip_y_origin = value; }
         }
 
         // public System.IntPtr clip_mask; // Pixmap
 
         public int dash_offset {
-            get { return values.dash_offset; }
-            set { values.dash_offset = value; }
+            get { return Record.dash_offset; }
+            set { Record.dash_offset = value; }
         }
 
         public byte dashes {
-            get { return values.dashes; }
-            set { values.dashes = value; }
+            get { return Record.dashes; }
+            set { Record.dashes = value; }
         }
 
     }
