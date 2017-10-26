@@ -51,16 +51,6 @@ namespace TonNurako.Xt.Core {
         public ulong dummy;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct XtResource {
-        [MarshalAs(UnmanagedType.LPStr)] public string resource_name;
-        [MarshalAs(UnmanagedType.LPStr)] public string resource_class;
-        [MarshalAs(UnmanagedType.LPStr)] public string resource_type;
-        public int resource_size;
-        public int resource_offset;
-        [MarshalAs(UnmanagedType.LPStr)] public string default_type;
-        public IntPtr default_addr; //XtPointer
-    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct XtInheritTNK {

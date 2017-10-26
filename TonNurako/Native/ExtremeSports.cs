@@ -392,7 +392,7 @@ namespace TonNurako.Native {
  		public static TonNurako.X11.XColor XParseColor(IWidget widget, string name)
 		{
             var color = new TonNurako.X11.XColor();
-			color.pixel = NativeMethods.TNK_IMP_Xt_XParseColorM(widget.Handle.Widget.Handle, name);
+			color.Pixel = NativeMethods.TNK_IMP_Xt_XParseColorM(widget.Handle.Widget.Handle, name);
 
             return color;
 		}

@@ -315,7 +315,7 @@ namespace TonNurako.Data
 		{
             ulong pixel = val.Pixel;
             if (null != Widget) {
-                pixel = val.ToXColor(Widget).pixel;
+                pixel = val.ToXColor(Widget).Pixel;
             }
 			//ﾘｿーｽの保持用
 			TonNurako.Xt.Arg args = new TonNurako.Xt.Arg(ToolkitOptionAttribute.GetToolkitName(arg) , pixel);

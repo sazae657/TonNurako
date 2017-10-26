@@ -47,7 +47,7 @@ namespace TonNurako.Widgets {
         /// <param name="context"></param>
         /// <param name="args">ｺﾏﾝﾄﾞﾗｲﾝ引数</param>
 		/// <returns></returns>
-		internal int CreateShell(ApplicationContext context, String[] args )
+		internal int CreateShell(ApplicationContext context, string[] args )
 		{
             InitialzieShell(context);
 

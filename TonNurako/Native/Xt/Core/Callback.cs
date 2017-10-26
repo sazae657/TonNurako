@@ -28,24 +28,15 @@ namespace TonNurako.Xt.Core {
          IntPtr      continue_to_dispatch //Boolean*
         );
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct XtEventRec {
-        IntPtr next; //XtEventTable = XtEventRec*
-        [MarshalAs(UnmanagedType.U8)]TonNurako.X11.EventMask mask;
-        [MarshalAs(UnmanagedType.FunctionPtr)] XtEventHandler proc;
-        IntPtr closure;
-        uint bf; //TODO: ↓ おう、勘弁してくれよ
-        //uint select:1;
-       // uint has_type_specifier:1;
-       // uint async:1; 
-    }
 
-    internal struct XtTMRec {
-     //   XtTranslations translations;    /* private to Translation Manager    */
-     //   XtBoundActions proc_table;      /* procedure bindings for actions    */
-     //   struct _XtStateRec *current_state;  /* Translation Manager state ptr     */
-        ulong lastEventTime;
-    }
+    internal delegate void XtActionProc(
+          IntPtr   widget,
+          IntPtr   xevent , //XEvent*
+          IntPtr   xparams, //String*
+          IntPtr   num_params //Cardinal*
+    );
+
+
     //
     // WidgetClass
     //

@@ -256,7 +256,7 @@ namespace TonNurako.Xt {
 
         public Arg(string _Name, TonNurako.X11.XColor _Val) {
             name = _Name;
-            color = _Val.pixel;
+            color = _Val.Pixel;
 
             type = XtArgType.Color;
 

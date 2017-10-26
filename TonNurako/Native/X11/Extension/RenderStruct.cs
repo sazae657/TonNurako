@@ -247,6 +247,12 @@ namespace TonNurako.X11.Extension {
             Blue    = b;
             Alpha   = a;
         }
+        public XRenderColor(Color color, ushort alpha) {
+            Red = color.Red;
+            Green = color.Green;
+            Blue = color.Blue;
+            Alpha = alpha;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -288,7 +294,7 @@ namespace TonNurako.X11.Extension {
 
     [StructLayout(LayoutKind.Sequential)]
     public struct XPointDouble {
-        public double x, y;
+        public double X, Y;
     }
 
     [StructLayout(LayoutKind.Sequential)]

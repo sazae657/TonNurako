@@ -66,3 +66,66 @@ TNK_EXPORT void XtRemoveTimeOut_TNK(XtIntervalId timer) {
 TNK_EXPORT Widget XtParent_TNK(Widget w) {
     return XtParent(w);
 }
+
+Widget GetWidgetRecSelf(WidgetRec* ptr) { return ptr->core.self; }
+void SetWidgetRecSelf(WidgetRec* ptr, Widget value) { ptr->core.self = value; }
+WidgetClass GetWidgetRecWidgetClass(WidgetRec* ptr) { return ptr->core.widget_class; }
+void SetWidgetRecWidgetClass(WidgetRec* ptr, WidgetClass value) { ptr->core.widget_class = value; }
+Widget GetWidgetRecParent(WidgetRec* ptr) { return ptr->core.parent; }
+void SetWidgetRecParent(WidgetRec* ptr, Widget value) { ptr->core.parent = value; }
+XrmName GetWidgetRecXrmName(WidgetRec* ptr) { return ptr->core.xrm_name; }
+void SetWidgetRecXrmName(WidgetRec* ptr, XrmName value) { ptr->core.xrm_name = value; }
+Boolean GetWidgetRecBeingDestroyed(WidgetRec* ptr) { return ptr->core.being_destroyed; }
+void SetWidgetRecBeingDestroyed(WidgetRec* ptr, Boolean value) { ptr->core.being_destroyed = value; }
+XtCallbackList GetWidgetRecDestroyCallbacks(WidgetRec* ptr) { return ptr->core.destroy_callbacks; }
+void SetWidgetRecDestroyCallbacks(WidgetRec* ptr, XtCallbackList value) { ptr->core.destroy_callbacks = value; }
+XtPointer GetWidgetRecConstraints(WidgetRec* ptr) { return ptr->core.constraints; }
+void SetWidgetRecConstraints(WidgetRec* ptr, XtPointer value) { ptr->core.constraints = value; }
+Position GetWidgetRecX(WidgetRec* ptr) { return ptr->core.x; }
+void SetWidgetRecX(WidgetRec* ptr, Position value) { ptr->core.x = value; }
+Position GetWidgetRecY(WidgetRec* ptr) { return ptr->core.y; }
+void SetWidgetRecY(WidgetRec* ptr, Position value) { ptr->core.y = value; }
+Dimension GetWidgetRecWidth(WidgetRec* ptr) { return ptr->core.width; }
+void SetWidgetRecWidth(WidgetRec* ptr, Dimension value) { ptr->core.width = value; }
+Dimension GetWidgetRecHeight(WidgetRec* ptr) { return ptr->core.height; }
+void SetWidgetRecHeight(WidgetRec* ptr, Dimension value) { ptr->core.height = value; }
+Dimension GetWidgetRecBorderWidth(WidgetRec* ptr) { return ptr->core.border_width; }
+void SetWidgetRecBorderWidth(WidgetRec* ptr, Dimension value) { ptr->core.border_width = value; }
+Boolean GetWidgetRecManaged(WidgetRec* ptr) { return ptr->core.managed; }
+void SetWidgetRecManaged(WidgetRec* ptr, Boolean value) { ptr->core.managed = value; }
+Boolean GetWidgetRecSensitive(WidgetRec* ptr) { return ptr->core.sensitive; }
+void SetWidgetRecSensitive(WidgetRec* ptr, Boolean value) { ptr->core.sensitive = value; }
+Boolean GetWidgetRecAncestorSensitive(WidgetRec* ptr) { return ptr->core.ancestor_sensitive; }
+void SetWidgetRecAncestorSensitive(WidgetRec* ptr, Boolean value) { ptr->core.ancestor_sensitive = value; }
+XtEventTable GetWidgetRecEventTable(WidgetRec* ptr) { return ptr->core.event_table; }
+void SetWidgetRecEventTable(WidgetRec* ptr, XtEventTable value) { ptr->core.event_table = value; }
+XtTMRec GetWidgetRecTm(WidgetRec* ptr) { return ptr->core.tm; }
+void SetWidgetRecTm(WidgetRec* ptr, XtTMRec value) { ptr->core.tm = value; }
+XtTranslations GetWidgetRecAccelerators(WidgetRec* ptr) { return ptr->core.accelerators; }
+void SetWidgetRecAccelerators(WidgetRec* ptr, XtTranslations value) { ptr->core.accelerators = value; }
+Pixel GetWidgetRecBorderPixel(WidgetRec* ptr) { return ptr->core.border_pixel; }
+void SetWidgetRecBorderPixel(WidgetRec* ptr, Pixel value) { ptr->core.border_pixel = value; }
+Pixmap GetWidgetRecBorderPixmap(WidgetRec* ptr) { return ptr->core.border_pixmap; }
+void SetWidgetRecBorderPixmap(WidgetRec* ptr, Pixmap value) { ptr->core.border_pixmap = value; }
+WidgetList GetWidgetRecPopupList(WidgetRec* ptr) { return ptr->core.popup_list; }
+void SetWidgetRecPopupList(WidgetRec* ptr, WidgetList value) { ptr->core.popup_list = value; }
+Cardinal GetWidgetRecNumPopups(WidgetRec* ptr) { return ptr->core.num_popups; }
+void SetWidgetRecNumPopups(WidgetRec* ptr, Cardinal value) { ptr->core.num_popups = value; }
+String GetWidgetRecName(WidgetRec* ptr) { return ptr->core.name; }
+void SetWidgetRecName(WidgetRec* ptr, String value) { ptr->core.name = value; }
+Screen* GetWidgetRecScreen(WidgetRec* ptr) { return ptr->core.screen; }
+void SetWidgetRecScreen(WidgetRec* ptr, Screen* value) { ptr->core.screen = value; }
+Colormap GetWidgetRecColormap(WidgetRec* ptr) { return ptr->core.colormap; }
+void SetWidgetRecColormap(WidgetRec* ptr, Colormap value) { ptr->core.colormap = value; }
+Window GetWidgetRecWindow(WidgetRec* ptr) { return ptr->core.window; }
+void SetWidgetRecWindow(WidgetRec* ptr, Window value) { ptr->core.window = value; }
+Cardinal GetWidgetRecDepth(WidgetRec* ptr) { return ptr->core.depth; }
+void SetWidgetRecDepth(WidgetRec* ptr, Cardinal value) { ptr->core.depth = value; }
+Pixel GetWidgetRecBackgroundPixel(WidgetRec* ptr) { return ptr->core.background_pixel; }
+void SetWidgetRecBackgroundPixel(WidgetRec* ptr, Pixel value) { ptr->core.background_pixel = value; }
+Pixmap GetWidgetRecBackgroundPixmap(WidgetRec* ptr) { return ptr->core.background_pixmap; }
+void SetWidgetRecBackgroundPixmap(WidgetRec* ptr, Pixmap value) { ptr->core.background_pixmap = value; }
+Boolean GetWidgetRecVisible(WidgetRec* ptr) { return ptr->core.visible; }
+void SetWidgetRecVisible(WidgetRec* ptr, Boolean value) { ptr->core.visible = value; }
+Boolean GetWidgetRecMappedWhenManaged(WidgetRec* ptr) { return ptr->core.mapped_when_managed; }
+void SetWidgetRecMappedWhenManaged(WidgetRec* ptr, Boolean value) { ptr->core.mapped_when_managed = value; }

@@ -134,7 +134,7 @@ namespace TonNurako.GC
             if (gc == null) {
                 return;
             }
-            TonNurako.X11.Xi.XSetForeground(Display, gc.Handle, color.pixel);
+            TonNurako.X11.Xi.XSetForeground(Display, gc.Handle, color.Pixel);
         }
 
         public void SetForeground(TonNurako.GC.Color color) {

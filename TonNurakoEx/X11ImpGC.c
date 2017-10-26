@@ -83,3 +83,16 @@ TNK_EXPORT Region XPolygonRegion_TNK(XPoint points[], int n, int fill_rule) {
 TNK_EXPORT int XClipBox_TNK(Region r, XRectangle* rect_return) {
     return XClipBox(r,rect_return);
 }
+
+TNK_EXPORT int XQueryColor_TNK(Display* display, Colormap colormap, XColor* def_in_out) {
+    return XQueryColor(display,colormap,def_in_out);
+}
+TNK_EXPORT int XQueryColors_TNK(Display* display, Colormap colormap, XColor defs_in_out[], int ncolors) {
+    return XQueryColors(display,colormap,defs_in_out,ncolors);
+}
+TNK_EXPORT Status XLookupColor_TNK(Display* display, Colormap colormap, char* color_name, XColor* exact_def_return, XColor* screen_def_return) {
+    return XLookupColor(display,colormap,color_name,exact_def_return,screen_def_return);
+}
+TNK_EXPORT Status XParseColor_TNK(Display* display, Colormap colormap, char* spec, XColor* exact_def_return) {
+    return XParseColor(display,colormap,spec,exact_def_return);
+}
