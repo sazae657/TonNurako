@@ -45,7 +45,7 @@ namespace TonNurako.GC
 
         public Color(TonNurako.Widgets.IWidget widget, string xcolor) {
             TonNurako.X11.XColor c = Native.ExtremeSports.XParseColor(widget, xcolor);
-            SetWidgetColor((uint)c.pixel);
+            SetWidgetColor((uint)c.Pixel);
             this.Display = widget.Handle.Display;
         }
 

@@ -32,8 +32,8 @@ namespace TonNurako.X11.Extension {
         public int type; // int
         public ulong serial; // unsigned long
         [MarshalAs(UnmanagedType.U1)]  public  bool send_event; // Bool
-        public IntPtr display; // Display*
-        public IntPtr window; // Window
+        internal IntPtr display; // Display*
+        internal IntPtr window; // Window
         public int kind; // int
         public int x; // int
         public int y; // int

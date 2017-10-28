@@ -47,7 +47,7 @@ namespace TonNurako.Widgets {
         /// <param name="context"></param>
         /// <param name="args">ｺﾏﾝﾄﾞﾗｲﾝ引数</param>
 		/// <returns></returns>
-		internal int CreateShell(ApplicationContext context, String[] args )
+		internal int CreateShell(ApplicationContext context, string[] args )
 		{
             InitialzieShell(context);
 
@@ -56,14 +56,14 @@ namespace TonNurako.Widgets {
 
 			//ShellWidgetの作成
 			selfWidget = new Native.NativeWidget(
-                ExtremeSports.XtAppCreateShell(ref m_appContext.NativeContext, this.Name, ref args, this.ToolkitResources.ToXtArg()));
+                ExtremeSports.XtAppCreateShell(m_appContext.Handle, this.Name, ref args, this.ToolkitResources.ToXtArg()));
             this.ToolkitResources.Clear();
 
             System.Diagnostics.Debug.WriteLine("CTX: display={0} context={1}",
-                new object[]{context.NativeContext.display, context.NativeContext.context});
+                new object[]{context.Handle.Display, context.Handle.Context});
 
 			//Closeｺーﾙﾊﾞｯｸの追加
-			this.CallbackQueue.AaddWMCallback( "WM_DELETE_WINDOW", new G.XtCallBack( this.WMCloseCallBack ));
+			this.CallbackQueue.AaddWMCallback( "WM_DELETE_WINDOW", new XtCallbackProc( this.WMCloseCallBack ));
 
 			//閉じられないように設定
 			ToolkitResources.Add( TonNurako.Motif.ResourceId.XmNdeleteResponse, TonNurako.Motif.Constant.XmDO_NOTHING );

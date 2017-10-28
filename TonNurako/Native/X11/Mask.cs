@@ -152,4 +152,27 @@ namespace TonNurako.X11
         ColormapChangeMask      = TonNurako.X11.Constant.ColormapChangeMask,
         OwnerGrabButtonMask     = TonNurako.X11.Constant.OwnerGrabButtonMask,
     }
+
+    /// <summary>
+    /// 装飾キーﾏｽｸ
+    /// </summary>
+    [Flags]
+    public enum ModifierMask : uint {
+        // 装飾キー
+        ShiftMask = TonNurako.X11.Constant.ShiftMask,
+        LockMask = TonNurako.X11.Constant.LockMask,
+        ControlMask = TonNurako.X11.Constant.ControlMask,
+        Mod1Mask = TonNurako.X11.Constant.Mod1Mask,
+        Mod2Mask = TonNurako.X11.Constant.Mod2Mask,
+        Mod3Mask = TonNurako.X11.Constant.Mod3Mask,
+        Mod4Mask = TonNurako.X11.Constant.Mod4Mask,
+        Mod5Mask = TonNurako.X11.Constant.Mod5Mask,
+        // ボタムマスク
+        Button1Mask = TonNurako.X11.Constant.Button1Mask,
+        Button2Mask = TonNurako.X11.Constant.Button2Mask,
+        Button3Mask = TonNurako.X11.Constant.Button3Mask,
+        Button4Mask = TonNurako.X11.Constant.Button4Mask,
+        Button5Mask = TonNurako.X11.Constant.Button5Mask,
+        AnyModifier = TonNurako.X11.Constant.AnyModifier,
+    }
 }

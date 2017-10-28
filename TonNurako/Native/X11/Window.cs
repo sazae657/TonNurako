@@ -7,6 +7,74 @@ using System.Threading.Tasks;
 using TonNurako.Native;
 
 namespace TonNurako.X11 {
+
+    internal struct XQueryPointerRec  {
+        public IntPtr Root;
+        public IntPtr Child;
+        public int RootX;
+        public int RootY;
+        public int WinX;
+        public int WinY;
+        public ModifierMask Mask;
+    }
+
+    public class XPointerInfo {
+        internal XQueryPointerRec Record;
+
+        public XPointerInfo() {
+            Record = new XQueryPointerRec();
+        }
+
+        internal Display Display { get; set; }
+
+        public Window Root {
+            get => new Window(Record.Root, Display);
+            set => Record.Root = value.Handle;
+        }
+        public Window Child {
+            get => new Window(Record.Child, Display);
+            set => Record.Child = value.Handle;
+        }
+        public int RootX {
+            get => Record.RootX;
+            set => Record.RootX = value;
+        }
+        public int RootY {
+            get => Record.RootY;
+            set => Record.RootY = value;
+        }
+        public int WinX {
+            get => Record.WinX;
+            set => Record.WinX = value;
+        }
+        public int WinY {
+            get => Record.WinY;
+            set => Record.WinY = value;
+        }
+        public ModifierMask Mask {
+            get => Record.Mask;
+            set => Record.Mask = value;
+        }
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
+
+
+
+
     public class Window : IX11Interop, IDrawable {
         ReturnPointerDelegaty delegaty;
         IntPtr window;
@@ -90,21 +158,6 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetClassHint_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetClassHint(IntPtr display, IntPtr w, out XClassHintRec class_hints_return);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XGrabKey_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGrabKey(
-                IntPtr display, int keycode, uint modifiers, IntPtr grab_window, [MarshalAs(UnmanagedType.U1)] bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode);
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XUngrabKey_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XUngrabKey(IntPtr display, int keycode, uint modifiers, IntPtr grab_window);
-
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XGrabButton_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGrabButton(IntPtr display, uint button, uint modifiers, IntPtr grab_window, [MarshalAs(UnmanagedType.U1)] bool owner_events, EventMask event_mask, GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr confine_to, int cursor);
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XUngrabButton_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XUngrabButton(IntPtr display, uint button, uint modifiers, IntPtr grab_window);
-
-
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMoveWindow_TNK", CharSet = CharSet.Auto)]
             internal static extern int XMoveWindow(IntPtr display, IntPtr w, int x, int y);
 
@@ -173,6 +226,10 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetTransientForHint_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetTransientForHint(IntPtr display, IntPtr w, out IntPtr prop_window_return);
 
+            // Bool: XQueryPointer Display*:display Window:w Window*:root_return Window*:child_return int*:root_x_return int*:root_y_return int*:win_x_return int*:win_y_return unsigned int*:mask_return
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryPointer_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XQueryPointer(
+                IntPtr display, IntPtr w, out IntPtr root_return, out IntPtr child_return, out int root_x_return, out int root_y_return, out int win_x_return, out int win_y_return, out ModifierMask mask_return);
 
             // int: XGetWindowProperty [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Atom', 'name': 'property'}, {'type': 'long', 'name': 'long_offset'}, {'type': 'long', 'name': 'long_length'}, {'type': 'Bool', 'name': 'delete'}, {'type': 'Atom', 'name': 'req_type'}, {'type': 'Atom*', 'name': 'actual_type_return'}, {'type': 'int*', 'name': 'actual_format_return'}, {'type': 'unsigned long*', 'name': 'nitems_return'}, {'type': 'unsigned long*', 'name': 'bytes_after_return'}, {'type': 'unsigned char*', 'name': '*prop_return'}]
             // [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWindowProperty_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
@@ -215,7 +272,7 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XStoreName_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XStoreName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XStoreName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string window_name);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFetchName_TNK", CharSet = CharSet.Auto)]
@@ -227,7 +284,7 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIconName_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIconName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XSetIconName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string icon_name);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetIconName_TNK", CharSet = CharSet.Auto)]
@@ -268,7 +325,7 @@ namespace TonNurako.X11 {
         public Display Display => display;
 
         #region IDrawable
-        IntPtr IDrawable.Drawable => Handle;
+        public IntPtr Drawable => Handle;
         #endregion
 
         public int SelectInput(EventMask mask) {
@@ -415,20 +472,17 @@ namespace TonNurako.X11 {
             return (new XClassHint(p));
         }
 
-        int GrabKey(int keycode, uint modifiers, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode) =>
-            NativeMethods.XGrabKey(
-                this.Display.Handle, keycode, modifiers, this.Handle, owner_events, pointer_mode, keyboard_mode);
+        public bool QueryPointer(XPointerInfo info) {
+            info.Display = this.Display;
+            var r = NativeMethods.XQueryPointer(
+                this.Display.Handle, this.Handle,
+                out info.Record.Root, out info.Record.Child, 
+                out info.Record.RootX, out info.Record.RootY, 
+                out info.Record.WinX, out info.Record.WinY,
+                out info.Record.Mask);
+            return r;
+        }
 
-        int UngrabKey(int keycode, uint modifiers) =>
-            NativeMethods.XUngrabKey(this.Display.Handle, keycode, modifiers, this.Handle);
-
-
-        int XGrabButton(uint button, uint modifiers, bool owner_events, EventMask event_mask, GrabMode pointer_mode, GrabMode keyboard_mode, Window confine_to, int cursor) =>
-            NativeMethods.XGrabButton(this.Display.Handle, button, modifiers, this.Handle,
-                owner_events, event_mask, pointer_mode, keyboard_mode, (null != confine_to) ? confine_to.Handle : IntPtr.Zero, cursor);
-
-        int XUngrabButton(uint button, uint modifiers) =>
-            NativeMethods.XUngrabButton(this.Display.Handle, button, modifiers, this.Handle);
 
         public Geometry GetGeometry() {
             var g = new Geometry(Display);

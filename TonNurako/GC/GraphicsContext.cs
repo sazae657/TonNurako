@@ -30,9 +30,6 @@ namespace TonNurako.GC
 
         private bool disposed;
 
-        internal delegate void SysDestroyGC();
-        internal SysDestroyGC DestroyGcFunc = null;
-
 		#endregion
 
 		#region ｺﾝｽﾄﾗｸﾀー
@@ -52,7 +49,7 @@ namespace TonNurako.GC
             gc.gc = new TonNurako.X11.GC(TonNurako.Xt.XtSports.XtGetGC(w), w.Handle.Display, w.Handle, false);
             gc.Display = w.Handle.Display;
 			gc.Target = w.Handle.Drawable;
-            gc.DestroyGcFunc = () => {
+            gc.gc.DispseGCDelegate = (g) => {
                 //GC解放
                 if (null != gc.gc) {
                     TonNurako.Xt.XtSports.XtReleaseGC(w, gc.Handle.Handle);
@@ -78,7 +75,7 @@ namespace TonNurako.GC
             //
             gc = new TonNurako.X11.GC(TonNurako.X11.Xi.XCreateGC(Display, Target), w.Display, w, false);
 
-            DestroyGcFunc = () => {
+            gc.DispseGCDelegate = (g)  => {
                 //GC解放
                 if (gc != null) {
                     TonNurako.X11.Xi.XFreeGC(Display, gc.Handle);
@@ -110,8 +107,10 @@ namespace TonNurako.GC
             if(disposed) {
                 return;
             }
-
-            DestroyGcFunc?.Invoke();
+            if (null != gc) {
+                gc.Dispose();
+            }
+            
             disposed = true;
         }
 
@@ -134,7 +133,7 @@ namespace TonNurako.GC
             if (gc == null) {
                 return;
             }
-            TonNurako.X11.Xi.XSetForeground(Display, gc.Handle, color.pixel);
+            TonNurako.X11.Xi.XSetForeground(Display, gc.Handle, color.Pixel);
         }
 
         public void SetForeground(TonNurako.GC.Color color) {

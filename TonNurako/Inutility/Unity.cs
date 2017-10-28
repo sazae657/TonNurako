@@ -14,8 +14,21 @@ namespace TonNurako.Inutility {
 
         public T Store<T>(T t)
             where T : IDisposable {
+            if (stack.Contains(t)) {
+                throw new DuplicateWaitObjectException("Unity");
+            }
             stack.Push(t);
             return t;
+        }
+
+        public void Store<T>(IEnumerable<T> t)
+            where T : IDisposable {
+            foreach (var s in t) {
+                if (null == s) {
+                    continue;
+                }
+                Store(s);
+            }
         }
 
         public void Asset() {

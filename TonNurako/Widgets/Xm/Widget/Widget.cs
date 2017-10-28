@@ -655,7 +655,7 @@ namespace TonNurako.Widgets.Xm
 				if (! UIeventTable.HasHandler(TonNuraEventId.Destroyed))
 				{
 					CallbackQueue.AddXtCallback( TonNurako.Motif.EventId.XmNdestroyCallback,
-						new G.XtCallBack( this.NdestroyCallback ) );
+						new XtCallbackProc( this.NdestroyCallback ) );
 				}
 
 				base.DestroyEvent += value;

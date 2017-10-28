@@ -35,7 +35,7 @@ namespace TonNurako.Motif
 
         internal class Functions
         {
-            public delegate System.IntPtr XmCreateFunc(IntPtr parent,string name, TonNurako.Xt.NativeXtArg[] arg, int argc );
+            public delegate System.IntPtr XmCreateFunc(IntPtr parent,string name, TonNurako.Xt.XtArgRec[] arg, int argc );
         }
 
         internal static class NativeMethods
@@ -119,14 +119,14 @@ namespace TonNurako.Motif
         /// <summary>
         /// XmCreateXXの呼び出し
         /// </summary>
-        public static IntPtr CallCreate2P(TonNurako.Motif.CreateSymbol sym, Widgets.IWidget parent,string name, TonNurako.Xt.XtArg[] args) {
+        public static IntPtr CallCreate2P(TonNurako.Motif.CreateSymbol sym, Widgets.IWidget parent,string name, TonNurako.Xt.Arg[] args) {
             if (null ==args || 0 == args.Length) {
                 return Instance.xmCreateFuncs[(int)sym](parent.Handle.Widget.Handle, name, null, 0);
             }
 
-            TonNurako.Xt.NativeXtArg[] au = new TonNurako.Xt.NativeXtArg[args.Length];
+            TonNurako.Xt.XtArgRec[] au = new TonNurako.Xt.XtArgRec[args.Length];
             int argc = ExtremeSports.TnkConvertResourceEx(args, au, true);
-            foreach(TonNurako.Xt.NativeXtArg k in au) {
+            foreach(TonNurako.Xt.XtArgRec k in au) {
                 System.Diagnostics.Debug.WriteLine($"NA<A>: {k.Name} : {k.Value}");
             }
             System.Diagnostics.Debug.WriteLine($"XM_CVT {au.Length} -> {argc}");

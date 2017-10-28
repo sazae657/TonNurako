@@ -397,10 +397,16 @@ XtNameToWidget_TNK(Widget parent, String name)
     return XtNameToWidget(parent, name);
 }
 
-TNK_EXPORT void
-XtRealizeWidget_TNK(Widget w) {
+TNK_EXPORT void XtRealizeWidget_TNK(Widget w) {
     XtRealizeWidget(w);
 }
+TNK_EXPORT Boolean XtIsRealized_TNK(Widget w) {
+    return XtIsRealized(w);
+}
+TNK_EXPORT void XtUnrealizeWidget_TNK(Widget w) {
+    XtUnrealizeWidget(w);
+}
+
 
 TNK_EXPORT void
 XtManageChild_TNK(Widget w) {
@@ -506,12 +512,154 @@ TNK_EXPORT void XtRemoveEventHandler_TNK(Widget w, EventMask event_mask, Boolean
     XtRemoveEventHandler(w,event_mask,nonmaskable,proc,client_data);
 }
 
+TNK_EXPORT void XtAddRawEventHandler_TNK(Widget w, EventMask event_mask, Boolean nonmaskable, XtEventHandler proc, XtPointer client_data) {
+    XtAddRawEventHandler(w,event_mask,nonmaskable,proc,client_data);
+}
+
+TNK_EXPORT void XtRemoveRawEventHandler_TNK(Widget w, EventMask event_mask, Boolean nonmaskable, XtEventHandler proc, XtPointer client_data) {
+    XtRemoveRawEventHandler(w,event_mask,nonmaskable,proc,client_data);
+}
+TNK_EXPORT void XtInsertEventHandler_TNK(Widget w, EventMask event_mask, Boolean nonmaskable, XtEventHandler proc, XtPointer client_data, XtListPosition position) {
+    XtInsertEventHandler(w,event_mask,nonmaskable,proc,client_data,position);
+}
+TNK_EXPORT void XtInsertRawEventHandler_TNK(Widget w, EventMask event_mask, Boolean nonmaskable, XtEventHandler proc, XtPointer client_data, XtListPosition position) {
+    XtInsertRawEventHandler(w,event_mask,nonmaskable,proc,client_data,position);
+}
+
 TNK_EXPORT void XtPopup_TNK(Widget popup_shell, XtGrabKind grab_kind) {
     XtPopup(popup_shell,grab_kind);
 }
 
 TNK_EXPORT void XtPopdown_TNK(Widget popup_shell) {
     XtPopdown(popup_shell);
+}
+
+TNK_EXPORT void XtAddGrab_TNK(Widget w, Boolean exclusive, Boolean spring_loaded) {
+    XtAddGrab(w,exclusive,spring_loaded);
+}
+TNK_EXPORT void XtRemoveGrab_TNK(Widget w) {
+    XtRemoveGrab(w);
+}
+
+TNK_EXPORT XtInputId XtAppAddInput_TNK(XtAppContext app_context, int source, XtPointer condition, XtInputCallbackProc proc, XtPointer client_data) {
+    return XtAppAddInput(app_context,source,condition,proc,client_data);
+}
+TNK_EXPORT void XtRemoveInput_TNK(XtInputId id) {
+    XtRemoveInput(id);
+}
+
+TNK_EXPORT XtWorkProcId XtAppAddWorkProc_TNK(XtAppContext app_context, XtWorkProc proc, XtPointer client_data) {
+    return XtAppAddWorkProc(app_context,proc,client_data);
+}
+TNK_EXPORT void XtRemoveWorkProc_TNK(XtWorkProcId id) {
+    XtRemoveWorkProc(id);
+}
+
+TNK_EXPORT XtBlockHookId XtAppAddBlockHook_TNK(XtAppContext app_context, XtBlockHookProc proc, XtPointer client_data) {
+    return XtAppAddBlockHook(app_context,proc,client_data);
+}
+TNK_EXPORT void XtRemoveBlockHook_TNK(XtBlockHookId id) {
+    XtRemoveBlockHook(id);
+}
+
+TNK_EXPORT XtSignalId XtAppAddSignal_TNK(XtAppContext app_context, XtSignalCallbackProc proc, XtPointer client_data) {
+    return XtAppAddSignal(app_context,proc,client_data);
+}
+TNK_EXPORT void XtRemoveSignal_TNK(XtSignalId id) {
+    XtRemoveSignal(id);
+}
+TNK_EXPORT void XtNoticeSignal_TNK(XtSignalId id) {
+    XtNoticeSignal(id);
+}
+
+TNK_EXPORT void XtAppError_TNK(XtAppContext app_context, String message) {
+    XtAppError(app_context,message);
+}
+TNK_EXPORT void XtAppSetErrorHandler_TNK(XtAppContext app_context, XtErrorHandler handler) {
+    XtAppSetErrorHandler(app_context,handler);
+}
+TNK_EXPORT void XtAppSetWarningHandler_TNK(XtAppContext app_context, XtErrorHandler handler) {
+    XtAppSetWarningHandler(app_context,handler);
+}
+TNK_EXPORT void XtAppWarning_TNK(XtAppContext app_context, String message) {
+    XtAppWarning(app_context,message);
+}
+
+TNK_EXPORT void XtAppErrorMsg_TNK(XtAppContext app_context, String name, String type, String class, String befault, String* params, Cardinal* num_params) {
+    XtAppErrorMsg(app_context,name,type,class,befault,params,num_params);
+}
+TNK_EXPORT void XtAppSetErrorMsgHandler_TNK(XtAppContext app_context, XtErrorMsgHandler msg_handler) {
+    XtAppSetErrorMsgHandler(app_context,msg_handler);
+}
+TNK_EXPORT void XtAppSetWarningMsgHandler_TNK(XtAppContext app_context, XtErrorMsgHandler msg_handler) {
+    XtAppSetWarningMsgHandler(app_context,msg_handler);
+}
+TNK_EXPORT void XtAppWarningMsg_TNK(XtAppContext app_context, String name, String type, String class, String befault, String* params, Cardinal* num_params) {
+    XtAppWarningMsg(app_context,name,type,class,befault,params,num_params);
+}
+TNK_EXPORT Widget XtAppCreateShell_TNK(String application_name, String application_class, WidgetClass widget_class, Display* display, ArgList args, Cardinal num_args) {
+    return XtAppCreateShell(application_name,application_class,widget_class,display,args,num_args);
+}
+
+TNK_EXPORT XrmDatabase* XtAppGetErrorDatabase_TNK(XtAppContext app_context) {
+    return XtAppGetErrorDatabase(app_context);
+}
+TNK_EXPORT void XtAppGetErrorDatabaseText_TNK(XtAppContext app_context, char* name, char* type, char* class, char* befault, char* buffer_return, int nbytes, XrmDatabase database) {
+    XtAppGetErrorDatabaseText(app_context,name,type,class,befault,buffer_return,nbytes,database);
+}
+
+TNK_EXPORT void XtAppSetExitFlag_TNK(XtAppContext app_context) {
+    XtAppSetExitFlag(app_context);
+}
+TNK_EXPORT Boolean XtAppGetExitFlag_TNK(XtAppContext app_context) {
+    return XtAppGetExitFlag(app_context);
+}
+
+TNK_EXPORT unsigned long XtAppGetSelectionTimeout_TNK(XtAppContext app_context) {
+    return XtAppGetSelectionTimeout(app_context);
+}
+TNK_EXPORT void XtAppSetSelectionTimeout_TNK(XtAppContext app_context, unsigned long timeout) {
+    XtAppSetSelectionTimeout(app_context,timeout);
+}
+
+TNK_EXPORT void XtAppLock_TNK(XtAppContext app_context) {
+    XtAppLock(app_context);
+}
+TNK_EXPORT void XtAppUnlock_TNK(XtAppContext app_context) {
+    XtAppUnlock(app_context);
+}
+
+TNK_EXPORT void XtAppNextEvent_TNK(XtAppContext app_context, XEvent* event_return) {
+    XtAppNextEvent(app_context,event_return);
+}
+TNK_EXPORT Boolean XtAppPeekEvent_TNK(XtAppContext app_context, XEvent* event_return) {
+    return XtAppPeekEvent(app_context,event_return);
+}
+TNK_EXPORT XtInputMask XtAppPending_TNK(XtAppContext app_context) {
+    return XtAppPending(app_context);
+}
+TNK_EXPORT void XtAppProcessEvent_TNK(XtAppContext app_context, XtInputMask mask) {
+    XtAppProcessEvent(app_context,mask);
+}
+TNK_EXPORT Boolean XtDispatchEvent_TNK(XEvent* event) {
+    return XtDispatchEvent(event);
+}
+TNK_EXPORT void XtAppMainLoop_TNK(XtAppContext app_context) {
+    XtAppMainLoop(app_context);
+}
+
+// Windows Phone
+
+TNK_EXPORT XtActionHookId XtAppAddActionHook_TNK(XtAppContext app_context, XtActionHookProc proc, XtPointer client_data) {
+    return XtAppAddActionHook(app_context,proc,client_data);
+}
+
+TNK_EXPORT void XtRemoveActionHook_TNK(XtActionHookId id) {
+    XtRemoveActionHook(id);
+}
+
+TNK_EXPORT void XtAppAddActions_TNK(XtAppContext app_context, XtActionList actions, Cardinal num_actions) {
+    XtAppAddActions(app_context,actions,num_actions);
 }
 
 TNK_DECLARE_END

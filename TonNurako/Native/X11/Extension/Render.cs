@@ -219,12 +219,12 @@ namespace TonNurako.X11.Extension {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderCreatePicture_TNK", CharSet = CharSet.Auto)]
             internal static extern int XRenderCreatePicture([In]IntPtr dpy, [In]IntPtr drawable, ref XRenderPictFormatRec format, CreatePictureMask valuemask, ref XRenderPictureAttributesRec attributes);
 
-            // void: XRenderChangePicture Display*:dpy Picture:picture unsigned long:valuemask XRenderPictureAttributes*:attributes 
+            // void: XRenderChangePicture Display*:dpy Picture:picture unsigned long:valuemask XRenderPictureAttributes*:attributes
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderChangePicture_TNK", CharSet = CharSet.Auto)]
             internal static extern void XRenderChangePicture(IntPtr dpy, int picture, CreatePictureMask valuemask, ref XRenderPictureAttributesRec attributes);
 
             // void: XRenderSetPictureFilter Display*:dpy Picture:picture char*:filter XFixed*:params int:nparams
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureFilter_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureFilter_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XRenderSetPictureFilter(IntPtr dpy, int picture, [MarshalAs(UnmanagedType.LPStr)] string filter, int[] fk_params, int nparams);
 
             // void: XRenderSetPictureClipRectangles Display*:dpy Picture:picture int:xOrigin int:yOrigin XRectangle*:rects int:n
@@ -282,7 +282,7 @@ namespace TonNurako.X11.Extension {
                 IntPtr dpy, ref XConicalGradient gradient, int[] stops, [In]XRenderColor[] colors, int nstops);
 
             // Status: XRenderParseColor Display*:dpy char*:spec XRenderColor*:def
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderParseColor_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderParseColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XRenderParseColor(IntPtr dpy, [MarshalAs(UnmanagedType.LPStr)] string spec, ref XRenderColor def);
 
             // XIndexValue*: XRenderQueryPictIndexValues Display*:dpy XRenderPictFormat*:format int*:num
@@ -339,11 +339,17 @@ namespace TonNurako.X11.Extension {
 
         public static XRenderPictFormat FindVisualFormat(Display display, Visual visual) {
             var p = NativeMethods.XRenderFindVisualFormat(display.Handle, visual.Handle);
+            if (IntPtr.Zero == p) {
+                return null;
+            }
             return (new XRenderPictFormat(display, p));
         }
 
         public static XRenderPictFormat FindStandardFormat(Display display, PictStandard format) {
             var p = NativeMethods.XRenderFindStandardFormat(display.Handle, format);
+            if (IntPtr.Zero == p) {
+                return null;
+            }
             return (new XRenderPictFormat(display, p));
         }
 
@@ -369,7 +375,9 @@ namespace TonNurako.X11.Extension {
 
         public static Picture CreatePicture(Display dpy, IDrawable drawable, XRenderPictFormat format, CreatePictureMask valuemask, XRenderPictureAttributes attributes) {
             var p = NativeMethods.XRenderCreatePicture(dpy.Handle, drawable.Drawable, ref format.Record, valuemask, ref attributes.Record);
-            TonNurako.Inutility.Dumper.DumpStruct(attributes.Record, (s) => Console.WriteLine($"XRenderCreatePicture: {s}"));
+            if (p == 0) {
+                return null;
+            }
             return new Picture(dpy, p);
         }
 
@@ -423,7 +431,7 @@ namespace TonNurako.X11.Extension {
             NativeMethods.XRenderCompositeTrapezoids(
                 display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, trap, trap.Length);
         }
-        
+
         public static void CompositeTriangles(Display display, PictOp op, Picture src, Picture dst, XRenderPictFormat maskFormat, int xSrc, int ySrc, XTriangle[] triangles) {
             NativeMethods.XRenderCompositeTriangles(
                 display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, triangles, triangles.Length);
@@ -439,15 +447,11 @@ namespace TonNurako.X11.Extension {
                 display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, points, points.Length);
         }
 
-        public static void XRenderCompositeDoublePoly(
+        public static void CompositeDoublePoly(
             Display display, PictOp op, Picture src, Picture dst, XRenderPictFormat maskFormat, int xSrc, int ySrc, int xDst, int yDst, XPointDouble[] points, int winding) {
             NativeMethods.XRenderCompositeDoublePoly(
                 display.Handle, op, src.Handle, dst.Handle, ref maskFormat.Record, xSrc, ySrc, xDst, yDst, points, points.Length, winding);
         }
-
-        
-
-
 
         public static void Composite(
             Display display, PictOp op, Picture src, Picture mask, Picture dst, int src_x, int src_y, int mask_x, int mask_y, int dst_x, int dst_y, int width, int height) {
@@ -455,7 +459,7 @@ namespace TonNurako.X11.Extension {
         }
 
         private static Picture BindReturn(Display d, int p) => (new Picture(d, p));
-        
+
 
         public static Picture CreateSolidFill(Display dpy, XRenderColor color) =>
             BindReturn(dpy, NativeMethods.XRenderCreateSolidFill(dpy.Handle, ref color));

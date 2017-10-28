@@ -36,7 +36,7 @@ namespace TonNurako {
         private Dictionary<Native.NativeWidget, IWidget> widgetResolutionTable;
 
         // ﾄﾝﾇﾗｺﾝﾃｷｽﾄ
-        public ExtremeSports.TnkAppContext NativeContext;
+        public ExtremeSports.TnkAppContext Handle;
 
         internal Application.SingleThreadSynchronizationContext SyncContext {
             get; set;
@@ -71,6 +71,7 @@ namespace TonNurako {
             Name = "";
             fallbackResource = new Dictionary<string, string>();
             widgetResolutionTable = new Dictionary<Native.NativeWidget, IWidget>(new Native.NativeWidgetComparer());
+            Handle = new ExtremeSports.TnkAppContext();
         }
 
         /// <summary>
@@ -82,16 +83,16 @@ namespace TonNurako {
                 SynchronizationContext.SetSynchronizationContext(SyncContext);
                 lock(Shell) {
                     if(null != Shell && Shell.IsAvailable) {
-                        ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                        ExtremeSports.TriggerPrivateEvent(Shell.AppContext.Handle, Shell);
                     }
                 }
                 Task t = new Task(()=>{
                         if(null != Shell && Shell.IsAvailable) {
-                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.Handle, Shell);
                         }
                         delegaty.DynamicInvoke(args);
                         if(null != Shell && Shell.IsAvailable) {
-                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.Handle, Shell);
                         }
                     }
                 );
@@ -112,16 +113,16 @@ namespace TonNurako {
                 SynchronizationContext.SetSynchronizationContext(SyncContext);
                 lock(Shell) {
                     if(null != Shell && Shell.IsAvailable) {
-                        ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                        ExtremeSports.TriggerPrivateEvent(Shell.AppContext.Handle, Shell);
                     }
                 }
                 Task t = new Task(()=>{
                         if(null != Shell && Shell.IsAvailable) {
-                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.Handle, Shell);
                         }
                         delegaty();
                         if(null != Shell && Shell.IsAvailable) {
-                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.NativeContext, Shell);
+                            ExtremeSports.TriggerPrivateEvent(Shell.AppContext.Handle, Shell);
                         }
                     }
                 );

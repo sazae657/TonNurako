@@ -25,11 +25,17 @@ namespace TonNurako.X11 {
         }
 
         int handle;
-        public int Handle => handle;
+        public int Handle => (null != cmapDelegaty) ? cmapDelegaty() : handle;
 
         Display display;
+        ReturnPointerDelegaty<int> cmapDelegaty = null;
 
         public Colormap() {
+        }
+
+        public Colormap(ReturnPointerDelegaty<int> delegaty, Display dpy) {
+            cmapDelegaty = delegaty;
+            display = dpy;
         }
 
         public Colormap(int cm, Display dpy) {

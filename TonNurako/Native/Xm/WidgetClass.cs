@@ -10,7 +10,7 @@ namespace TonNurako.Motif
     /// <summary>
     /// ｳｲｼﾞｪｯﾄｸﾗｽ
     /// </summary>
-    public enum WidgetClass {
+    public enum MotifWidgetClass {
         [ToolkitOption("ﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌﾌ")] INVALID = 0,
         [ToolkitOption("XmArrowButtonGadget")] xmArrowButtonGadgetClass = 1,
         [ToolkitOption("XmArrowButton")] xmArrowButtonWidgetClass = 2,

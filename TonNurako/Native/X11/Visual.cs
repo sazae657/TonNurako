@@ -75,15 +75,26 @@ namespace TonNurako.X11 {
         public IntPtr Handle => handle;
 
         public Visual(IntPtr v) {
+            handle = v;
             if (IntPtr.Zero == v) {
                 return;
             }
-            handle = v;
             visual = (VisualC)Marshal.PtrToStructure(v, typeof(VisualC));
             if (IntPtr.Zero != visual.ext_data) {
                 extdata = (XExtData)Marshal.PtrToStructure(visual.ext_data, typeof(XExtData));
             }
         }
+
+        /// <summary>
+        /// CopyFromParent定数対応
+        /// </summary>
+        public static Visual CopyFromParent {
+            get {
+                return (new Visual(IntPtr.Zero));
+            }
+        }
+
+
 
         public ulong VisualIDFromVisual
             => NativeMethods.XVisualIDFromVisual(ref visual);

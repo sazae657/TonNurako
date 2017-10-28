@@ -8,15 +8,39 @@ using TonNurako.Native;
 
 namespace TonNurako.X11 {
 
+    [Flags]
+    public enum XColorFlags : byte {
+        DoRed = TonNurako.X11.Constant.DoRed,
+        DoGreen = TonNurako.X11.Constant.DoGreen,
+        DoBlue = TonNurako.X11.Constant.DoBlue,
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public struct XColor {
-        public ulong pixel;
-        public ushort red;
-        public ushort green;
-        public ushort blue;
-        public char flags;
-        public char pad;
+        public ulong    Pixel;
+        public ushort   Red;
+        public ushort   Green;
+        public ushort   Blue;
+        [MarshalAs(UnmanagedType.U1)] public XColorFlags Flags;
+        public byte     Pad;
     };
+
+    public class XLookupColorResult {
+        internal Color exact;
+        internal Color screen;
+
+        public Color Exact => exact;
+        public Color Screen => screen;
+
+        public XLookupColorResult() {
+            exact = new Color();
+            screen = new Color();
+        }
+        internal XLookupColorResult(Display dpy, Colormap cmap) {
+            exact = new Color(dpy, cmap);
+            screen = new Color(dpy, cmap);
+        }
+    }
 
     #region ColorCell
     // TODO: PseudoColorな環境が要る
@@ -97,55 +121,167 @@ namespace TonNurako.X11 {
     public class Color : IX11Interop<ulong> {
 
         internal static class NativeMethods {
-            // Status: XAllocColor [{'type': 'Display*', 'name': 'display'}, {'type': 'Colormap', 'name': 'colormap'}, {'type': 'XColor*', 'name': 'screen_in_out'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocColor_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XAllocColor(IntPtr display, int colormap, [In,Out] ref XColor screen_in_out);
 
-            // Status: XAllocNamedColor [{'type': 'Display*', 'name': 'display'}, {'type': 'Colormap', 'name': 'colormap'}, {'type': 'char*', 'name': 'color_name'}, {'type': 'XColor*', 'name': 'screen_def_return'}, {'type': 'XColor*', 'name': 'exact_def_return'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocNamedColor_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocColor_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XAllocColor(IntPtr display, int colormap, [In, Out] ref XColor screen_in_out);
+
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocNamedColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XAllocNamedColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor screen_def_return, out XColor exact_def_return);
+
+            // int: XQueryColor Display*:display  Colormap:colormap  XColor*:def_in_out  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryColor_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XQueryColor(IntPtr display, int colormap, ref XColor def_in_out);
+
+            // int: XQueryColors Display*:display  Colormap:colormap  XColor:defs_in_out[]  int:ncolors  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryColors_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XQueryColors(IntPtr display, int colormap, [In,Out] XColor [] defs_in_out, int ncolors);
+
+            // Status: XLookupColor Display*:display  Colormap:colormap  char*:color_name  XColor*:exact_def_return  XColor*:screen_def_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XLookupColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            internal static extern int XLookupColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor exact_def_return, out XColor screen_def_return);
+
+            // Status: XParseColor Display*:display  Colormap:colormap  char*:spec  XColor*:exact_def_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XParseColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            internal static extern int XParseColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string spec, out XColor exact_def_return);
         }
 
-        public ulong Handle => color.pixel;
+        public ulong Handle => Record.Pixel;
 
-        XColor color;
-        public XColor XColor => color;
-
-        public ulong Pixel => color.pixel;
+        internal XColor Record;
+        public XColor XColor => Record;
 
         Colormap colormap;
         Display display;
 
+        public ReturnPointerDelegaty<ulong> PixelDelegaty = null;
+
         public Color() {
             colormap = null;
             display = null;
-            color = new XColor();
+            Record = new XColor();
         }
 
         public Color(Display dpy, Colormap cmap) {
             colormap = cmap;
             display = dpy;
+            Record = new XColor();
         }
 
+        public Color(Display dpy, Colormap cmap, XColor color) {
+            colormap = cmap;
+            display = dpy;
+            this.Record = color;
+        }
+
+
+        public Color(ulong pixel) {
+            colormap = null;
+            display = null;
+            Record = new XColor();
+            Record.Pixel = pixel;
+        }
+
+        public Color(ReturnPointerDelegaty<ulong> delegaty) {
+            colormap = null;
+            display = null;
+            PixelDelegaty = delegaty;
+            Record = new XColor();
+        }
+
+        public ulong Pixel {
+            get => (null != PixelDelegaty) ? PixelDelegaty() : Record.Pixel;
+            set => Record.Pixel = value;
+        }
+        public ushort Red {
+            get => Record.Red;
+            set => Record.Red = value;
+        }
+        public ushort Green {
+            get => Record.Green;
+            set => Record.Green = value;
+        }
+        public ushort Blue {
+            get => Record.Blue;
+            set => Record.Blue = value;
+        }
+        public XColorFlags Flags {
+            get => Record.Flags;
+            set => Record.Flags = value;
+        }
+        public byte Pad {
+            get => Record.Pad;
+            set => Record.Pad = value;
+        }
+
+        public bool PixelEquals(Color b) {
+            return (this.Pixel == b.Pixel);
+        }
+
+        internal void Assign(Display dpy, Colormap cmap, XColor color) {
+            this.colormap = cmap;
+            this.display = dpy;
+            this.Record = color;
+        }
+
+
+
+        #region ﾌｧｸﾄﾘーっぽいやつ
         public static Color AllocNamedColor(Display dpy, Colormap cmap, string name) {
             var near = new XColor();
             var far  = new XColor();
             NativeMethods.XAllocNamedColor(dpy.Handle, cmap.Handle, name, out near, out far);
             var k = new Color(dpy, cmap);
-            k.color = near;
+            k.Record = near;
             return k;
         }
 
         public static Color AllocColor(Display dpy, Colormap cmap, int r, int g, int b) {
             var k = new Color(dpy, cmap);
-            k.color.red = (ushort)(256*r);
-            k.color.green = (ushort)(256 * g);
-            k.color.blue = (ushort)(256 * b);
-            if (XStatus.True != NativeMethods.XAllocColor(dpy.Handle, cmap.Handle, ref k.color)) {
+            k.Record.Red = (ushort)(256*r);
+            k.Record.Green = (ushort)(256 * g);
+            k.Record.Blue = (ushort)(256 * b);
+            if (XStatus.True != NativeMethods.XAllocColor(dpy.Handle, cmap.Handle, ref k.Record)) {
                 throw new System.ArgumentException($"r#{r} g#{g} #b{b}");
             }
             return k;
         }
+
+        public static Color QueryColor(Display display, Colormap colormap, XColor color) {
+            var r = new Color(display, colormap);
+            r.Record.Pixel= color.Pixel;
+            if (XStatus.True != NativeMethods.XQueryColor(display.Handle, colormap.Handle, ref r.Record)) {
+                return null;
+            }
+            return r;
+        }
+
+        public static Color [] QueryColors(Display display, Colormap colormap, XColor[] colors) {
+            if (XStatus.True != NativeMethods.XQueryColors(display.Handle, colormap.Handle, colors, colors.Length)) {
+                return null;
+            }
+            var r = new Color[colors.Length];
+            for (int i = 0; i < colors.Length; ++i) {
+                r[i] = new Color(display, colormap, colors[i]);
+            }
+            return r;
+        }
+
+        public static XLookupColorResult LookupColor(Display display, Colormap colormap, string color_name) {
+            var r = new XLookupColorResult(display, colormap);
+            if (XStatus.True != NativeMethods.XLookupColor(display.Handle, colormap.Handle, color_name, out r.exact.Record, out r.screen.Record)) {
+                return null;
+            }
+            return r;
+        }
+
+        public static Color ParseColor(Display display, Colormap colormap, string spec) {
+            var r = new Color(display, colormap);
+            if (XStatus.True != NativeMethods.XParseColor(display.Handle, colormap.Handle, spec, out r.Record)) {
+                return null;
+            }
+            return r;
+        }
+        #endregion
 
     }
 }

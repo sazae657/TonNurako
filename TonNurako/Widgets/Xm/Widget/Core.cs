@@ -72,7 +72,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNtranslations
         [Data.Resource.SportyResource(Data.Resource.Access.CSG)]
-        public virtual Data.Translations Translations {
+        public virtual Xt.Translations Translations {
             get {
                 return XSports.GetTranslations(TonNurako.Motif.ResourceId.XmNtranslations);
             }

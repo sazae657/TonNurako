@@ -23,7 +23,7 @@ namespace TonNurako.Native {
 		private struct QueueData
 		{
             public ulong EventMask;
-			public G.XtEventHandler Proc;
+			public XtEventHandler Proc;
 		}
 		#endregion
 
@@ -55,7 +55,7 @@ namespace TonNurako.Native {
 		/// </summary>
 		/// <param name="mask"></param>
 		/// <param name="proc"></param>
-		public void AddCallback(ulong mask, G.XtEventHandler proc )
+		public void AddCallback(ulong mask, XtEventHandler proc )
 		{
 			QueueData q = new QueueData();
 

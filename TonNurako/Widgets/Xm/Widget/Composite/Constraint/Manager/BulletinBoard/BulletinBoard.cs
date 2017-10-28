@@ -264,7 +264,7 @@ namespace TonNurako.Widgets.Xm
 
         /// XmNtextTranslations XmCTranslations XtTranslations NULL C
         [Data.Resource.SportyResource(Data.Resource.Access.C)]
-        public virtual Translations TextTranslations {
+        public virtual Xt.Translations TextTranslations {
             set {
                 XSports.SetTranslations(
                     TonNurako.Motif.ResourceId.XmNtextTranslations, value, Data.Resource.Access.C);

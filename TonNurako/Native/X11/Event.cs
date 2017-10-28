@@ -701,6 +701,8 @@ namespace TonNurako.X11.Event {
         internal IntPtr handle;
         public IntPtr Handle => handle;
 
+        bool handleAllocated = false;
+
         XAnyEvent xevent;
         public XAnyEvent XEvent => xevent;
 
@@ -722,6 +724,13 @@ namespace TonNurako.X11.Event {
             window = new Window();
             even = new Dictionary<Type, object>();
             handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(XEvent)));
+            handleAllocated = true;
+            cmSplitted = false;
+        }
+
+        internal XEventArg(IntPtr href) {
+            handle = href;
+            handleAllocated = false;
             cmSplitted = false;
         }
 
@@ -790,7 +799,9 @@ namespace TonNurako.X11.Event {
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (handle != IntPtr.Zero) {
-                    Marshal.FreeHGlobal(handle);
+                    if (handleAllocated) {
+                        Marshal.FreeHGlobal(handle);
+                    }
                     handle = IntPtr.Zero;
                 }
                 disposedValue = true;
