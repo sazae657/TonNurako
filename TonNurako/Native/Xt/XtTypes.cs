@@ -17,7 +17,7 @@ namespace TonNurako.Xt {
         /// <summary>
         /// 汎用ｺーﾙﾊﾞｯｸ
         /// </summary>
-        public delegate void XtCallBack(IntPtr w, IntPtr client, IntPtr call);
+        //public delegate void XtCallBack(IntPtr w, IntPtr client, IntPtr call);
 
         /// <summary>
         /// List widgetの選択項目列挙用
@@ -27,7 +27,7 @@ namespace TonNurako.Xt {
         /// <summary>
 	    /// EventHandler
 	    /// </summary>
-        public delegate void XtEventHandler(IntPtr widget, IntPtr closure, IntPtr xevent, IntPtr continue_to_dispatch);
+        //public delegate void XtEventHandler(IntPtr widget, IntPtr closure, IntPtr xevent, IntPtr continue_to_dispatch);
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ namespace TonNurako.Xt {
 
         public ulong color;
 
-        public G.XtCallBack callback;
+        public XtCallbackProc callback;
 
         public Arg(string _Name, int _Val) {
             name = _Name;
@@ -270,7 +270,7 @@ namespace TonNurako.Xt {
             callback = null;
         }
 
-        public Arg(string _Name, G.XtCallBack _Val) {
+        public Arg(string _Name, XtCallbackProc _Val) {
             name = _Name;
             callback = _Val;
             type = XtArgType.Callback;

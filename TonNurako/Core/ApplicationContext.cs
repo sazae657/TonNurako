@@ -71,6 +71,7 @@ namespace TonNurako {
             Name = "";
             fallbackResource = new Dictionary<string, string>();
             widgetResolutionTable = new Dictionary<Native.NativeWidget, IWidget>(new Native.NativeWidgetComparer());
+            Handle = new ExtremeSports.TnkAppContext();
         }
 
         /// <summary>

@@ -188,7 +188,7 @@ namespace TonNurako.X11 {
 
 
             // KeySym: XStringToKeysym [{'type': 'char*', 'name': 'string'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XStringToKeysym_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XStringToKeysym_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern KeySym XStringToKeysym([MarshalAs(UnmanagedType.LPStr)] string sk);
 
             // char*: XKeysymToString [{'type': 'KeySym', 'name': 'keysym'}]
@@ -470,7 +470,7 @@ namespace TonNurako.X11 {
             return (new Window(w, this));
         }
     }
-    public class XCoordinates {
+    public class XCoordinates : IDisposable {
         internal IntPtr child = IntPtr.Zero;
 
         Window window = null;
@@ -495,5 +495,20 @@ namespace TonNurako.X11 {
             }
             window.Assign(child, display);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

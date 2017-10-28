@@ -117,7 +117,7 @@ namespace TonNurako.Data
 		//参照保持
 		private List<IDisposable> retainObjects;
 
-        private List<TonNurako.Xt.G.XtCallBack> callbacks;
+        private List<TonNurako.Xt.XtCallbackProc> callbacks;
 
 
         // ﾍﾟﾝﾃﾞｨﾝｸﾞ？
@@ -168,7 +168,7 @@ namespace TonNurako.Data
 
 			retainObjects = new List<IDisposable>();
 
-            callbacks = new List<TonNurako.Xt.G.XtCallBack>();
+            callbacks = new List<TonNurako.Xt.XtCallbackProc>();
 
             isPending = false;
 
@@ -425,9 +425,9 @@ namespace TonNurako.Data
 		/// </summary>
 		/// <param name="arg">ｾｯﾄするﾘｿーｽ</param>
 		/// <param name="val">値</param>
-		public void Add(Enum arg, TonNurako.Xt.G.XtCallBack val )
+		public void Add(Enum arg, TonNurako.Xt.XtCallbackProc val )
 		{
-            callbacks.Add(new TonNurako.Xt.G.XtCallBack(val));
+            callbacks.Add(new TonNurako.Xt.XtCallbackProc(val));
 
 			//ﾘｿーｽの保持用
 			TonNurako.Xt.Arg args = new TonNurako.Xt.Arg(
@@ -638,10 +638,29 @@ namespace TonNurako.Data
             return (IntPtr)ret;
 		}
 
+        /// <summary>
+        /// Widgetに関連づけられているﾘｿーｽを取得(int)
+        /// </summary>
+        /// <param name="arg">取得するﾘｿーｽ</param>
+        public long GetIntValue(Enum arg) {
+            int ret;
+            ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out ret);
+            return ret;
+        }
 
-	   /// <summary>
-	   /// Argに変換
-	   /// </summary>
+        /// <summary>
+        /// Widgetに関連づけられているﾘｿーｽを取得(long)
+        /// </summary>
+        /// <param name="arg">取得するﾘｿーｽ</param>
+        public long GetLongValue(Enum arg) {
+            long ret;
+            ExtremeSports.XtGetValues(Widget.Handle, ToolkitOptionAttribute.GetToolkitName(arg), out ret);
+            return ret;
+        }
+
+        /// <summary>
+        /// Argに変換
+        /// </summary>
         public TonNurako.Xt.Arg[] ToXtArg() {
 			TonNurako.Xt.Arg [] res = new TonNurako.Xt.Arg[ resources.Count ];
 			for(int i = 0 ; i < resources.Count ; i++) {

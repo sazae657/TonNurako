@@ -135,11 +135,11 @@ namespace TonNurako.Native {
             //MWM用ｲﾍﾞﾝﾄﾊﾝﾄﾞﾗの追加
             [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
             public static extern void TNK_IMP_Xm_XmAddWMProtocolCallback( IntPtr w,
-                [MarshalAs(UnmanagedType.LPStr)] string name, Xt.G.XtCallBack call );
+                [MarshalAs(UnmanagedType.LPStr)] string name, Xt.XtCallbackProc call );
 
             [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
             public static extern void TNK_IMP_Xm_XmRemoveWMProtocolCallback( IntPtr w,
-                [MarshalAs(UnmanagedType.LPStr)] string name, Xt.G.XtCallBack call );
+                [MarshalAs(UnmanagedType.LPStr)] string name, Xt.XtCallbackProc call );
 
 
             [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
@@ -303,6 +303,8 @@ namespace TonNurako.Native {
 		{
             internal IntPtr context;
             internal IntPtr display;
+            [MarshalAs(UnmanagedType.LPStr)]
+            internal string display_string;
             internal TnkAppRefreshHandler comm;
             internal int   colormap;
 		}
@@ -314,6 +316,7 @@ namespace TonNurako.Native {
 
             public TnkAppContext() {
                 Record = new TnkAppContextRec();
+                Record.display_string = null;
             }
 
             internal TnkAppContext(TnkAppContextRec r) {
@@ -328,10 +331,17 @@ namespace TonNurako.Native {
                 get => appContext;
                // set => Record.context = value;
             }
+
             public IntPtr Display {
                 get => Record.display;
                 set => Record.display = value;
             }
+
+            public string DisplayString {
+                get => Record.display_string;
+                set => Record.display_string = value;
+            }
+
             public TnkAppRefreshHandler Comm {
                 get => Record.comm;
                 set => Record.comm = value;
@@ -399,12 +409,12 @@ namespace TonNurako.Native {
 
 
 
-		public static void XmAddWMProtocolCallback( Native.NativeWidget w, string name, Xt.G.XtCallBack call )
+		public static void XmAddWMProtocolCallback( Native.NativeWidget w, string name, XtCallbackProc call )
 		{
 			NativeMethods.TNK_IMP_Xm_XmAddWMProtocolCallback(w.Widget.Handle, name, call );
 		}
 
-		public static void XmRemoveWMProtocolCallback( Native.NativeWidget w, string name, Xt.G.XtCallBack call )
+		public static void XmRemoveWMProtocolCallback( Native.NativeWidget w, string name, XtCallbackProc call )
 		{
 			NativeMethods.TNK_IMP_Xm_XmRemoveWMProtocolCallback(w.Widget.Handle, name, call );
 		}

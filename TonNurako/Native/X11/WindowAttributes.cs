@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TonNurako.X11 {
 
-    public class Geometry {
+    public class Geometry :IDisposable {
         internal IntPtr root_return = IntPtr.Zero;
         Display display;
         public Window Root => new Window(root_return, display);
@@ -52,6 +52,20 @@ namespace TonNurako.X11 {
             display = dpy;
         }
 
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 
 
@@ -177,8 +191,8 @@ namespace TonNurako.X11 {
         public int height; // int
         public int border_width; // int
         public int depth; // int
-        public IntPtr visual; // Visual*
-        public IntPtr root; // Window
+        internal IntPtr visual; // Visual*
+        internal IntPtr root; // Window
         public int klass; // int
         public Gravity bit_gravity; // int
         public UnmapGravity win_gravity; // int
@@ -193,7 +207,7 @@ namespace TonNurako.X11 {
         [MarshalAs(UnmanagedType.U8)] public EventMask your_event_mask; // long
         [MarshalAs(UnmanagedType.U8)] public EventMask do_not_propagate_mask; // long
         [MarshalAs(UnmanagedType.U1)] public bool override_redirect; // Bool
-        public IntPtr screen; // Screen*
+        internal IntPtr screen; // Screen*
     }
 
     public class XWindowAttributes {

@@ -63,7 +63,7 @@ namespace TonNurako.Widgets {
                 new object[]{context.Handle.Display, context.Handle.Context});
 
 			//Closeｺーﾙﾊﾞｯｸの追加
-			this.CallbackQueue.AaddWMCallback( "WM_DELETE_WINDOW", new G.XtCallBack( this.WMCloseCallBack ));
+			this.CallbackQueue.AaddWMCallback( "WM_DELETE_WINDOW", new XtCallbackProc( this.WMCloseCallBack ));
 
 			//閉じられないように設定
 			ToolkitResources.Add( TonNurako.Motif.ResourceId.XmNdeleteResponse, TonNurako.Motif.Constant.XmDO_NOTHING );

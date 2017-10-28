@@ -148,7 +148,6 @@ namespace TonNurako.X11.Extension {
         public IntPtr dither; //Atom
         public bool component_alpha;
     }
-
     public class XRenderPictureAttributes {
         internal XRenderPictureAttributesRec Record;
         Pixmap clip_mask;
@@ -268,7 +267,7 @@ namespace TonNurako.X11.Extension {
     [StructLayout(LayoutKind.Sequential)]
     public struct XGlyphElt8 {
         public int glyphset; //GlyphSet=XID
-        public IntPtr chars; // _Xconst char*
+        internal IntPtr chars; // _Xconst char*
         public int nchars;
         public int xOff;
         public int yOff;
@@ -360,9 +359,9 @@ namespace TonNurako.X11.Extension {
     [StructLayout(LayoutKind.Sequential)]
     public struct XFiltersRec {
         public int nfilter;
-        public IntPtr filter; //char**
+        internal IntPtr filter; //char**
         public int nalias;
-        public IntPtr alias; //short*
+        internal IntPtr alias; //short*
     }
 
     public class XFilters {

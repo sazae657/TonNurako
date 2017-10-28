@@ -8,7 +8,7 @@ using TonNurako.Native;
 
 namespace TonNurako.X11 {
 
-    internal struct XQueryPointerRec {
+    internal struct XQueryPointerRec  {
         public IntPtr Root;
         public IntPtr Child;
         public int RootX;
@@ -55,6 +55,21 @@ namespace TonNurako.X11 {
             get => Record.Mask;
             set => Record.Mask = value;
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 
 
@@ -257,7 +272,7 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XStoreName_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XStoreName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XStoreName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string window_name);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFetchName_TNK", CharSet = CharSet.Auto)]
@@ -269,7 +284,7 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIconName_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIconName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XSetIconName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string icon_name);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetIconName_TNK", CharSet = CharSet.Auto)]
@@ -310,7 +325,7 @@ namespace TonNurako.X11 {
         public Display Display => display;
 
         #region IDrawable
-        IntPtr IDrawable.Drawable => Handle;
+        public IntPtr Drawable => Handle;
         #endregion
 
         public int SelectInput(EventMask mask) {

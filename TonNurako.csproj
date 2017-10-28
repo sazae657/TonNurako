@@ -63,9 +63,9 @@
     <Compile Include="TonNurako\GC\GraphicsContext.cs" />
     <Compile Include="TonNurako\GC\PixmapFactory.cs" />
     <Compile Include="TonNurako\GC\XImage.cs" />
-    <Compile Include="TonNurako\Misc\Inutility.cs" />
-    <Compile Include="TonNurako\Misc\MarshalHelper.cs" />
-    <Compile Include="TonNurako\Misc\Unity.cs" />
+    <Compile Include="TonNurako\Inutility\Inutility.cs" />
+    <Compile Include="TonNurako\Inutility\MarshalHelper.cs" />
+    <Compile Include="TonNurako\Inutility\Unity.cs" />
     <Compile Include="TonNurako\Native\Attribute.cs" />
     <Compile Include="TonNurako\Native\CallbackQueue.cs" />
     <Compile Include="TonNurako\Native\DlSym.cs" />
@@ -78,6 +78,7 @@
     <Compile Include="TonNurako\Native\GEN\Xm.Constant.cs" />
     <Compile Include="TonNurako\Native\GEN\Xm.ResourceId.cs" />
     <Compile Include="TonNurako\Native\GEN\Xm.StringConstant.cs" />
+    <Compile Include="TonNurako\Native\GEN\Xt.Constant.cs" />
     <Compile Include="TonNurako\Native\GEN\Xt.StringConstant.cs" />
     <Compile Include="TonNurako\Native\Types.cs" />
     <Compile Include="TonNurako\Native\X11\Atom.cs" />
@@ -112,10 +113,12 @@
     <Compile Include="TonNurako\Native\Xm\Xm.cs" />
     <Compile Include="TonNurako\Native\Xm\XmCall.cs" />
     <Compile Include="TonNurako\Native\Xm\XmCall.gen.cs" />
+    <Compile Include="TonNurako\Native\Xrm\Database.cs" />
     <Compile Include="TonNurako\Native\Xt\AppContext.cs" />
     <Compile Include="TonNurako\Native\Xt\Core\Callback.cs" />
     <Compile Include="TonNurako\Native\Xt\Core\Structure.cs" />
     <Compile Include="TonNurako\Native\Xt\Core\WidgetRec.cs" />
+    <Compile Include="TonNurako\Native\Xt\EventHandler.cs" />
     <Compile Include="TonNurako\Native\Xt\Masks.cs" />
     <Compile Include="TonNurako\Native\Xt\Symbol.cs" />
     <Compile Include="TonNurako\Native\Xt\Translation.cs" />

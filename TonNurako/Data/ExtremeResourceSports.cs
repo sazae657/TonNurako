@@ -382,7 +382,7 @@ namespace TonNurako.Data
         //
         // Callback
         //
-        internal void SetCallback(Enum key, TonNurako.Xt.G.XtCallBack val, Resource.Access access = Resource.Access.CSG) {
+        internal void SetCallback(Enum key, TonNurako.Xt.XtCallbackProc val, Resource.Access access = Resource.Access.CSG) {
             widget.ToolkitResources.Add(key, val);
    			widget.ToolkitResources.SetWidget(true);
         }

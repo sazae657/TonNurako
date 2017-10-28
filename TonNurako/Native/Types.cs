@@ -78,6 +78,12 @@ namespace TonNurako.Native {
 
 
         /// <summary>
+        /// WidgetRecAccessor
+        /// </summary>
+        /// <returns>Name</returns>
+        public Xt.Core.WidgetRecAccessor WidgetRecAccessor => new Xt.Core.WidgetRecAccessor(Widget.Handle);
+        
+        /// <summary>
         /// 比較
         /// </summary>
         /// <param name="with">比較元</param>

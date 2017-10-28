@@ -153,7 +153,7 @@ namespace TonNurako.X11 {
 
         internal static class NativeMethods {
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateFontSet_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateFontSet_TNK", CharSet = CharSet.Auto, BestFitMapping =false,ThrowOnUnmappableChar =true)]
             internal static extern IntPtr XCreateFontSet(
                 IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string base_font_name_list, out IntPtr missing_charset_list_return, out int missing_charset_count_return, out IntPtr def_string_return);
 
@@ -180,7 +180,7 @@ namespace TonNurako.X11 {
             internal static extern IntPtr XQueryFont(IntPtr display, int font_ID);
 
             // XFontStruct*: XLoadQueryFont [{'type': 'Display*', 'name': 'display'}, {'type': 'char*', 'name': 'name'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XLoadQueryFont_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XLoadQueryFont_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XLoadQueryFont(IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string name);
 
             // int: XFreeFont [{'type': 'Display*', 'name': 'display'}, {'type': 'XFontStruct*', 'name': 'font_struct'}]
@@ -192,7 +192,7 @@ namespace TonNurako.X11 {
             internal static extern bool XGetFontProperty(IntPtr font_struct, ulong atom, out IntPtr value_return);
 
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XListFonts_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XListFonts_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XListFonts(IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string pattern, int maxnames, out int actual_count_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeFontNames_TNK", CharSet = CharSet.Auto)]
@@ -305,6 +305,7 @@ namespace TonNurako.X11 {
                 if (DestructFunction != null) {
                     DestructFunction();
                 }
+                handle = IntPtr.Zero;
                 disposedValue = true;
             }
         }

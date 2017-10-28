@@ -224,7 +224,7 @@ namespace TonNurako.X11.Extension {
             internal static extern void XRenderChangePicture(IntPtr dpy, int picture, CreatePictureMask valuemask, ref XRenderPictureAttributesRec attributes);
 
             // void: XRenderSetPictureFilter Display*:dpy Picture:picture char*:filter XFixed*:params int:nparams
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureFilter_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderSetPictureFilter_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XRenderSetPictureFilter(IntPtr dpy, int picture, [MarshalAs(UnmanagedType.LPStr)] string filter, int[] fk_params, int nparams);
 
             // void: XRenderSetPictureClipRectangles Display*:dpy Picture:picture int:xOrigin int:yOrigin XRectangle*:rects int:n
@@ -282,7 +282,7 @@ namespace TonNurako.X11.Extension {
                 IntPtr dpy, ref XConicalGradient gradient, int[] stops, [In]XRenderColor[] colors, int nstops);
 
             // Status: XRenderParseColor Display*:dpy char*:spec XRenderColor*:def
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderParseColor_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderParseColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XRenderParseColor(IntPtr dpy, [MarshalAs(UnmanagedType.LPStr)] string spec, ref XRenderColor def);
 
             // XIndexValue*: XRenderQueryPictIndexValues Display*:dpy XRenderPictFormat*:format int*:num
@@ -378,7 +378,6 @@ namespace TonNurako.X11.Extension {
             if (p == 0) {
                 return null;
             }
-            TonNurako.Inutility.Dumper.DumpStruct(attributes.Record, (s) => Console.WriteLine($"XRenderCreatePicture: {s}"));
             return new Picture(dpy, p);
         }
 

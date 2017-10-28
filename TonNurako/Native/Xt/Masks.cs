@@ -25,4 +25,12 @@ namespace TonNurako.Xt {
         CWStackMode = TonNurako.X11.Constant.CWStackMode,
         CWQueryOnly = TonNurako.X11.Constant.XtCWQueryOnly,
     }
+
+    [Flags]
+    public enum XtInputMask :ulong{
+        XtInputNoneMask = TonNurako.Xt.Constant.XtInputNoneMask,
+        XtInputReadMask = TonNurako.Xt.Constant.XtInputReadMask,
+        XtInputWriteMask = TonNurako.Xt.Constant.XtInputWriteMask,
+        XtInputExceptMask = TonNurako.Xt.Constant.XtInputExceptMask
+    }
 }

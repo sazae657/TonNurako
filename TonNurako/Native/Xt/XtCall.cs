@@ -94,12 +94,12 @@ namespace TonNurako.Xt {
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtRemoveCallback_TNK", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
             public static extern void XtRemoveCallback(IntPtr w,
-                [MarshalAs(UnmanagedType.LPStr)]string type, G.XtCallBack call ,IntPtr client);
+                [MarshalAs(UnmanagedType.LPStr)]string type, XtCallbackProc call ,IntPtr client);
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtAddCallback_TNK", CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
             public static extern void XtAddCallback(IntPtr w,
-                [MarshalAs(UnmanagedType.LPStr)]string type, G.XtCallBack call ,IntPtr client);
+                [MarshalAs(UnmanagedType.LPStr)]string type, XtCallbackProc call ,IntPtr client);
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtLastTimestampProcessed_TNK", CharSet=CharSet.Auto)]
@@ -128,11 +128,11 @@ namespace TonNurako.Xt {
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtAddEventHandler_TNK", CharSet=CharSet.Auto)]
             internal static extern void XtAddEventHandler(IntPtr w, ulong event_mask,
-                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data);
+                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Xt.XtEventHandler proc, IntPtr client_data);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtRemoveEventHandler_TNK", CharSet=CharSet.Auto)]
             internal static extern void XtRemoveEventHandler(IntPtr w, ulong event_mask,
-                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data);
+                    [MarshalAs(UnmanagedType.U1)] bool nonmaskable, TonNurako.Xt.XtEventHandler proc, IntPtr client_data);
 
             [DllImport(ExtremeSports.Lib, EntryPoint="XtInitializeWidgetClass_TNK", CharSet=CharSet.Auto)]
             internal static extern void XtInitializeWidgetClass(IntPtr glass);
@@ -248,11 +248,11 @@ namespace TonNurako.Xt {
             return null;
         }
 
-        public static  void  XtRemoveCallback(Widgets.IWidget wgt, string type, G.XtCallBack call) {
+        public static  void  XtRemoveCallback(Widgets.IWidget wgt, string type, XtCallbackProc call) {
             NativeMethods.XtRemoveCallback(wgt.Handle.Widget.Handle, type, call, IntPtr.Zero);
         }
 
-        public static  void  XtAddCallback(Widgets.IWidget wgt, string type, G.XtCallBack call ) {
+        public static  void  XtAddCallback(Widgets.IWidget wgt, string type, XtCallbackProc call ) {
             NativeMethods.XtAddCallback(wgt.Handle.Widget.Handle, type, call, IntPtr.Zero);
         }
         public static uint XtLastTimestampProcessed(IntPtr display) {
@@ -295,13 +295,13 @@ namespace TonNurako.Xt {
         }
 
         public static void XtAddEventHandler(Widgets.IWidget w, ulong event_mask, bool nonmaskable,
-                     TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data) {
+                     TonNurako.Xt.XtEventHandler proc, IntPtr client_data) {
             NativeMethods.XtAddEventHandler(w.Handle.Widget.Handle, event_mask,nonmaskable,proc,client_data);
         }
 
 
         public static void XtRemoveEventHandler(Widgets.IWidget w, ulong event_mask, bool nonmaskable,
-            TonNurako.Xt.G.XtEventHandler proc, IntPtr client_data) {
+            TonNurako.Xt.XtEventHandler proc, IntPtr client_data) {
             NativeMethods.XtRemoveEventHandler(w.Handle.Widget.Handle,event_mask,nonmaskable,proc,client_data);
         }
 

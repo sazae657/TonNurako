@@ -86,7 +86,7 @@ namespace TonNurako.X11
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIOErrorHandler_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XSetIOErrorHandler([In]IntPtr handler);
 
-            [DllImport(ExtremeSports.Lib, EntryPoint = "setlocale_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "setlocale_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr setlocale_TNK(XLocale category, [MarshalAs(UnmanagedType.LPStr)] string locale);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeStringList_TNK", CharSet = CharSet.Auto)]

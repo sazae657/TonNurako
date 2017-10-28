@@ -9,32 +9,7 @@ using TonNurako.Widgets;
 namespace TonNurako.Xt.Core {
     public delegate void XtProc();
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct XtCallbackRec {
-        [MarshalAs(UnmanagedType.FunctionPtr)] XtCallbackProc callback;
-        IntPtr closure;
-    }
 
-    internal delegate void XtCallbackProc(
-          IntPtr        widget,
-          IntPtr         closure ,
-          IntPtr         call_data
-      );
-
-    internal delegate void XtEventHandler(
-        IntPtr        widget,
-        IntPtr        closure,
-        IntPtr       xevent,//XEvent*
-         IntPtr      continue_to_dispatch //Boolean*
-        );
-
-
-    internal delegate void XtActionProc(
-          IntPtr   widget,
-          IntPtr   xevent , //XEvent*
-          IntPtr   xparams, //String*
-          IntPtr   num_params //Cardinal*
-    );
 
 
     //

@@ -98,9 +98,10 @@ tagTNK_PIXMAX
 typedef struct
 _tagTNK_APP_CONTEXT{
 	XtAppContext context;
-	Display      *display;
-    XtPointer      comm; // long
-    Colormap    colormap; //int
+    Display      *display;
+    String       display_string;
+    XtPointer    comm; // long
+    Colormap     colormap; //int
 } TNK_APP_CONTEXT, *LPTNK_APP_CONTEXT;
 
 typedef enum

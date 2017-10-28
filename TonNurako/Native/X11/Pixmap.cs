@@ -123,6 +123,10 @@ namespace TonNurako.X11 {
             this.DestroyPixmapFunc = delegaty;
         }
 
+        public void AssignPixmap(IntPtr ptr) {
+            this.drawable = ptr;
+        }
+
         /// <summary>
         /// ﾑｯﾌﾟ
         /// </summary>

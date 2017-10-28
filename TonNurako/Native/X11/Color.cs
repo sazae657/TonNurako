@@ -121,12 +121,11 @@ namespace TonNurako.X11 {
     public class Color : IX11Interop<ulong> {
 
         internal static class NativeMethods {
-            // Status: XAllocColor [{'type': 'Display*', 'name': 'display'}, {'type': 'Colormap', 'name': 'colormap'}, {'type': 'XColor*', 'name': 'screen_in_out'}]
+
             [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocColor_TNK", CharSet = CharSet.Auto)]
             internal static extern int XAllocColor(IntPtr display, int colormap, [In, Out] ref XColor screen_in_out);
 
-            // Status: XAllocNamedColor [{'type': 'Display*', 'name': 'display'}, {'type': 'Colormap', 'name': 'colormap'}, {'type': 'char*', 'name': 'color_name'}, {'type': 'XColor*', 'name': 'screen_def_return'}, {'type': 'XColor*', 'name': 'exact_def_return'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocNamedColor_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocNamedColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XAllocNamedColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor screen_def_return, out XColor exact_def_return);
 
             // int: XQueryColor Display*:display  Colormap:colormap  XColor*:def_in_out  
@@ -138,11 +137,11 @@ namespace TonNurako.X11 {
             internal static extern int XQueryColors(IntPtr display, int colormap, [In,Out] XColor [] defs_in_out, int ncolors);
 
             // Status: XLookupColor Display*:display  Colormap:colormap  char*:color_name  XColor*:exact_def_return  XColor*:screen_def_return  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XLookupColor_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XLookupColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XLookupColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor exact_def_return, out XColor screen_def_return);
 
             // Status: XParseColor Display*:display  Colormap:colormap  char*:spec  XColor*:exact_def_return  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XParseColor_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XParseColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XParseColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string spec, out XColor exact_def_return);
         }
 
@@ -153,6 +152,8 @@ namespace TonNurako.X11 {
 
         Colormap colormap;
         Display display;
+
+        public ReturnPointerDelegaty<ulong> PixelDelegaty = null;
 
         public Color() {
             colormap = null;
@@ -172,8 +173,23 @@ namespace TonNurako.X11 {
             this.Record = color;
         }
 
+
+        public Color(ulong pixel) {
+            colormap = null;
+            display = null;
+            Record = new XColor();
+            Record.Pixel = pixel;
+        }
+
+        public Color(ReturnPointerDelegaty<ulong> delegaty) {
+            colormap = null;
+            display = null;
+            PixelDelegaty = delegaty;
+            Record = new XColor();
+        }
+
         public ulong Pixel {
-            get => Record.Pixel;
+            get => (null != PixelDelegaty) ? PixelDelegaty() : Record.Pixel;
             set => Record.Pixel = value;
         }
         public ushort Red {
@@ -197,12 +213,19 @@ namespace TonNurako.X11 {
             set => Record.Pad = value;
         }
 
+        public bool PixelEquals(Color b) {
+            return (this.Pixel == b.Pixel);
+        }
+
         internal void Assign(Display dpy, Colormap cmap, XColor color) {
             this.colormap = cmap;
             this.display = dpy;
             this.Record = color;
         }
 
+
+
+        #region ﾌｧｸﾄﾘーっぽいやつ
         public static Color AllocNamedColor(Display dpy, Colormap cmap, string name) {
             var near = new XColor();
             var far  = new XColor();
@@ -229,7 +252,6 @@ namespace TonNurako.X11 {
             if (XStatus.True != NativeMethods.XQueryColor(display.Handle, colormap.Handle, ref r.Record)) {
                 return null;
             }
-            TonNurako.Inutility.Dumper.DumpStruct(r.Record, (s)=> Console.WriteLine(s));
             return r;
         }
 
@@ -259,6 +281,7 @@ namespace TonNurako.X11 {
             }
             return r;
         }
+        #endregion
 
     }
 }

@@ -91,7 +91,7 @@ namespace TonNurako {
 		public void AddHandler(Widgets.WidgetBase widget, Enum n, EventHandler<E_Type> e)
 		{
             if(! HasHandler(n)) {
-                TonNurako.Xt.G.XtCallBack cb =
+                TonNurako.Xt.XtCallbackProc cb =
                  (w, client, call) => {
                             this.CallHandler(n, widget,
                                 ((Func<E_Type>)(() => {
@@ -115,7 +115,7 @@ namespace TonNurako {
 		public void AddHandlerToRes(Widgets.WidgetBase widget, Enum n, EventHandler<E_Type> e)
 		{
             if(! HasHandler(n)) {
-                TonNurako.Xt.G.XtCallBack cb =
+                TonNurako.Xt.XtCallbackProc cb =
                  (w, client, call) => {
                             this.CallHandler(n, widget,
                                 ((Func<E_Type>)(() => {

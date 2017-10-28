@@ -108,7 +108,6 @@ namespace TonNurako {
                 rs.Add($"{v.Key}: {v.Value}");
             }
 
-            _Ctx.Handle = new ExtremeSports.TnkAppContext();
             ExtremeSports.TnkCode code =
                 (ExtremeSports.TnkCode)ExtremeSports.XtInitialize(_Ctx.Handle, _Ctx.Name, _Args, rs.ToArray());
             if (ExtremeSports.TnkCode.Ok != code) {

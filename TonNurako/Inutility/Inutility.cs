@@ -13,7 +13,9 @@ namespace TonNurako.Inutility {
             var infoArray = obzekt.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             depth++;
             foreach (var info in infoArray) {
-                if (info.PropertyType.Namespace.StartsWith("TonNurako") && depth < maxDepth && info.PropertyType.IsClass) {
+                if (info.PropertyType.Namespace.StartsWith("TonNurako") && 
+                    depth < maxDepth && info.PropertyType.IsClass) 
+                {
                     var sv = "(NULL)";
                     var v = info.GetValue(obzekt, null);
                     if (null == v) {

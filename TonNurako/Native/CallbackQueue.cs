@@ -33,9 +33,9 @@ namespace TonNurako.Native {
 		{
 			public CallbackType type;
             public string eventName;
-			public G.XtCallBack proc;
+			public XtCallbackProc proc;
 
-            public QueueData(CallbackType t, string n, G.XtCallBack p) {
+            public QueueData(CallbackType t, string n, XtCallbackProc p) {
                 type = t;
                 eventName = n;
                 proc = p;
@@ -69,7 +69,7 @@ namespace TonNurako.Native {
 		/// </summary>
 		/// <param name="eventName"></param>
 		/// <param name="proc"></param>
-		public void AddXtCallback( string eventName, G.XtCallBack proc )
+		public void AddXtCallback( string eventName, XtCallbackProc proc )
 		{
 			callbacks.Add(new QueueData(CallbackType.Xt, eventName, proc));
 			//適用
@@ -80,7 +80,7 @@ namespace TonNurako.Native {
 		/// </summary>
 		/// <param name="eventId"></param>
 		/// <param name="proc"></param>
-		public void AddXtCallback(Enum eventId, G.XtCallBack proc )
+		public void AddXtCallback(Enum eventId, XtCallbackProc proc )
         {
             AddXtCallback(ToolkitOptionAttribute.GetToolkitName(eventId), proc);
         }
@@ -90,7 +90,7 @@ namespace TonNurako.Native {
 		/// </summary>
 		/// <param name="eventName"></param>
 		/// <param name="proc"></param>
-		public void AaddWMCallback( string eventName, G.XtCallBack proc )
+		public void AaddWMCallback( string eventName, XtCallbackProc proc )
         {
             callbacks.Add(new QueueData(CallbackType.WM, eventName, proc));
             //適用
@@ -102,7 +102,7 @@ namespace TonNurako.Native {
 		/// </summary>
 		/// <param name="eventId"></param>
 		/// <param name="proc"></param>
-		public void AddWMCallback(Enum eventId, G.XtCallBack proc )
+		public void AddWMCallback(Enum eventId, XtCallbackProc proc )
         {
             AaddWMCallback(ToolkitOptionAttribute.GetToolkitName(eventId), proc);
         }
