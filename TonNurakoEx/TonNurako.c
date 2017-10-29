@@ -144,9 +144,6 @@ TNK_XtInitialize(
 	//ﾃﾞｨｽﾌﾟﾚｲのOpen
 	pContext->display = XtOpenDisplay( pContext->context, pContext->display_string,
 		NULL, strAppTitle, NULL, 0, &copyArgc, copyArgv);
-    if (NULL == pContext->display) {
-        return TNK_ERR_CANNOT_OPEN_DISPLAY;
-    }
 
     if (NULL != copyArgv) {
         for( i = 0; i < argc; i++ ) {
@@ -156,6 +153,9 @@ TNK_XtInitialize(
             free(copyArgv[i]);
         }
         free(copyArgv);
+    }
+    if (NULL == pContext->display) {
+        return TNK_ERR_CANNOT_OPEN_DISPLAY;
     }
 
     XmRepTypeInstallTearOffModelConverter();
