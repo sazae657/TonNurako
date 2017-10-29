@@ -20,5 +20,5 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: info@ftp.gawanative.com
     build_command_prepend: "make -C TonNurakoEx clean audio"
-    build_command:   "make -C TonNurakoEx"
+    build_command:   "make -C TonNurakoEx ExtremeSports"
     branch_pattern: coverity_scan
