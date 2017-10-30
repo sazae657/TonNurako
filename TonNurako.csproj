@@ -79,6 +79,7 @@
     <Compile Include="TonNurako\Native\GEN\Xm.ResourceId.cs" />
     <Compile Include="TonNurako\Native\GEN\Xm.StringConstant.cs" />
     <Compile Include="TonNurako\Native\GEN\Xt.Constant.cs" />
+    <Compile Include="TonNurako\Native\GEN\Xt.ResourceId.cs" />
     <Compile Include="TonNurako\Native\GEN\Xt.StringConstant.cs" />
     <Compile Include="TonNurako\Native\Types.cs" />
     <Compile Include="TonNurako\Native\X11\Atom.cs" />

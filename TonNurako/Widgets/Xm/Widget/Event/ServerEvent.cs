@@ -18,6 +18,7 @@ namespace TonNurako.Events
         internal ServerEvent(Widgets.WidgetBase widget) {
             ButtonEventTable = new XMaskEventQueue<Events.Server.ButtonEventArgs>();
             MotionEventTable = new XMaskEventQueue<Events.Server.MotionEventArgs>();
+            ExposeEventTable = new XMaskEventQueue<Server.ExposeEventArgs>();
             Widget = widget;
         }
 
@@ -29,6 +30,10 @@ namespace TonNurako.Events
         }
 
         internal XMaskEventQueue<Events.Server.KeymapEventArgs> KeyMapEventTable {
+            get;
+        }
+
+        internal XMaskEventQueue<Events.Server.ExposeEventArgs> ExposeEventTable {
             get;
         }
 
@@ -73,5 +78,11 @@ namespace TonNurako.Events
                 MotionEventTable.RemoveHandler((ulong)TonNurako.X11.EventMask.PointerMotionMask ,  value );
             }
         }
+
+        public virtual event EventHandler<Events.Server.ExposeEventArgs> ExposeEvent {
+            add => ExposeEventTable.AddHandler(Widget, (ulong)TonNurako.X11.EventMask.ExposureMask, value);
+            remove => ExposeEventTable.RemoveHandler((ulong)TonNurako.X11.EventMask.ExposureMask, value);           
+        }
+        
     }
 }
