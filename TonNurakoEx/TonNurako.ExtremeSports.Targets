@@ -3,7 +3,11 @@
     <PropertyGroup>
         <WorkingFolder>$(MSBuildProjectDirectory)/TonNurakoEx</WorkingFolder>
     </PropertyGroup>
-    <Target Name="TonNuraConfig">
+    <Target Name="TonNuraConfig"
+      Inputs="$(WorkingFolder)/Config.mp3"
+      Outputs="$(WorkingFolder)/Site.mp3"
+      Condition="'$(OS)' == 'Unix'">
+      <!--
         <PropertyGroup>
             <HasSiteMP3 Condition="Exists('$(WorkingFolder)/Site.mp3')">true</HasSiteMP3>
             <HasSiteMP3 Condition="'$(HasSiteMP3)'==''">false</HasSiteMP3>
@@ -12,9 +16,10 @@
              Text="=== run make audio $(WorkingFolder) $(Configuration) ===" />
         <Message Condition="'$(OS)' != 'Unix'"
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
+        -->
+        <Message Text="=== run make audio $(WorkingFolder) $(Configuration) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)/"
-            Command="make audio"
-            Condition="'$(HasSiteMP3)' == 'false' AND '$(OS)' == 'Unix'" />
+            Command="make audio"/>
     </Target>
 
     <Target Name="PrePareExtremeSports" DependsOnTargets="TonNuraConfig">
