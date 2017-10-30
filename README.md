@@ -1,15 +1,9 @@
-﻿## ﾄﾝﾇﾗｺ
+﻿# ﾄﾝﾇﾗｺ
 
-ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ
-
-ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ ﾄﾝﾇﾗｺ
-
-
+＜ﾄﾝﾇﾗｺ＞.NetでX/Motifをなんとかしようというﾊﾞﾍﾞﾙの塔＜ﾄﾝﾇﾗｺ＞
 
 ﾗｲｾﾝｽはOpenMotifに従いLGPLとします
 
-
-ﾄﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺﾝﾇﾗｺ
 
 ![VSS](https://raw.githubusercontent.com/sazae657/TonNurako/master/ScreenShot.png)
 
@@ -21,9 +15,10 @@
 ### 必要なもの
 
 * 広い心
-* mono 4.x
+* mono 5.x
 * OpenMotif 2.3+
 * Python2
+* GNUMake
 
 *Mac OSXで動かす場合は32bit版のﾗｲﾌﾞﾗﾘーを用意するかmono64のｲﾝｽﾄーﾙが必要な模様です
 
@@ -39,9 +34,11 @@
 
 * X11やMotifが一般的でない場所にｲﾝｽﾄーﾙされている場合
 * 一部の不自由ｼｽﾃﾑで検疫ﾌｫﾙﾀﾞーにMotifが移動されてしまっている場合
+* msbuildを叩いたら *PrePareExtremeSports* もしくは *BuildExtremeSports* でｴﾗーになった場合
 
 該当しない場合はこの手順をすっ飛ばして構いません
-
+<details>
+<summary>手順詳細</summary>
 1. 依存ﾗｲﾌﾞﾗﾘーを自動検索させる場合
     TonNurako/TonNurakoExで *make audio* を叩いてください
 
@@ -79,10 +76,10 @@
 ```
 % make clean all
 ```
+</details>
 
 ## ﾄﾝﾇﾗｺ本体とﾃﾞﾓのﾋﾞﾙﾄﾞ
 ```
-% cd ..
 % msbuild
 ---
 % ls bin/Debug/*Ton*

@@ -331,7 +331,7 @@ namespace TonNurako.X11 {
                 );
         }
 
-        public Colormap GetDefaultColormap() =>
+        public Colormap DefaultColormap =>
             new Colormap(NativeMethods.DefaultColormap(Handle, DefaultScreen), this);
 
         public Colormap GetDefaultColormap(int screen) =>

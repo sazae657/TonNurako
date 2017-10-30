@@ -1,4 +1,4 @@
-.SUFFIXES: .iso .cs .swift
+.SUFFIXES: .iso .cs .swift .slo .xml
 include Config.mp3
 -include Site.mp3
 
@@ -6,7 +6,8 @@ PLATFORM := SunOS
 BUILD := Debug
 LINKER := $(CC)
 BINDIR := ../bin/$(BUILD)/
-
+OBJDIR := tmpfile.app/Contents/_CodeSignature/$(BUILD)
+OBJ_SUFFIX := .dylib
 
 CFLAGS := $(CFLAGS) -Iimport.app $(MOTF_HEADER_ARGS) $(X11_HEADER_ARGS)
 LINK_LIBS := -Limport.app/lib $(MOTF_LIBRARY_ARGS) $(MOTIF_LIBS) $(X11_LIBRARY_ARGS) $(X11_LIBS)
@@ -32,8 +33,8 @@ RULES_OK_DIR=tmpfile.app/Contents/_CodeSignature
 RULES_OK_FILE=tmpfile.app/Contents/_CodeSignature/Zakefile
 
 # 自動生成用
-GEN_EXE := tmpfile.app/Contents/MacOS/gen
-GEN_C := tmpfile.app/Contents/Resources/gen.c
+GEN_EXE_DIR := tmpfile.app/Contents/MacOS
+GEN_C_DIR := tmpfile.app/Contents/Resources
 GEN_SRC_DIR := ../TonNurako/Native/GEN
 TEMPLATE_DIR := iso.app
 SCRIPT_DIR := scripts.app
@@ -55,23 +56,18 @@ XT_CONSTANT_CS_TPL=$(TEMPLATE_DIR)/Xt.Constant.swift
 
 X_CONSTANT_CS=$(GEN_SRC_DIR)/X.Constant.cs
 X_CONSTANT_CS_TPL=$(TEMPLATE_DIR)/X.Constant.iso
-X_CONSTANT_CS_MAP=$(GEN_SRC_DIR)/X.Constant.map
 
 X_STRINGCONSTANT_CS=$(GEN_SRC_DIR)/X.StringConstant.cs
 X_STRINGCONSTANT_CS_TPL=$(TEMPLATE_DIR)/X.StringConstant.swift
-X_STRINGCONSTANT_CS_MAP=$(GEN_SRC_DIR)/X.StringConstant.map
 
 X_PROTO_CS=$(GEN_SRC_DIR)/X.Proto.cs
 X_PROTO_CS_TPL=$(TEMPLATE_DIR)/X.Proto.swift
-X_PROTO_CS_MAP=$(GEN_SRC_DIR)/X.Proto.map
 
 X_ATOM_CS=$(GEN_SRC_DIR)/X.Atom.cs
 X_ATOM_CS_TPL=$(TEMPLATE_DIR)/X.Atom.swift
-X_ATOM_CS_MAP=$(GEN_SRC_DIR)/X.Atom.map
 
 X_KEYSYM_CS=$(GEN_SRC_DIR)/X.KeySym.cs
 X_KEYSYM_CS_TPL=$(TEMPLATE_DIR)/X.KeySym.swift
-X_KEYSYM_CS_MAP=$(GEN_SRC_DIR)/X.KeySym.map
 X_KEYSYM_CS_PP=	-DXK_3270
 
 GEN_SRCS = $(XM_CONSTANT_CS) \
@@ -91,25 +87,31 @@ ifeq ($(PLATFORM), Darwin)
 	LINK_FLAGS += -dynamiclib
 endif
 
-OBJ=DlSym.o	\
- 	ClassDef.o \
-    TonNurako.o \
- 	XmImport.o \
-	XtImport.o  \
-	XtImportMacro.o \
-	X11Import.o \
-	X11ImportMacro.o \
-	X11ImportLocale.o \
-	XkbImport.o \
-	XrmImport.o \
-	XmCreateFuncs.o \
-	X11ExtShapeImp.o \
-	X11ExtRenderImp.o \
-	X11ImpGC.o \
+SOURCES=DlSym.c	\
+ 	ClassDef.c \
+    TonNurako.c \
+ 	XmImport.c \
+	XtImport.c  \
+	XtImportMacro.c \
+	X11Import.c \
+	X11ImportMacro.c \
+	X11ImportLocale.c \
+	XkbImport.c \
+	XftImport.c \
+	XrmImport.c \
+	XmCreateFuncs.c \
+	X11ExtShapeImp.c \
+	X11ExtRenderImp.c \
+	X11ImpGC.c \
+
+OBJ=$(addprefix $(OBJDIR)/, $(SOURCES:.c=$(OBJ_SUFFIX)))
 
 TARGET = $(BINDIR)libTonNurako.extremesports
 
-.c.o:
+$(OBJDIR)/%$(OBJ_SUFFIX): %.c
+	$(CC) $(OPT) $(CFLAGS) $(WARN_OPT) -c  $< -o $@
+
+$(OBJDIR)/%.xml: %.c
 	$(CC) $(OPT) $(CFLAGS) $(WARN_OPT) -c  $< -o $@
 
 all: ExtremeSports GenSrc
@@ -120,10 +122,13 @@ $(TARGET): $(OBJ)
 	$(LINKER) $(LINK_FLAGS) -o $(TARGET) $(OBJ) $(LINK_LIBS)
 	echo "-- $(TARGET) OK --"
 
-$(OBJ): $(BINDIR)
+$(OBJ): $(OBJDIR) $(BINDIR)
 
 $(BINDIR):
 	mkdir -p $(BINDIR)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
 
 # ﾁｪｯｸ
 check: $(RULES_OK_FILE)
@@ -156,77 +161,33 @@ GenSrc: $(GEN_SRCS)
 $(TEMP_BIN):
 	mkdir -p $(TEMP_BIN)
 
-#TODO: ↓これなんとかならんものか
-$(XM_CONSTANT_CS): $(XM_CONSTANT_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(XM_CONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(XM_CONSTANT_CS)
+$(GEN_SRC_DIR)/%.cs: $(TEMPLATE_DIR)/%.swift
+	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $< >$(GEN_C_DIR)/$(notdir $<).c
+	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) \
+		-o $(GEN_EXE_DIR)/$(notdir $<) \
+		$(GEN_C_DIR)/$(notdir $<).c $(COMMON_C) $(LINK_LIBS)
+	$(GEN_EXE_DIR)/$(notdir $<) >$@
+	$(PYTHON) $(SCRIPT_DIR)/map.py $< >$@.map
 
-$(XM_RESOURCEID_CS): $(XM_RESOURCEID_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(XM_RESOURCEID_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C)  $(LINK_LIBS)
-	$(GEN_EXE) >$(XM_RESOURCEID_CS)
-
-$(XM_STRINGCONSTANT_CS): $(XM_STRINGCONSTANT_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(XM_STRINGCONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(XM_STRINGCONSTANT_CS)
-
-
-$(XT_STRINGCONSTANT_CS): $(XT_STRINGCONSTANT_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(XT_STRINGCONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(XT_STRINGCONSTANT_CS)
-	$(PYTHON) $(SCRIPT_DIR)/map.py $(XT_STRINGCONSTANT_CS_TPL) >$(XT_STRINGCONSTANT_CS).map
-
-$(XT_CONSTANT_CS): $(XT_CONSTANT_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(XT_CONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(XT_CONSTANT_CS)
-	$(PYTHON) $(SCRIPT_DIR)/map.py $(XT_CONSTANT_CS_TPL) >$(XT_CONSTANT_CS).map
-
-
-$(X_CONSTANT_CS): $(X_CONSTANT_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(X_CONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(X_CONSTANT_CS)
-	$(PYTHON) $(SCRIPT_DIR)/map.py $(X_CONSTANT_CS_TPL) >$(X_CONSTANT_CS_MAP)
-
-$(X_PROTO_CS): $(X_PROTO_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(X_PROTO_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(X_PROTO_CS)
-	$(PYTHON) $(SCRIPT_DIR)/map.py $(X_PROTO_CS_TPL) >$(X_PROTO_CS_MAP)
-
-$(X_ATOM_CS): $(X_ATOM_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(X_ATOM_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(X_ATOM_CS)
-	$(PYTHON) $(SCRIPT_DIR)/map.py $(X_ATOM_CS_TPL) >$(X_ATOM_CS_MAP)
-
-$(X_KEYSYM_CS): $(X_KEYSYM_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(X_KEYSYM_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(X_KEYSYM_CS_PP) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(X_KEYSYM_CS)
-	$(PYTHON) $(SCRIPT_DIR)/map.py $(X_KEYSYM_CS_TPL) >$(X_KEYSYM_CS_MAP)
-
-
-$(X_STRINGCONSTANT_CS): $(X_STRINGCONSTANT_CS_TPL)
-	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $(X_STRINGCONSTANT_CS_TPL) >$(GEN_C)
-	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(X_STRINGCONSTANT_CS_PP) $(EXE_LINK_FLAGS) $(COMMON_I) -o $(GEN_EXE) $(GEN_C) $(COMMON_C) $(LINK_LIBS)
-	$(GEN_EXE) >$(X_STRINGCONSTANT_CS)
-	$(PYTHON) $(SCRIPT_DIR)/map.py $(X_STRINGCONSTANT_CS_TPL) >$(X_STRINGCONSTANT_CS_MAP)
-
+$(GEN_SRC_DIR)/%.cs: $(TEMPLATE_DIR)/%.iso
+	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $< >$(GEN_C_DIR)/$(notdir $<).c
+	$(CC) $(CFLAGS) $(GEN_CFLAGS) $(EXE_LINK_FLAGS) $(COMMON_I) \
+		-o $(GEN_EXE_DIR)/$(notdir $<) \
+	$(GEN_C_DIR)/$(notdir $<).c $(COMMON_C) $(LINK_LIBS)
+	$(GEN_EXE_DIR)/$(notdir $<) >$@
+	$(PYTHON) $(SCRIPT_DIR)/map.py $< >$@.map
 
 clean.lib:
-	- rm -rf *.o
-	- rm -rf $(TARGET)
+	- rm -f *.o
+	- rm -rf $(OBJDIR)
+	- rm -f $(TARGET)
 	- rm -rf dep
 	- rm -rf core
 
 clean: clean.lib
 	- rm $(MOTIF_CHECK_E) $(LIB_CHECK_E) $(IMP_CHECK_E) $(RULES_OK_DIR)/*file
 	- rm $(GEN_SRCS)
+	- rm $(GEN_C_DIR)/*.c
 
 install: clean
 

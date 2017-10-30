@@ -9,7 +9,7 @@
     <key>CFBundleDisplayName</key>
     <string>ほあああ</string>
     <key>CFBundleExecutable</key>
-    <string>gen</string>
+    <string>Xt.Constant.swift</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleSignature</key>

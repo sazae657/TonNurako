@@ -220,7 +220,10 @@ TNK_EXPORT Arg*
 TNK_IMP_TnkAllocArg(int count) {
     Arg* args;
 
-    args = (Arg*)malloc(sizeof(Arg) * (1+count));
+    args = (Arg*)XtMalloc((1+count) + sizeof(Arg));
+    if (NULL == args) {
+        return NULL;
+    }
     memset(args, 0x00, sizeof(Arg) * count);
     #ifdef _DEBUG
     CONS25W(stderr, "IMP_ALLOC<%p>(%d)\n", args, count);
