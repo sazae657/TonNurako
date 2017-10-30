@@ -71,17 +71,25 @@ namespace Xlib {
                 Console.WriteLine("cannot open display");
                 return;
             }
+
+            if (!TonNurako.Extension.Xft.FontConfig.FcInit()) {
+                Console.WriteLine("FcInit failed");
+                return;
+            }
+
+
             Console.WriteLine($"*** EventMaskOfScreen={dpy.DefaultScreenOfDisplay.EventMaskOfScreen}");
             DumpProperty(dpy.DefaultScreenOfDisplay);
             DumpProperty(dpy);
-
+            /*
             TonNurako.X11.Xi.SetErrorHandler((d, e) => {
                 Console.WriteLine("*** E ***");
                 DumpProperty(d);
                 DumpProperty(e);
                 Console.WriteLine("******");
                 return -1;
-            });
+            });*/
+
 
             var fs = TonNurako.X11.FontSet.CreateFontSet(dpy, "-*-fixed-medium-r-normal--14-*-*-*");
             int fi = 0;
@@ -104,8 +112,8 @@ namespace Xlib {
             DumpStruct(rc2.OverallLogical);
 
             var rw = dpy.DefaultRootWindow;
-            rw.SelectInput(TonNurako.X11.EventMask.SubstructureRedirectMask|TonNurako.X11.EventMask.SubstructureNotifyMask);
-            dpy.Sync(false);
+            //rw.SelectInput(TonNurako.X11.EventMask.SubstructureRedirectMask|TonNurako.X11.EventMask.SubstructureNotifyMask);
+            //dpy.Sync(false);
 
 
             var c = TonNurako.X11.XClassHint.Alloc();
@@ -118,9 +126,9 @@ namespace Xlib {
             Console.WriteLine($"atom={atom.Handle}");
 
             var win = dpy.CreateSimpleWindow(
-                rw, 0, 0, 800, 800, 10,
-                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "yellow"),
-                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "black"));
+                rw, 0, 0, 512, 512, 10,
+                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.DefaultColormap, "yellow"),
+                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.DefaultColormap, "black"));
             win.SetWMProtocols(new TonNurako.X11.Atom[] { atom });
             win.SelectInput(TonNurako.X11.EventMask.StructureNotifyMask |
                 TonNurako.X11.EventMask.ExposureMask|
@@ -161,8 +169,25 @@ namespace Xlib {
 
             Console.WriteLine($"FetchName: {win.FetchName()}");
 
-            var green = TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "Green");
+            var green = TonNurako.X11.Color.AllocNamedColor(dpy, dpy.DefaultColormap, "Green");
             TonNurako.X11.GC gc = null;
+
+
+
+            var font = TonNurako.Extension.Xft.XftFont.OpenName(dpy, dpy.DefaultScreen, ":size=24");
+            TonNurako.Inutility.Dumper.DumpProperty(font, (s) => Console.WriteLine(s));
+
+            var color1 = TonNurako.Extension.Xft.XftColor.AllocName(dpy, dpy.DefaultVisual, dpy.DefaultColormap, "red");
+            var color2 = TonNurako.Extension.Xft.XftColor.AllocValue(
+                dpy, dpy.DefaultVisual, dpy.DefaultColormap, new TonNurako.X11.Extension.XRenderColor(0x0000, 0xffff, 0x0000, 0xffff));
+
+
+            var xftDraw = TonNurako.Extension.Xft.XftDraw.XftDrawCreate(dpy, win, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
+            if (null == xftDraw) {
+                Console.WriteLine("XftDrawCreate Failed");
+                return;
+            }
+
 
             var ev = new TonNurako.X11.Event.XEventArg();
             while (true) {
@@ -175,7 +200,7 @@ namespace Xlib {
                         DumpStruct(ev.Expose);
                         if (null == gc) {
                             gc = TonNurako.X11.GC.Create(win);
-                            gc.SetForeground(TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "Green"));
+                            gc.SetForeground(TonNurako.X11.Color.AllocNamedColor(dpy, dpy.DefaultColormap, "Green"));
                         }
                         const int N = 16;
                         var geom = win.GetGeometry();
@@ -195,12 +220,15 @@ namespace Xlib {
                         gc.DrawString(fs, 30, 30, "W ゆゆ式！");
                         gc.DrawStringMultiByte(fs, 30, 60, "M ゆゆ式！");
 
+                        xftDraw.DrawString(color2, font, 30, 60+font.Height, "Xft ゆゆ式！");
+
                         dpy.Flush();
                         break;
 
                     case TonNurako.X11.Event.XEventType.ClientMessage:
                         DumpStruct(ev.ClientMessage);
                         if (atom.Equals(ev.ClientMessage.data.l[0])) {
+                            xftDraw.Dispose();
                             win.DestroyWindow();
                             break;
                         }
@@ -211,6 +239,10 @@ namespace Xlib {
                             gc.Dispose();
                         }
                         fs.Dispose();
+                        color1.Dispose();
+                        color2.Dispose();
+                        font.Dispose();
+                        //TonNurako.Xft.FontConfig.FcFini();
                         dpy.SetCloseDownMode(TonNurako.X11.CloseDownMode.DestroyAll);
                         dpy.Close();
                         return;

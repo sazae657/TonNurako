@@ -1,5 +1,5 @@
 MAKE="gmake"
-MSBUILD="xbuild"
+MSBUILD="msbuild"
 GULP="gulp"
 
 task :default => "build"
