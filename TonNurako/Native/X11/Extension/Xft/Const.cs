@@ -16,6 +16,6 @@ namespace TonNurako.X11.Extension.Xft {
         FcTypeCharSet = TonNurako.X11.Constant.FcTypeCharSet,
         FcTypeFTFace = TonNurako.X11.Constant.FcTypeFTFace,
         FcTypeLangSet = TonNurako.X11.Constant.FcTypeLangSet,
-        FcTypeRange = TonNurako.X11.Constant.FcTypeRange,
+        //FcTypeRange = TonNurako.X11.Constant.FcTypeRange,
     }
 }
