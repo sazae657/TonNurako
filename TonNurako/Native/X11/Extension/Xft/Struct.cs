@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TonNurako.Native;
@@ -46,7 +46,7 @@ namespace TonNurako.X11.Extension.Xft
     [StructLayout(LayoutKind.Sequential)]
     struct _FcValue {
         FcType type;
-        /* TODO:Ç«Å[Ç∑Ç¡Ç©Ç»∫⁄
+        /* TODO:„Å©„Éº„Åô„Å£„Åã„Å™ÔΩ∫Ôæö
         union {
 		const FcChar8* s;
         int i;
@@ -68,7 +68,7 @@ namespace TonNurako.X11.Extension.Xft
         public double YX;
         public double YY;
     }
-    
+
 
 }
 

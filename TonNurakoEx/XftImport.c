@@ -238,9 +238,8 @@ TNK_EXPORT FcBool FcPatternAddBool_TNK(FcPattern* p, const char* obzekt, FcBool 
 TNK_EXPORT FcBool FcPatternAddLangSet_TNK(FcPattern* p, const char* obzekt, const FcLangSet* ls) {
     return FcPatternAddLangSet(p,obzekt,ls);
 }
-TNK_EXPORT FcBool FcPatternAddRange_TNK(FcPattern* p, const char* obzekt, const FcRange* r) {
-    return FcPatternAddRange(p,obzekt,r);
-}
+
+
 TNK_EXPORT FcResult FcPatternGetInteger_TNK(const FcPattern* p, const char* obzekt, int n, int* i) {
     return FcPatternGetInteger(p,obzekt,n,i);
 }
@@ -262,9 +261,17 @@ TNK_EXPORT FcResult FcPatternGetBool_TNK(const FcPattern* p, const char* obzekt,
 TNK_EXPORT FcResult FcPatternGetLangSet_TNK(const FcPattern* p, const char* obzekt, int n, FcLangSet** ls) {
     return FcPatternGetLangSet(p,obzekt,n,ls);
 }
+
+#ifdef USE_FC22
+TNK_EXPORT FcBool FcPatternAddRange_TNK(FcPattern* p, const char* obzekt, const FcRange* r) {
+    return FcPatternAddRange(p,obzekt,r);
+}
+
 TNK_EXPORT FcResult FcPatternGetRange_TNK(const FcPattern* p, const char* obzekt, int id, FcRange** r) {
     return FcPatternGetRange(p,obzekt,id,r);
 }
+#endif
+
 TNK_EXPORT FcChar8* FcPatternFormat_TNK(FcPattern* pat, const FcChar8* format) {
     return FcPatternFormat(pat,format);
 }
