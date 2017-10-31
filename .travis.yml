@@ -3,4 +3,5 @@ solution: TonNurako.sln
 
 install:
     - sudo apt-get -qq update
-    - sudo apt-get -qq install libmotif-dev libxmu-dev libxt-dev
+    - sudo apt-get -qq install libmotif-dev libxmu-dev libxt-dev libfontconfig1-dev
+
