@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TonNurako.Native;
 
-namespace TonNurako.Extension.Xft {
+namespace TonNurako.X11.Extension.Xft {
     public class FontConfig {
         internal static class NativeMethods {
             // FcBool: FcInit 

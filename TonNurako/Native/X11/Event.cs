@@ -540,12 +540,12 @@ namespace TonNurako.X11.Event {
     public struct _XClientMessageEventData {
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 20)]
         [FieldOffset(0)] public byte[] b;
-        
+
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 10)]
         [FieldOffset(0)] public short[] s;
 
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 5)]
-        [FieldOffset(0)] public long[] l;
+        [FieldOffset(0)] public int[] l;
     }
 
     /// <summary>
@@ -561,7 +561,9 @@ namespace TonNurako.X11.Event {
         public ulong window;
         public ulong message_type;
         public int format;
-        public _XClientMessageEventData data;
+        //public _XClientMessageEventData data;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
+        public long[] l;
     }
 #endregion
 
@@ -787,6 +789,11 @@ namespace TonNurako.X11.Event {
                     clientMessageEvent = new XClientMessageEvent();
                     NativeMethods.TNK_IMP_SplitXClientMessageEventData(Handle, out clientMessageEvent);
                     cmSplitted = true;
+                    //var k = Marshal.PtrToStructure<_XClientMessageEvent>(Handle);
+                    //clientMessageEvent.data.b = new byte[20];
+                    //clientMessageEvent.data.s = new short[10];
+                    //clientMessageEvent.data.l = new long[5];
+                    //clientMessageEvent.type = k.type;
                 }
                 return clientMessageEvent;
             }
@@ -794,7 +801,7 @@ namespace TonNurako.X11.Event {
 
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {

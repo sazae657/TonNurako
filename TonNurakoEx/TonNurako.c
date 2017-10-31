@@ -192,9 +192,9 @@ void TNK_IMP_SplitXClientMessageEventData(
     const XClientMessageEvent* src, TNK_XClientMessageEventData* ev)
 {
 
-    memset(&ev->data, 0xcc, sizeof(ev->data));
+    memset(ev, 0xcc, sizeof(TNK_XClientMessageEventData));
 
-    memcpy(&ev->event, src, sizeof(XClientMessageEvent) - sizeof(src->data));
+    memcpy(&ev->event, src, sizeof(XClientMessageEvent));
     memcpy(ev->data.b, src->data.b, sizeof(src->data.b));
     memcpy(ev->data.s, src->data.s, sizeof(src->data.s));
     memcpy(ev->data.l, src->data.l, sizeof(src->data.l));

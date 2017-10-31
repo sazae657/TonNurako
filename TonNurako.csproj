@@ -70,6 +70,7 @@
     <Compile Include="TonNurako\Native\CallbackQueue.cs" />
     <Compile Include="TonNurako\Native\DlSym.cs" />
     <Compile Include="TonNurako\Native\ExtremeSports.cs" />
+    <Compile Include="TonNurako\Native\GEN\Fc.ResourceId.cs" />
     <Compile Include="TonNurako\Native\GEN\X.Atom.cs" />
     <Compile Include="TonNurako\Native\GEN\X.Constant.cs" />
     <Compile Include="TonNurako\Native\GEN\X.KeySym.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="TonNurako\Native\X11\Extension\Render\Render.cs" />
     <Compile Include="TonNurako\Native\X11\Extension\Render\RenderStruct.cs" />
     <Compile Include="TonNurako\Native\X11\Extension\Shape\Shape.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\Const.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcCharSet.cs" />
     <Compile Include="TonNurako\Native\X11\Font.cs" />
     <Compile Include="TonNurako\Native\X11\GC.cs" />
     <Compile Include="TonNurako\Native\X11\Mask.cs" />

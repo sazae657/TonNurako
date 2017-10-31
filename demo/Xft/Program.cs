@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TonNurako;
-using TonNurako.Widgets;
-using TonNurako.X11;
-using TonNurako.Xt;
 
-namespace Frogram {
-
+namespace XftDemo {
+    static class Extensions {
+        public static IEnumerable<int> GetUTF32CodePoints(this string s) {
+            for (int i = 0; i < s.Length; i++) {
+                int unicodeCodePoint = char.ConvertToUtf32(s, i);
+                if (unicodeCodePoint > 0xffff) {
+                    i++;
+                }
+                yield return unicodeCodePoint;
+            }
+        }
+    }
 
     class Program : TonNurako.Widgets.Shell.TopLevel {
         TonNurako.Inutility.Unity unity;
@@ -17,9 +23,11 @@ namespace Frogram {
         TonNurako.X11.Extension.Xft.XftDraw xftDraw;
         TonNurako.X11.Extension.Xft.XftColor blue;
         TonNurako.X11.Extension.Xft.XftColor green;
-        public Program() :base() {
+        public Program() : base() {
             unity = new TonNurako.Inutility.Unity();
         }
+
+
 
         public override void ShellCreated() {
 
@@ -34,9 +42,9 @@ namespace Frogram {
             var dpy = this.Handle.Display;
 
             font = new TonNurako.X11.Extension.Xft.XftFont[4];
-            for (int i = 1; i < font.Length+1; ++i) {
-                font[i-1] = 
-                    TonNurako.X11.Extension.Xft.XftFont.OpenName(dpy, dpy.DefaultScreen, $":size={16*i}");
+            for (int i = 1; i < font.Length + 1; ++i) {
+                font[i - 1] =
+                    TonNurako.X11.Extension.Xft.XftFont.OpenName(dpy, dpy.DefaultScreen, $":size={16 * i}");
             }
             unity.Store<TonNurako.X11.Extension.Xft.XftFont>(font);
 
@@ -46,6 +54,12 @@ namespace Frogram {
             unity.Store(blue);
             unity.Store(green);
 
+            using (var charset = TonNurako.X11.Extension.Xft.FcCharSet.Create()) {
+                foreach (var u in "ゆゆ式".GetUTF32CodePoints()) {
+                    var r = charset.AddChar((uint)u);
+                    Console.WriteLine($"res={r} Count={charset.Count()}");
+                }
+            }
         }
 
         private void Program_RealizedEvent(object sender, TonNurako.Events.TnkEventArgs e) {
@@ -78,3 +92,4 @@ namespace Frogram {
         }
     }
 }
+

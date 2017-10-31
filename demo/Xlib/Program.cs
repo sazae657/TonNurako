@@ -72,7 +72,7 @@ namespace Xlib {
                 return;
             }
 
-            if (!TonNurako.Extension.Xft.FontConfig.FcInit()) {
+            if (!TonNurako.X11.Extension.Xft.FontConfig.FcInit()) {
                 Console.WriteLine("FcInit failed");
                 return;
             }
@@ -174,15 +174,15 @@ namespace Xlib {
 
 
 
-            var font = TonNurako.Extension.Xft.XftFont.OpenName(dpy, dpy.DefaultScreen, ":size=24");
+            var font = TonNurako.X11.Extension.Xft.XftFont.OpenName(dpy, dpy.DefaultScreen, ":size=24");
             TonNurako.Inutility.Dumper.DumpProperty(font, (s) => Console.WriteLine(s));
 
-            var color1 = TonNurako.Extension.Xft.XftColor.AllocName(dpy, dpy.DefaultVisual, dpy.DefaultColormap, "red");
-            var color2 = TonNurako.Extension.Xft.XftColor.AllocValue(
+            var color1 = TonNurako.X11.Extension.Xft.XftColor.AllocName(dpy, dpy.DefaultVisual, dpy.DefaultColormap, "red");
+            var color2 = TonNurako.X11.Extension.Xft.XftColor.AllocValue(
                 dpy, dpy.DefaultVisual, dpy.DefaultColormap, new TonNurako.X11.Extension.XRenderColor(0x0000, 0xffff, 0x0000, 0xffff));
 
 
-            var xftDraw = TonNurako.Extension.Xft.XftDraw.XftDrawCreate(dpy, win, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
+            var xftDraw = TonNurako.X11.Extension.Xft.XftDraw.XftDrawCreate(dpy, win, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
             if (null == xftDraw) {
                 Console.WriteLine("XftDrawCreate Failed");
                 return;
@@ -226,7 +226,8 @@ namespace Xlib {
                         break;
 
                     case TonNurako.X11.Event.XEventType.ClientMessage:
-                        DumpStruct(ev.ClientMessage);
+                        TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage,(s)=>Console.WriteLine(s));
+                        TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage.data,(s)=>Console.WriteLine(s));
                         if (atom.Equals(ev.ClientMessage.data.l[0])) {
                             xftDraw.Dispose();
                             win.DestroyWindow();
