@@ -18,4 +18,22 @@ namespace TonNurako.X11.Extension.Xft {
         FcTypeLangSet = TonNurako.X11.Constant.FcTypeLangSet,
         //FcTypeRange = TonNurako.X11.Constant.FcTypeRange,
     }
+
+    public enum FcMatchKind : int {
+        FcMatchPattern = TonNurako.X11.Constant.FcMatchPattern,
+        FcMatchFont = TonNurako.X11.Constant.FcMatchFont,
+        FcMatchScan = TonNurako.X11.Constant.FcMatchScan
+    }
+
+    public enum FcLangResult : int {
+        FcLangEqual = TonNurako.X11.Constant.FcLangEqual,
+        FcLangDifferentCountry = TonNurako.X11.Constant.FcLangDifferentCountry,
+        FcLangDifferentTerritory = TonNurako.X11.Constant.FcLangDifferentTerritory,
+        FcLangDifferentLang = TonNurako.X11.Constant.FcLangDifferentLang
+    }
+
+    public enum FcSetName : int {
+        FcSetSystem = TonNurako.X11.Constant.FcSetSystem,
+        FcSetApplication = TonNurako.X11.Constant.FcSetApplication
+    }
 }

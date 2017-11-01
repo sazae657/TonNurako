@@ -233,7 +233,7 @@ namespace TonNurako.X11
                 return;
             }
             var h = NativeMethods.XSetErrorHandler((dpy, code) => {
-                return handler(new Display(dpy, false), code);
+                return handler(new Display(dpy, false), Marshal.PtrToStructure<Event.XErrorEvent>(code));
             });
             Instance.XErrorHandlerStack.Push(h);
         }

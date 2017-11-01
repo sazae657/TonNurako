@@ -293,6 +293,21 @@ FC_LCD_DEFAULT
 FC_LCD_LIGHT
 FC_LCD_LEGACY
 
+//FcMatchKind
+FcMatchPattern
+FcMatchFont
+FcMatchScan
+
+//FcLangResult
+FcLangEqual
+FcLangDifferentCountry
+FcLangDifferentTerritory
+FcLangDifferentLang
+
+//FcSetName
+FcSetSystem
+FcSetApplication
+
 //CursorShape
 ShapeSet
 ShapeUnion

@@ -84,7 +84,7 @@ namespace TonNurako.X11.Extension.Xft {
 
             // FcBool: FcPatternAddMatrix FcPattern*:p  const char*:pbject  const FcMatrix*:s
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddMatrix_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool FcPatternAddMatrix(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, ref FcMatrix s);
+            internal static extern bool FcPatternAddMatrix(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, ref FcMatrixRec s);
 
             // FcBool: FcPatternAddCharSet FcPattern*:p  const char*:pbject  const FcCharSet*:c
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddCharSet_TNK", CharSet = CharSet.Auto)]
@@ -112,11 +112,11 @@ namespace TonNurako.X11.Extension.Xft {
 
             // FcResult: FcPatternGetMatrix const FcPattern*:p  const char*:pbject  int:n  FcMatrix**:s
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetMatrix_TNK", CharSet = CharSet.Auto)]
-            internal static extern FcResult FcPatternGetMatrix(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out FcMatrix[] s);
+            internal static extern FcResult FcPatternGetMatrix(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out IntPtr s);
 
             // FcResult: FcPatternGetCharSet const FcPattern*:p  const char*:pbject  int:n  FcCharSet**:c
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetCharSet_TNK", CharSet = CharSet.Auto)]
-            internal static extern FcResult FcPatternGetCharSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, IntPtr[] c);
+            internal static extern FcResult FcPatternGetCharSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out IntPtr c);
 
             // FcResult: FcPatternGetBool const FcPattern*:p  const char*:pbject  int:n  FcBool*:b
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetBool_TNK", CharSet = CharSet.Auto)]
@@ -124,7 +124,7 @@ namespace TonNurako.X11.Extension.Xft {
 
             // FcResult: FcPatternGetLangSet const FcPattern*:p  const char*:pbject  int:n  FcLangSet**:ls
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetLangSet_TNK", CharSet = CharSet.Auto)]
-            internal static extern FcResult FcPatternGetLangSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, IntPtr[] ls);
+            internal static extern FcResult FcPatternGetLangSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out IntPtr ls);
 
             // FcChar8*: FcPatternFormat FcPattern*:pat  const FcChar8*:format
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternFormat_TNK", CharSet = CharSet.Auto)]
@@ -229,7 +229,7 @@ namespace TonNurako.X11.Extension.Xft {
         public string Format(string format) =>
             NativeMethods.FcPatternFormat(Handle, format);
 
-        /*
+        /* FC22用
         public static bool FcPatternAdd(IntPtr p, string obzekt, [In]FcValue value, bool append) {
             return NativeMethods.FcPatternAdd(p, obzekt, value, append);
         }
@@ -252,7 +252,7 @@ namespace TonNurako.X11.Extension.Xft {
 
 
         public bool AddMatrix(FcObjectId obzekt, FcMatrix s) =>
-             NativeMethods.FcPatternAddMatrix(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), ref s);
+             NativeMethods.FcPatternAddMatrix(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), ref s.Record);
 
 
         public bool AddCharSet(FcObjectId obzekt, FcCharSet c) =>
@@ -262,12 +262,13 @@ namespace TonNurako.X11.Extension.Xft {
         public bool AddBool(FcObjectId obzekt, bool b) =>
              NativeMethods.FcPatternAddBool(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), b);
 
-        /*
-        public bool AddLangSet(FcObjectId obzekt, IntPtr ls) =>
-             NativeMethods.FcPatternAddLangSet(Handle, obzekt, ls);
+        
+        public bool AddLangSet(FcObjectId obzekt, FcLangSet ls) =>
+             NativeMethods.FcPatternAddLangSet(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), ls.Handle);
 
 
-        public bool AddRange(FcObjectId obzekt, IntPtr r) =>
+        /*　FC22用
+         * public bool AddRange(FcObjectId obzekt, IntPtr r) =>
              NativeMethods.FcPatternAddRange(Handle, obzekt, r);
         */
 
@@ -282,7 +283,7 @@ namespace TonNurako.X11.Extension.Xft {
         public FcResult GetString(FcObjectId obzekt, int n, out string s) {
             IntPtr p;
             var r = NativeMethods.FcPatternGetString(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, out p);
-            if (r == FcResult.TypeMismatch) {
+            if (r == FcResult.TypeMismatch || p == IntPtr.Zero) {
                 s = null;
                 return r;
             }
@@ -293,23 +294,48 @@ namespace TonNurako.X11.Extension.Xft {
         public FcResult GetBool(FcObjectId obzekt, int n, out bool b) =>
                 NativeMethods.FcPatternGetBool(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, out b);
 
-        /*
-
-        public FcResult GetMatrix(FcObjectId obzekt, int n, ref FcMatrix[] s) =>
-                NativeMethods.FcPatternGetMatrix(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, s);
 
 
-        public  FcResult GetCharSet(FcObjectId obzekt, int n, IntPtr[] c) =>
-                NativeMethods.FcPatternGetCharSet(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, c);
+        public FcResult GetMatrix(FcObjectId obzekt, int n, out FcMatrix s) {
+            s = null;
+            IntPtr p = IntPtr.Zero;
+            var r = NativeMethods.FcPatternGetMatrix(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, out p);
+            if (r == FcResult.TypeMismatch || p == IntPtr.Zero) {
+                return r;
+            }
+            s = new FcMatrix(p, true);
+            return r;
+        }
 
 
-                public  FcResult GetLangSet(FcObjectId obzekt, int n, IntPtr[] ls) =>
-                NativeMethods.FcPatternGetLangSet(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, ls);
+        public FcResult GetCharSet(FcObjectId obzekt, int n, out FcCharSet c) {
+            c = null;
+            IntPtr p = IntPtr.Zero;
+            var r = NativeMethods.FcPatternGetCharSet(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, out p);
+            if (r == FcResult.TypeMismatch || p == IntPtr.Zero) {
+                return r;
+            }
+            c = new FcCharSet(p);
+            return r;
+        }
 
 
-        public  FcResult GetRange(FcObjectId obzekt, int id, IntPtr[] r) =>
-                NativeMethods.FcPatternGetRange(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), id, r);
-    */
+        public FcResult GetLangSet(FcObjectId obzekt, int n, FcLangSet ls) {
+            ls = null;
+            IntPtr p = IntPtr.Zero;
+            var r = NativeMethods.FcPatternGetLangSet(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), n, out p);
+            if (r == FcResult.TypeMismatch || p == IntPtr.Zero) {
+                return r;
+            }
+            ls = new FcLangSet(p);
+            return r;           
+        }
+
+
+        /*   FC22用
+         *   public  FcResult GetRange(FcObjectId obzekt, int id, IntPtr[] r) =>
+                   NativeMethods.FcPatternGetRange(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), id, r);
+        */
 
 
 

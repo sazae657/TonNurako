@@ -200,5 +200,8 @@ clean: clean.lib
 
 install: clean
 
+depend:
+	$(PYTHON) $(SCRIPT_DIR)/mk_dep.py ../TonNurako >$(TEMPLATE_DIR)/Depend.map
+
 audio:
 	./config.sh

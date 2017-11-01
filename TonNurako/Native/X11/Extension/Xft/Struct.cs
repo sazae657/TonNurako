@@ -61,15 +61,6 @@ namespace TonNurako.X11.Extension.Xft
         */
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct FcMatrix {
-        public double XX;
-        public double XY;
-        public double YX;
-        public double YY;
-    }
-
-
 }
 
 

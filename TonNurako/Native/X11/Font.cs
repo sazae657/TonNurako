@@ -261,7 +261,11 @@ namespace TonNurako.X11 {
         }
 
         public XFontSetExtents XExtentsOfFontSet() {
-            return new XFontSetExtents(NativeMethods.XExtentsOfFontSet(this.Handle));
+            var f = NativeMethods.XExtentsOfFontSet(this.Handle);
+            if (IntPtr.Zero == f) {
+                return null;
+            }
+            return new XFontSetExtents(f);
         }
 
         public static FontSet CreateFontSet(Display display, string font_name_list) {

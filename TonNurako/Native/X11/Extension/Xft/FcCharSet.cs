@@ -91,10 +91,11 @@ namespace TonNurako.X11.Extension.Xft {
             }
             handle = ptr;
         }
+        static FcCharSet WrapReturn(IntPtr p) => (new FcCharSet(p));
 
-        public static FcCharSet Create() {
-            return new FcCharSet(NativeMethods.FcCharSetCreate());
-        }
+
+        public static FcCharSet Create() =>
+            WrapReturn(NativeMethods.FcCharSetCreate());
 
         public void Destroy() {
             if (IntPtr.Zero != handle) {
@@ -112,7 +113,7 @@ namespace TonNurako.X11.Extension.Xft {
         
 
         public FcCharSet Copy() =>
-            new FcCharSet(NativeMethods.FcCharSetCopy(Handle));
+            WrapReturn(NativeMethods.FcCharSetCopy(Handle));
 
         public uint FirstPage(uint[] map, out int next) =>
             NativeMethods.FcCharSetFirstPage(Handle, map, out next);
@@ -133,18 +134,17 @@ namespace TonNurako.X11.Extension.Xft {
 
         public static bool Equal(FcCharSet a, FcCharSet b) =>
             NativeMethods.FcCharSetEqual(a.Handle, b.Handle);
-        
 
         public static FcCharSet Intersect(FcCharSet a, FcCharSet b) =>
-            new FcCharSet(NativeMethods.FcCharSetIntersect(a.Handle, b.Handle));
+            WrapReturn(NativeMethods.FcCharSetIntersect(a.Handle, b.Handle));
 
 
         public static FcCharSet Union(FcCharSet a, FcCharSet b) =>
-            new FcCharSet(NativeMethods.FcCharSetUnion(a.Handle, b.Handle));
+            WrapReturn(NativeMethods.FcCharSetUnion(a.Handle, b.Handle));
         
 
-        public static IntPtr Subtract(FcCharSet a, FcCharSet b) =>
-            NativeMethods.FcCharSetSubtract(a.Handle, b.Handle);
+        public static FcCharSet Subtract(FcCharSet a, FcCharSet b) =>
+            WrapReturn(NativeMethods.FcCharSetSubtract(a.Handle, b.Handle));
         
 
         public static bool Merge(FcCharSet a, FcCharSet b, out bool changed) =>

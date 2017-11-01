@@ -133,8 +133,12 @@ TNK_XtInitialize(
         }
 
         for( i = 0; i < argc; i++ ) {
-            len = 1 + strlen(argv[i]);
-            copyArgv[i] = (String)XtCalloc(len, sizeof(char));
+            len = strlen(argv[i]);
+            if (len == 0) {
+                copyArgv[i] = NULL;
+                continue;
+            }
+            copyArgv[i] = (String)XtCalloc(len+1, sizeof(char));
             memcpy((void*)copyArgv[i], (const void*)argv[i], len);
             #ifdef _DEBUG
             CONS25W( stderr, "TNK_XtInitialize[%d] %s\n", i, copyArgv[i]);

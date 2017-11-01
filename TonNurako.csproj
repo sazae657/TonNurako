@@ -94,7 +94,14 @@
     <Compile Include="TonNurako\Native\X11\Extension\Render\RenderStruct.cs" />
     <Compile Include="TonNurako\Native\X11\Extension\Shape\Shape.cs" />
     <Compile Include="TonNurako\Native\X11\Extension\Xft\Const.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcBlanks.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcCache.cs" />
     <Compile Include="TonNurako\Native\X11\Extension\Xft\FcCharSet.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcConfig.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcFontSet.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcLangSet.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcStr.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcStructs.cs" />
     <Compile Include="TonNurako\Native\X11\Font.cs" />
     <Compile Include="TonNurako\Native\X11\GC.cs" />
     <Compile Include="TonNurako\Native\X11\Mask.cs" />

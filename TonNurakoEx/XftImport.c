@@ -276,6 +276,288 @@ TNK_EXPORT FcChar8* FcPatternFormat_TNK(FcPattern* pat, const FcChar8* format) {
     return FcPatternFormat(pat,format);
 }
 
+
+TNK_EXPORT FcBlanks* FcBlanksCreate_TNK() {
+    return FcBlanksCreate();
+}
+TNK_EXPORT void FcBlanksDestroy_TNK(FcBlanks* b) {
+    FcBlanksDestroy(b);
+}
+TNK_EXPORT FcBool FcBlanksAdd_TNK(FcBlanks* b, FcChar32 ucs4) {
+    return FcBlanksAdd(b,ucs4);
+}
+TNK_EXPORT FcBool FcBlanksIsMember_TNK(FcBlanks* b, FcChar32 ucs4) {
+    return FcBlanksIsMember(b,ucs4);
+}
+
+
+TNK_EXPORT const FcChar8* FcCacheDir_TNK(const FcCache* c) {
+    return FcCacheDir(c);
+}
+TNK_EXPORT FcFontSet* FcCacheCopySet_TNK(const FcCache* c) {
+    return FcCacheCopySet(c);
+}
+TNK_EXPORT const FcChar8* FcCacheSubdir_TNK(const FcCache* c, int i) {
+    return FcCacheSubdir(c,i);
+}
+TNK_EXPORT int FcCacheNumSubdir_TNK(const FcCache* c) {
+    return FcCacheNumSubdir(c);
+}
+TNK_EXPORT int FcCacheNumFont_TNK(const FcCache* c) {
+    return FcCacheNumFont(c);
+}
+TNK_EXPORT FcBool FcDirCacheUnlink_TNK(const FcChar8* dir, FcConfig* config) {
+    return FcDirCacheUnlink(dir,config);
+}
+TNK_EXPORT FcBool FcDirCacheValid_TNK(const FcChar8* cache_file) {
+    return FcDirCacheValid(cache_file);
+}
+TNK_EXPORT FcBool FcDirCacheClean_TNK(const FcChar8* cache_dir, FcBool verbose) {
+    return FcDirCacheClean(cache_dir,verbose);
+}
+TNK_EXPORT void FcCacheCreateTagFile_TNK(const FcConfig* config) {
+    FcCacheCreateTagFile(config);
+}
+
+
+TNK_EXPORT int FcGetVersion_TNK() {
+    return FcGetVersion();
+}
+TNK_EXPORT FcBool FcInitReinitialize_TNK() {
+    return FcInitReinitialize();
+}
+TNK_EXPORT FcBool FcInitBringUptoDate_TNK() {
+    return FcInitBringUptoDate();
+}
+
+TNK_EXPORT FcChar8* FcConfigHome_TNK() {
+    return FcConfigHome();
+}
+TNK_EXPORT FcBool FcConfigEnableHome_TNK(FcBool enable) {
+    return FcConfigEnableHome(enable);
+}
+TNK_EXPORT FcChar8* FcConfigFilename_TNK(const FcChar8* url) {
+    return FcConfigFilename(url);
+}
+TNK_EXPORT FcConfig* FcConfigCreate_TNK() {
+    return FcConfigCreate();
+}
+TNK_EXPORT FcConfig* FcConfigReference_TNK(FcConfig* config) {
+    return FcConfigReference(config);
+}
+TNK_EXPORT void FcConfigDestroy_TNK(FcConfig* config) {
+    FcConfigDestroy(config);
+}
+TNK_EXPORT FcBool FcConfigSetCurrent_TNK(FcConfig* config) {
+    return FcConfigSetCurrent(config);
+}
+TNK_EXPORT FcConfig* FcConfigGetCurrent_TNK() {
+    return FcConfigGetCurrent();
+}
+TNK_EXPORT FcBool FcConfigUptoDate_TNK(FcConfig* config) {
+    return FcConfigUptoDate(config);
+}
+TNK_EXPORT FcBool FcConfigBuildFonts_TNK(FcConfig* config) {
+    return FcConfigBuildFonts(config);
+}
+TNK_EXPORT FcStrList* FcConfigGetFontDirs_TNK(FcConfig* config) {
+    return FcConfigGetFontDirs(config);
+}
+TNK_EXPORT FcStrList* FcConfigGetConfigDirs_TNK(FcConfig* config) {
+    return FcConfigGetConfigDirs(config);
+}
+TNK_EXPORT FcStrList* FcConfigGetConfigFiles_TNK(FcConfig* config) {
+    return FcConfigGetConfigFiles(config);
+}
+TNK_EXPORT FcChar8* FcConfigGetCache_TNK(FcConfig* config) {
+    return FcConfigGetCache(config);
+}
+TNK_EXPORT FcBlanks* FcConfigGetBlanks_TNK(FcConfig* config) {
+    return FcConfigGetBlanks(config);
+}
+TNK_EXPORT FcStrList* FcConfigGetCacheDirs_TNK(const FcConfig* config) {
+    return FcConfigGetCacheDirs(config);
+}
+TNK_EXPORT int FcConfigGetRescanInterval_TNK(FcConfig* config) {
+    return FcConfigGetRescanInterval(config);
+}
+TNK_EXPORT FcBool FcConfigSetRescanInterval_TNK(FcConfig* config, int rescanInterval) {
+    return FcConfigSetRescanInterval(config,rescanInterval);
+}
+TNK_EXPORT FcFontSet* FcConfigGetFonts_TNK(FcConfig* config, FcSetName set) {
+    return FcConfigGetFonts(config,set);
+}
+TNK_EXPORT FcBool FcConfigAppFontAddFile_TNK(FcConfig* config, const FcChar8* file) {
+    return FcConfigAppFontAddFile(config,file);
+}
+TNK_EXPORT FcBool FcConfigAppFontAddDir_TNK(FcConfig* config, const FcChar8* dir) {
+    return FcConfigAppFontAddDir(config,dir);
+}
+TNK_EXPORT void FcConfigAppFontClear_TNK(FcConfig* config) {
+    FcConfigAppFontClear(config);
+}
+TNK_EXPORT FcBool FcConfigSubstituteWithPat_TNK(FcConfig* config, FcPattern* p, FcPattern* p_pat, FcMatchKind kind) {
+    return FcConfigSubstituteWithPat(config,p,p_pat,kind);
+}
+TNK_EXPORT FcBool FcConfigSubstitute_TNK(FcConfig* config, FcPattern* p, FcMatchKind kind) {
+    return FcConfigSubstitute(config,p,kind);
+}
+TNK_EXPORT const FcChar8* FcConfigGetSysRoot_TNK(const FcConfig* config) {
+    return FcConfigGetSysRoot(config);
+}
+TNK_EXPORT void FcConfigSetSysRoot_TNK(FcConfig* config, const FcChar8* sysroot) {
+    FcConfigSetSysRoot(config,sysroot);
+}
+
+TNK_EXPORT FcConfig* FcInitLoadConfig_TNK() {
+    return FcInitLoadConfig();
+}
+TNK_EXPORT FcConfig* FcInitLoadConfigAndFonts_TNK() {
+    return FcInitLoadConfigAndFonts();
+}
+
+TNK_EXPORT FcBool FcConfigParseAndLoad_TNK(FcConfig* config, const FcChar8* file, FcBool complain) {
+    return FcConfigParseAndLoad(config,file,complain);
+}
+
+
+TNK_EXPORT FcStrList* FcStrListCreate_TNK(FcStrSet* set) {
+    return FcStrListCreate(set);
+}
+TNK_EXPORT void FcStrListFirst_TNK(FcStrList* list) {
+    FcStrListFirst(list);
+}
+TNK_EXPORT FcChar8* FcStrListNext_TNK(FcStrList* list) {
+    return FcStrListNext(list);
+}
+TNK_EXPORT void FcStrListDone_TNK(FcStrList* list) {
+    FcStrListDone(list);
+}
+
+TNK_EXPORT FcStrSet* FcStrSetCreate_TNK() {
+    return FcStrSetCreate();
+}
+TNK_EXPORT FcBool FcStrSetMember_TNK(FcStrSet* set, const FcChar8* s) {
+    return FcStrSetMember(set,s);
+}
+TNK_EXPORT FcBool FcStrSetEqual_TNK(FcStrSet* sa, FcStrSet* sb) {
+    return FcStrSetEqual(sa,sb);
+}
+TNK_EXPORT FcBool FcStrSetAdd_TNK(FcStrSet* set, const FcChar8* s) {
+    return FcStrSetAdd(set,s);
+}
+TNK_EXPORT FcBool FcStrSetAddFilename_TNK(FcStrSet* set, const FcChar8* s) {
+    return FcStrSetAddFilename(set,s);
+}
+TNK_EXPORT FcBool FcStrSetDel_TNK(FcStrSet* set, const FcChar8* s) {
+    return FcStrSetDel(set,s);
+}
+TNK_EXPORT void FcStrSetDestroy_TNK(FcStrSet* set) {
+    FcStrSetDestroy(set);
+}
+
+TNK_EXPORT FcFontSet* FcFontSetCreate_TNK() {
+    return FcFontSetCreate();
+}
+TNK_EXPORT void FcFontSetDestroy_TNK(FcFontSet* s) {
+    FcFontSetDestroy(s);
+}
+TNK_EXPORT FcBool FcFontSetAdd_TNK(FcFontSet* s, FcPattern* font) {
+    return FcFontSetAdd(s,font);
+}
+
+TNK_EXPORT FcPattern* FcFontSetMatch_TNK(FcConfig* config, FcFontSet** sets, int nsets, FcPattern* p, FcResult* result) {
+    return FcFontSetMatch(config,sets,nsets,p,result);
+}
+TNK_EXPORT FcPattern* FcFontMatch_TNK(FcConfig* config, FcPattern* p, FcResult* result) {
+    return FcFontMatch(config,p,result);
+}
+TNK_EXPORT FcPattern* FcFontRenderPrepare_TNK(FcConfig* config, FcPattern* pat, FcPattern* font) {
+    return FcFontRenderPrepare(config,pat,font);
+}
+TNK_EXPORT FcFontSet* FcFontSetSort_TNK(FcConfig* config, FcFontSet** sets, int nsets, FcPattern* p, FcBool trim, FcCharSet** csp, FcResult* result) {
+    return FcFontSetSort(config,sets,nsets,p,trim,csp,result);
+}
+TNK_EXPORT FcFontSet* FcFontSort_TNK(FcConfig* config, FcPattern* p, FcBool trim, FcCharSet** csp, FcResult* result) {
+    return FcFontSort(config,p,trim,csp,result);
+}
+TNK_EXPORT void FcFontSetSortDestroy_TNK(FcFontSet* fs) {
+    FcFontSetSortDestroy(fs);
+}
+
+TNK_EXPORT FcStrSet* FcGetLangs_TNK() {
+    return FcGetLangs();
+}
+TNK_EXPORT FcChar8* FcLangNormalize_TNK(const FcChar8* lang) {
+    return FcLangNormalize(lang);
+}
+TNK_EXPORT const FcCharSet* FcLangGetCharSet_TNK(const FcChar8* lang) {
+    return FcLangGetCharSet(lang);
+}
+TNK_EXPORT FcLangSet* FcLangSetCreate_TNK() {
+    return FcLangSetCreate();
+}
+TNK_EXPORT void FcLangSetDestroy_TNK(FcLangSet* ls) {
+    FcLangSetDestroy(ls);
+}
+TNK_EXPORT FcLangSet* FcLangSetCopy_TNK(const FcLangSet* ls) {
+    return FcLangSetCopy(ls);
+}
+TNK_EXPORT FcBool FcLangSetAdd_TNK(FcLangSet* ls, const FcChar8* lang) {
+    return FcLangSetAdd(ls,lang);
+}
+TNK_EXPORT FcBool FcLangSetDel_TNK(FcLangSet* ls, const FcChar8* lang) {
+    return FcLangSetDel(ls,lang);
+}
+TNK_EXPORT FcLangResult FcLangSetHasLang_TNK(const FcLangSet* ls, const FcChar8* lang) {
+    return FcLangSetHasLang(ls,lang);
+}
+TNK_EXPORT FcLangResult FcLangSetCompare_TNK(const FcLangSet* lsa, const FcLangSet* lsb) {
+    return FcLangSetCompare(lsa,lsb);
+}
+TNK_EXPORT FcBool FcLangSetContains_TNK(const FcLangSet* lsa, const FcLangSet* lsb) {
+    return FcLangSetContains(lsa,lsb);
+}
+TNK_EXPORT FcBool FcLangSetEqual_TNK(const FcLangSet* lsa, const FcLangSet* lsb) {
+    return FcLangSetEqual(lsa,lsb);
+}
+TNK_EXPORT FcChar32 FcLangSetHash_TNK(const FcLangSet* ls) {
+    return FcLangSetHash(ls);
+}
+TNK_EXPORT FcStrSet* FcLangSetGetLangs_TNK(const FcLangSet* ls) {
+    return FcLangSetGetLangs(ls);
+}
+TNK_EXPORT FcLangSet* FcLangSetUnion_TNK(const FcLangSet* a, const FcLangSet* b) {
+    return FcLangSetUnion(a,b);
+}
+TNK_EXPORT FcLangSet* FcLangSetSubtract_TNK(const FcLangSet* a, const FcLangSet* b) {
+    return FcLangSetSubtract(a,b);
+}
+
+
+TNK_EXPORT void FcMatrixInit_TNK(FcMatrix* mat) {
+    FcMatrixInit(mat);
+}
+
+TNK_EXPORT FcMatrix* FcMatrixCopy_TNK(const FcMatrix* mat) {
+    return FcMatrixCopy(mat);
+}
+TNK_EXPORT FcBool FcMatrixEqual_TNK(const FcMatrix* mat1, const FcMatrix* mat2) {
+    return FcMatrixEqual(mat1,mat2);
+}
+TNK_EXPORT void FcMatrixMultiply_TNK(FcMatrix* result, const FcMatrix* a, const FcMatrix* b) {
+    FcMatrixMultiply(result,a,b);
+}
+TNK_EXPORT void FcMatrixRotate_TNK(FcMatrix* m, double c, double s) {
+    FcMatrixRotate(m,c,s);
+}
+TNK_EXPORT void FcMatrixScale_TNK(FcMatrix* m, double sx, double sy) {
+    FcMatrixScale(m,sx,sy);
+}
+TNK_EXPORT void FcMatrixShear_TNK(FcMatrix* m, double sh, double sv) {
+    FcMatrixShear(m,sh,sv);
+}
+
 //XftFont ｱｸｾｯｻー
 int TNK_GetXftFontAscent(XftFont* ptr) { return ptr->ascent; }
 void TNK_SetXftFontAscent(XftFont* ptr, int value) { ptr->ascent = value; }

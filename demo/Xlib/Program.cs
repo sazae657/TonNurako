@@ -72,7 +72,7 @@ namespace Xlib {
                 return;
             }
 
-            if (!TonNurako.X11.Extension.Xft.FontConfig.FcInit()) {
+            if (!TonNurako.X11.Extension.Xft.FontConfig.Init()) {
                 Console.WriteLine("FcInit failed");
                 return;
             }
