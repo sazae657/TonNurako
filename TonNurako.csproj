@@ -79,6 +79,7 @@
     <Compile Include="TonNurako\Native\GEN\Xm.ResourceId.cs" />
     <Compile Include="TonNurako\Native\GEN\Xm.StringConstant.cs" />
     <Compile Include="TonNurako\Native\GEN\Xt.Constant.cs" />
+    <Compile Include="TonNurako\Native\GEN\Xt.ResourceId.cs" />
     <Compile Include="TonNurako\Native\GEN\Xt.StringConstant.cs" />
     <Compile Include="TonNurako\Native\Types.cs" />
     <Compile Include="TonNurako\Native\X11\Atom.cs" />
@@ -88,9 +89,9 @@
     <Compile Include="TonNurako\Native\X11\Error.cs" />
     <Compile Include="TonNurako\Native\X11\Event.cs" />
     <Compile Include="TonNurako\Native\X11\Extension\ExtCommon.cs" />
-    <Compile Include="TonNurako\Native\X11\Extension\Render.cs" />
-    <Compile Include="TonNurako\Native\X11\Extension\RenderStruct.cs" />
-    <Compile Include="TonNurako\Native\X11\Extension\Shape.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Render\Render.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Render\RenderStruct.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Shape\Shape.cs" />
     <Compile Include="TonNurako\Native\X11\Font.cs" />
     <Compile Include="TonNurako\Native\X11\GC.cs" />
     <Compile Include="TonNurako\Native\X11\Mask.cs" />
@@ -105,7 +106,12 @@
     <Compile Include="TonNurako\Native\X11\X11Call.cs" />
     <Compile Include="TonNurako\Native\X11\TextProperty.cs" />
     <Compile Include="TonNurako\Native\XEventQueue.cs" />
-    <Compile Include="TonNurako\Native\Xft\Struct.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FcPattern.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\FontConfig.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\Struct.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\XftColor.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\XftDraw.cs" />
+    <Compile Include="TonNurako\Native\X11\Extension\Xft\XftFont.cs" />
     <Compile Include="TonNurako\Native\Xm\EventId.cs" />
     <Compile Include="TonNurako\Native\Xm\Symbol.cs" />
     <Compile Include="TonNurako\Native\Xm\Types.cs" />
@@ -248,11 +254,12 @@
     <Compile Include="TonNurako\Widgets\Xm\Widget\Widget.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildProjectDirectory)\TonNurakoEx\TonNurako.ExtremeSports.Targets" />
   <PropertyGroup>
-    <PreBuildEvent Condition="'$(OS)' == 'Unix'">
-                 cd $(ProjectDir)/TonNurakoEx
-                 make BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` clean.lib check all
-               </PreBuildEvent>
+    <BuildDependsOn>
+          BuildExtremeSports;
+          $(BuildDependsOn);
+      </BuildDependsOn>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -56,8 +56,8 @@ namespace XShape {
 
             var win = dpy.CreateSimpleWindow(
                 rw, 0, 0, maskImage.Width + 32, maskImage.Height + 32, 0,
-                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "white"),
-                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.GetDefaultColormap(), "black"));
+                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.DefaultColormap, "white"),
+                TonNurako.X11.Color.AllocNamedColor(dpy, dpy.DefaultColormap, "black"));
 
             win.SetWMProtocols(new TonNurako.X11.Atom[] { atom });
             win.SelectInput(TonNurako.X11.EventMask.StructureNotifyMask |

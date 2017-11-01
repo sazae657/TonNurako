@@ -25,6 +25,10 @@
 #include <Xm/Outline.h>
 #include <Xm/Tree.h>
 
+#include <X11/Xft/Xft.h>
+#include <X11/XKBlib.h>
+#include <fontconfig/fontconfig.h>
+
 #if defined(TNK_USE_LIBXPM)
 #include <X11/xpm.h>
 #endif

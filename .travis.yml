@@ -11,7 +11,6 @@ before_install:
 install:
     - sudo apt-get -qq update
     - sudo apt-get -qq install libmotif-dev libxmu-dev libxt-dev
-    - make -C TonNurakoEx audio
 
 addons:
   coverity_scan:

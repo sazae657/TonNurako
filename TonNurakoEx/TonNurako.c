@@ -127,11 +127,14 @@ TNK_XtInitialize(
     CONS25W(stderr, "TNK_XtInitialize %d\n", __LINE__);
     if (argc > 0) {
         copyArgc = argc;
-        copyArgv = (String*)malloc(sizeof(String) * (1 + argc));
+        copyArgv = (String*)XtMalloc((1+argc) * sizeof(String));
+        if (NULL == copyArgv) {
+            return TNK_ALLOC_FAILED;
+        }
 
         for( i = 0; i < argc; i++ ) {
             len = 1 + strlen(argv[i]);
-            copyArgv[i] = (String)calloc(len, sizeof(char));
+            copyArgv[i] = (String)XtCalloc(len, sizeof(char));
             memcpy((void*)copyArgv[i], (const void*)argv[i], len);
             #ifdef _DEBUG
             CONS25W( stderr, "TNK_XtInitialize[%d] %s\n", i, copyArgv[i]);
@@ -144,18 +147,18 @@ TNK_XtInitialize(
 	//ﾃﾞｨｽﾌﾟﾚｲのOpen
 	pContext->display = XtOpenDisplay( pContext->context, pContext->display_string,
 		NULL, strAppTitle, NULL, 0, &copyArgc, copyArgv);
-    if (NULL == pContext->display) {
-        return TNK_ERR_CANNOT_OPEN_DISPLAY;
-    }
 
     if (NULL != copyArgv) {
         for( i = 0; i < argc; i++ ) {
             #ifdef _DEBUG
             CONS25W( stderr, "TNK_XtInitialize[%d] F: %s\n", i, copyArgv[i]);
             #endif
-            free(copyArgv[i]);
+            XtFree(copyArgv[i]);
         }
-        free(copyArgv);
+        XtFree((String)copyArgv);
+    }
+    if (NULL == pContext->display) {
+        return TNK_ERR_CANNOT_OPEN_DISPLAY;
     }
 
     XmRepTypeInstallTearOffModelConverter();

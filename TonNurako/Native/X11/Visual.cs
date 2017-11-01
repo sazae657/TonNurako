@@ -70,9 +70,11 @@ namespace TonNurako.X11 {
         public int BitsPerRgb => visual.bits_per_rgb;
         public int MapEntries => visual.map_entries;
 
+        ReturnPointerDelegaty delegaty;
 
         IntPtr handle;
-        public IntPtr Handle => handle;
+        public IntPtr Handle => (delegaty == null) ? handle : delegaty();
+
 
         public Visual(IntPtr v) {
             handle = v;
@@ -83,6 +85,11 @@ namespace TonNurako.X11 {
             if (IntPtr.Zero != visual.ext_data) {
                 extdata = (XExtData)Marshal.PtrToStructure(visual.ext_data, typeof(XExtData));
             }
+        }
+
+        internal Visual(ReturnPointerDelegaty delegaty) {
+            this.delegaty = delegaty;
+            //TODO: Marshallするか考え中
         }
 
         /// <summary>

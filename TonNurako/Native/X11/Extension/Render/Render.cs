@@ -149,8 +149,11 @@ namespace TonNurako.X11.Extension {
 
 
     public class Picture : IX11Interop<int> , IDisposable {
+        bool disposable = true;
+
         int handle;
-        public int Handle => handle;
+        public int Handle => (delegaty == null) ? handle : delegaty();
+
         Display display;
         internal Display Display => display;
 
@@ -159,14 +162,28 @@ namespace TonNurako.X11.Extension {
             this.display = display;
         }
 
+        public Picture(Display display, int pic, bool disposable) {
+            handle = pic;
+            this.display = display;
+            this.disposable = disposable;
+        }
+
+        ReturnPointerDelegaty<int> delegaty;
+        public Picture(ReturnPointerDelegaty<int> pic, bool disposable) {
+            delegaty = pic;
+            this.disposable = disposable;
+        }
+
         #region IDisposable Support
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (0 != handle) {
-                    // TODO: 微妙にダサイのであとで考える
-                    XRender.FreePicture(this);
+                    if (disposable) {
+                        // TODO: 微妙にダサイのであとで考える
+                        XRender.FreePicture(this);
+                    }
                     handle = 0;
                 }
                 disposedValue = true;

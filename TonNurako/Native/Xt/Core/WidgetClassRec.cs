@@ -581,13 +581,9 @@ namespace TonNurako.Xt.Core {
         #region IDisposable Support
         private bool disposedValue = false;
 
-        public virtual void PrepareDispose() {
-        }
-
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 disposedValue = true;
-                PrepareDispose();
 
                 if (null != superClass) {
                     superClass.Dispose();
