@@ -56,9 +56,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreFunction\ExtremeSports.cs" />
     <Compile Include="CoreFunction\Unity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="X11\AbstractSingleWindow.cs" />
+    <Compile Include="X11\AbstractDisplay.cs" />
     <Compile Include="X11\DisplayTest.cs" />
+    <Compile Include="X11\GCTest.cs" />
     <Compile Include="X11\XFontTest.cs" />
   </ItemGroup>
   <ItemGroup>

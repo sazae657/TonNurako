@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.X11;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
@@ -16,6 +17,15 @@ namespace TonNurakoTest.X11 {
             TonNurako.Application.RegisterGlobals();
             TonNurako.X11.Xi.SetIOErrorHandler((dpy) => throw new Exception("IOE"));
             TonNurako.X11.Xi.SetErrorHandler((dpy, ev) => throw new Exception($"XError {ev.error_code}"));
+        }
+
+        void Open() {
+            Assert.NotNull(TonNurako.X11.Xi.SetLocale(TonNurako.X11.XLocale.LC_ALL, ""));
+            Assert.True(TonNurako.X11.Xi.SupportsLocale());
+            Assert.NotNull(TonNurako.X11.Xi.SetLocaleModifiers(""));
+
+            display = TonNurako.X11.Display.Open(null);
+            Assert.NotNull(display);
         }
 
         public void Dispose() {
@@ -33,17 +43,12 @@ namespace TonNurakoTest.X11 {
             var dpy = TonNurako.X11.Display.Open(null);
             Assert.NotNull(dpy);
 
-            Assert.Equal(0, dpy.Close());
+            Assert.True(dpy.Close() >= 0);
         }
 
         [Fact]
         public void DisplayContext() {
-            Assert.NotNull(TonNurako.X11.Xi.SetLocale(TonNurako.X11.XLocale.LC_ALL, ""));
-            Assert.True(TonNurako.X11.Xi.SupportsLocale());
-            Assert.NotNull(TonNurako.X11.Xi.SetLocaleModifiers(""));
-
-            display = TonNurako.X11.Display.Open(null);
-            Assert.NotNull(display);
+            Open();
 
             var dpy = display;
 
@@ -82,6 +87,25 @@ namespace TonNurakoTest.X11 {
 
             var dpy = TonNurako.X11.Display.Open(@"ｳﾁｮﾑーﾁｮ");
             Assert.Null(dpy);
+        }
+
+        [Fact]
+        public void TextPropertyTest() {
+            Open();
+
+            using (var p = XTextProperty.Create(display, "ﾌﾟﾛﾊﾟﾁー")) {
+                Assert.NotNull(p);
+            }
+
+            using (var p = XTextProperty.TextListToTextProperty(display, new[] { "ﾌﾟﾛﾊﾟﾁー" }, XICCEncodingStyle.XCompoundTextStyle)) {
+                Assert.NotNull(p);
+            }
+
+            using (var p = XTextProperty.TextListToTextProperty(display, new[] { "ﾌﾟﾛﾊﾟﾁー" }, XICCEncodingStyle.XCompoundTextStyle)) {
+                Assert.NotNull(p);
+                Assert.NotNull(p.TextPropertyToTextList(display));
+            }
+
         }
 
     }

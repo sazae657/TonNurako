@@ -132,33 +132,33 @@ namespace TonNurako.X11.Extension.Xft {
 
 #if USE_FC22
             // FcBool: FcPatternAddRange FcPattern*:p  const char*:pbject  const FcRange*:r
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddRange_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool FcPatternAddRange(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, IntPtr r);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddRange_TNK", CharSet = CharSet.Auto)]
+            //internal static extern bool FcPatternAddRange(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, IntPtr r);
 
             // FcResult: FcPatternGetRange const FcPattern*:p  const char*:pbject  int:id  FcRange**:r
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetRange_TNK", CharSet = CharSet.Auto)]
-            internal static extern FcResult FcPatternGetRange(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int id, IntPtr[] r);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetRange_TNK", CharSet = CharSet.Auto)]
+            //internal static extern FcResult FcPatternGetRange(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int id, IntPtr[] r);
 #endif
             /* ↓考え中
             // FcBool: FcValueEqual FcValue:va  FcValue:vb
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcValueEqual_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool FcValueEqual([In]FcValue va, [In]FcValue vb);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcValueEqual_TNK", CharSet = CharSet.Auto)]
+            //internal static extern bool FcValueEqual([In]FcValue va, [In]FcValue vb);
 
             // FcValue: FcValueSave FcValue:v
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcValueSave_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr FcValueSave([In]FcValue v);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcValueSave_TNK", CharSet = CharSet.Auto)]
+            //internal static extern IntPtr FcValueSave([In]FcValue v);
 
             // FcBool: FcPatternAdd FcPattern*:p  const char*:object  FcValue:value  FcBool:append
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAdd_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool FcPatternAdd(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, [In]FcValue value, bool append);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAdd_TNK", CharSet = CharSet.Auto)]
+            //internal static extern bool FcPatternAdd(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, [In]FcValue value, bool append);
 
             // FcBool: FcPatternAddWeak FcPattern*:p  const char*:pbject  FcValue:value  FcBool:append
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddWeak_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool FcPatternAddWeak(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, [In]FcValue value, bool append);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddWeak_TNK", CharSet = CharSet.Auto)]
+            //internal static extern bool FcPatternAddWeak(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, [In]FcValue value, bool append);
 
             // FcResult: FcPatternGet const FcPattern*:p  const char*:pbject  int:id  FcValue*:v
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGet_TNK", CharSet = CharSet.Auto)]
-            internal static extern FcResult FcPatternGet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int id, ref FcValue v);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGet_TNK", CharSet = CharSet.Auto)]
+            //internal static extern FcResult FcPatternGet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int id, ref FcValue v);
              */
         }
 

@@ -21,10 +21,10 @@ namespace TonNurako.X11 {
             internal static extern int XCloseDisplay(IntPtr display);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFlush_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XFlush(IntPtr display);
+            internal static extern XStatus XFlush(IntPtr display);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSync_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSync(IntPtr display, [MarshalAs(UnmanagedType.U1)] bool discard);
+            internal static extern XStatus XSync(IntPtr display, [MarshalAs(UnmanagedType.U1)] bool discard);
 
             // [DllImport(ExtremeSports.Lib, EntryPoint = "XEventsQueued_TNK", CharSet = CharSet.Auto)]
             // internal static extern int XEventsQueued(IntPtr display, int mode);
@@ -294,11 +294,11 @@ namespace TonNurako.X11 {
         }
 
 
-        public int Flush() {
+        public XStatus Flush() {
             return NativeMethods.XFlush(display);
         }
 
-        public int Sync(bool discard) {
+        public XStatus Sync(bool discard) {
             return NativeMethods.XSync(display, discard);
         }
 

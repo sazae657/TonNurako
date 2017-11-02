@@ -133,7 +133,7 @@ namespace TonNurako.X11 {
 
             // Status: XMatchVisualInfo Display*:display int:screen int:depth int:class XVisualInfo*:vinfo_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMatchVisualInfo_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMatchVisualInfo(IntPtr display, int screen, int depth, VisualClass klass, ref XVisualInfoRec vinfo_return);
+            internal static extern XStatus XMatchVisualInfo(IntPtr display, int screen, int depth, VisualClass klass, ref XVisualInfoRec vinfo_return);
         }
 
         internal XVisualInfoRec Record;

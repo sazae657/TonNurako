@@ -85,25 +85,25 @@ namespace TonNurako.X11 {
             internal static extern IntPtr DefaultRootWindow(IntPtr dpy);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSelectInput_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSelectInput(IntPtr display, IntPtr w, ulong event_mask);
+            internal static extern XStatus XSelectInput(IntPtr display, IntPtr w, ulong event_mask);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMapWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMapWindow(IntPtr display, IntPtr w);
+            internal static extern XStatus XMapWindow(IntPtr display, IntPtr w);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMapRaised_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMapRaised(IntPtr display, IntPtr w);
+            internal static extern XStatus XMapRaised(IntPtr display, IntPtr w);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMapSubwindows_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMapSubwindows(IntPtr display, IntPtr w);
+            internal static extern XStatus XMapSubwindows(IntPtr display, IntPtr w);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XUnmapWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XUnmapWindow(IntPtr display, IntPtr w);
+            internal static extern XStatus XUnmapWindow(IntPtr display, IntPtr w);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XUnmapSubwindows_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XUnmapSubwindows(IntPtr display, IntPtr w);
+            internal static extern XStatus XUnmapSubwindows(IntPtr display, IntPtr w);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRaiseWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XRaiseWindow(IntPtr display, IntPtr w);
+            internal static extern XStatus XRaiseWindow(IntPtr display, IntPtr w);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XLowerWindow_TNK", CharSet = CharSet.Auto)]
             internal static extern int XLowerWindow(IntPtr display, IntPtr w);
@@ -122,27 +122,27 @@ namespace TonNurako.X11 {
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XChangeWindowAttributes_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XChangeWindowAttributes(IntPtr display, IntPtr w, ulong valuemask, ref XSetWindowAttributesRec attributes);
+            internal static extern XStatus XChangeWindowAttributes(IntPtr display, IntPtr w, ulong valuemask, ref XSetWindowAttributesRec attributes);
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWindowBackground_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetWindowBackground(IntPtr display, IntPtr w, ulong background_pixel);
+            internal static extern XStatus XSetWindowBackground(IntPtr display, IntPtr w, ulong background_pixel);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWindowBorder_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetWindowBorder(IntPtr display, IntPtr w, ulong border_pixel);
+            internal static extern XStatus XSetWindowBorder(IntPtr display, IntPtr w, ulong border_pixel);
 
             // int: XSetWindowBackgroundPixmap [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Pixmap', 'name': 'background_pixmap'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWindowBackgroundPixmap_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetWindowBackgroundPixmap(IntPtr display, IntPtr w, IntPtr background_pixmap);
+            internal static extern XStatus XSetWindowBackgroundPixmap(IntPtr display, IntPtr w, IntPtr background_pixmap);
 
 
             // int: XSetWindowBorderPixmap [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Pixmap', 'name': 'border_pixmap'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWindowBorderPixmap_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetWindowBorderPixmap(IntPtr display, IntPtr w, IntPtr border_pixmap);
+            internal static extern XStatus XSetWindowBorderPixmap(IntPtr display, IntPtr w, IntPtr border_pixmap);
 
             // int: XSetWindowColormap [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Colormap', 'name': 'colormap'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWindowColormap_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetWindowColormap(IntPtr display, IntPtr w, IntPtr colormap);
+            internal static extern XStatus XSetWindowColormap(IntPtr display, IntPtr w, IntPtr colormap);
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWindowAttributes_TNK", CharSet = CharSet.Auto)]
@@ -328,7 +328,7 @@ namespace TonNurako.X11 {
         public IntPtr Drawable => Handle;
         #endregion
 
-        public int SelectInput(EventMask mask) {
+        public XStatus SelectInput(EventMask mask) {
             return NativeMethods.XSelectInput(display.Handle, Handle, (ulong)mask);
         }
 
@@ -415,28 +415,28 @@ namespace TonNurako.X11 {
         }
 
 
-        public int MapWindow() => NativeMethods.XMapWindow(display.Handle, Handle);
-        public int MapRaised() => NativeMethods.XMapRaised(display.Handle, Handle);
+        public XStatus MapWindow() => NativeMethods.XMapWindow(display.Handle, Handle);
+        public XStatus MapRaised() => NativeMethods.XMapRaised(display.Handle, Handle);
 
-        public int MapSubwindows() => NativeMethods.XMapSubwindows(display.Handle, Handle);
+        public XStatus MapSubwindows() => NativeMethods.XMapSubwindows(display.Handle, Handle);
 
-        public int UnmapWindow() => NativeMethods.XUnmapWindow(display.Handle, Handle);
-        public int UnmapSubwindows() => NativeMethods.XUnmapSubwindows(display.Handle, Handle);
+        public XStatus UnmapWindow() => NativeMethods.XUnmapWindow(display.Handle, Handle);
+        public XStatus UnmapSubwindows() => NativeMethods.XUnmapSubwindows(display.Handle, Handle);
 
-        public int RaiseWindow() => NativeMethods.XRaiseWindow(display.Handle, Handle);
+        public XStatus RaiseWindow() => NativeMethods.XRaiseWindow(display.Handle, Handle);
         public int LowerWindow() => NativeMethods.XLowerWindow(display.Handle, Handle);
 
         public int DestroyWindow() => NativeMethods.XDestroyWindow(display.Handle, Handle);
         public int DestroySubwindows() => NativeMethods.XDestroySubwindows(display.Handle, Handle);
 
-        public int SetWindowBackground(Color color) => NativeMethods.XSetWindowBackground(display.Handle, Handle, color.Pixel);
-        public int SetWindowBorder(Color color) => NativeMethods.XSetWindowBorder(display.Handle, Handle, color.Pixel);
+        public XStatus SetWindowBackground(Color color) => NativeMethods.XSetWindowBackground(display.Handle, Handle, color.Pixel);
+        public XStatus SetWindowBorder(Color color) => NativeMethods.XSetWindowBorder(display.Handle, Handle, color.Pixel);
 
 
-        public int SetWindowBackgroundPixmap(TonNurako.X11.Pixmap pixmap) =>
+        public XStatus SetWindowBackgroundPixmap(TonNurako.X11.Pixmap pixmap) =>
             NativeMethods.XSetWindowBackgroundPixmap(display.Handle, Handle, pixmap.Drawable);
 
-        public int SetWindowBorderPixmap(TonNurako.X11.Pixmap pixmap) =>
+        public XStatus SetWindowBorderPixmap(TonNurako.X11.Pixmap pixmap) =>
             NativeMethods.XSetWindowBorderPixmap(display.Handle, Handle, pixmap.Drawable);
 
         public int MoveWindow(int x, int y)
@@ -458,7 +458,7 @@ namespace TonNurako.X11 {
             return rw;
         }
 
-        public int ChangeWindowAttributes(ChangeWindowAttributes cw, XSetWindowAttributes attr) {
+        public XStatus ChangeWindowAttributes(ChangeWindowAttributes cw, XSetWindowAttributes attr) {
             return NativeMethods.XChangeWindowAttributes(this.Display.Handle, Handle, (ulong)cw, ref attr.record);
         }
 

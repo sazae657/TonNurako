@@ -9,6 +9,7 @@ def collect(file):
     k = open(file,'rt')
     lines = k.readlines()
     k.close()
+    kumment = False
     for v in lines:
         s = re.search(IMP, v)
         if not s:
@@ -34,4 +35,4 @@ for a in sys.argv:
         if file.endswith('.cs'):
             for r in collect(file):
                 print r
-                
+

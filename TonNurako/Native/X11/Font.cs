@@ -200,11 +200,11 @@ namespace TonNurako.X11 {
 
             // int: XmbTextExtents [{'type': 'XFontSet', 'name': 'font_set'}, {'type': 'char*', 'name': 'string'}, {'type': 'int', 'name': 'num_bytes'}, {'type': 'XRectangle*', 'name': 'overall_ink_return'}, {'type': 'XRectangle*', 'name': 'overall_logical_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XmbTextExtents_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XmbTextExtents(IntPtr font_set, [In] byte[] str, int num_bytes, ref TonNurako.X11.XRectangle overall_ink_return, ref TonNurako.X11.XRectangle overall_logical_return);
+            internal static extern ErrorCode XmbTextExtents(IntPtr font_set, [In] byte[] str, int num_bytes, ref TonNurako.X11.XRectangle overall_ink_return, ref TonNurako.X11.XRectangle overall_logical_return);
 
             // int: XwcTextExtents [{'type': 'XFontSet', 'name': 'font_set'}, {'type': 'wchar_t*', 'name': 'string'}, {'type': 'int', 'name': 'num_wchars'}, {'type': 'XRectangle*', 'name': 'overall_ink_return'}, {'type': 'XRectangle*', 'name': 'overall_logical_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XwcTextExtents_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XwcTextExtents(IntPtr font_set, [In] byte[] str, int num_wchars, ref TonNurako.X11.XRectangle overall_ink_return, ref TonNurako.X11.XRectangle overall_logical_return);
+            internal static extern ErrorCode XwcTextExtents(IntPtr font_set, [In] byte[] str, int num_wchars, ref TonNurako.X11.XRectangle overall_ink_return, ref TonNurako.X11.XRectangle overall_logical_return);
 
             // XFontSetExtents*: XExtentsOfFontSet [{'type': 'XFontSet', 'name': 'font_set'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XExtentsOfFontSet_TNK", CharSet = CharSet.Auto)]
@@ -247,14 +247,14 @@ namespace TonNurako.X11 {
             return ret;
         }
 
-        public int TextExtentsMultiByte(string str, TextExtents extents) {
+        public ErrorCode TextExtentsMultiByte(string str, TextExtents extents) {
             var bs = Encoding.Default.GetBytes(str);
             var r = NativeMethods.XmbTextExtents(this.Handle, bs, bs.Length, ref extents.overall_ink, ref extents.overall_logical);
             return r;
         }
 
         
-        public int TextExtents(string str, TextExtents extents) {
+        public ErrorCode TextExtents(string str, TextExtents extents) {
             var gs = Encoding.Convert(Encoding.Default, Encoding.UTF32, Encoding.Default.GetBytes(str));
             var r = NativeMethods.XwcTextExtents(this.Handle, gs, str.Length, ref extents.overall_ink, ref extents.overall_logical);
             return r;

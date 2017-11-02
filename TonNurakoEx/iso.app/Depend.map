@@ -419,13 +419,6 @@ FcPatternGetCharSet_TNK
 FcPatternGetBool_TNK
 FcPatternGetLangSet_TNK
 FcPatternFormat_TNK
-FcPatternAddRange_TNK
-FcPatternGetRange_TNK
-FcValueEqual_TNK
-FcValueSave_TNK
-FcPatternAdd_TNK
-FcPatternAddWeak_TNK
-FcPatternGet_TNK
 FcStrListCreate_TNK
 FcStrListFirst_TNK
 FcStrListNext_TNK
