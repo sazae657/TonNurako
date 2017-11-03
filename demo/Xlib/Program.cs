@@ -163,7 +163,7 @@ namespace Xlib {
             dpy.Flush();
 
             win.GetWMName();
-            foreach (var k in win.XGetWMIconName().TextPropertyToTextList(dpy)) {
+            foreach (var k in win.GetWMIconName().TextPropertyToTextList(dpy)) {
                 Console.WriteLine($"XGetWMIconName: {k}");
             }
 

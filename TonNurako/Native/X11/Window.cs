@@ -109,10 +109,10 @@ namespace TonNurako.X11 {
             internal static extern int XLowerWindow(IntPtr display, IntPtr w);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMProtocols_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetWMProtocols(IntPtr display, IntPtr w, IntPtr protocols, int count);
+            internal static extern XStatus XSetWMProtocols(IntPtr display, IntPtr w, IntPtr protocols, int count);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMProtocols_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetWMProtocols(IntPtr display, IntPtr w, out IntPtr protocols_return, out int count_return);
+            internal static extern XStatus XGetWMProtocols(IntPtr display, IntPtr w, out IntPtr protocols_return, out int count_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XDestroyWindow_TNK", CharSet = CharSet.Auto)]
             internal static extern int XDestroyWindow(IntPtr display, IntPtr w);
@@ -146,49 +146,49 @@ namespace TonNurako.X11 {
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWindowAttributes_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetWindowAttributes(IntPtr display, IntPtr w, out XWindowAttributesRec window_attributes_return);
+            internal static extern XStatus XGetWindowAttributes(IntPtr display, IntPtr w, out XWindowAttributesRec window_attributes_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetGeometry_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetGeometry(IntPtr display, IntPtr d,
+            internal static extern XStatus XGetGeometry(IntPtr display, IntPtr d,
                 out IntPtr root_return, out int x_return, out int y_return, out int width_return, out int height_return, out int border_width_return, out int depth_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetClassHint_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetClassHint(IntPtr display, IntPtr w, ref XClassHint class_hints);
+            internal static extern XStatus XSetClassHint(IntPtr display, IntPtr w, ref XClassHint class_hints);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetClassHint_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetClassHint(IntPtr display, IntPtr w, out XClassHintRec class_hints_return);
+            internal static extern XStatus XGetClassHint(IntPtr display, IntPtr w, out XClassHintRec class_hints_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMoveWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMoveWindow(IntPtr display, IntPtr w, int x, int y);
+            internal static extern XStatus XMoveWindow(IntPtr display, IntPtr w, int x, int y);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XResizeWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XResizeWindow(IntPtr display, IntPtr w, uint width, uint height);
+            internal static extern XStatus XResizeWindow(IntPtr display, IntPtr w, uint width, uint height);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMoveResizeWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMoveResizeWindow(IntPtr display, IntPtr w, int x, int y, uint width, uint height);
+            internal static extern XStatus XMoveResizeWindow(IntPtr display, IntPtr w, int x, int y, uint width, uint height);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWindowBorderWidth_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetWindowBorderWidth(IntPtr display, IntPtr w, uint width);
+            internal static extern XStatus XSetWindowBorderWidth(IntPtr display, IntPtr w, uint width);
 
             // int: XCirculateSubwindows [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'int', 'name': 'direction'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCirculateSubwindows_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XCirculateSubwindows(IntPtr display, IntPtr w, int direction);
+            internal static extern XStatus XCirculateSubwindows(IntPtr display, IntPtr w, int direction);
 
             // int: XCirculateSubwindowsUp [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCirculateSubwindowsUp_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XCirculateSubwindowsUp(IntPtr display, IntPtr w);
+            internal static extern XStatus XCirculateSubwindowsUp(IntPtr display, IntPtr w);
 
             // int: XCirculateSubwindowsDown [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCirculateSubwindowsDown_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XCirculateSubwindowsDown(IntPtr display, IntPtr w);
+            internal static extern XStatus XCirculateSubwindowsDown(IntPtr display, IntPtr w);
 
             // int: XRestackWindows [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'windows[]'}, {'type': 'int', 'name': 'nwindows'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRestackWindows_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XRestackWindows(IntPtr display, IntPtr[] windows, int nwindows);
+            internal static extern XStatus XRestackWindows(IntPtr display, IntPtr[] windows, int nwindows);
 
             // int: XWindowEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XWindowEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XWindowEvent(IntPtr display, IntPtr w, long event_mask, out IntPtr event_return);
+            internal static extern XStatus XWindowEvent(IntPtr display, IntPtr w, long event_mask, out IntPtr event_return);
 
             // Bool: XCheckWindowEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckWindowEvent_TNK", CharSet = CharSet.Auto)]
@@ -196,7 +196,7 @@ namespace TonNurako.X11 {
 
             // int: XMaskEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XMaskEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XMaskEvent(IntPtr display, long event_mask, out IntPtr event_return);
+            internal static extern XStatus XMaskEvent(IntPtr display, long event_mask, out IntPtr event_return);
 
             // Bool: XCheckMaskEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckMaskEvent_TNK", CharSet = CharSet.Auto)]
@@ -212,19 +212,19 @@ namespace TonNurako.X11 {
 
             // int: XConfigureWindow [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'unsigned', 'name': 'value_mask'}, {'type': 'XWindowChanges*', 'name': 'changes'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XConfigureWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XConfigureWindow(IntPtr display, IntPtr w, uint value_mask, IntPtr changes);
+            internal static extern XStatus XConfigureWindow(IntPtr display, IntPtr w, uint value_mask, IntPtr changes);
 
             // Status: XQueryTree [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Window*', 'name': 'root_return'}, {'type': 'Window*', 'name': 'parent_return'}, {'type': 'Window*', 'name': '*children_return'}, {'type': 'unsigned int*', 'name': 'nchildren_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryTree_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XQueryTree(IntPtr display, IntPtr w, out IntPtr root_return, out IntPtr parent_return, out IntPtr children_return, out IntPtr nchildren_return);
+            internal static extern XStatus XQueryTree(IntPtr display, IntPtr w, out IntPtr root_return, out IntPtr parent_return, out IntPtr children_return, out IntPtr nchildren_return);
 
             // int: XSetTransientForHint [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Window', 'name': 'prop_window'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetTransientForHint_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetTransientForHint(IntPtr display, IntPtr w, IntPtr prop_window);
+            internal static extern XStatus XSetTransientForHint(IntPtr display, IntPtr w, IntPtr prop_window);
 
             // Status: XGetTransientForHint [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Window*', 'name': 'prop_window_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetTransientForHint_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetTransientForHint(IntPtr display, IntPtr w, out IntPtr prop_window_return);
+            internal static extern XStatus XGetTransientForHint(IntPtr display, IntPtr w, out IntPtr prop_window_return);
 
             // Bool: XQueryPointer Display*:display Window:w Window*:root_return Window*:child_return int*:root_x_return int*:root_y_return int*:win_x_return int*:win_y_return unsigned int*:mask_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryPointer_TNK", CharSet = CharSet.Auto)]
@@ -260,7 +260,7 @@ namespace TonNurako.X11 {
 
              [DllImport(ExtremeSports.Lib, EntryPoint = "XmbSetWMProperties_TNK", CharSet = CharSet.Auto)]
              internal static extern void XmbSetWMProperties(
-                 IntPtr display, IntPtr w, 
+                 IntPtr display, IntPtr w,
                  [In] byte[] window_name, [In] byte[] icon_name, [MarshalAs(UnmanagedType.LPStr)] string[] argv, int argc,
                  IntPtr normal_hints, IntPtr wm_hints, IntPtr class_hints);
                  */
@@ -270,25 +270,25 @@ namespace TonNurako.X11 {
             internal static extern void XSetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMName_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
+            internal static extern XStatus XGetWMName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XStoreName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XStoreName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string window_name);
+            internal static extern XStatus XStoreName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string window_name);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFetchName_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XFetchName(IntPtr display, IntPtr w, out IntPtr window_name_return);
+            internal static extern XStatus XFetchName(IntPtr display, IntPtr w, out IntPtr window_name_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern void XSetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMIconName_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
+            internal static extern XStatus XGetWMIconName(IntPtr display, IntPtr w, ref XTextPropertyRec text_prop_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetIconName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XSetIconName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string icon_name);
+            internal static extern XStatus XSetIconName(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.LPStr)] string icon_name);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetIconName_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetIconName(IntPtr display, IntPtr w, out IntPtr icon_name_return);
+            internal static extern XStatus XGetIconName(IntPtr display, IntPtr w, out IntPtr icon_name_return);
 
         }
 
@@ -333,7 +333,7 @@ namespace TonNurako.X11 {
         }
 
 
-        public int SetWMProtocols(IEnumerable<Atom> atoms) {
+        public XStatus SetWMProtocols(IEnumerable<Atom> atoms) {
             var arr = new List<IntPtr>();
             foreach (var a in atoms) {
                 arr.Add(a.Handle);
@@ -372,18 +372,21 @@ namespace TonNurako.X11 {
 
         public XTextProperty GetWMName() {
             var r = new XTextProperty();
-            NativeMethods.XGetWMName(display.Handle, Handle, ref r.record);
+            if(XStatus.False == NativeMethods.XGetWMName(display.Handle, Handle, ref r.record)) {
+                return null;
+            }
             return r;
         }
 
-        public XTextProperty XGetWMIconName() {
+        public XTextProperty GetWMIconName() {
             var r = new XTextProperty();
-            NativeMethods.XGetWMIconName(display.Handle, Handle, ref r.record);
+            if (XStatus.False ==  NativeMethods.XGetWMIconName(display.Handle, Handle, ref r.record)) {
+                return null;
+            }
             return r;
         }
 
-        public int StoreName(string window_name) =>
-            NativeMethods.XStoreName(display.Handle, Handle, window_name);
+
 
         string sfr(IntPtr str) {
             if (str == IntPtr.Zero) {
@@ -398,6 +401,8 @@ namespace TonNurako.X11 {
             return TonNurako.X11.Xi.XClearWindow(Display, Handle);
         }
 
+        public XStatus StoreName(string window_name) =>
+            NativeMethods.XStoreName(display.Handle, Handle, window_name);
 
         public string FetchName() {
             IntPtr rw = IntPtr.Zero;
@@ -405,7 +410,7 @@ namespace TonNurako.X11 {
             return sfr(rw);
         }
 
-        public int SetIconName(string window_name) =>
+        public XStatus SetIconName(string window_name) =>
             NativeMethods.XSetIconName(display.Handle, Handle, window_name);
 
         public string GetIconName() {
@@ -439,22 +444,24 @@ namespace TonNurako.X11 {
         public XStatus SetWindowBorderPixmap(TonNurako.X11.Pixmap pixmap) =>
             NativeMethods.XSetWindowBorderPixmap(display.Handle, Handle, pixmap.Drawable);
 
-        public int MoveWindow(int x, int y)
+        public XStatus MoveWindow(int x, int y)
             => NativeMethods.XMoveWindow(display.Handle, Handle, x, y);
 
-
-        public int ResizeWindow(int width, int height)
+        public XStatus ResizeWindow(int width, int height)
             => NativeMethods.XResizeWindow(display.Handle, Handle, (uint)width, (uint)height);
 
-        public int MoveResizeWindow(int x, int y, int width, int height)
+        public XStatus MoveResizeWindow(int x, int y, int width, int height)
             => NativeMethods.XMoveResizeWindow(display.Handle, Handle, x, y, (uint)width, (uint)height);
 
-        public int SetWindowBorderWidth(int width)
+        public XStatus SetWindowBorderWidth(int width)
             => NativeMethods.XSetWindowBorderWidth(display.Handle, Handle, (uint)width);
 
         public XWindowAttributes GetWindowAttributes() {
             var rw = new XWindowAttributes(Display);
             var k = NativeMethods.XGetWindowAttributes(this.Display.Handle, Handle, out rw.record);
+            if(XStatus.False == k) {
+                return null;
+            }
             return rw;
         }
 
@@ -462,13 +469,15 @@ namespace TonNurako.X11 {
             return NativeMethods.XChangeWindowAttributes(this.Display.Handle, Handle, (ulong)cw, ref attr.record);
         }
 
-        public int SetClassHint(XClassHint klass) {
+        public XStatus SetClassHint(XClassHint klass) {
             return NativeMethods.XSetClassHint(this.Display.Handle, Handle, ref klass);
         }
 
         public XClassHint GetClassHint() {
             XClassHintRec p;
-            NativeMethods.XGetClassHint(this.Display.Handle, Handle, out p);
+            if (XStatus.False == NativeMethods.XGetClassHint(this.Display.Handle, Handle, out p)) {
+                return null;
+            }
             return (new XClassHint(p));
         }
 
@@ -476,8 +485,8 @@ namespace TonNurako.X11 {
             info.Display = this.Display;
             var r = NativeMethods.XQueryPointer(
                 this.Display.Handle, this.Handle,
-                out info.Record.Root, out info.Record.Child, 
-                out info.Record.RootX, out info.Record.RootY, 
+                out info.Record.Root, out info.Record.Child,
+                out info.Record.RootX, out info.Record.RootY,
                 out info.Record.WinX, out info.Record.WinY,
                 out info.Record.Mask);
             return r;
@@ -486,7 +495,7 @@ namespace TonNurako.X11 {
 
         public Geometry GetGeometry() {
             var g = new Geometry(Display);
-            NativeMethods.XGetGeometry(
+            var r = NativeMethods.XGetGeometry(
                 this.Display.Handle, Handle,
                 out g.root_return,
                 out g.x_return,
@@ -495,6 +504,9 @@ namespace TonNurako.X11 {
                 out g.height_return,
                 out g.border_width_return,
                 out g.depth_return);
+            if(XStatus.True != r) {
+                return null;
+            }
             return g;
         }
 
@@ -504,8 +516,8 @@ namespace TonNurako.X11 {
                 window_name,
                 icon_name,
                 argv,
-                argv.Length, 
-                ref normal_hints, 
+                argv.Length,
+                ref normal_hints,
                 ref wm_hints.record, ref class_hints.classHint);
         }
 
@@ -636,7 +648,7 @@ namespace TonNurako.X11 {
         public IntPtr Handle => raw;
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {

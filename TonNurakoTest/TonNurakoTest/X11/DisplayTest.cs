@@ -21,8 +21,6 @@ namespace TonNurakoTest.X11 {
 
         void Open() {
             Assert.NotNull(TonNurako.X11.Xi.SetLocale(TonNurako.X11.XLocale.LC_ALL, ""));
-            Assert.True(TonNurako.X11.Xi.SupportsLocale());
-            Assert.NotNull(TonNurako.X11.Xi.SetLocaleModifiers(""));
 
             display = TonNurako.X11.Display.Open(null);
             Assert.NotNull(display);
@@ -52,7 +50,7 @@ namespace TonNurakoTest.X11 {
 
             var dpy = display;
 
-            
+
             Assert.NotNull(dpy.GetDisplayName());
             Assert.NotNull(dpy.DefaultColormap);
             Assert.NotNull(dpy.GetDefaultColormap(0));

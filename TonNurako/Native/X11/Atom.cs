@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.Inutility;
 using TonNurako.Native;
 
 namespace TonNurako.X11 {
@@ -16,7 +17,7 @@ namespace TonNurako.X11 {
 
             // Status: XInternAtoms [{'type': 'Display*', 'name': 'display'}, {'type': 'char*', 'name': '*names'}, {'type': 'int', 'name': 'count'}, {'type': 'Bool', 'name': 'only_if_exists'}, {'type': 'Atom*', 'name': 'atoms_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XInternAtoms_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XInternAtoms(IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string names, int count, [MarshalAs(UnmanagedType.U1)] bool only_if_exists, IntPtr atoms_return);
+            internal static extern XStatus XInternAtoms(IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string[] names, int count, [MarshalAs(UnmanagedType.U1)] bool only_if_exists, out IntPtr atoms_return);
 
             // char*: XGetAtomName [{'type': 'Display*', 'name': 'display'}, {'type': 'Atom', 'name': 'atom'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetAtomName_TNK", CharSet = CharSet.Auto)]
@@ -24,7 +25,7 @@ namespace TonNurako.X11 {
 
             // Status: XGetAtomNames [{'type': 'Display*', 'name': 'display'}, {'type': 'Atom*', 'name': 'atoms'}, {'type': 'int', 'name': 'count'}, {'type': 'char*', 'name': '*names_return'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetAtomNames_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XGetAtomNames(IntPtr display, IntPtr atoms, int count, [MarshalAs(UnmanagedType.LPStr)] string names_return);
+            internal static extern XStatus XGetAtomNames(IntPtr display, ulong[] atoms, int count, out IntPtr names_return);
 
         }
 
@@ -40,7 +41,7 @@ namespace TonNurako.X11 {
             this.atom = handle;
             this.display = dpy;
         }
-        
+
         public static Atom InternAtom(Display display, string name, bool only_if_exists) {
             var r = NativeMethods.XInternAtom(display.Handle, name, only_if_exists);
             if (r == IntPtr.Zero) {
@@ -48,6 +49,33 @@ namespace TonNurako.X11 {
             }
             return (new Atom(r, display));
         }
+
+        public static Atom[] InternAtoms(Display display, string[] names, bool only_if_exists)
+        {
+            IntPtr atoms_return = IntPtr.Zero;
+            try {
+                var r = NativeMethods.XInternAtoms(display.Handle, names, names.Length, only_if_exists, out atoms_return);
+                if(XStatus.True != r) {
+                    return null;
+                }
+                return TonNurako.Inutility.MarshalHelper.AsArray<Atom>(
+                    atoms_return, typeof(int), names.Length, (p)=> new Atom(p));
+            }
+            finally {
+            }
+        }
+        /*public static string[] GetAtomNames(Display display, IEnumerable<Atom> atoms) {
+            IntPtr names_return;
+            var arr = new List<ulong>();
+            foreach(var a in atoms) {
+                arr.Add((ulong)a.Handle);
+            }
+            var r = NativeMethods.XGetAtomNames(display.Handle, arr.ToArray(), arr.Count, out names_return);
+            if(XStatus.True != r) {
+                return null;
+            }
+            return MarshalHelper.ToStringArray(names_return, arr.Count);
+        }*/
 
         public bool Equals(Atom y) {
             return (Handle == y.Handle &&
@@ -62,7 +90,7 @@ namespace TonNurako.X11 {
             return obzekt.GetHashCode();
         }
 
-        public string Name => 
+        public string Name =>
             Marshal.PtrToStringAnsi(NativeMethods.XGetAtomName(display.Handle, Handle));
 
         Display display;

@@ -8,7 +8,7 @@ using Xunit;
 
 namespace TonNurakoTest.X11 {
     public abstract class AbstractDisplayTest : IDisposable {
-        protected Display display;
+        protected Display display{get;private set;} = null;
 
         public AbstractDisplayTest() {
             TonNurako.Application.RegisterGlobals();

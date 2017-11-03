@@ -171,7 +171,7 @@ namespace TonNurako.X11 {
             get => visual;
         }
 
-        public ulong Visualid {
+        public ulong VisualId {
             get => Record.visualid;
             set => Record.visualid = value;
         }
