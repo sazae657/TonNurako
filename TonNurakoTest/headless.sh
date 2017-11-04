@@ -4,5 +4,5 @@ LD_LIBRARY_PATH=$(pwd)/bin/Debug \
 LANG="ja_JP.UTF-8" \
 xvfb-run --server-args="-screen 0 320x240x24" \
 mono ${CONSOLE_EXE}  \
-  bin/Debug/TonNurakoTest.dll -verbose $@
+  bin/Debug/TonNurakoTest.dll -verbose -parallel none $@
 exit $?
