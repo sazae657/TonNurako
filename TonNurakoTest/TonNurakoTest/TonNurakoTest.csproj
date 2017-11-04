@@ -69,6 +69,7 @@
     <Compile Include="X11\EmptyWindowRule.cs" />
     <Compile Include="X11\VisualTest.cs" />
     <Compile Include="X11\Ext.Render.cs" />
+    <Compile Include="X11\Ext.Shape.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

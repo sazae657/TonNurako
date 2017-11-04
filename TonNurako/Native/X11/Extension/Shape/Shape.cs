@@ -51,7 +51,7 @@ namespace TonNurako.X11.Extension {
             internal static extern bool XShapeQueryExtension(IntPtr dpy, out int event_basep, out int error_basep);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XShapeQueryVersion_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XShapeQueryVersion(IntPtr dpy, out int major_versionp, out int minor_versionp);
+            internal static extern XStatus XShapeQueryVersion(IntPtr dpy, out int major_versionp, out int minor_versionp);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XShapeCombineRegion_TNK", CharSet = CharSet.Auto)]
             internal static extern void XShapeCombineRegion(IntPtr dpy, IntPtr dest, ShapeKind destKind, int xOff, int yOff, IntPtr r, ShapeOp op);
@@ -90,7 +90,9 @@ namespace TonNurako.X11.Extension {
 
         public static ExtensionVersion QueryVersion(Display display) {
             var n = new ExtensionVersion();
-            NativeMethods.XShapeQueryVersion(display.Handle, out n.Major, out n.Minor);
+            if (XStatus.True != NativeMethods.XShapeQueryVersion(display.Handle, out n.Major, out n.Minor)) {
+                return null;
+            }
             return n;
         }
 
