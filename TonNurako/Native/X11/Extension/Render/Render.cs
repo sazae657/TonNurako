@@ -414,11 +414,11 @@ namespace TonNurako.X11.Extension {
             NativeMethods.XRenderSetPictureClipRectangles(display.Handle, picture.Handle, xOrigin, yOrigin, rects, rects.Length);
         }
 
-        public static void SetPictureClipRectangles(Display display, Picture picture, Region region) {
+        public static void SetPictureClipRegion(Display display, Picture picture, Region region) {
             NativeMethods.XRenderSetPictureClipRegion(display.Handle, picture.Handle, region.Handle);
         }
 
-        public static void SetPictureClipRectangles(Display display, Picture picture, XTransform transform) {
+        public static void SetPictureTransform(Display display, Picture picture, XTransform transform) {
             NativeMethods.XRenderSetPictureTransform(display.Handle, picture.Handle, ref transform);
         }
 
