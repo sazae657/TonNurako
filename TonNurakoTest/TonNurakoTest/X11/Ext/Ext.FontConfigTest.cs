@@ -29,7 +29,6 @@ namespace TonNurakoTest.X11.Ext {
         }
 
         public override void Dispose() {
-            FontConfig.Fini();
             base.Dispose();
         }
 
