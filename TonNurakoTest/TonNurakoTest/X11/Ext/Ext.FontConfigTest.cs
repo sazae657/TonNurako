@@ -15,7 +15,7 @@ namespace TonNurakoTest.X11.Ext {
 
         protected override void BeforeCreateWindow() {
             Assert.True(FontConfig.Init());
-            Assert.True(FontConfig.Reinitialize());
+            //Assert.True(FontConfig.Reinitialize());
             Assert.True(FontConfig.BringUptoDate());
             using (var fc = FontConfig.LoadConfig()) {
                 Assert.NotNull(fc);
