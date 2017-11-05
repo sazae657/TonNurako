@@ -133,8 +133,12 @@ TNK_XtInitialize(
         }
 
         for( i = 0; i < argc; i++ ) {
-            len = 1 + strlen(argv[i]);
-            copyArgv[i] = (String)XtCalloc(len, sizeof(char));
+            len = strlen(argv[i]);
+            if (len == 0) {
+                copyArgv[i] = NULL;
+                continue;
+            }
+            copyArgv[i] = (String)XtCalloc(len+1, sizeof(char));
             memcpy((void*)copyArgv[i], (const void*)argv[i], len);
             #ifdef _DEBUG
             CONS25W( stderr, "TNK_XtInitialize[%d] %s\n", i, copyArgv[i]);
@@ -192,9 +196,9 @@ void TNK_IMP_SplitXClientMessageEventData(
     const XClientMessageEvent* src, TNK_XClientMessageEventData* ev)
 {
 
-    memset(&ev->data, 0xcc, sizeof(ev->data));
+    memset(ev, 0xcc, sizeof(TNK_XClientMessageEventData));
 
-    memcpy(&ev->event, src, sizeof(XClientMessageEvent) - sizeof(src->data));
+    memcpy(&ev->event, src, sizeof(XClientMessageEvent));
     memcpy(ev->data.b, src->data.b, sizeof(src->data.b));
     memcpy(ev->data.s, src->data.s, sizeof(src->data.s));
     memcpy(ev->data.l, src->data.l, sizeof(src->data.l));

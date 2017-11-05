@@ -47,7 +47,7 @@ namespace TonNurako.X11 {
     public class ColorCell : IDisposable {
         internal static class NativeMethods {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocColorCells_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XAllocColorCells(
+            internal static extern XStatus XAllocColorCells(
                 IntPtr display, int colormap, [MarshalAs(UnmanagedType.U1)] bool contig, 
                 [In, Out] ulong[] plane_masks_return, uint nplanes, [In, Out] ulong[] pixels_return, uint npixels);
 
@@ -123,26 +123,26 @@ namespace TonNurako.X11 {
         internal static class NativeMethods {
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocColor_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XAllocColor(IntPtr display, int colormap, [In, Out] ref XColor screen_in_out);
+            internal static extern XStatus XAllocColor(IntPtr display, int colormap, [In, Out] ref XColor screen_in_out);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XAllocNamedColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XAllocNamedColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor screen_def_return, out XColor exact_def_return);
+            internal static extern XStatus XAllocNamedColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor screen_def_return, out XColor exact_def_return);
 
             // int: XQueryColor Display*:display  Colormap:colormap  XColor*:def_in_out  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryColor_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XQueryColor(IntPtr display, int colormap, ref XColor def_in_out);
+            internal static extern XStatus XQueryColor(IntPtr display, int colormap, ref XColor def_in_out);
 
             // int: XQueryColors Display*:display  Colormap:colormap  XColor:defs_in_out[]  int:ncolors  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryColors_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XQueryColors(IntPtr display, int colormap, [In,Out] XColor [] defs_in_out, int ncolors);
+            internal static extern XStatus XQueryColors(IntPtr display, int colormap, [In,Out] XColor [] defs_in_out, int ncolors);
 
             // Status: XLookupColor Display*:display  Colormap:colormap  char*:color_name  XColor*:exact_def_return  XColor*:screen_def_return  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XLookupColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XLookupColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor exact_def_return, out XColor screen_def_return);
+            internal static extern XStatus XLookupColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string color_name, out XColor exact_def_return, out XColor screen_def_return);
 
             // Status: XParseColor Display*:display  Colormap:colormap  char*:spec  XColor*:exact_def_return  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XParseColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XParseColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string spec, out XColor exact_def_return);
+            internal static extern XStatus XParseColor(IntPtr display, int colormap, [MarshalAs(UnmanagedType.LPStr)] string spec, out XColor exact_def_return);
         }
 
         public ulong Handle => Record.Pixel;
@@ -229,7 +229,9 @@ namespace TonNurako.X11 {
         public static Color AllocNamedColor(Display dpy, Colormap cmap, string name) {
             var near = new XColor();
             var far  = new XColor();
-            NativeMethods.XAllocNamedColor(dpy.Handle, cmap.Handle, name, out near, out far);
+            if (XStatus.True != NativeMethods.XAllocNamedColor(dpy.Handle, cmap.Handle, name, out near, out far)) {
+                throw new System.ArgumentException($"XAllocNamedColor({name} == False");
+            }
             var k = new Color(dpy, cmap);
             k.Record = near;
             return k;

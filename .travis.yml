@@ -1,6 +1,30 @@
 language: csharp
 solution: TonNurako.sln
 
+env:
+  global:
+   - secure: "obePwfHkruSsNJMU0kmPRvjZyhUfpub4qU4M+83ycdXfVwG0/GDX868FFbm6tsOyXbe9SmkYBVSjBiiX2goz47WQZqdseAKa0iW6WWUyewL4bj048HqvzBbpu0iRou493Uae+FWIhnneBiwCu965imMBgmeXM25c6Jiqjwc+FzuQrdfw9n7lv4kW4v/Qu0XJwgymemgaGO6KQtK5CUNohpIXbe5Fzyejb3XqGRqC1Yqd4eFB1B6az3OYvShDUtMIYOeJOiAFGWozp/S/ib2Qb+frfNw6J3+oSiskrmf+kHnMWmyDJOzqu6VIr5LUGVbf5hFfz9U9EzmNWmyWgl2GIzBAsVHPM0YgotPPCEB5S3dET0PScmTvjk5QYm1CcsQm0Y3RxI616pCGVlA327FbftT3zB5c0Fgp5WWoPniU/JQ/TO9l46zYieIjXIb1YeSPGjWDOpHGbI4iKFr/hE/c1XzOq45s4kmWBHCuK4qZxWQJ2pomwsmSsE05wCFi7h3HugMhMEigCgnfi68AOQ2z5r6HK9lQPwfCRvhWQ3e8YLHkkYRC4J6UWnGNeH4Ny/ZD4wldjSZxZXc6EvaLVKoUaQDJ4Gtp8YdV++ZAf1QlIYjgD4WMqYCb7fCw2akMMFTGwIknpYrdLmoC/UI6sKt+dU2RwoX1siuezV3jL/nw5i4="
+
+before_install:
+      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
 install:
     - sudo apt-get -qq update
-    - sudo apt-get -qq install libmotif-dev libxmu-dev libxt-dev
+    - sudo apt-get -qq install libmotif-dev libxmu-dev libxt-dev libfontconfig1-dev xvfb fonts-ipafont-gothic xfonts-intl-japanese
+
+script:
+    - sudo fc-cache -v
+    - cd TonNurakoTest
+    - nuget restore
+    - msbuild /p:Configuration=Debug TonNurakoTest.sln
+    - ./headless.sh
+
+addons:
+  coverity_scan:
+    project:
+      name: "sazae657/TonNurako"
+      description: "Build submitted via Travis CI"
+    notification_email: info@ftp.gawanative.com
+    build_command_prepend: "make -C TonNurakoEx clean audio"
+    build_command:   "make -C TonNurakoEx ExtremeSports"
+    branch_pattern: coverity_scan

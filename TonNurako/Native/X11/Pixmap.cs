@@ -109,6 +109,9 @@ namespace TonNurako.X11 {
 
             drawable =
                 Xi.XCreatePixmap(drm.Display, drm.Drawable, (uint)width, (uint)height, (uint)depth);
+            if (drawable == IntPtr.Zero) {
+                throw new Exception($"XCreatePixmap == NULL");
+            }
             System.Diagnostics.Debug.WriteLine($"Pixmap(N) <{drawable}>");
 
             DestroyPixmapFunc = () => {

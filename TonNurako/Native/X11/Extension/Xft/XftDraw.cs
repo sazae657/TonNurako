@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TonNurako.Native;
 using TonNurako.X11;
 
-namespace TonNurako.Extension.Xft {
+namespace TonNurako.X11.Extension.Xft {
 
     public enum FcEndian :int {
         FcEndianBig = TonNurako.X11.Constant.FcEndianBig,

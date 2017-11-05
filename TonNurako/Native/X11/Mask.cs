@@ -7,12 +7,6 @@ using System;
 namespace TonNurako.X11
 {
 
-
-    public static class XStatus {
-        public static int True => 1;
-        public static int False => 0; 
-    }
-
     /// <summary>
     /// ﾊﾞｯｷﾝｸﾞｽﾄｱー
     /// </summary>

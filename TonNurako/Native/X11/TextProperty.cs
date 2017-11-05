@@ -26,13 +26,17 @@ namespace TonNurako.X11 {
     }
 
     public class XTextProperty : IX11Interop, IDisposable {
+        enum TextPropEncode {
+            Mb,
+            Wchar
+        }
         internal static class NativeMethods {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XwcTextListToTextProperty_TNK", CharSet = CharSet.Auto)]
             internal static extern int XwcTextListToTextProperty(
                 IntPtr display, IntPtr list, int count, XICCEncodingStyle style, ref XTextPropertyRec text_prop_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XmbTextPropertyToTextList_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XmbTextPropertyToTextList(IntPtr display, ref XTextPropertyRec text_prop, out IntPtr list_return, out int count_return);
+            internal static extern XStatus XmbTextPropertyToTextList(IntPtr display, ref XTextPropertyRec text_prop, out IntPtr list_return, out int count_return);
 
             // TODO: UTF-32の上手いﾏーｼｬﾘﾝｸﾞ方法思いついたら替える
             //[DllImport(ExtremeSports.Lib, EntryPoint = "XwcTextPropertyToTextList_TNK", CharSet = CharSet.Auto)]
@@ -56,6 +60,8 @@ namespace TonNurako.X11 {
 
         }
 
+        TextPropEncode encode = TextPropEncode.Mb;
+
         internal XTextPropertyRec record;
 
         public XTextProperty() {
@@ -67,6 +73,10 @@ namespace TonNurako.X11 {
             IntPtr list;
 
             NativeMethods.XmbTextPropertyToTextList(display.Handle, ref record, out list , out count);
+            if (count == 0) {
+                return null;
+            }
+
             var arr = new IntPtr[count];
             var ret = new string[count];
             Marshal.Copy(list, arr, 0, count);
@@ -110,6 +120,7 @@ namespace TonNurako.X11 {
 
         public static XTextProperty TextListToTextProperty(Display dpy, string [] list, XICCEncodingStyle style) {
             var r = new XTextProperty();
+            r.encode = TextPropEncode.Wchar;
 
             var arr = new IntPtr[list.Length+1];
             for (int i = 0; i < list.Length; ++i) {

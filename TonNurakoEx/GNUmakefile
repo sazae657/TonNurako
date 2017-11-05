@@ -73,6 +73,8 @@ X_KEYSYM_CS=$(GEN_SRC_DIR)/X.KeySym.cs
 X_KEYSYM_CS_TPL=$(TEMPLATE_DIR)/X.KeySym.swift
 X_KEYSYM_CS_PP=	-DXK_3270
 
+FC_RESOURCE_ID_CS=$(GEN_SRC_DIR)/Fc.ResourceId.cs
+
 GEN_SRCS = $(XM_CONSTANT_CS) \
 		$(XM_RESOURCEID_CS) \
 		$(XM_STRINGCONSTANT_CS) \
@@ -81,8 +83,10 @@ GEN_SRCS = $(XM_CONSTANT_CS) \
 		$(XT_RESOURCEID_CS) \
 		$(X_CONSTANT_CS) \
 		$(X_STRINGCONSTANT_CS) \
-		$(X_PROTO_CS) $(X_ATOM_CS) \
-		$(X_KEYSYM_CS)
+		$(X_PROTO_CS) \
+		$(X_ATOM_CS) \
+		$(X_KEYSYM_CS) \
+		$(FC_RESOURCE_ID_CS)
 
 ifeq ($(BUILD),Release)
 	OPT = -O2 -DNDEBUG
@@ -172,7 +176,7 @@ $(GEN_SRC_DIR)/%.cs: $(TEMPLATE_DIR)/%.swift
 		-o $(GEN_EXE_DIR)/$(notdir $<) \
 		$(GEN_C_DIR)/$(notdir $<).c $(COMMON_C) $(LINK_LIBS)
 	$(GEN_EXE_DIR)/$(notdir $<) >$@
-	$(PYTHON) $(SCRIPT_DIR)/map.py $< >$@.map
+	$(PYTHON) $(SCRIPT_DIR)/map.py $< >$(@:.cs=.map)
 
 $(GEN_SRC_DIR)/%.cs: $(TEMPLATE_DIR)/%.iso
 	$(PYTHON) $(SCRIPT_DIR)/const_ex.py $< >$(GEN_C_DIR)/$(notdir $<).c
@@ -180,7 +184,7 @@ $(GEN_SRC_DIR)/%.cs: $(TEMPLATE_DIR)/%.iso
 		-o $(GEN_EXE_DIR)/$(notdir $<) \
 	$(GEN_C_DIR)/$(notdir $<).c $(COMMON_C) $(LINK_LIBS)
 	$(GEN_EXE_DIR)/$(notdir $<) >$@
-	$(PYTHON) $(SCRIPT_DIR)/map.py $< >$@.map
+	$(PYTHON) $(SCRIPT_DIR)/map.py $< >$(@:.cs=.map)
 
 clean.lib:
 	- rm -f *.o
@@ -195,6 +199,9 @@ clean: clean.lib
 	- rm $(GEN_C_DIR)/*.c
 
 install: clean
+
+depend:
+	$(PYTHON) $(SCRIPT_DIR)/mk_dep.py ../TonNurako >$(TEMPLATE_DIR)/Depend.map
 
 audio:
 	./config.sh

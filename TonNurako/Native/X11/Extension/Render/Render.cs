@@ -300,7 +300,7 @@ namespace TonNurako.X11.Extension {
 
             // Status: XRenderParseColor Display*:dpy char*:spec XRenderColor*:def
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderParseColor_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern int XRenderParseColor(IntPtr dpy, [MarshalAs(UnmanagedType.LPStr)] string spec, ref XRenderColor def);
+            internal static extern XStatus XRenderParseColor(IntPtr dpy, [MarshalAs(UnmanagedType.LPStr)] string spec, ref XRenderColor def);
 
             // XIndexValue*: XRenderQueryPictIndexValues Display*:dpy XRenderPictFormat*:format int*:num
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRenderQueryPictIndexValues_TNK", CharSet = CharSet.Auto)]
@@ -339,7 +339,9 @@ namespace TonNurako.X11.Extension {
 
         public static ExtensionVersion QueryVersion(Display display) {
             var n = new ExtensionVersion();
-            NativeMethods.XRenderQueryExtension(display.Handle, out n.Major, out n.Minor);
+            if (!NativeMethods.XRenderQueryExtension(display.Handle, out n.Major, out n.Minor)) {
+                return null;
+            }
             return n;
         }
 
@@ -385,10 +387,7 @@ namespace TonNurako.X11.Extension {
                 return null;
             }
             return (new XFilters(Marshal.PtrToStructure<XFiltersRec>(r)));
-
         }
-
-
 
         public static Picture CreatePicture(Display dpy, IDrawable drawable, XRenderPictFormat format, CreatePictureMask valuemask, XRenderPictureAttributes attributes) {
             var p = NativeMethods.XRenderCreatePicture(dpy.Handle, drawable.Drawable, ref format.Record, valuemask, ref attributes.Record);
@@ -415,11 +414,11 @@ namespace TonNurako.X11.Extension {
             NativeMethods.XRenderSetPictureClipRectangles(display.Handle, picture.Handle, xOrigin, yOrigin, rects, rects.Length);
         }
 
-        public static void SetPictureClipRectangles(Display display, Picture picture, Region region) {
+        public static void SetPictureClipRegion(Display display, Picture picture, Region region) {
             NativeMethods.XRenderSetPictureClipRegion(display.Handle, picture.Handle, region.Handle);
         }
 
-        public static void SetPictureClipRectangles(Display display, Picture picture, XTransform transform) {
+        public static void SetPictureTransform(Display display, Picture picture, XTransform transform) {
             NativeMethods.XRenderSetPictureTransform(display.Handle, picture.Handle, ref transform);
         }
 
@@ -434,7 +433,9 @@ namespace TonNurako.X11.Extension {
 
         public static XRenderColor ParseColor(Display display, string spec) {
             var def = new XRenderColor();
-            NativeMethods.XRenderParseColor(display.Handle, spec, ref def);
+            if(XStatus.False == NativeMethods.XRenderParseColor(display.Handle, spec, ref def)) {
+                throw new Exception("XRenderParseColor == False");
+            }
             return def;
         }
 

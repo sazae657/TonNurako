@@ -112,7 +112,7 @@ namespace TonNurako.X11
             public static extern int XFreeGC(IntPtr display, IntPtr gc);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetGCValues_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetGCValues(IntPtr display, IntPtr gc, GCMask valuemask, out XGCValuesRec values_return);
+            internal static extern XStatus XGetGCValues(IntPtr display, IntPtr gc, GCMask valuemask, out XGCValuesRec values_return);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCreatePixmap_TNK", CharSet = CharSet.Auto)]
             public static extern IntPtr XCreatePixmap(IntPtr display, IntPtr d, uint width, uint height, uint depth);
@@ -181,10 +181,10 @@ namespace TonNurako.X11
             public static extern int XDrawArcs(IntPtr display, IntPtr d, IntPtr gc, TonNurako.X11.XArc[] arcs, int narcs);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetLineAttributes_TNK", CharSet = CharSet.Auto)]
-            public static extern int XSetLineAttributes(IntPtr display, IntPtr gc, uint line_width, int line_style, int cap_style, int join_style);
+            public static extern XStatus XSetLineAttributes(IntPtr display, IntPtr gc, uint line_width, int line_style, int cap_style, int join_style);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetDashes_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            public static extern int XSetDashes(IntPtr display, IntPtr gc, int dash_offset, [MarshalAs(UnmanagedType.LPStr)] string dash_list, int n);
+            public static extern XStatus XSetDashes(IntPtr display, IntPtr gc, int dash_offset, byte[] dash_list, int n);
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetGeometry_TNK", CharSet = CharSet.Auto)]
@@ -233,7 +233,7 @@ namespace TonNurako.X11
                 return;
             }
             var h = NativeMethods.XSetErrorHandler((dpy, code) => {
-                return handler(new Display(dpy, false), code);
+                return handler(new Display(dpy, false), Marshal.PtrToStructure<Event.XErrorEvent>(code));
             });
             Instance.XErrorHandlerStack.Push(h);
         }
@@ -318,7 +318,7 @@ namespace TonNurako.X11
             return NativeMethods.XFreeGC(display.Handle, gc);
         }
 
-        public static int XGetGCValues(Display display, IntPtr gc, GCMask valuemask, XGCValues values_return) {
+        public static XStatus XGetGCValues(Display display, IntPtr gc, GCMask valuemask, XGCValues values_return) {
             var v = new XGCValuesRec();
             var r = NativeMethods.XGetGCValues(display.Handle, gc, valuemask, out v);
             values_return.Record = v;
@@ -424,13 +424,13 @@ namespace TonNurako.X11
         }
 
 
-        public static int XSetLineAttributes(Display display, IntPtr gc, uint line_width, int line_style, int cap_style, int join_style) {
+        public static XStatus XSetLineAttributes(Display display, IntPtr gc, uint line_width, int line_style, int cap_style, int join_style) {
             return NativeMethods.XSetLineAttributes(display.Handle, gc,line_width,line_style,cap_style,join_style);
         }
 
 
-        public static int XSetDashes(Display display, IntPtr gc, int dash_offset, string dash_list, int n) {
-            return NativeMethods.XSetDashes(display.Handle,gc,dash_offset,dash_list,n);
+        public static XStatus XSetDashes(Display display, IntPtr gc, int dash_offset, byte[] dash_list) {
+            return NativeMethods.XSetDashes(display.Handle, gc, dash_offset, dash_list, dash_list.Length);
         }
 
        /* たぶんやらない

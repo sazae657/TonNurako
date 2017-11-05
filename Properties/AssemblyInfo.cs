@@ -1,6 +1,6 @@
 ﻿//
 // トンヌラコ
-// 
+//
 // Widget
 //
 using System.Reflection;
@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 // 参照不可能になります。COM からこのｱｾﾝﾌﾞﾘ内の型にｱｸｾｽする場合は、
 // その型の ComVisible 属性を true に設定してください。
 [assembly: ComVisible(false)]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("TonNurakoTest")]
 
 // このﾌﾟﾛｼﾞｪｸﾄが COM に公開される場合、次の GUID が typelib の ID になります
 [assembly: Guid("936e32ea-d5cb-41b5-b75a-a282db26cc1c")]

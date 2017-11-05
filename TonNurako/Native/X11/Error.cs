@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace TonNurako.X11 {
 
+    public enum XStatus :int{
+        True = 1,
+        False = 0
+    }
+
     public delegate int XErrorHandler(Display display, Event.XErrorEvent ev);
 
-    internal delegate int XErrorHandlerInt(IntPtr display, Event.XErrorEvent ev);
+    internal delegate int XErrorHandlerInt(IntPtr display, IntPtr ev);
 
     public delegate int XIOErrorHandler(Display display);
     internal delegate int XIOErrorHandlerInt(IntPtr display);
