@@ -218,7 +218,7 @@ namespace TonNurako.X11.Extension {
             get => Record.poly_mode;
             set => Record.poly_mode = value;
         }
-        
+
 
         public Atom Dither {
             get => dither;
@@ -294,6 +294,10 @@ namespace TonNurako.X11.Extension {
     [StructLayout(LayoutKind.Sequential)]
     public struct XPointDouble {
         public double X, Y;
+        public XPointDouble(double x, double y) {
+            X = x;
+            Y = y;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -319,7 +323,12 @@ namespace TonNurako.X11.Extension {
 
     [StructLayout(LayoutKind.Sequential)]
     public struct XTriangle {
-        public XPointFixed p1, p2, p3;
+        public XPointFixed P1, P2, P3;
+        public XTriangle(XPointFixed p1,XPointFixed p2,XPointFixed p3) {
+            P1 = p1;
+            P2 = p2;
+            P3 = p3;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -351,7 +360,7 @@ namespace TonNurako.X11.Extension {
 
     [StructLayout(LayoutKind.Sequential)]
     public struct XTransform {
-        [MarshalAs(UnmanagedType.LPArray, SizeConst = 9)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 9)]
         public int[] Matrix; //matrix[3][3]
     }
 

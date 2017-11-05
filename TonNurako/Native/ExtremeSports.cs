@@ -8,6 +8,10 @@ using System.Runtime.InteropServices;
 using TonNurako.Data;
 using TonNurako.Xt;
 using TonNurako.Widgets;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using static TonNurako.Native.ExtremeSportsLoader;
+
 namespace TonNurako.Native {
 
     /// <summary>
@@ -248,6 +252,42 @@ namespace TonNurako.Native {
         public static int CallPtrArg1ReturnInt(IntPtr fn, IntPtr ptr) {
             return NativeMethods.TNK_CallPtrArg1ReturnInt(fn, ptr);
         }
+
+        #region ｼﾝﾎﾞﾙｪｯｸ
+
+        /// <summary>
+        /// ExtremeSportsに必要ｼﾝﾎﾞﾙが揃っているかﾁｪｯｸする
+        /// </summary>
+        /// <returns>trueもしくは例外</returns>
+        public static bool CheckLinkage() {
+            var ur = new List<string>();
+            var oppai = System.Reflection.Assembly.GetExecutingAssembly();
+            int count = 0;
+            int lineno = 0;
+            using (var ex = new ExtremeSportsLoader(oppai.Location, "CheckLinkage")) {
+                var r = new Regex(@"[\r\n]");
+                foreach (var s in r.Split(TonNurako.Properties.Resources.DependMap)) {
+                    lineno++;
+                    var e = s.Trim();
+                    if (! e.Contains("TNK")) {
+                        continue;
+                    }
+
+                    try {
+                        ex.GetProcAddress(e);
+                    }
+                    catch (SymbolNotFoundException) {
+                        ur.Add(e);
+                    }
+                    count++;
+                }
+            }
+            if (ur.Count != 0) {
+                throw new SymbolNotFoundException(ur, $"CheckLinkage failed<{ur.Count}/{count}>");
+            }
+            return true;
+        }
+        #endregion
 
         #region ﾘｿーｽ関連
 

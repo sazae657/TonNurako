@@ -21,10 +21,10 @@ namespace TonNurako.X11 {
             internal static extern int XCloseDisplay(IntPtr display);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFlush_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XFlush(IntPtr display);
+            internal static extern XStatus XFlush(IntPtr display);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSync_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSync(IntPtr display, [MarshalAs(UnmanagedType.U1)] bool discard);
+            internal static extern XStatus XSync(IntPtr display, [MarshalAs(UnmanagedType.U1)] bool discard);
 
             // [DllImport(ExtremeSports.Lib, EntryPoint = "XEventsQueued_TNK", CharSet = CharSet.Auto)]
             // internal static extern int XEventsQueued(IntPtr display, int mode);
@@ -184,7 +184,7 @@ namespace TonNurako.X11 {
 
             // KeyCode: XKeysymToKeycode [{'type': 'Display*', 'name': 'display'}, {'type': 'KeySym', 'name': 'keysym'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XKeysymToKeycode_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XKeysymToKeycode(IntPtr display, KeySym keysym);
+            internal static extern uint XKeysymToKeycode(IntPtr display, KeySym keysym);
 
 
             // KeySym: XStringToKeysym [{'type': 'char*', 'name': 'string'}]
@@ -243,6 +243,9 @@ namespace TonNurako.X11 {
 
         public static Display Open(string display) {
             var dp = (null != display) ? NativeMethods.XOpenDisplay(display) : NativeMethods.XOpenDisplayP(IntPtr.Zero);
+            if (IntPtr.Zero == dp) {
+                return null;
+            }
             return new Display(dp, true);
         }
 
@@ -291,20 +294,20 @@ namespace TonNurako.X11 {
         }
 
 
-        public int Flush() {
+        public XStatus Flush() {
             return NativeMethods.XFlush(display);
         }
 
-        public int Sync(bool discard) {
+        public XStatus Sync(bool discard) {
             return NativeMethods.XSync(display, discard);
         }
 
-        // TODO: Œ³‚É–ß‚·ˆ—(ƒXƒ^ƒbƒN‹l‚ÞH)
+        // TODO: å…ƒã«æˆ»ã™å‡¦ç†(ã‚¹ã‚¿ãƒƒã‚¯è©°ã‚€ï¼Ÿ)
         public void SetAfterFunction(XSetAfterFunctionDelegaty proc) {
             NativeMethods.XSetAfterFunction(Handle, proc);
         }
 
-        // TODO: Œ³‚É–ß‚·ˆ—
+        // TODO: å…ƒã«æˆ»ã™å‡¦ç†
         public void Synchronize(bool onoff) {
             NativeMethods.XSynchronize(Handle, onoff);
         }
@@ -389,7 +392,7 @@ namespace TonNurako.X11 {
         public KeySym KeycodeToKeysym(uint keycode, uint group, uint level)
             => NativeMethods.XkbKeycodeToKeysym(Handle, keycode, group, level);
 
-        public int KeysymToKeycode(KeySym keysym)
+        public uint KeysymToKeycode(KeySym keysym)
             => NativeMethods.XKeysymToKeycode(Handle, keysym);
 
         public KeySym StringToKeysym(string sk)
@@ -398,19 +401,19 @@ namespace TonNurako.X11 {
         public string KeysymToString(KeySym keysym)
             => Marshal.PtrToStringAnsi(NativeMethods.XKeysymToString(keysym));
 
-        int GrabKey(int keycode, uint modifiers, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode) =>
+        public int GrabKey(int keycode, uint modifiers, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode) =>
             NativeMethods.XGrabKey(
                 this.Handle, keycode, modifiers, this.Handle, owner_events, pointer_mode, keyboard_mode);
 
-        int UngrabKey(int keycode, uint modifiers) =>
+        public int UngrabKey(int keycode, uint modifiers) =>
             NativeMethods.XUngrabKey(this.Handle, keycode, modifiers, this.Handle);
 
 
-        int XGrabButton(uint button, uint modifiers, bool owner_events, EventMask event_mask, GrabMode pointer_mode, GrabMode keyboard_mode, Window confine_to, int cursor) =>
+        public int GrabButton(uint button, uint modifiers, bool owner_events, EventMask event_mask, GrabMode pointer_mode, GrabMode keyboard_mode, Window confine_to, int cursor) =>
             NativeMethods.XGrabButton(this.Handle, button, modifiers, this.Handle,
                 owner_events, event_mask, pointer_mode, keyboard_mode, (null != confine_to) ? confine_to.Handle : IntPtr.Zero, cursor);
 
-        int XUngrabButton(uint button, uint modifiers) =>
+        public int UngrabButton(uint button, uint modifiers) =>
             NativeMethods.XUngrabButton(this.Handle, button, modifiers, this.Handle);
 
         public int NextEvent(TonNurako.X11.Event.XEventArg ev) {

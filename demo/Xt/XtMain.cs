@@ -13,10 +13,10 @@ namespace Frogram {
 
     class Program : TonNurako.Widgets.Shell.TopLevel {
         TonNurako.Inutility.Unity unity;
-        TonNurako.Extension.Xft.XftFont[] font;
-        TonNurako.Extension.Xft.XftDraw xftDraw;
-        TonNurako.Extension.Xft.XftColor blue;
-        TonNurako.Extension.Xft.XftColor green;
+        TonNurako.X11.Extension.Xft.XftFont[] font;
+        TonNurako.X11.Extension.Xft.XftDraw xftDraw;
+        TonNurako.X11.Extension.Xft.XftColor blue;
+        TonNurako.X11.Extension.Xft.XftColor green;
         public Program() :base() {
             unity = new TonNurako.Inutility.Unity();
         }
@@ -33,15 +33,15 @@ namespace Frogram {
 
             var dpy = this.Handle.Display;
 
-            font = new TonNurako.Extension.Xft.XftFont[4];
+            font = new TonNurako.X11.Extension.Xft.XftFont[4];
             for (int i = 1; i < font.Length+1; ++i) {
                 font[i-1] = 
-                    TonNurako.Extension.Xft.XftFont.OpenName(dpy, dpy.DefaultScreen, $":size={16*i}");
+                    TonNurako.X11.Extension.Xft.XftFont.OpenName(dpy, dpy.DefaultScreen, $":size={16*i}");
             }
-            unity.Store<TonNurako.Extension.Xft.XftFont>(font);
+            unity.Store<TonNurako.X11.Extension.Xft.XftFont>(font);
 
-            blue = TonNurako.Extension.Xft.XftColor.AllocName(dpy, dpy.DefaultVisual, dpy.DefaultColormap, "blue");
-            green = TonNurako.Extension.Xft.XftColor.AllocValue(
+            blue = TonNurako.X11.Extension.Xft.XftColor.AllocName(dpy, dpy.DefaultVisual, dpy.DefaultColormap, "blue");
+            green = TonNurako.X11.Extension.Xft.XftColor.AllocValue(
                 dpy, dpy.DefaultVisual, dpy.DefaultColormap, new TonNurako.X11.Extension.XRenderColor(0x0000, 0xffff, 0x0000, 0xffff));
             unity.Store(blue);
             unity.Store(green);
@@ -50,7 +50,7 @@ namespace Frogram {
 
         private void Program_RealizedEvent(object sender, TonNurako.Events.TnkEventArgs e) {
             var dpy = this.Handle.Display;
-            xftDraw = TonNurako.Extension.Xft.XftDraw.XftDrawCreate(dpy, this.Handle, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
+            xftDraw = TonNurako.X11.Extension.Xft.XftDraw.XftDrawCreate(dpy, this.Handle, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
             if (null == xftDraw) {
                 Console.WriteLine("XftDrawCreate Failed");
                 return;

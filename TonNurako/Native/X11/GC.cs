@@ -116,28 +116,37 @@ namespace TonNurako.X11
 		/// <summary>
 		/// 左上角のX座標
 		/// </summary>
-		public short x;
+		public short X;
 		/// <summary>
 		/// 左上角のX座標
 		/// </summary>
-		public short y;
+		public short Y;
 		/// <summary>
 		/// 幅
 		/// </summary>
-		public short w;
+		public short W;
 		/// <summary>
 		/// 高さ
 		/// </summary>
-		public short h;
+		public short H;
 		/// <summary>
 		/// 開始角
 		/// </summary>
-		public short  startAngle;
+		public short  StartAngle;
 		/// <summary>
 		/// 終了角
 		/// </summary>
-		public short  sweepAngle;
-	}
+		public short  SweepAngle;
+
+        public XArc(short x, short y, short w, short h, short startAngle, short sweepAngle) {
+            this.X = x;
+            this.Y = y;
+            this.W = w;
+            this.H = h;
+            this.StartAngle = startAngle;
+            this.SweepAngle = sweepAngle;
+        }
+    }
 
 
 	/// <summary>
@@ -315,7 +324,9 @@ namespace TonNurako.X11
 
         public XGCValues GetGCValues(GCMask mask) {
             var v = new XGCValues();
-            Xi.XGetGCValues(display, handle, mask, v);
+            if (XStatus.True != Xi.XGetGCValues(display, handle, mask, v)) {
+                return null;
+            }
             return v;
         }
         public void DrawStringMultiByte(FontSet fontSet, int x, int y, string str) {
@@ -580,14 +591,17 @@ namespace TonNurako.X11
         /// <param name="line">線の形状</param>
         /// <param name="cap">端の形状</param>
         /// <param name="join">接合方法</param>
-        public void SetLineAttributes(uint w, TonNurako.X11.LineStyle line,
+        public XStatus SetLineAttributes(uint w, TonNurako.X11.LineStyle line,
                 TonNurako.X11.CapStyle cap,
                 TonNurako.X11.JoinStyle join) {
-            if (Handle != IntPtr.Zero) {
-                TonNurako.X11.Xi.XSetLineAttributes(Display, Handle,
-                    w, (int)line, (int)cap, (int)join);
-            }
+            return TonNurako.X11.Xi.XSetLineAttributes(Display, Handle, w, (int)line, (int)cap, (int)join);
         }
+
+
+        public XStatus SetDashes(int dash_offset, byte[] dash_list) {
+            return TonNurako.X11.Xi.XSetDashes(Display, Handle, dash_offset, dash_list);
+        }
+
         #endregion
 
 

@@ -8,7 +8,7 @@ using TonNurako.Native;
 using TonNurako.X11;
 using TonNurako.X11.Extension;
 
-namespace TonNurako.Extension.Xft {
+namespace TonNurako.X11.Extension.Xft {
 
     [StructLayout(LayoutKind.Sequential)]
     struct XftColorRec {
