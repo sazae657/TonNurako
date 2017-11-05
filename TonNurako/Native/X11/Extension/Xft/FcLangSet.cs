@@ -88,20 +88,24 @@ namespace TonNurako.X11.Extension.Xft {
 
 
         public static FcCharSet FcLangGetCharSet(string lang) =>
-            (new FcCharSet(NativeMethods.FcLangGetCharSet(lang)));
+            (FcCharSet.WR(NativeMethods.FcLangGetCharSet(lang), false));
 
+
+        static FcLangSet WR(IntPtr p) =>
+            (IntPtr.Zero != p) ? (new FcLangSet(p)) : null;
 
         public static FcLangSet Create() =>
-            Luxury(NativeMethods.FcLangSetCreate());
+            WR(NativeMethods.FcLangSetCreate());
 
-        public void Destroy() =>
-            NativeMethods.FcLangSetDestroy(Handle);
-
-        static FcLangSet Luxury(IntPtr p) => (new FcLangSet(p));
-
+        public void Destroy() {
+            if (IntPtr.Zero != handle) {
+                NativeMethods.FcLangSetDestroy(Handle);
+                handle = IntPtr.Zero;
+            }
+        }
 
         public FcLangSet Copy() =>
-            Luxury(NativeMethods.FcLangSetCopy(Handle));
+            WR(NativeMethods.FcLangSetCopy(Handle));
 
 
         public bool Add(string lang) =>
@@ -132,15 +136,15 @@ namespace TonNurako.X11.Extension.Xft {
 
 
         public FcStrSet GetLangs() =>
-            new FcStrSet(NativeMethods.FcLangSetGetLangs(Handle));
+            FcStrSet.WR(NativeMethods.FcLangSetGetLangs(Handle));
 
 
-        public static FcLangSet Union(FcLangSet a, FcLangSet b) =>
-            Luxury(NativeMethods.FcLangSetUnion(a.Handle, b.Handle));
+        public FcLangSet Union(FcLangSet b) =>
+            WR(NativeMethods.FcLangSetUnion(Handle, b.Handle));
 
 
-        public static FcLangSet Subtract(FcLangSet a, FcLangSet b) =>
-            Luxury(NativeMethods.FcLangSetSubtract(a.Handle, b.Handle));
+        public FcLangSet Subtract(FcLangSet b) =>
+            WR(NativeMethods.FcLangSetSubtract(Handle, b.Handle));
 
 
 

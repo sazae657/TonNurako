@@ -46,11 +46,11 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        public bool Add(IntPtr b, uint ucs4) =>
+        public bool Add(uint ucs4) =>
             NativeMethods.FcBlanksAdd(Handle, ucs4);
         
 
-        public bool IsMember(IntPtr b, uint ucs4) =>
+        public bool IsMember(uint ucs4) =>
             NativeMethods.FcBlanksIsMember(Handle, ucs4);
         
 

@@ -44,11 +44,11 @@ namespace TonNurako.X11.Extension.Xft {
         }
 
         public static FcConfig LoadConfig() =>
-            new FcConfig(NativeMethods.FcInitLoadConfig());
+            FcConfig.WR(NativeMethods.FcInitLoadConfig());
 
 
         public static FcConfig LoadConfigAndFonts() =>
-            new FcConfig(NativeMethods.FcInitLoadConfigAndFonts());
+            FcConfig.WR(NativeMethods.FcInitLoadConfigAndFonts());
 
         public static int GetVersion() 
             => NativeMethods.FcGetVersion();
@@ -62,7 +62,7 @@ namespace TonNurako.X11.Extension.Xft {
             => NativeMethods.FcInitBringUptoDate();
 
         public static FcStrSet GetLangs() =>
-            (new FcStrSet(NativeMethods.FcGetLangs()));
+            (FcStrSet.WR(NativeMethods.FcGetLangs()));
 
 
         public static bool Init() 

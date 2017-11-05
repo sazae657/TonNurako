@@ -32,6 +32,8 @@ namespace TonNurakoTest.X11 {
 
         public void Open() {
             Assert.NotNull(TonNurako.X11.Xi.SetLocale(TonNurako.X11.XLocale.LC_ALL, ""));
+            Assert.True(TonNurako.X11.Xi.SupportsLocale());
+            Assert.NotNull(TonNurako.X11.Xi.SetLocaleModifiers(""));
 
             this.display = TonNurako.X11.Display.Open(null);
             Assert.NotNull(this.display);

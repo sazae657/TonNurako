@@ -20,7 +20,7 @@ namespace TonNurako.X11.Extension.Xft {
 
             // FcChar8*: FcStrListNext FcStrList*:list  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrListNext_TNK", CharSet = CharSet.Auto)]
-            internal static extern string FcStrListNext(IntPtr list);
+            internal static extern IntPtr FcStrListNext(IntPtr list);
 
             // void: FcStrListDone FcStrList*:list  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrListDone_TNK", CharSet = CharSet.Auto)]
@@ -34,6 +34,13 @@ namespace TonNurako.X11.Extension.Xft {
             handle = ptr;
         }
 
+        internal static FcStrList WR(IntPtr ptr) {
+            if (IntPtr.Zero == ptr) {
+                return null;
+            }
+            return (new FcStrList(ptr));
+        }
+
         public static FcStrList Create(FcStrSet set) =>
             new FcStrList(NativeMethods.FcStrListCreate(set.Handle));
 
@@ -42,8 +49,13 @@ namespace TonNurako.X11.Extension.Xft {
             NativeMethods.FcStrListFirst(Handle);
 
 
-        public string Next() =>
-            NativeMethods.FcStrListNext(Handle);
+        public string Next() {
+            var k = NativeMethods.FcStrListNext(Handle);
+            if (k == IntPtr.Zero) {
+                return null;
+            }
+            return Marshal.PtrToStringAnsi(k);
+        }
 
         public void Done() {
             if (IntPtr.Zero != handle) {
@@ -113,11 +125,14 @@ namespace TonNurako.X11.Extension.Xft {
         }
 
         internal FcStrSet(IntPtr ptr) {
-            this.intPtr = ptr;
+            this.handle = ptr;
         }
 
+        internal static FcStrSet WR(IntPtr ptr) => 
+            (IntPtr.Zero != ptr) ? (new FcStrSet(ptr)) : null;
+
         public static FcStrSet Create() =>
-            new FcStrSet(NativeMethods.FcStrSetCreate());
+            FcStrSet.WR(NativeMethods.FcStrSetCreate());
 
 
         public bool Member(string s) =>
@@ -138,16 +153,17 @@ namespace TonNurako.X11.Extension.Xft {
         public bool Del(string s) =>
             NativeMethods.FcStrSetDel(Handle, s);
 
-        public void Destroy() =>
-            NativeMethods.FcStrSetDestroy(Handle);
+        public void Destroy() {
+            if (handle != IntPtr.Zero) {
+                NativeMethods.FcStrSetDestroy(Handle);
+                handle = IntPtr.Zero;
+            }
+        }
 
 
 
         #region IDisposable Support
         private bool disposedValue = false;
-        private IntPtr intPtr;
-
-
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {

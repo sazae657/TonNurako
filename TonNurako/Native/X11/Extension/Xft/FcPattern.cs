@@ -180,14 +180,15 @@ namespace TonNurako.X11.Extension.Xft {
             handle = IntPtr.Zero;
         }
 
-        static FcPattern WrapReturn(IntPtr ptr) => (new FcPattern(ptr));
+        internal static FcPattern WR(IntPtr ptr) => 
+            (IntPtr.Zero != ptr) ? (new FcPattern(ptr)) : null;
 
         public static FcPattern Create() =>
-             WrapReturn(NativeMethods.FcPatternCreate());
+             WR(NativeMethods.FcPatternCreate());
 
 
-        public FcPattern FcPatternDuplicate() =>
-            WrapReturn(NativeMethods.FcPatternDuplicate(Handle));
+        public FcPattern Duplicate() =>
+            WR(NativeMethods.FcPatternDuplicate(Handle));
 
 
         public void Reference() =>
@@ -195,7 +196,7 @@ namespace TonNurako.X11.Extension.Xft {
 
 
         public FcPattern Filter(FcObjectSet os) =>
-            WrapReturn(NativeMethods.FcPatternFilter(Handle, ref os));
+            WR(NativeMethods.FcPatternFilter(Handle, ref os));
 
 
 
@@ -315,7 +316,7 @@ namespace TonNurako.X11.Extension.Xft {
             if (r == FcResult.TypeMismatch || p == IntPtr.Zero) {
                 return r;
             }
-            c = new FcCharSet(p);
+            c = new FcCharSet(p, true);
             return r;
         }
 
@@ -342,21 +343,13 @@ namespace TonNurako.X11.Extension.Xft {
 
 
         #region staticおじさん
-        public static FcPattern ParseXlfd(string xlfd_orig, bool ignore_scalable, bool complete) {
-            var r = NativeMethods.XftXlfdParse(xlfd_orig, ignore_scalable, complete);
-            if (r == IntPtr.Zero) {
-                 return null;
-            }
-            return (new FcPattern(r));
-        }
+        public static FcPattern ParseXlfd(string xlfd_orig, bool ignore_scalable, bool complete) =>
+                    FcPattern.WR(NativeMethods.XftXlfdParse(xlfd_orig, ignore_scalable, complete));
 
-        public static FcPattern Parse(string name) {
-            var r = NativeMethods.FcNameParse(name);
-            if (r == IntPtr.Zero) {
-                return null;
-            }
-            return (new FcPattern(r));
-        }
+
+        public static FcPattern Parse(string name) =>
+            FcPattern.WR(NativeMethods.FcNameParse(name));
+
 
         #endregion
 

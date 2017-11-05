@@ -9,10 +9,14 @@ namespace TonNurakoTest.X11 {
     public class EmptyWindowRule : AbstractSingleWindowTest {
         public EmptyWindowRule() : base() {
         }
+
+        protected override void BeforeCreateWindow() {
+        }
+
         protected override void BeforeMapWindow() {
-            var attr = new TonNurako.X11.XSetWindowAttributes();
-            attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
-            Assert.Equal(XStatus.True, window.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr));
+        }
+
+        protected override void AfterMapWindow() {
         }
 
         public override void Dispose() {

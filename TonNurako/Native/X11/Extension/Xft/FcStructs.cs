@@ -77,16 +77,16 @@ namespace TonNurako.X11.Extension.Xft {
         public void Init() =>
             NativeMethods.FcMatrixInit(ref Record);
 
-        public FcMatrix Copy(FcMatrix mat) =>
-            new FcMatrix(NativeMethods.FcMatrixCopy(ref mat.Record), true);
+        public FcMatrix Copy() =>
+            new FcMatrix(NativeMethods.FcMatrixCopy(ref Record), true);
 
         public bool Equal(FcMatrix mat2) =>
             NativeMethods.FcMatrixEqual(ref Record, ref mat2.Record);
 
 
-        public static FcMatrix Multiply(FcMatrix a, FcMatrix b) {
+        public FcMatrix Multiply(FcMatrix b) {
             IntPtr res = IntPtr.Zero;
-            NativeMethods.FcMatrixMultiply(out res, ref a.Record, ref b.Record);
+            NativeMethods.FcMatrixMultiply(out res, ref Record, ref b.Record);
             if (IntPtr.Zero == res) {
                 throw new NullReferenceException("FcMatrixMultiply == NULL");
             }

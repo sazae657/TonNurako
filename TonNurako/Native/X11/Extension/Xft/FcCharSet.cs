@@ -85,23 +85,26 @@ namespace TonNurako.X11.Extension.Xft {
         IntPtr handle = IntPtr.Zero;
         public IntPtr Handle => handle;
 
-        internal FcCharSet(IntPtr ptr) {
+        bool autoDispose = true;
+
+        internal FcCharSet(IntPtr ptr, bool ad) {
             if (IntPtr.Zero == ptr) {
                 throw new NullReferenceException("handle == NULL");
             }
             handle = ptr;
+            autoDispose = ad;
         }
-        static FcCharSet WrapReturn(IntPtr p) => (new FcCharSet(p));
+        internal static FcCharSet WR(IntPtr p, bool b) => (IntPtr.Zero != p) ? (new FcCharSet(p, b)) : null;
 
 
         public static FcCharSet Create() =>
-            WrapReturn(NativeMethods.FcCharSetCreate());
+            WR(NativeMethods.FcCharSetCreate(), true);
 
         public void Destroy() {
-            if (IntPtr.Zero != handle) {
+            if ((IntPtr.Zero != handle) && (true == autoDispose)) {
                 NativeMethods.FcCharSetDestroy(Handle);
-                handle = IntPtr.Zero;
             }
+            handle = IntPtr.Zero;
         }
 
         public bool AddChar(uint ucs4) => 
@@ -113,7 +116,7 @@ namespace TonNurako.X11.Extension.Xft {
         
 
         public FcCharSet Copy() =>
-            WrapReturn(NativeMethods.FcCharSetCopy(Handle));
+            WR(NativeMethods.FcCharSetCopy(Handle), true);
 
         public uint FirstPage(uint[] map, out int next) =>
             NativeMethods.FcCharSetFirstPage(Handle, map, out next);
@@ -130,41 +133,36 @@ namespace TonNurako.X11.Extension.Xft {
             NativeMethods.FcCharSetCount(Handle);
         
 
-        #region staticおじさん
+        public bool Equal(FcCharSet b) =>
+            NativeMethods.FcCharSetEqual(Handle, b.Handle);
 
-        public static bool Equal(FcCharSet a, FcCharSet b) =>
-            NativeMethods.FcCharSetEqual(a.Handle, b.Handle);
-
-        public static FcCharSet Intersect(FcCharSet a, FcCharSet b) =>
-            WrapReturn(NativeMethods.FcCharSetIntersect(a.Handle, b.Handle));
+        public FcCharSet Intersect(FcCharSet b) =>
+            WR(NativeMethods.FcCharSetIntersect(Handle, b.Handle), true);
 
 
-        public static FcCharSet Union(FcCharSet a, FcCharSet b) =>
-            WrapReturn(NativeMethods.FcCharSetUnion(a.Handle, b.Handle));
+        public FcCharSet Union(FcCharSet b) =>
+            WR(NativeMethods.FcCharSetUnion(Handle, b.Handle), true);
         
 
-        public static FcCharSet Subtract(FcCharSet a, FcCharSet b) =>
-            WrapReturn(NativeMethods.FcCharSetSubtract(a.Handle, b.Handle));
+        public FcCharSet Subtract(FcCharSet b) =>
+            WR(NativeMethods.FcCharSetSubtract(Handle, b.Handle), true);
         
 
-        public static bool Merge(FcCharSet a, FcCharSet b, out bool changed) =>
-            NativeMethods.FcCharSetMerge(a.Handle, b.Handle, out changed);
+        public bool Merge(FcCharSet b, out bool changed) =>
+            NativeMethods.FcCharSetMerge(Handle, b.Handle, out changed);
         
 
 
-        public static uint IntersectCount(FcCharSet a, FcCharSet b) =>
-            NativeMethods.FcCharSetIntersectCount(a.Handle, b.Handle);
+        public uint IntersectCount(FcCharSet b) =>
+            NativeMethods.FcCharSetIntersectCount(Handle, b.Handle);
         
 
-        public static uint SubtractCount(FcCharSet a, FcCharSet b) =>
-            NativeMethods.FcCharSetSubtractCount(a.Handle, b.Handle);
+        public uint SubtractCount(FcCharSet b) =>
+            NativeMethods.FcCharSetSubtractCount(Handle, b.Handle);
         
 
-        public static bool SetIsSubset(FcCharSet a, FcCharSet b) =>
-            NativeMethods.FcCharSetIsSubset(a.Handle, b.Handle);
-        
-
-#endregion
+        public bool IsSubset(FcCharSet b) =>
+            NativeMethods.FcCharSetIsSubset(Handle, b.Handle);
 
 
         #region IDisposable Support

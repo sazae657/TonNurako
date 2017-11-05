@@ -123,13 +123,13 @@ namespace TonNurakoTest.X11 {
                         Assert.NotNull(prpr);
                         var r = prpr.TextPropertyToTextList(display);
                         Assert.NotNull(r);
-                        Assert.Equal(1,r.Length);
+                        Assert.Single(r);
                     }
                     using(var prpr = window.GetWMIconName()) {
                         Assert.NotNull(prpr);
                         var r = prpr.TextPropertyToTextList(display);
                         Assert.NotNull(r);
-                        Assert.Equal(1,r.Length);
+                        Assert.Single(r);
                     }
 
                 },

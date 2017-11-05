@@ -62,14 +62,15 @@
     <Compile Include="X11\AbstractSingleWindow.cs" />
     <Compile Include="X11\AbstractDisplay.cs" />
     <Compile Include="X11\DisplayTest.cs" />
+    <Compile Include="X11\Ext\Ext.FontConfigTest.cs" />
     <Compile Include="X11\GCTest.cs" />
     <Compile Include="X11\XFontTest.cs" />
     <Compile Include="X11\WindowTest.cs" />
     <Compile Include="X11\PixmapTest.cs" />
     <Compile Include="X11\EmptyWindowRule.cs" />
     <Compile Include="X11\VisualTest.cs" />
-    <Compile Include="X11\Ext.Render.cs" />
-    <Compile Include="X11\Ext.Shape.cs" />
+    <Compile Include="X11\Ext\Ext.Render.cs" />
+    <Compile Include="X11\Ext\Ext.Shape.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

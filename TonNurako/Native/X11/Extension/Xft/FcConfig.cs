@@ -11,7 +11,7 @@ namespace TonNurako.X11.Extension.Xft {
         internal static class NativeMethods {
             // FcChar8*: FcConfigHome 
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigHome_TNK", CharSet = CharSet.Auto)]
-            internal static extern string FcConfigHome();
+            internal static extern IntPtr FcConfigHome();
 
             // FcBool: FcConfigEnableHome FcBool:enable  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigEnableHome_TNK", CharSet = CharSet.Auto)]
@@ -19,7 +19,7 @@ namespace TonNurako.X11.Extension.Xft {
 
             // FcChar8*: FcConfigFilename const FcChar8*:url  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigFilename_TNK", CharSet = CharSet.Auto)]
-            internal static extern string FcConfigFilename([MarshalAs(UnmanagedType.LPStr)]string url);
+            internal static extern IntPtr FcConfigFilename([MarshalAs(UnmanagedType.LPStr)]string url);
 
             // FcConfig*: FcConfigCreate 
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigCreate_TNK", CharSet = CharSet.Auto)]
@@ -63,7 +63,7 @@ namespace TonNurako.X11.Extension.Xft {
 
             // FcChar8*: FcConfigGetCache FcConfig*:config  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetCache_TNK", CharSet = CharSet.Auto)]
-            internal static extern string FcConfigGetCache(IntPtr config);
+            internal static extern IntPtr FcConfigGetCache(IntPtr config);
 
             // FcBlanks*: FcConfigGetBlanks FcConfig*:config  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetBlanks_TNK", CharSet = CharSet.Auto)]
@@ -107,7 +107,7 @@ namespace TonNurako.X11.Extension.Xft {
 
             // const FcChar8*: FcConfigGetSysRoot const FcConfig*:config  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetSysRoot_TNK", CharSet = CharSet.Auto)]
-            internal static extern string FcConfigGetSysRoot(IntPtr config);
+            internal static extern IntPtr FcConfigGetSysRoot(IntPtr config);
 
             // void: FcConfigSetSysRoot FcConfig*:config  const FcChar8*:sysroot  
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSetSysRoot_TNK", CharSet = CharSet.Auto)]
@@ -130,24 +130,30 @@ namespace TonNurako.X11.Extension.Xft {
             handle = ptr;
         }
 
+        internal static FcConfig WR(IntPtr p) {
+            if (IntPtr.Zero == p) {
+                return null;
+            }
+            return (new FcConfig(p));
+        }
+
         #region static        
-        public static string Home() => NativeMethods.FcConfigHome();
+        public static string Home() => Marshal.PtrToStringAnsi(NativeMethods.FcConfigHome());
         
         public static bool EnableHome(bool enable) => NativeMethods.FcConfigEnableHome(enable);
 
-        public static string Filename(string url) => NativeMethods.FcConfigFilename(url);
+        public static string Filename(string url) => Marshal.PtrToStringAnsi(NativeMethods.FcConfigFilename(url));
 
-        public static FcConfig FcConfigGetCurrent() =>
-            new FcConfig(NativeMethods.FcConfigGetCurrent());
+        public static FcConfig GetCurrent() =>
+            WR(NativeMethods.FcConfigGetCurrent());
 
-        public static FcConfig Create() => 
-            new FcConfig(NativeMethods.FcConfigCreate());
-
-
-        public FcConfig Reference() =>
-            new FcConfig(NativeMethods.FcConfigReference(Handle));
+        public static FcConfig Create() =>
+            WR(NativeMethods.FcConfigCreate());
 
         #endregion
+
+        public FcConfig Reference() =>
+            WR(NativeMethods.FcConfigReference(Handle));
 
         public void Destroy() {
             if (IntPtr.Zero != handle) {
@@ -160,9 +166,8 @@ namespace TonNurako.X11.Extension.Xft {
             NativeMethods.FcConfigParseAndLoad(Handle, file, complain);
 
 
-        public bool SetCurrent() {
-            return NativeMethods.FcConfigSetCurrent(Handle);
-        }      
+        public bool SetCurrent() =>
+            NativeMethods.FcConfigSetCurrent(Handle);
 
         public bool UptoDate() =>
             NativeMethods.FcConfigUptoDate(Handle);
@@ -171,28 +176,28 @@ namespace TonNurako.X11.Extension.Xft {
             NativeMethods.FcConfigBuildFonts(Handle);
         
 
-        public FcStrList FcConfigGetFontDirs() =>
-            new FcStrList(NativeMethods.FcConfigGetFontDirs(Handle));
+        public FcStrList GetFontDirs() =>
+            FcStrList.WR(NativeMethods.FcConfigGetFontDirs(Handle));
 
 
-        public FcStrList FcConfigGetConfigDirs()
-            => new FcStrList(NativeMethods.FcConfigGetConfigDirs(Handle));
+        public FcStrList GetConfigDirs()
+            => FcStrList.WR(NativeMethods.FcConfigGetConfigDirs(Handle));
 
 
-        public FcStrList FcConfigGetConfigFiles()
-            => new FcStrList(NativeMethods.FcConfigGetConfigFiles(Handle));
+        public FcStrList GetConfigFiles()
+            => FcStrList.WR(NativeMethods.FcConfigGetConfigFiles(Handle));
         
 
         public string GetCache() 
-            => NativeMethods.FcConfigGetCache(Handle);
+            => Marshal.PtrToStringAnsi(NativeMethods.FcConfigGetCache(Handle));
         
 
         public FcBlanks GetBlanks() 
             => (new FcBlanks(NativeMethods.FcConfigGetBlanks(Handle)));
 
 
-        public FcStrList FcConfigGetCacheDirs() 
-            => new FcStrList(NativeMethods.FcConfigGetCacheDirs(Handle));
+        public FcStrList GetCacheDirs() 
+            => FcStrList.WR(NativeMethods.FcConfigGetCacheDirs(Handle));
         
 
         public int GetRescanInterval() 
@@ -202,7 +207,7 @@ namespace TonNurako.X11.Extension.Xft {
         public bool SetRescanInterval(int rescanInterval) 
             => NativeMethods.FcConfigSetRescanInterval(Handle, rescanInterval);
         
-        public FcFontSet FcConfigGetFonts(FcSetName set) 
+        public FcFontSet GetFonts(FcSetName set) 
             => new FcFontSet(NativeMethods.FcConfigGetFonts(Handle, set));
         
 
@@ -226,7 +231,7 @@ namespace TonNurako.X11.Extension.Xft {
         
 
         public string GetSysRoot() 
-            => NativeMethods.FcConfigGetSysRoot(Handle);
+            => Marshal.PtrToStringAnsi(NativeMethods.FcConfigGetSysRoot(Handle));
         
         public void SetSysRoot(string sysroot) 
             => NativeMethods.FcConfigSetSysRoot(Handle, sysroot);
