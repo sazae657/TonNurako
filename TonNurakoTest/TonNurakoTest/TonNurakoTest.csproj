@@ -63,6 +63,7 @@
     <Compile Include="X11\AbstractDisplay.cs" />
     <Compile Include="X11\DisplayTest.cs" />
     <Compile Include="X11\Ext\Ext.FontConfigTest.cs" />
+    <Compile Include="X11\Ext\Ext.Xft.cs" />
     <Compile Include="X11\GCTest.cs" />
     <Compile Include="X11\XFontTest.cs" />
     <Compile Include="X11\WindowTest.cs" />

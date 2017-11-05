@@ -107,8 +107,12 @@ namespace TonNurako.X11.Extension.Xft {
             return (new XftFont(p, fontpattern, dpy));
         }
 
-        public static IntPtr XftFontOpenXlfd(IntPtr dpy, int screen, string xlfd) {
-            return NativeMethods.XftFontOpenXlfd(dpy, screen, xlfd);
+        public static XftFont XftFontOpenXlfd(Display dpy, int screen, string xlfd) {
+            var p = NativeMethods.XftFontOpenXlfd(dpy.Handle, screen, xlfd);
+            if (IntPtr.Zero == p) {
+                throw new ArgumentException($"XftFontOpenPattern() == NULL");
+            }
+            return (new XftFont(p, null, dpy));
         }
 
         public void Close() {
