@@ -36,6 +36,25 @@ namespace TonNurakoTest.X11.Ext {
         const string LANG_STR = "【神】俺様が考えた最強公用語【降臨】";
 
         [Fact]
+        public void PatternTest() {
+            Assert.NotNull(unity.Store(FcPattern.Create()));
+            //Assert.NotNull(unity.Store(FcPattern.ParseXlfd("*misc*", false, false)));
+            Assert.NotNull(unity.Store(FcPattern.Parse(":14")));
+            unity.Asset();
+            using(var c = FcPattern.Create()) {
+                Assert.NotNull(c);
+                Assert.NotNull(c.Duplicate());
+                Assert.True(c.AddBool(FcObjectId.FC_SCALABLE, true));
+                Assert.True(c.AddInteger(FcObjectId.FC_PIXEL_SIZE, 14));
+                Assert.True(c.AddDouble(FcObjectId.FC_SCALE, 14));
+                Assert.True(c.AddString(FcObjectId.FC_FAMILY, "misc"));
+                Assert.True(c.AddMatrix(FcObjectId.FC_MATRIX, new FcMatrix()));
+                Assert.True(c.AddCharSet(FcObjectId.FC_CHARSET, unity.Store(FcCharSet.Create())));
+                Assert.True(c.AddLangSet(FcObjectId.FC_LANG, unity.Store(FcLangSet.Create())));
+            }
+        }
+
+        [Fact]
         public void MatrixSetTest() {
             var m1 = new FcMatrix();
             var m2 = new FcMatrix();
@@ -190,7 +209,7 @@ namespace TonNurakoTest.X11.Ext {
                 Assert.NotNull(iso);
                 Assert.Equal(1, (int)iso.Count());
             }
-            bool boo = false;           
+            bool boo = false;
             Assert.True(cs.Merge(cs2, out boo));
             Assert.True(boo);
 
