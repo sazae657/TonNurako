@@ -9,8 +9,8 @@ using Xunit;
 
 
 namespace TonNurakoTest.X11.Ext {
-    public class XftTest : AbstractSingleWindowTest {
-        public XftTest() : base() {
+    public class FontConfigTest : AbstractSingleWindowTest {
+        public FontConfigTest() : base() {
         }
 
         protected override void BeforeCreateWindow() {
@@ -37,25 +37,42 @@ namespace TonNurakoTest.X11.Ext {
 
         [Fact]
         public void PatternTest() {
+            Open();
             Assert.NotNull(unity.Store(FcPattern.Create()));
             //Assert.NotNull(unity.Store(FcPattern.ParseXlfd("*misc*", false, false)));
             Assert.NotNull(unity.Store(FcPattern.Parse(":14")));
             unity.Asset();
-            using(var c = FcPattern.Create()) {
+            using (var c = FcPattern.Create()) {
                 Assert.NotNull(c);
-                Assert.NotNull(c.Duplicate());
+                Assert.NotNull(unity.Store(c.Duplicate()));
                 Assert.True(c.AddBool(FcObjectId.FC_SCALABLE, true));
                 Assert.True(c.AddInteger(FcObjectId.FC_PIXEL_SIZE, 14));
-                Assert.True(c.AddDouble(FcObjectId.FC_SCALE, 14));
                 Assert.True(c.AddString(FcObjectId.FC_FAMILY, "misc"));
                 Assert.True(c.AddMatrix(FcObjectId.FC_MATRIX, new FcMatrix()));
                 Assert.True(c.AddCharSet(FcObjectId.FC_CHARSET, unity.Store(FcCharSet.Create())));
                 Assert.True(c.AddLangSet(FcObjectId.FC_LANG, unity.Store(FcLangSet.Create())));
             }
+            using (var c = FcPattern.Parse(":14")) {
+                Assert.NotNull(c);
+                var cs = unity.Store(FcCharSet.Create());
+                Assert.NotNull(cs);
+                Assert.True(cs.AddChar(0x0001F4A9));
+
+                Assert.True(c.AddCharSet(FcObjectId.FC_CHARSET, cs));
+                Assert.True(c.AddBool(FcObjectId.FC_SCALABLE, true));
+                using (var cf = FcConfig.GetCurrent()) {
+                    Assert.True(cf.Substitute(c, FcMatchKind.FcMatchPattern));
+                    Assert.NotNull(unity.Store(FcDefault.GetDefaultLangs()));
+                    FcDefault.Substitute(c);
+                }
+            }
+            Close();
+
         }
 
         [Fact]
         public void MatrixSetTest() {
+            Open();
             var m1 = new FcMatrix();
             var m2 = new FcMatrix();
             m1.Init();
@@ -66,10 +83,13 @@ namespace TonNurakoTest.X11.Ext {
             m1.Rotate(10, 10);
             m1.Scale(10, 10);
             m1.Shear(10, 10);
+            Close();
         }
 
         [Fact]
         public void StrSetTest() {
+            Open();
+
             var s1 = unity.Store(FcStrSet.Create());
             var s2 = unity.Store(FcStrSet.Create());
             Assert.True(s1.Add(UNICODE_STR));
@@ -91,10 +111,14 @@ namespace TonNurakoTest.X11.Ext {
             Assert.Null(l1.Next());
 
             unity.Asset();
+
+            Close();
         }
 
         [Fact]
         public void LangSetTest() {
+            Open();
+
             Assert.NotNull(FcLangSet.Normalize("ja"));
             Assert.Null(FcLangSet.Normalize(LANG_STR));
             using(var o = FcLangSet.FcLangGetCharSet("ja")) {
@@ -117,23 +141,28 @@ namespace TonNurakoTest.X11.Ext {
             Assert.NotEqual(FcLangResult.FcLangEqual, fc.HasLang("en"));
 
             unity.Asset();
+
+            Close();
         }
 
 
         [Fact]
         public void FontSetTest() {
+            Open();
             using (var fs = FcFontSet.Create()) {
                 Assert.NotNull(fs);
             }
+            Close();
         }
 
         [Fact]
         public void ConfigTest() {
+            Open();
             Assert.NotEmpty(FcConfig.Home());
             Assert.True(FcConfig.EnableHome(false));
             Assert.False(FcConfig.EnableHome(true));
 
-            var cf = FcConfig.GetCurrent();
+            var cf = unity.Store(FcConfig.GetCurrent());
             Assert.NotNull(cf);
             Assert.True(cf.SetCurrent());
             Assert.True(cf.UptoDate());
@@ -159,20 +188,23 @@ namespace TonNurakoTest.X11.Ext {
             Assert.True(cf.SetRescanInterval(10000));
             Assert.Equal(10000, cf.GetRescanInterval());
             Assert.True(cf.SetRescanInterval(k));
-
+            Close();
         }
 
         [Fact]
         public void BlanksTest() {
+            Open();
             var br = unity.Store(FcBlanks.Create());
             Assert.NotNull(br);
             Assert.True(br.Add(0x0001F4A9));
             Assert.True(br.IsMember(0x0001F4A9));
             Assert.False(br.IsMember(0x0001F4AA));
+            Close();
         }
 
         [Fact]
         public void CharSetTest() {
+            Open();
             var cs = unity.Store(FcCharSet.Create());
             Assert.NotNull(cs);
             Assert.True(cs.AddChar(0x0001F4A9));
@@ -221,6 +253,7 @@ namespace TonNurakoTest.X11.Ext {
             Assert.True(cs3.IsSubset(cs));
 
             unity.Asset();
+            Close();
         }
     }
 }

@@ -624,6 +624,9 @@ namespace TonNurako.X11
         }
 
         ~GC() {
+            if (handle != IntPtr.Zero && autoDispose == true) {
+                throw new ResourceLeakException(this);
+            }
             Dispose(false);
         }
 

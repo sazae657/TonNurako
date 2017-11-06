@@ -17,6 +17,7 @@ namespace TonNurakoTest.X11 {
 
         [Fact]
         public void StandardRule() {
+            Open();
             Assert.True(XShape.QueryExtension(display));
             Assert.NotNull(XShape.QueryVersion(display));
             using(var pm = new Pixmap(window, 80, 80, 1)) {
@@ -28,6 +29,7 @@ namespace TonNurakoTest.X11 {
             Assert.Equal(ShapeEventMask.None, XShape.InputSelected(display, window));
             XShape.SelectInput(display, window, ShapeEventMask.ShapeNotifyMask);
             Assert.Equal(ShapeEventMask.ShapeNotifyMask, XShape.InputSelected(display, window));
+            Close();
         }
     }
 }

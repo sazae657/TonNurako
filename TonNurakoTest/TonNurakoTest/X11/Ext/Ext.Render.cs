@@ -21,6 +21,7 @@ namespace TonNurakoTest.X11.Ext {
 
         [Fact]
         public void StandardFunction() {
+            Open();
             Assert.True(XRender.QueryExtension(display));
             Assert.NotNull(XRender.QueryVersion(display));
             Assert.NotEqual(0, XRender.QueryFormats(display));
@@ -39,12 +40,13 @@ namespace TonNurakoTest.X11.Ext {
 
             XRender.ParseColor(display, "green");
             Assert.ThrowsAny<System.Exception>(()=>XRender.ParseColor(display, "うんこ色"));
-
+            Close();
         }
 
         [Fact]
         public void Picture() {
-            using(var pm = new Pixmap(window, 100, 100, 8)) {
+            Open();
+            using (var pm = new Pixmap(window, 100, 100, 8)) {
                 Assert.NotNull(pm);
                 using(var pic = XRender.CreatePicture(
                     display, pm, XRender.FindStandardFormat(display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
@@ -52,10 +54,12 @@ namespace TonNurakoTest.X11.Ext {
                     Assert.NotNull(pic);
                 }
             }
+            Close();
         }
 
         [Fact]
         public void StdDraw() {
+            Open();
             var pm = new Pixmap(window, 100, 100, 8);
             Assert.NotNull(pm);
             using(var src = XRender.CreatePicture(
@@ -70,6 +74,7 @@ namespace TonNurakoTest.X11.Ext {
                 CompositeFunc(src, dest, 100, 100);
             }
             pm.Dispose();
+            Close();
         }
 
         void DrawFunc(Pixmap pixmap, Picture picture) {

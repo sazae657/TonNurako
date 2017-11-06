@@ -30,6 +30,7 @@ namespace TonNurakoTest.X11 {
             if (display != null) {
                 display.Close();
             }
+            System.Threading.Thread.Sleep(100);
         }
 
         [Fact]

@@ -173,7 +173,7 @@ namespace TonNurako.X11.Extension.Xft {
         }
 
         public void Destroy() {
-            if (handle == IntPtr.Zero) {
+            if (handle != IntPtr.Zero) {
                 NativeMethods.FcPatternDestroy(handle);
             }
             handle = IntPtr.Zero;
@@ -362,13 +362,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~FcPattern() {
-        //   Dispose(false);
-        // }
+        ~FcPattern() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }

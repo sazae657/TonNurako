@@ -10,9 +10,6 @@ namespace TonNurakoTest.X11 {
         public PixmapTest() : base() {
         }
         protected override void BeforeMapWindow() {
-            var attr = new TonNurako.X11.XSetWindowAttributes();
-            attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
-            Assert.Equal(XStatus.True, window.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr));
         }
 
         public override void Dispose() {
@@ -21,9 +18,16 @@ namespace TonNurakoTest.X11 {
 
         [Fact]
         public void StandardPixmap() {
-            using(var pm = new Pixmap(display, window, 100, 100, display.DefaultDepth)) {
+            try {
+                Open();
+
+                using (var pm = new Pixmap(display, window, 100, 100, display.DefaultDepth)) {
+                }
+                using (var pm = new Pixmap(window, 100, 100, display.DefaultDepth)) {
+                }
             }
-            using(var pm = new Pixmap(window, 100, 100, display.DefaultDepth)) {
+            finally {
+                Close();
             }
         }
     }

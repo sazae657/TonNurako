@@ -10,9 +10,6 @@ namespace TonNurakoTest.X11 {
         public VisualTest() : base() {
         }
         protected override void BeforeMapWindow() {
-            var attr = new TonNurako.X11.XSetWindowAttributes();
-            attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
-            Assert.Equal(XStatus.True, window.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr));
         }
 
         public override void Dispose() {
@@ -21,8 +18,14 @@ namespace TonNurakoTest.X11 {
 
         [Fact]
         public void ServerProps() {
-            var v = display.DefaultVisual;
-            Assert.NotNull(v);
+            Open();
+            try {
+                var v = display.DefaultVisual;
+                Assert.NotNull(v);
+            }
+            finally {
+                Close();
+            }
         }
     }
 }

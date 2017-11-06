@@ -29,6 +29,10 @@ namespace TonNurakoTest.X11 {
                 Assert.True(display.Close() >= 0);
                 display = null;
             }
+            else {
+                throw new NullReferenceException("display is NULL");
+            }
+            System.Threading.Thread.Sleep(10);
         }
 
         public virtual void Dispose() {

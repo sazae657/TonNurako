@@ -25,10 +25,23 @@ namespace TonNurako.X11.Extension.Xft {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenXlfd_TNK", CharSet = CharSet.Ansi)]
             internal static extern IntPtr XftFontOpenXlfd(IntPtr dpy, int screen, [MarshalAs(UnmanagedType.LPStr)] string xlfd);
 
+            // XftFont*: XftFontOpenInfo Display*:dpy  FcPattern*:pattern  XftFontInfo*:fi  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenInfo_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XftFontOpenInfo(IntPtr dpy, IntPtr pattern, IntPtr fi);
 
             // void: XftFontClose Display*:dpy  XftFont*:font  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontClose_TNK", CharSet = CharSet.Auto)]
             internal static extern void XftFontClose(IntPtr dpy, IntPtr font);
+
+            // FcBool: XftCharExists Display*:dpy  XftFont*:pub  FcChar32:ucs4  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftCharExists_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XftCharExists(IntPtr dpy, IntPtr pub, uint ucs4);
+
+            // FT_UInt: XftCharIndex Display*:dpy  XftFont*:pub  FcChar32:ucs4  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftCharIndex_TNK", CharSet = CharSet.Auto)]
+            internal static extern uint XftCharIndex(IntPtr dpy, IntPtr pub, uint ucs4);
+
+
 
             #region XftFont
             // int
@@ -84,19 +97,34 @@ namespace TonNurako.X11.Extension.Xft {
             fcPattern = pattern;
         }
 
+        public bool CharExists(uint ucs4) =>
+            NativeMethods.XftCharExists(display.Handle, handle, ucs4);
+
+        public bool CharExists(string str) =>
+            NativeMethods.XftCharExists(display.Handle, handle, (uint)Char.ConvertToUtf32(str, 0));
+
+
+        public uint CharIndex(uint ucs4) =>
+            NativeMethods.XftCharIndex(display.Handle, handle, ucs4);
+
+
+        public uint CharIndex(string str) =>
+            NativeMethods.XftCharIndex(display.Handle, handle, (uint)Char.ConvertToUtf32(str, 0));
+
+
         public static XftFont OpenName(Display dpy, int screen, string name) {
-            var p =  NativeMethods.XftFontOpenName(dpy.Handle, 0, name);
+            var p =  NativeMethods.XftFontOpenName(dpy.Handle, screen, name);
             if (IntPtr.Zero == p) {
                 throw new ArgumentException($"XftFontOpenName({name}) == NULL");
             }
 
-            var pattern = FcPattern.Parse(name);
+            /*var pattern = FcPattern.Parse(name);
             if (null == pattern) {
                 NativeMethods.XftFontClose(dpy.Handle, p);
                 throw new ArgumentException($"FcNameParse({name}) == NULL");
-            }
+            }*/
 
-            return (new XftFont(p, pattern, dpy));
+            return (new XftFont(p, null, dpy));
         }
 
         public static XftFont OpenPattern(Display dpy, FcPattern fontpattern) {
@@ -107,13 +135,23 @@ namespace TonNurako.X11.Extension.Xft {
             return (new XftFont(p, fontpattern, dpy));
         }
 
-        public static XftFont XftFontOpenXlfd(Display dpy, int screen, string xlfd) {
+        public static XftFont OpenXlfd(Display dpy, int screen, string xlfd) {
             var p = NativeMethods.XftFontOpenXlfd(dpy.Handle, screen, xlfd);
             if (IntPtr.Zero == p) {
                 throw new ArgumentException($"XftFontOpenPattern() == NULL");
             }
             return (new XftFont(p, null, dpy));
         }
+        public static XftFont OpenInfo(Display dpy, FcPattern pattern, XftFontInfo fi) {
+            var p = NativeMethods.XftFontOpenInfo(dpy.Handle, pattern.Handle, fi.Handle);
+            if (IntPtr.Zero == p) {
+                throw new ArgumentException($"XftFontOpenInfo() == NULL");
+            }
+            return (new XftFont(p, pattern, dpy));
+
+        }
+
+
 
         public void Close() {
             if (handle != IntPtr.Zero) {
@@ -169,13 +207,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~XftFont() {
-        //   Dispose(false);
-        // }
+        ~XftFont() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }

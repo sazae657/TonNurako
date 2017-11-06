@@ -120,21 +120,23 @@ namespace TonNurako.X11.Extension.Xft {
         }
         IntPtr handle = IntPtr.Zero;
         public IntPtr Handle => handle;
+        bool disposable = true;
 
-        public static FcConfig NullConfig { get; } = new FcConfig(IntPtr.Zero);
+        public static FcConfig NullConfig { get; } = new FcConfig(IntPtr.Zero, false);
 
         public FcConfig() {
         }
 
-        internal FcConfig(IntPtr ptr) {
+        internal FcConfig(IntPtr ptr, bool boo) {
             handle = ptr;
+            disposable = boo;
         }
 
-        internal static FcConfig WR(IntPtr p) {
+        internal static FcConfig WR(IntPtr p, bool boo) {
             if (IntPtr.Zero == p) {
                 return null;
             }
-            return (new FcConfig(p));
+            return (new FcConfig(p, boo));
         }
 
         #region static        
@@ -145,21 +147,21 @@ namespace TonNurako.X11.Extension.Xft {
         public static string Filename(string url) => Marshal.PtrToStringAnsi(NativeMethods.FcConfigFilename(url));
 
         public static FcConfig GetCurrent() =>
-            WR(NativeMethods.FcConfigGetCurrent());
+            WR(NativeMethods.FcConfigGetCurrent(), false);
 
         public static FcConfig Create() =>
-            WR(NativeMethods.FcConfigCreate());
+            WR(NativeMethods.FcConfigCreate(), true);
 
         #endregion
 
         public FcConfig Reference() =>
-            WR(NativeMethods.FcConfigReference(Handle));
+            WR(NativeMethods.FcConfigReference(Handle), true);
 
         public void Destroy() {
-            if (IntPtr.Zero != handle) {
+            if (IntPtr.Zero != handle && disposable) {
                 NativeMethods.FcConfigDestroy(Handle);
-                handle = IntPtr.Zero;
             }
+            handle = IntPtr.Zero;
         }
 
         public bool ParseAndLoad(string file, bool complain) =>
@@ -228,7 +230,9 @@ namespace TonNurako.X11.Extension.Xft {
         
         public bool Substitute(FcPattern p, FcMatchKind kind) 
             => NativeMethods.FcConfigSubstitute(Handle, p.Handle, kind);
-        
+
+        public static bool Substitute(FcConfig c, FcPattern p, FcMatchKind kind)
+            => NativeMethods.FcConfigSubstitute((null!=c) ? c.handle : IntPtr.Zero, p.Handle, kind);
 
         public string GetSysRoot() 
             => Marshal.PtrToStringAnsi(NativeMethods.FcConfigGetSysRoot(Handle));
@@ -246,13 +250,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~FcConfig() {
-        //   Dispose(false);
-        // }
+        ~FcConfig() {
+            if (handle != IntPtr.Zero && disposable) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }

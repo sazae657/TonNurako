@@ -600,13 +600,16 @@ namespace TonNurako.X11 {
             }
         }
 
-        //~XWMHints() {
-        //    Dispose(false);
-        //}
+        ~XWMHints() {
+            if (IntPtr.Zero != handle) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-         //  System.GC.SuppressFinalize(this);
+           System.GC.SuppressFinalize(this);
         }
         #endregion
     }
