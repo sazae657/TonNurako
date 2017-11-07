@@ -20,19 +20,17 @@ namespace TonNurakoTest.X11 {
             }
         }
     }
-    public class XftTest : AbstractSingleWindowTest {
-        public XftTest() : base() {
+    public class XftTest : IClassFixture<WindowFixture>, IDisposable {
+        WindowFixture fix;
+        Unity unity;
+        public XftTest(WindowFixture fixture) {
+            fix = fixture;
+            unity = new Unity();
         }
 
-        public override void Dispose() {
+        public void Dispose() {
             unity.Asset();
-            base.Dispose();
         }
-
-        protected override void BeforeCreateWindow() {
-            Assert.True(FontConfig.Reinitialize());
-        }
-
 
         const string UNCODE = "💩";
         const uint   UNCODE_C = 0x0001F4A9;
@@ -41,64 +39,58 @@ namespace TonNurakoTest.X11 {
 
         const string STRING = "AAAA";
 
-        void StandardRule() {
-            Open();
-            try {
-                var font = new XftFont[4];
-                for (int i = 1; i < font.Length + 1; ++i) {
-                    font[i - 1] =
-                        XftFont.OpenName(display, display.DefaultScreen, $"IPAGothic:style=Regular:size={16 * i}");
-                    Assert.NotNull(font[i - 1]);
-                }
-                unity.Store<XftFont>(font);
+        [Fact]
+        public void StandardRule() {
 
-                Assert.True(font[0].CharExists(UNICODE_S));
-                Assert.True(font[0].CharExists(UNICODE_C));
-                Assert.NotEqual(0, (int)font[0].CharIndex(UNICODE_S));
-                Assert.NotEqual(0, (int)font[0].CharIndex(UNICODE_C));
-                Assert.Equal(font[0].CharIndex(UNICODE_S), font[0].CharIndex(UNICODE_C));
+            var font = new XftFont[4];
+            for (int i = 1; i < font.Length + 1; ++i) {
+                font[i - 1] =
+                    XftFont.OpenName(fix.Display, fix.Display.DefaultScreen, $"IPAGothic:style=Regular:size={16 * i}");
+                Assert.NotNull(font[i - 1]);
             }
-            finally {
-                unity.Asset();
-                Close();
+            unity.Store<XftFont>(font);
+
+            Assert.True(font[0].CharExists(UNICODE_S));
+            Assert.True(font[0].CharExists(UNICODE_C));
+            Assert.NotEqual(0, (int)font[0].CharIndex(UNICODE_S));
+            Assert.NotEqual(0, (int)font[0].CharIndex(UNICODE_C));
+            Assert.Equal(font[0].CharIndex(UNICODE_S), font[0].CharIndex(UNICODE_C));
+
+
+        }
+
+        [Fact]
+        public void ColorTest() {
+            Assert.NotNull(
+                unity.Store(XftColor.AllocName(fix.Display, fix.Display.DefaultVisual, fix.Display.DefaultColormap, "green")));
+
+            Assert.NotNull(
+                unity.Store(XftColor.AllocValue(fix.Display, fix.Display.DefaultVisual, fix.Display.DefaultColormap,
+                    new TonNurako.X11.Extension.XRenderColor(0x0000, 0xffff, 0x0000, 0xffff))));
+        }
+
+        [Fact]
+        public void DrawTest() {
+            using (var font = XftFont.OpenName(fix.Display, fix.Display.DefaultScreen, ":style=Regular")) {
+                Assert.NotNull(font);
+                DrawPrimitive(fix.Window, font, unity);
             }
         }
 
         [Fact]
-        void ColorTest() {
-            Open();
-            try {
-                Assert.NotNull(
-                    unity.Store(XftColor.AllocName(display, display.DefaultVisual, display.DefaultColormap, "green")));
-
-                Assert.NotNull(
-                    unity.Store(XftColor.AllocValue(display, display.DefaultVisual, display.DefaultColormap,
-                        new TonNurako.X11.Extension.XRenderColor(0x0000, 0xffff, 0x0000, 0xffff)))
-                );
-            }
-            finally {
-                unity.Asset();
-                Close();
-            }
-        }
-
-        public void DrawTest() {
-            Open();
-            try {
-                using (var font = XftFont.OpenName(display, display.DefaultScreen, ":style=Regular")) {
-                    Assert.NotNull(font);
-                    DrawPrimitive(window, font);
+        public void OffscreenTest() {
+            using (var font = XftFont.OpenName(fix.Display, fix.Display.DefaultScreen, ":style=Regular")) {
+                Assert.NotNull(font);
+                using (var pixmap = new Pixmap(fix.Window, 320, 240, 8)) {
+                    DrawPrimitive(fix.Window, font, unity);
                 }
             }
-            finally {
-                Close();
-            }
         }
 
-        void DrawPrimitive(IDrawable drawable, XftFont font) {
-            var color = unity.Store(XftColor.AllocName(display, display.DefaultVisual, display.DefaultColormap, "green"));
+        void DrawPrimitive(IDrawable drawable, XftFont font, Unity unity) {
+            var color = unity.Store(XftColor.AllocName(fix.Display, fix.Display.DefaultVisual, fix.Display.DefaultColormap, "green"));
             Assert.NotNull(color);
-            using (var d = XftDraw.Create(display, drawable, display.DefaultVisual, display.DefaultColormap.Handle)) {
+            using (var d = XftDraw.Create(fix.Display, drawable, fix.Display.DefaultVisual, fix.Display.DefaultColormap.Handle)) {
                 Assert.NotNull(d);
                 //Assert.NotNull(
                 //8    unity.Store(d.SrcPicture(XftColor.AllocName(display, display.DefaultVisual, display.DefaultColormap, "green"))));
@@ -126,10 +118,6 @@ namespace TonNurakoTest.X11 {
                 }
                 d.DrawCharFontSpec(color, cfs);
             }
-            unity.Asset();
         }
-
-
-
     }
 }

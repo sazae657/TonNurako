@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.Inutility;
 using TonNurako.X11;
 using TonNurako.X11.Extension.Xft;
 using Xunit;
 
 
 namespace TonNurakoTest.X11.Ext {
-    public class FontConfigTest : AbstractSingleWindowTest {
-        public FontConfigTest() : base() {
+    public class FontConfigTest : IClassFixture<WindowFixture>, IDisposable {
+
+        WindowFixture fix;
+        Unity unity;
+        public FontConfigTest(WindowFixture fixture) {
+            fix = fixture;
+            unity = new Unity();
         }
 
-        protected override void BeforeCreateWindow() {
+        void BeforeCreateWindow() {
             Assert.True(FontConfig.Init());
             //Assert.True(FontConfig.Reinitialize());
             Assert.True(FontConfig.BringUptoDate());
@@ -28,8 +34,8 @@ namespace TonNurakoTest.X11.Ext {
             }
         }
 
-        public override void Dispose() {
-            base.Dispose();
+        public void Dispose() {
+            unity.Asset();
         }
 
         const string UNICODE_STR = "【神】俺様が考えた最強文字列【降臨】";
@@ -37,7 +43,6 @@ namespace TonNurakoTest.X11.Ext {
 
         [Fact]
         public void PatternTest() {
-            Open();
             Assert.NotNull(unity.Store(FcPattern.Create()));
             //Assert.NotNull(unity.Store(FcPattern.ParseXlfd("*misc*", false, false)));
             Assert.NotNull(unity.Store(FcPattern.Parse(":14")));
@@ -66,13 +71,10 @@ namespace TonNurakoTest.X11.Ext {
                     FcDefault.Substitute(c);
                 }
             }
-            Close();
-
         }
 
         [Fact]
         public void MatrixSetTest() {
-            Open();
             var m1 = new FcMatrix();
             var m2 = new FcMatrix();
             m1.Init();
@@ -83,13 +85,10 @@ namespace TonNurakoTest.X11.Ext {
             m1.Rotate(10, 10);
             m1.Scale(10, 10);
             m1.Shear(10, 10);
-            Close();
         }
 
         [Fact]
         public void StrSetTest() {
-            Open();
-
             var s1 = unity.Store(FcStrSet.Create());
             var s2 = unity.Store(FcStrSet.Create());
             Assert.True(s1.Add(UNICODE_STR));
@@ -111,14 +110,10 @@ namespace TonNurakoTest.X11.Ext {
             Assert.Null(l1.Next());
 
             unity.Asset();
-
-            Close();
         }
 
         [Fact]
         public void LangSetTest() {
-            Open();
-
             Assert.NotNull(FcLangSet.Normalize("ja"));
             Assert.Null(FcLangSet.Normalize(LANG_STR));
             using(var o = FcLangSet.FcLangGetCharSet("ja")) {
@@ -141,23 +136,18 @@ namespace TonNurakoTest.X11.Ext {
             Assert.NotEqual(FcLangResult.FcLangEqual, fc.HasLang("en"));
 
             unity.Asset();
-
-            Close();
         }
 
 
         [Fact]
         public void FontSetTest() {
-            Open();
             using (var fs = FcFontSet.Create()) {
                 Assert.NotNull(fs);
             }
-            Close();
         }
 
         [Fact]
         public void ConfigTest() {
-            Open();
             Assert.NotEmpty(FcConfig.Home());
             Assert.True(FcConfig.EnableHome(false));
             Assert.False(FcConfig.EnableHome(true));
@@ -188,23 +178,19 @@ namespace TonNurakoTest.X11.Ext {
             Assert.True(cf.SetRescanInterval(10000));
             Assert.Equal(10000, cf.GetRescanInterval());
             Assert.True(cf.SetRescanInterval(k));
-            Close();
         }
 
         [Fact]
         public void BlanksTest() {
-            Open();
             var br = unity.Store(FcBlanks.Create());
             Assert.NotNull(br);
             Assert.True(br.Add(0x0001F4A9));
             Assert.True(br.IsMember(0x0001F4A9));
             Assert.False(br.IsMember(0x0001F4AA));
-            Close();
         }
 
         [Fact]
         public void CharSetTest() {
-            Open();
             var cs = unity.Store(FcCharSet.Create());
             Assert.NotNull(cs);
             Assert.True(cs.AddChar(0x0001F4A9));
@@ -253,7 +239,6 @@ namespace TonNurakoTest.X11.Ext {
             Assert.True(cs3.IsSubset(cs));
 
             unity.Asset();
-            Close();
         }
     }
 }

@@ -59,12 +59,13 @@
     <Compile Include="CoreFunction\ExtremeSports.cs" />
     <Compile Include="CoreFunction\UnityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="X11\AbstractSingleWindow.cs" />
-    <Compile Include="X11\AbstractDisplay.cs" />
+    <Compile Include="Fixture\DisplayFixture.cs" />
     <Compile Include="X11\DisplayTest.cs" />
+    <Compile Include="X11\DrawCallContainer.cs" />
     <Compile Include="X11\Ext\Ext.FontConfigTest.cs" />
     <Compile Include="X11\Ext\Ext.Xft.cs" />
     <Compile Include="X11\GCTest.cs" />
+    <Compile Include="Fixture\WindowFixture.cs" />
     <Compile Include="X11\XFontTest.cs" />
     <Compile Include="X11\WindowTest.cs" />
     <Compile Include="X11\PixmapTest.cs" />

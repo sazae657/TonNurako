@@ -6,26 +6,17 @@ using TonNurako.X11;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
-    public class VisualTest : AbstractSingleWindowTest {
-        public VisualTest() : base() {
-        }
-        protected override void BeforeMapWindow() {
-        }
+    public class VisualTest : IClassFixture<WindowFixture> {
 
-        public override void Dispose() {
-            base.Dispose();
+        WindowFixture fix;
+        public VisualTest(WindowFixture fixture)  {
+            fix = fixture;
         }
 
         [Fact]
         public void ServerProps() {
-            Open();
-            try {
-                var v = display.DefaultVisual;
-                Assert.NotNull(v);
-            }
-            finally {
-                Close();
-            }
+            var v = fix.Display.DefaultVisual;
+            Assert.NotNull(v);
         }
     }
 }

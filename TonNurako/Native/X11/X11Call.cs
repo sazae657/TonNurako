@@ -227,6 +227,7 @@ namespace TonNurako.X11
         public static void SetErrorHandler(XErrorHandler handler) {
             if (null == handler) {
                 if (0 == Instance.XErrorHandlerStack.Count) {
+                    NativeMethods.XSetErrorHandler(IntPtr.Zero);
                     return;
                 }
                 NativeMethods.XSetErrorHandler(Instance.XErrorHandlerStack.Pop());
@@ -241,6 +242,7 @@ namespace TonNurako.X11
         public static void SetIOErrorHandler(XIOErrorHandler handler) {
             if (null == handler) {
                 if (0 == Instance.XIOErrorHandlerStack.Count) {
+                    NativeMethods.XSetIOErrorHandler(IntPtr.Zero);
                     return;
                 }
                 NativeMethods.XSetIOErrorHandler(Instance.XIOErrorHandlerStack.Pop());
@@ -285,7 +287,7 @@ namespace TonNurako.X11
 
         public static void FreeStringList(IntPtr list) => NativeMethods.XFreeStringList(list);
 
-        
+
         // TODO: 置き場に困る
         public static int DoubleToFixed(double f) => NativeMethods.XDoubleToFixed(f);
         public static double FixedToDouble(int f) => NativeMethods.XFixedToDouble(f);

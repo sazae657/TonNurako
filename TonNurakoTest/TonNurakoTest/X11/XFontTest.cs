@@ -7,23 +7,19 @@ using TonNurako.X11;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
-    public class XFontTest : AbstractDisplayTest {
-
-        public XFontTest() : base() {
-
-        }
-
-        public override void Dispose() {
-            base.Dispose();
+    public class XFontTest : IClassFixture<DisplayFixture> {
+        DisplayFixture display;
+        public XFontTest(DisplayFixture fixture) {
+            display = fixture;
         }
 
         [Fact]
         public void FontSetTest() {           
-            Assert.ThrowsAny<System.Exception>(() => FontSet.ListFonts(display, "【神】俺様が考えたすごいフォント【降臨】", 100));
-            Assert.NotNull(FontSet.ListFonts(display, "*", 10));
+            Assert.ThrowsAny<System.Exception>(() => FontSet.ListFonts(display.Display, "【神】俺様が考えたすごいフォント【降臨】", 100));
+            Assert.NotNull(FontSet.ListFonts(display.Display, "*", 10));
 
-            Assert.ThrowsAny<System.Exception>(() => FontSet.CreateFontSet(display, "【神】俺様が考えたすごいフォント【降臨】"));
-            var fs = TonNurako.X11.FontSet.CreateFontSet(display, "-*-fixed-medium-r-normal--*-*-*-*");
+            Assert.ThrowsAny<System.Exception>(() => FontSet.CreateFontSet(display.Display, "【神】俺様が考えたすごいフォント【降臨】"));
+            var fs = TonNurako.X11.FontSet.CreateFontSet(display.Display, "-*-fixed-medium-r-normal--*-*-*-*");
             Assert.NotNull(fs);
 
             var rc1 = new TonNurako.X11.TextExtents();

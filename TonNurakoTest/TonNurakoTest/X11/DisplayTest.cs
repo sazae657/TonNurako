@@ -28,9 +28,12 @@ namespace TonNurakoTest.X11 {
 
         public void Dispose() {
             if (display != null) {
+                display.SetCloseDownMode(TonNurako.X11.CloseDownMode.DestroyAll);
                 display.Close();
             }
-            System.Threading.Thread.Sleep(100);
+            TonNurako.X11.Xi.SetIOErrorHandler(null);
+            TonNurako.X11.Xi.SetErrorHandler(null);
+            TonNurako.Application.UnregisterGlobals();
         }
 
         [Fact]
@@ -41,7 +44,6 @@ namespace TonNurakoTest.X11 {
 
             var dpy = TonNurako.X11.Display.Open(null);
             Assert.NotNull(dpy);
-
             Assert.True(dpy.Close() >= 0);
         }
 
