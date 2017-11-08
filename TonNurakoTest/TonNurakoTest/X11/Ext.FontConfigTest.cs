@@ -10,11 +10,11 @@ using Xunit;
 
 
 namespace TonNurakoTest.X11.Ext {
-    public class FontConfigTest : IClassFixture<WindowFixture>, IDisposable {
+    public class FontConfigTest : IClassFixture<DisplayFixture>, IDisposable {
 
-        WindowFixture fix;
+        DisplayFixture fix;
         Unity unity;
-        public FontConfigTest(WindowFixture fixture) {
+        public FontConfigTest(DisplayFixture fixture) {
             fix = fixture;
             unity = new Unity();
         }

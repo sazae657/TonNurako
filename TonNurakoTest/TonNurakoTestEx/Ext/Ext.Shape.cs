@@ -7,7 +7,7 @@ using TonNurako.X11;
 using TonNurako.X11.Extension;
 using Xunit;
 
-namespace TonNurakoTest.X11 {
+namespace TonNurakoTestEx {
     public class ShapeTest : IClassFixture<WindowFixture>, IDisposable {
         WindowFixture fix;
         Unity unity;

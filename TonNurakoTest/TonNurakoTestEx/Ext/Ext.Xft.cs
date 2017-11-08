@@ -8,7 +8,7 @@ using TonNurako.X11;
 using TonNurako.X11.Extension.Xft;
 using Xunit;
 
-namespace TonNurakoTest.X11 {
+namespace TonNurakoTestEx {
     static class Extensions {
         public static IEnumerable<uint> GetUTF32CodePoints(this string s) {
             for (int i = 0; i < s.Length; i++) {

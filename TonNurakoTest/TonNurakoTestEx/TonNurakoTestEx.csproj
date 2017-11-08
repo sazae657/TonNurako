@@ -6,12 +6,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52F1B124-700F-46F3-9AEF-08CA9A8C9ED6}</ProjectGuid>
+    <ProjectGuid>{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TonNurakoTest</RootNamespace>
-    <AssemblyName>TonNurakoTest</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <RootNamespace>TonNurakoTestEx</RootNamespace>
+    <AssemblyName>TonNurakoTestEx</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -56,21 +56,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreFunction\ExtremeSports.cs" />
-    <Compile Include="CoreFunction\UnityTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ext\Ext.Render.cs" />
+    <Compile Include="Ext\Ext.Shape.cs" />
+    <Compile Include="Ext\Ext.Xft.cs" />
     <Compile Include="Fixture\DisplayFixture.cs" />
-    <Compile Include="X11\DisplayTest.cs" />
-    <Compile Include="X11\DrawCallContainer.cs" />
-    <Compile Include="X11\Ext.FontConfigTest.cs" />
-    <Compile Include="X11\GCTest.cs" />
     <Compile Include="Fixture\WindowFixture.cs" />
-    <Compile Include="X11\WindowOperationTest.cs" />
-    <Compile Include="X11\XFontTest.cs" />
-    <Compile Include="X11\WindowTest.cs" />
-    <Compile Include="X11\PixmapTest.cs" />
-    <Compile Include="X11\EmptyWindowRule.cs" />
-    <Compile Include="X11\VisualTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
