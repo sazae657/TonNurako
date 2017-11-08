@@ -17,7 +17,7 @@ namespace TonNurako.X11.Extension.Xft {
     }
 
 
-    public class FcPattern :IX11Interop {
+    public class FcPattern :IX11Interop,IDisposable {
         internal static class NativeMethods {
             // void: FcPatternDestroy FcPattern*:p
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternDestroy_TNK", CharSet = CharSet.Auto)]
@@ -173,14 +173,13 @@ namespace TonNurako.X11.Extension.Xft {
         }
 
         public void Destroy() {
-            if (handle == IntPtr.Zero) {
-                ;
+            if (handle != IntPtr.Zero) {
+                NativeMethods.FcPatternDestroy(handle);
             }
-            NativeMethods.FcPatternDestroy(handle);
             handle = IntPtr.Zero;
         }
 
-        internal static FcPattern WR(IntPtr ptr) => 
+        internal static FcPattern WR(IntPtr ptr) =>
             (IntPtr.Zero != ptr) ? (new FcPattern(ptr)) : null;
 
         public static FcPattern Create() =>
@@ -263,7 +262,7 @@ namespace TonNurako.X11.Extension.Xft {
         public bool AddBool(FcObjectId obzekt, bool b) =>
              NativeMethods.FcPatternAddBool(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), b);
 
-        
+
         public bool AddLangSet(FcObjectId obzekt, FcLangSet ls) =>
              NativeMethods.FcPatternAddLangSet(Handle, ToolkitOptionAttribute.GetToolkitName(obzekt), ls.Handle);
 
@@ -329,7 +328,7 @@ namespace TonNurako.X11.Extension.Xft {
                 return r;
             }
             ls = new FcLangSet(p);
-            return r;           
+            return r;
         }
 
 
@@ -363,13 +362,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~FcPattern() {
-        //   Dispose(false);
-        // }
+        ~FcPattern() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }

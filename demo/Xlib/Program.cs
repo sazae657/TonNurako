@@ -182,7 +182,7 @@ namespace Xlib {
                 dpy, dpy.DefaultVisual, dpy.DefaultColormap, new TonNurako.X11.Extension.XRenderColor(0x0000, 0xffff, 0x0000, 0xffff));
 
 
-            var xftDraw = TonNurako.X11.Extension.Xft.XftDraw.XftDrawCreate(dpy, win, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
+            var xftDraw = TonNurako.X11.Extension.Xft.XftDraw.Create(dpy, win, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
             if (null == xftDraw) {
                 Console.WriteLine("XftDrawCreate Failed");
                 return;

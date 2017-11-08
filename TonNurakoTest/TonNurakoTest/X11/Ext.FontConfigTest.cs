@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TonNurako.Inutility;
 using TonNurako.X11;
 using TonNurako.X11.Extension.Xft;
 using Xunit;
 
 
 namespace TonNurakoTest.X11.Ext {
-    public class XftTest : AbstractSingleWindowTest {
-        public XftTest() : base() {
+    public class FontConfigTest : IClassFixture<DisplayFixture>, IDisposable {
+
+        DisplayFixture fix;
+        Unity unity;
+        public FontConfigTest(DisplayFixture fixture) {
+            fix = fixture;
+            unity = new Unity();
         }
 
-        protected override void BeforeCreateWindow() {
+        void BeforeCreateWindow() {
             Assert.True(FontConfig.Init());
             //Assert.True(FontConfig.Reinitialize());
             Assert.True(FontConfig.BringUptoDate());
@@ -28,12 +34,44 @@ namespace TonNurakoTest.X11.Ext {
             }
         }
 
-        public override void Dispose() {
-            base.Dispose();
+        public void Dispose() {
+            unity.Asset();
         }
 
         const string UNICODE_STR = "【神】俺様が考えた最強文字列【降臨】";
         const string LANG_STR = "【神】俺様が考えた最強公用語【降臨】";
+
+        [Fact]
+        public void PatternTest() {
+            Assert.NotNull(unity.Store(FcPattern.Create()));
+            //Assert.NotNull(unity.Store(FcPattern.ParseXlfd("*misc*", false, false)));
+            Assert.NotNull(unity.Store(FcPattern.Parse(":14")));
+            unity.Asset();
+            using (var c = FcPattern.Create()) {
+                Assert.NotNull(c);
+                Assert.NotNull(unity.Store(c.Duplicate()));
+                Assert.True(c.AddBool(FcObjectId.FC_SCALABLE, true));
+                Assert.True(c.AddInteger(FcObjectId.FC_PIXEL_SIZE, 14));
+                Assert.True(c.AddString(FcObjectId.FC_FAMILY, "misc"));
+                Assert.True(c.AddMatrix(FcObjectId.FC_MATRIX, new FcMatrix()));
+                Assert.True(c.AddCharSet(FcObjectId.FC_CHARSET, unity.Store(FcCharSet.Create())));
+                Assert.True(c.AddLangSet(FcObjectId.FC_LANG, unity.Store(FcLangSet.Create())));
+            }
+            using (var c = FcPattern.Parse(":14")) {
+                Assert.NotNull(c);
+                var cs = unity.Store(FcCharSet.Create());
+                Assert.NotNull(cs);
+                Assert.True(cs.AddChar(0x0001F4A9));
+
+                Assert.True(c.AddCharSet(FcObjectId.FC_CHARSET, cs));
+                Assert.True(c.AddBool(FcObjectId.FC_SCALABLE, true));
+                using (var cf = FcConfig.GetCurrent()) {
+                    Assert.True(cf.Substitute(c, FcMatchKind.FcMatchPattern));
+                    Assert.NotNull(unity.Store(FcDefault.GetDefaultLangs()));
+                    FcDefault.Substitute(c);
+                }
+            }
+        }
 
         [Fact]
         public void MatrixSetTest() {
@@ -114,7 +152,7 @@ namespace TonNurakoTest.X11.Ext {
             Assert.True(FcConfig.EnableHome(false));
             Assert.False(FcConfig.EnableHome(true));
 
-            var cf = FcConfig.GetCurrent();
+            var cf = unity.Store(FcConfig.GetCurrent());
             Assert.NotNull(cf);
             Assert.True(cf.SetCurrent());
             Assert.True(cf.UptoDate());
@@ -140,7 +178,6 @@ namespace TonNurakoTest.X11.Ext {
             Assert.True(cf.SetRescanInterval(10000));
             Assert.Equal(10000, cf.GetRescanInterval());
             Assert.True(cf.SetRescanInterval(k));
-
         }
 
         [Fact]
@@ -190,7 +227,7 @@ namespace TonNurakoTest.X11.Ext {
                 Assert.NotNull(iso);
                 Assert.Equal(1, (int)iso.Count());
             }
-            bool boo = false;           
+            bool boo = false;
             Assert.True(cs.Merge(cs2, out boo));
             Assert.True(boo);
 

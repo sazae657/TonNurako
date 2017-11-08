@@ -202,13 +202,16 @@ namespace TonNurako.X11 {
             }
         }
 
-        // ~Region() {
-        //   Dispose(false);
-        // }
+        ~Region() {
+            if (!isReference && IntPtr.Zero != handle) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
 

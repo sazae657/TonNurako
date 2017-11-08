@@ -18,7 +18,7 @@ namespace TonNurakoTest.CoreFunction {
 
         [Fact]
         public void CheckSymbol() {
-            Assert.True(TonNurako.Native.ExtremeSports.CheckLinkage());
+            Assert.True(TonNurako.Native.ExtremeSports.CheckLinkage((e)=>Console.Error.WriteLine($"SNF: {e}")));
         }
     }
 }

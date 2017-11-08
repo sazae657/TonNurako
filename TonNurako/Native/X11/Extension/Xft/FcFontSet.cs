@@ -110,13 +110,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~FcFontSet() {
-        //   Dispose(false);
-        // }
+        ~FcFontSet() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }

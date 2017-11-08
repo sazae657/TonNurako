@@ -169,14 +169,15 @@ namespace TonNurako.X11 {
         }
 
         ~Pixmap() {
+            if (drawable != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
             Dispose(false);
         }
 
         protected virtual void Dispose(bool disposing) {
             if (IntPtr.Zero != drawable) {
-                if (null != DestroyPixmapFunc) {
-                    DestroyPixmapFunc();
-                }
+                DestroyPixmapFunc?.Invoke();
                 display = null;
                 drawable = IntPtr.Zero;
                 //drawable.Screen = null;

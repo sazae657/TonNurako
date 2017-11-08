@@ -194,15 +194,6 @@ namespace TonNurako.X11
             //[DllImport(ExtremeSports.Lib, EntryPoint="XGetWindowAttributes_TNK", CharSet=CharSet.Auto)]
             //public static extern int XGetWindowAttributes(IntPtr display, IntPtr w, out XWindowAttributes window_attributes_return);
 
-            // int: XSetInputFocus [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'focus'}, {'type': 'int', 'name': 'revert_to'}, {'type': 'Time', 'name': 'time'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetInputFocus_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSetInputFocus(IntPtr display, IntPtr focus, int revert_to, uint time);
-
-            // int: XGetInputFocus [{'type': 'Display*', 'name': 'display'}, {'type': 'Window*', 'name': 'focus_return'}, {'type': 'int*', 'name': 'revert_to_return'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetInputFocus_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGetInputFocus(IntPtr display, out IntPtr focus_return, out IntPtr revert_to_return);
-
-
             /*[DllImport(ExtremeSports.Lib, EntryPoint = "XStringListToTextProperty_TNK", CharSet = CharSet.Auto)]
             internal static extern int XStringListToTextProperty(IntPtr list, int count, out IntPtr text_prop_return);
 
@@ -227,6 +218,7 @@ namespace TonNurako.X11
         public static void SetErrorHandler(XErrorHandler handler) {
             if (null == handler) {
                 if (0 == Instance.XErrorHandlerStack.Count) {
+                    NativeMethods.XSetErrorHandler(IntPtr.Zero);
                     return;
                 }
                 NativeMethods.XSetErrorHandler(Instance.XErrorHandlerStack.Pop());
@@ -241,6 +233,7 @@ namespace TonNurako.X11
         public static void SetIOErrorHandler(XIOErrorHandler handler) {
             if (null == handler) {
                 if (0 == Instance.XIOErrorHandlerStack.Count) {
+                    NativeMethods.XSetIOErrorHandler(IntPtr.Zero);
                     return;
                 }
                 NativeMethods.XSetIOErrorHandler(Instance.XIOErrorHandlerStack.Pop());
@@ -285,7 +278,7 @@ namespace TonNurako.X11
 
         public static void FreeStringList(IntPtr list) => NativeMethods.XFreeStringList(list);
 
-        
+
         // TODO: 置き場に困る
         public static int DoubleToFixed(double f) => NativeMethods.XDoubleToFixed(f);
         public static double FixedToDouble(int f) => NativeMethods.XFixedToDouble(f);

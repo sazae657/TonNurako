@@ -255,11 +255,13 @@ namespace TonNurako.Native {
 
         #region ｼﾝﾎﾞﾙｪｯｸ
 
+        public delegate void SymbolNotFoundRportDelegaty(string p);
+
         /// <summary>
         /// ExtremeSportsに必要ｼﾝﾎﾞﾙが揃っているかﾁｪｯｸする
         /// </summary>
         /// <returns>trueもしくは例外</returns>
-        public static bool CheckLinkage() {
+        public static bool CheckLinkage(SymbolNotFoundRportDelegaty delegaty) {
             var ur = new List<string>();
             var oppai = System.Reflection.Assembly.GetExecutingAssembly();
             int count = 0;
@@ -277,12 +279,14 @@ namespace TonNurako.Native {
                         ex.GetProcAddress(e);
                     }
                     catch (SymbolNotFoundException) {
+                        delegaty?.Invoke(e);
                         ur.Add(e);
                     }
                     count++;
                 }
             }
             if (ur.Count != 0) {
+                
                 throw new SymbolNotFoundException(ur, $"CheckLinkage failed<{ur.Count}/{count}>");
             }
             return true;

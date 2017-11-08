@@ -121,6 +121,45 @@ TNK_EXPORT void XftDrawSetSubwindowMode_TNK(XftDraw* draw, int mode) {
     XftDrawSetSubwindowMode(draw,mode);
 }
 
+TNK_EXPORT Bool XftDefaultHasRender_TNK(Display* dpy) {
+    return XftDefaultHasRender(dpy);
+}
+TNK_EXPORT Bool XftDefaultSet_TNK(Display* dpy, FcPattern* defaults) {
+    return XftDefaultSet(dpy,defaults);
+}
+TNK_EXPORT void XftDefaultSubstitute_TNK(Display* dpy, int screen, FcPattern* pattern) {
+    XftDefaultSubstitute(dpy,screen,pattern);
+}
+
+TNK_EXPORT FcBool XftCharExists_TNK(Display* dpy, XftFont* pub, FcChar32 ucs4) {
+    return XftCharExists(dpy,pub,ucs4);
+}
+TNK_EXPORT FT_UInt XftCharIndex_TNK(Display* dpy, XftFont* pub, FcChar32 ucs4) {
+    return XftCharIndex(dpy,pub,ucs4);
+}
+TNK_EXPORT FcBool XftInit_TNK(_Xconst char* config) {
+    return XftInit(config);
+}
+TNK_EXPORT int XftGetVersion_TNK() {
+    return XftGetVersion();
+}
+
+TNK_EXPORT XftFontInfo* XftFontInfoCreate_TNK(Display* dpy, _Xconst FcPattern* pattern) {
+    return XftFontInfoCreate(dpy,pattern);
+}
+TNK_EXPORT void XftFontInfoDestroy_TNK(Display* dpy, XftFontInfo* fi) {
+    XftFontInfoDestroy(dpy,fi);
+}
+TNK_EXPORT FcChar32 XftFontInfoHash_TNK(XftFontInfo* fi) {
+    return XftFontInfoHash(fi);
+}
+TNK_EXPORT FcBool XftFontInfoEqual_TNK(XftFontInfo* a, _Xconst XftFontInfo* b) {
+    return XftFontInfoEqual(a,b);
+}
+TNK_EXPORT XftFont* XftFontOpenInfo_TNK(Display* dpy, FcPattern* pattern, XftFontInfo* fi) {
+    return XftFontOpenInfo(dpy,pattern,fi);
+}
+
 TNK_EXPORT FcCharSet* FcCharSetCreate_TNK() {
     return FcCharSetCreate();
 }
@@ -557,6 +596,32 @@ TNK_EXPORT void FcMatrixScale_TNK(FcMatrix* m, double sx, double sy) {
 TNK_EXPORT void FcMatrixShear_TNK(FcMatrix* m, double sh, double sv) {
     FcMatrixShear(m,sh,sv);
 }
+
+TNK_EXPORT FcStrSet* FcGetDefaultLangs_TNK() {
+    return FcGetDefaultLangs();
+}
+TNK_EXPORT void FcDefaultSubstitute_TNK(FcPattern* pattern) {
+    FcDefaultSubstitute(pattern);
+}
+
+
+#ifdef USE_FC22
+TNK_EXPORT FcRange* FcRangeCreateDouble_TNK(double begin, double end) {
+    return FcRangeCreateDouble(begin,end);
+}
+TNK_EXPORT FcRange* FcRangeCreateInteger_TNK(FcChar32 begin, FcChar32 end) {
+    return FcRangeCreateInteger(begin,end);
+}
+TNK_EXPORT void FcRangeDestroy_TNK(FcRange* range) {
+    FcRangeDestroy(range);
+}
+TNK_EXPORT FcRange* FcRangeCopy_TNK(const FcRange* r) {
+    return FcRangeCopy(r);
+}
+TNK_EXPORT FcBool FcRangeGetDouble_TNK(const FcRange* range, double* begin, double* end) {
+    return FcRangeGetDouble(range,begin,end);
+}
+#endif
 
 //XftFont ｱｸｾｯｻー
 int TNK_GetXftFontAscent(XftFont* ptr) { return ptr->ascent; }

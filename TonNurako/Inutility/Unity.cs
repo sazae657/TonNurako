@@ -14,6 +14,9 @@ namespace TonNurako.Inutility {
 
         public T Store<T>(T t)
             where T : IDisposable {
+            if (null == t) {
+                return t;
+            }
             if (stack.Contains(t)) {
                 throw new DuplicateWaitObjectException("Unity");
             }

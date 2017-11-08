@@ -17,13 +17,13 @@ namespace TonNurako.X11
             IntPtr sibling; //Window
             int stack_mode;
     }
-
+/*
     [StructLayout(LayoutKind.Sequential)]
     internal struct XModifierKeymap {
             int max_keypermod;
             IntPtr modifiermap;  // KeyCode *
     } ;
-
+    */
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct XTimeCoord{

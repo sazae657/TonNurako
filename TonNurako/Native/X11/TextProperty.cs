@@ -173,6 +173,9 @@ namespace TonNurako.X11 {
         }
 
         ~XTextProperty() {
+            if (IntPtr.Zero != record.value) {
+                throw new ResourceLeakException(this);
+            }
             Dispose(false);
         }
         #endregion

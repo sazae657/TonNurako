@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonNurakoTest", "TonNurakoT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonNurako", "..\TonNurako.csproj", "{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonNurakoTestEx", "TonNurakoTestEx\TonNurakoTestEx.csproj", "{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
