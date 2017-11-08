@@ -7,47 +7,47 @@ using Xunit;
 using TonNurako.X11.Extension;
 using System;
 
-namespace TonNurakoTest.X11.Ext {
-    public class RenderTest : AbstractSingleWindowTest {
-        public RenderTest() : base() {
+namespace TonNurakoTestEx {
+    public class RenderTest : IClassFixture<WindowFixture>, IDisposable {
+        WindowFixture fix;
+        Unity unity;
+        public RenderTest(WindowFixture fixture) {
+            fix = fixture;
+            unity = new Unity();
         }
-        protected override void BeforeMapWindow() {
 
-        }
-
-        public override void Dispose() {
-            base.Dispose();
+        public void Dispose() {
+            unity.Asset();
         }
 
         [Fact]
         public void StandardFunction() {
-            Assert.True(XRender.QueryExtension(display));
-            Assert.NotNull(XRender.QueryVersion(display));
-            Assert.NotEqual(0, XRender.QueryFormats(display));
+            Assert.True(XRender.QueryExtension(fix.Display));
+            Assert.NotNull(XRender.QueryVersion(fix.Display));
+            Assert.NotEqual(0, XRender.QueryFormats(fix.Display));
 
-            var spo = XRender.QuerySubpixelOrder(display, display.DefaultScreen);
-            Assert.True(XRender.SetSubpixelOrder(display, display.DefaultScreen, SubPixel.SubPixelVerticalRGB));
-            Assert.Equal(SubPixel.SubPixelVerticalRGB, XRender.QuerySubpixelOrder(display, display.DefaultScreen));
-            Assert.True(XRender.SetSubpixelOrder(display, display.DefaultScreen, spo));
-            Assert.Equal(spo, XRender.QuerySubpixelOrder(display, display.DefaultScreen));
+            var spo = XRender.QuerySubpixelOrder(fix.Display, fix.Display.DefaultScreen);
+            Assert.True(XRender.SetSubpixelOrder(fix.Display, fix.Display.DefaultScreen, SubPixel.SubPixelVerticalRGB));
+            Assert.Equal(SubPixel.SubPixelVerticalRGB, XRender.QuerySubpixelOrder(fix.Display, fix.Display.DefaultScreen));
+            Assert.True(XRender.SetSubpixelOrder(fix.Display, fix.Display.DefaultScreen, spo));
+            Assert.Equal(spo, XRender.QuerySubpixelOrder(fix.Display, fix.Display.DefaultScreen));
 
-            Assert.NotNull(XRender.FindVisualFormat(display, display.DefaultVisual));
-            Assert.NotNull(XRender.FindStandardFormat(display, PictStandard.ARGB32));
+            Assert.NotNull(XRender.FindVisualFormat(fix.Display, fix.Display.DefaultVisual));
+            Assert.NotNull(XRender.FindStandardFormat(fix.Display, PictStandard.ARGB32));
 
-            //Assert.NotNull(XRender.QueryPictIndexValues(display, null));
-            Assert.NotNull(XRender.QueryFilters(display, window));
+            //Assert.NotNull(XRender.QueryPictIndexValues(fix.Display, null));
+            Assert.NotNull(XRender.QueryFilters(fix.Display, fix.Window));
 
-            XRender.ParseColor(display, "green");
-            Assert.ThrowsAny<System.Exception>(()=>XRender.ParseColor(display, "うんこ色"));
-
+            XRender.ParseColor(fix.Display, "green");
+            Assert.ThrowsAny<System.Exception>(()=>XRender.ParseColor(fix.Display, "うんこ色"));
         }
 
         [Fact]
         public void Picture() {
-            using(var pm = new Pixmap(window, 100, 100, 8)) {
+            using (var pm = new Pixmap(fix.Window, 100, 100, 8)) {
                 Assert.NotNull(pm);
                 using(var pic = XRender.CreatePicture(
-                    display, pm, XRender.FindStandardFormat(display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
+                    fix.Display, pm, XRender.FindStandardFormat(fix.Display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
                 {
                     Assert.NotNull(pic);
                 }
@@ -56,12 +56,12 @@ namespace TonNurakoTest.X11.Ext {
 
         [Fact]
         public void StdDraw() {
-            var pm = new Pixmap(window, 100, 100, 8);
+            var pm = new Pixmap(fix.Window, 100, 100, 8);
             Assert.NotNull(pm);
             using(var src = XRender.CreatePicture(
-                display, pm, XRender.FindStandardFormat(display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
+                fix.Display, pm, XRender.FindStandardFormat(fix.Display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
             using(var dest = XRender.CreatePicture(
-                display, pm, XRender.FindStandardFormat(display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
+                fix.Display, pm, XRender.FindStandardFormat(fix.Display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
             {
                 Assert.NotNull(src);
                 Assert.NotNull(dest);
@@ -73,17 +73,17 @@ namespace TonNurakoTest.X11.Ext {
         }
 
         void DrawFunc(Pixmap pixmap, Picture picture) {
-            XRender.ChangePicture(display, picture, CreatePictureMask.None, new XRenderPictureAttributes());
-            XRender.SetPictureFilter(display, picture, Filter.FilterConvolution, CreateGaussianKernel2D(10));
-            XRender.SetPictureClipRectangles(display, picture, 0, 0, new[]{new XRectangle(5,5,5,5)});
+            XRender.ChangePicture(fix.Display, picture, CreatePictureMask.None, new XRenderPictureAttributes());
+            XRender.SetPictureFilter(fix.Display, picture, Filter.FilterConvolution, CreateGaussianKernel2D(10));
+            XRender.SetPictureClipRectangles(fix.Display, picture, 0, 0, new[]{new XRectangle(5,5,5,5)});
             using(var rgn = Region.Create()) {
-                XRender.SetPictureClipRegion(display, picture, rgn);
+                XRender.SetPictureClipRegion(fix.Display, picture, rgn);
             }
             var xt = new XTransform();
-            XRender.SetPictureTransform(display, picture, xt);
-            var color = XRender.ParseColor(display, "green");
-            XRender.FillRectangle(display, PictOp.Over, picture, color, 0, 0, 100, 100);
-            XRender.FillRectangles(display, PictOp.Over, picture, color, new[]{new XRectangle(0,0,100,100)});
+            XRender.SetPictureTransform(fix.Display, picture, xt);
+            var color = XRender.ParseColor(fix.Display, "green");
+            XRender.FillRectangle(fix.Display, PictOp.Over, picture, color, 0, 0, 100, 100);
+            XRender.FillRectangles(fix.Display, PictOp.Over, picture, color, new[]{new XRectangle(0,0,100,100)});
         }
 
         void CompositeFunc(Picture src, Picture dest, int width, int height) {
@@ -106,27 +106,27 @@ namespace TonNurakoTest.X11.Ext {
                         TonNurako.X11.Xi.DoubleToFixed((double)height - 30.0f)))
             );
 
-            var pfm = XRender.FindStandardFormat(display, PictStandard.A8);
-            XRender.CompositeTrapezoid(display, PictOp.Over, src, dest, pfm, 0, 0, trapezoid);
-            XRender.CompositeTrapezoids(display, PictOp.Over, src, dest, pfm, 0, 0, new[]{trapezoid, trapezoid});
+            var pfm = XRender.FindStandardFormat(fix.Display, PictStandard.A8);
+            XRender.CompositeTrapezoid(fix.Display, PictOp.Over, src, dest, pfm, 0, 0, trapezoid);
+            XRender.CompositeTrapezoids(fix.Display, PictOp.Over, src, dest, pfm, 0, 0, new[]{trapezoid, trapezoid});
 
             var triangle = new XTriangle(new XPointFixed(50, 0), new XPointFixed(100, 100), new XPointFixed(0, 100));
             XRender.CompositeTriangles(
-                display, PictOp.Over, src, dest, pfm, 0, 0, new[]{triangle});
+                fix.Display, PictOp.Over, src, dest, pfm, 0, 0, new[]{triangle});
 
             XRender.CompositeTriStrip(
-                display, PictOp.Over, src, dest, pfm, 0, 0, new[]{new XPointFixed(50, 0), new XPointFixed(100, 100), new XPointFixed(0, 100)});
+                fix.Display, PictOp.Over, src, dest, pfm, 0, 0, new[]{new XPointFixed(50, 0), new XPointFixed(100, 100), new XPointFixed(0, 100)});
             XRender.CompositeTriFan(
-                display, PictOp.Over, src, dest, pfm, 0, 0, new[]{new XPointFixed(50, 0), new XPointFixed(100, 100), new XPointFixed(0, 100)});
+                fix.Display, PictOp.Over, src, dest, pfm, 0, 0, new[]{new XPointFixed(50, 0), new XPointFixed(100, 100), new XPointFixed(0, 100)});
 
             XRender.CompositeDoublePoly(
-                display, PictOp.Over, src, dest, pfm, 0, 0, 0, 0, new[]{new XPointDouble(50, 0), new XPointDouble(100, 100), new XPointDouble(0, 100)}, 0);
+                fix.Display, PictOp.Over, src, dest, pfm, 0, 0, 0, 0, new[]{new XPointDouble(50, 0), new XPointDouble(100, 100), new XPointDouble(0, 100)}, 0);
 
-            using(var pm = new Pixmap(display, window, width, height, 8))
+            using(var pm = new Pixmap(fix.Display, fix.Window, width, height, 8))
             using(var mask = XRender.CreatePicture(
-                    display, pm, XRender.FindStandardFormat(display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
+                    fix.Display, pm, XRender.FindStandardFormat(fix.Display, PictStandard.A8), CreatePictureMask.None, new XRenderPictureAttributes()))
             {
-                XRender.Composite(display, PictOp.Src, src, mask, dest, 0, 0, 0, 0, 0, 0, width, height);
+                XRender.Composite(fix.Display, PictOp.Src, src, mask, dest, 0, 0, 0, 0, 0, 0, width, height);
             }
 
         }
@@ -160,17 +160,17 @@ namespace TonNurakoTest.X11.Ext {
                 TonNurako.X11.Xi.DoubleToFixed(1.0f)
             };
 
-            using(var g  = TonNurako.X11.Extension.XRender.CreateSolidFill(display, colors[0])) {
+            using(var g  = TonNurako.X11.Extension.XRender.CreateSolidFill(fix.Display, colors[0])) {
                 Assert.NotNull(g);
             }
 
-            using(var g  = TonNurako.X11.Extension.XRender.CreateConicalGradient(display, conicalGradient, colorStops, colors)) {
+            using(var g  = TonNurako.X11.Extension.XRender.CreateConicalGradient(fix.Display, conicalGradient, colorStops, colors)) {
                 Assert.NotNull(g);
             }
-            using(var g  = TonNurako.X11.Extension.XRender.CreateLinearGradient(display, linearGradient, colorStops, colors)) {
+            using(var g  = TonNurako.X11.Extension.XRender.CreateLinearGradient(fix.Display, linearGradient, colorStops, colors)) {
                 Assert.NotNull(g);
             }
-            using(var g  = TonNurako.X11.Extension.XRender.CreateRadialGradient(display, radialGradient, colorStops, colors)) {
+            using(var g  = TonNurako.X11.Extension.XRender.CreateRadialGradient(fix.Display, radialGradient, colorStops, colors)) {
                 Assert.NotNull(g);
             }
         }

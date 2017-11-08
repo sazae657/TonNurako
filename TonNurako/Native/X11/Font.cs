@@ -306,21 +306,22 @@ namespace TonNurako.X11 {
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
-                if (DestructFunction != null) {
-                    DestructFunction();
-                }
+                DestructFunction?.Invoke();
                 handle = IntPtr.Zero;
                 disposedValue = true;
             }
         }
 
-        // ~FontSet() {
-        //   Dispose(false);
-        // }
+        ~FontSet() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
 

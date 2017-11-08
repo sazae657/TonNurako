@@ -75,13 +75,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~FcStrList() {
-        //   Dispose(false);
-        // }
+        ~FcStrList() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }
@@ -160,8 +163,6 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-
-
         #region IDisposable Support
         private bool disposedValue = false;
 
@@ -172,13 +173,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~FcStrSet() {
-        //   Dispose(false);
-        // }
+        ~FcStrSet() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }

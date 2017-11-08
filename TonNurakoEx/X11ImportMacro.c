@@ -1,5 +1,25 @@
 #include "TonNurako.h"
 
+//
+// XModifierKeymapｱｸｾｻー
+//
+TNK_EXPORT int TNK_GetXModifierKeymap_MaxKeypermod(const XModifierKeymap* p) {
+    return p->max_keypermod;
+}
+
+TNK_EXPORT void TNK_SetXModifierKeymap_MaxKeypermod(XModifierKeymap* p, const KeyCode val) {
+    p->max_keypermod = val;
+}
+
+TNK_EXPORT KeyCode TNK_GetXModifierKeymap_Modifiermap(const XModifierKeymap* p, const int index) {
+    return p->modifiermap[index];
+}
+
+TNK_EXPORT void TNK_SetXModifierKeymap_Modifiermap(XModifierKeymap* p, const int index, const KeyCode val) {
+    p->modifiermap[index] = val;
+}
+
+
 TNK_EXPORT Status XStringListToTextProperty_TNK(char* *list, int count, XTextProperty* text_prop_return) {
     return XStringListToTextProperty(list,count,text_prop_return);
 }

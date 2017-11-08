@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TonNurako.Native;
+using TonNurako.X11.Event;
 
 namespace TonNurako.X11 {
 
@@ -186,29 +187,19 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRestackWindows_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XRestackWindows(IntPtr display, IntPtr[] windows, int nwindows);
 
-            // int: XWindowEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
+            // int: XWindowEvent Display*:display  Window:w  long:event_mask  XEvent*:event_return  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XWindowEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern XStatus XWindowEvent(IntPtr display, IntPtr w, long event_mask, out IntPtr event_return);
+            internal static extern XStatus XWindowEvent(IntPtr display, IntPtr w, EventMask event_mask, [In,Out] IntPtr event_return);
 
-            // Bool: XCheckWindowEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
+            // Bool: XCheckWindowEvent Display*:display  Window:w  long:event_mask  XEvent*:event_return  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckWindowEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool XCheckWindowEvent(IntPtr display, IntPtr w, long event_mask, out IntPtr event_return);
+            internal static extern bool XCheckWindowEvent(IntPtr display, IntPtr w, EventMask event_mask, [In,Out] IntPtr event_return);
 
-            // int: XMaskEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XMaskEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern XStatus XMaskEvent(IntPtr display, long event_mask, out IntPtr event_return);
-
-            // Bool: XCheckMaskEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'long', 'name': 'event_mask'}, {'type': 'XEvent*', 'name': 'event_return'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckMaskEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool XCheckMaskEvent(IntPtr display, long event_mask, out IntPtr event_return);
-
-            // Bool: XCheckTypedEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'int', 'name': 'event_type'}, {'type': 'XEvent*', 'name': 'event_return'}]
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckTypedEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool XCheckTypedEvent(IntPtr display, int event_type, out IntPtr event_return);
-
-            // Bool: XCheckTypedWindowEvent [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'int', 'name': 'event_type'}, {'type': 'XEvent*', 'name': 'event_return'}]
+            // Bool: XCheckTypedWindowEvent Display*:display  Window:w  int:event_type  XEvent*:event_return  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckTypedWindowEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool XCheckTypedWindowEvent(IntPtr display, IntPtr w, int event_type, out IntPtr event_return);
+            internal static extern bool XCheckTypedWindowEvent(IntPtr display, IntPtr w, Event.XEventType event_type, [In, Out] IntPtr event_return);
+
+
 
             // int: XConfigureWindow [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'unsigned', 'name': 'value_mask'}, {'type': 'XWindowChanges*', 'name': 'changes'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XConfigureWindow_TNK", CharSet = CharSet.Auto)]
@@ -289,6 +280,27 @@ namespace TonNurako.X11 {
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XGetIconName(IntPtr display, IntPtr w, out IntPtr icon_name_return);
+
+            // XSizeHints*: XAllocSizeHints 
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "XAllocSizeHints_TNK", CharSet = CharSet.Auto)]
+            //internal static extern IntPtr XAllocSizeHints();
+
+            // void: XSetWMNormalHints Display*:display  Window:w  XSizeHints*:hints  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMNormalHints_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XSetWMNormalHints(IntPtr display, IntPtr w, ref XSizeHints hints);
+
+            // Status: XGetWMNormalHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMNormalHints_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XGetWMNormalHints(IntPtr display, IntPtr w, ref XSizeHints hints_return, out long supplied_return);
+
+            // void: XSetWMSizeHints Display*:display  Window:w  XSizeHints*:hints  Atom:property  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMSizeHints_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XSetWMSizeHints(IntPtr display, IntPtr w, ref XSizeHints hints, ulong property);
+
+            // Status: XGetWMSizeHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  Atom:property  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMSizeHints_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XGetWMSizeHints(IntPtr display, IntPtr w, ref XSizeHints hints_return, out long supplied_return, ulong property);
+
 
         }
 
@@ -456,6 +468,49 @@ namespace TonNurako.X11 {
         public XStatus SetWindowBorderWidth(int width)
             => NativeMethods.XSetWindowBorderWidth(display.Handle, Handle, (uint)width);
 
+        //public static IntPtr XAllocSizeHints() =>
+        //    NativeMethods.XAllocSizeHints();
+
+
+        // void: XSetWMNormalHints Display*:display  Window:w  XSizeHints*:hints  
+        public void SetWMNormalHints(ref XSizeHints hints) =>
+            NativeMethods.XSetWMNormalHints(display.Handle, Handle, ref hints);
+
+
+        // Status: XGetWMNormalHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  
+        public XStatus GetWMNormalHints(ref XSizeHints hints_return, out long supplied_return) =>
+            NativeMethods.XGetWMNormalHints(display.Handle, Handle, ref hints_return, out supplied_return);
+
+
+        // void: XSetWMSizeHints Display*:display  Window:w  XSizeHints*:hints  Atom:property  
+        public void SetWMSizeHints(ref XSizeHints hints, ulong property) =>
+            NativeMethods.XSetWMSizeHints(display.Handle, Handle, ref hints, property);
+
+
+        // Status: XGetWMSizeHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  Atom:property  
+        public XStatus GetWMSizeHints(ref XSizeHints hints_return, out long supplied_return, Atom property) =>
+            NativeMethods.XGetWMSizeHints(display.Handle, Handle, ref hints_return, out supplied_return, (ulong)property.Handle);
+
+
+
+        public XStatus WindowEvent(EventMask event_mask, XEventArg event_return) {
+            var r = NativeMethods.XWindowEvent(display.Handle, Handle, event_mask, event_return.handle);
+            event_return.Assign();
+            return r;
+        }
+
+        public bool CheckWindowEvent(EventMask event_mask, XEventArg event_return) {
+            var r = NativeMethods.XCheckWindowEvent(display.Handle, Handle, event_mask, event_return.handle);
+            event_return.Assign();
+            return r;
+        }
+
+        public bool CheckTypedWindowEvent(Event.XEventType event_type, XEventArg ev) {
+            var r = NativeMethods.XCheckTypedWindowEvent(display.Handle, Handle, event_type, ev.Handle);
+            ev.Assign();
+            return r;
+        }
+
         public XWindowAttributes GetWindowAttributes() {
             var rw = new XWindowAttributes(Display);
             var k = NativeMethods.XGetWindowAttributes(this.Display.Handle, Handle, out rw.record);
@@ -600,13 +655,16 @@ namespace TonNurako.X11 {
             }
         }
 
-        //~XWMHints() {
-        //    Dispose(false);
-        //}
+        ~XWMHints() {
+            if (IntPtr.Zero != handle) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-         //  System.GC.SuppressFinalize(this);
+           System.GC.SuppressFinalize(this);
         }
         #endregion
     }

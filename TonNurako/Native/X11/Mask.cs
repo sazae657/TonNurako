@@ -36,6 +36,16 @@ namespace TonNurako.X11
     }
 
     /// <summary>
+    /// ﾌｫーｶｽ
+    /// </summary>
+    public enum RevertTo : int {
+        None = TonNurako.X11.Constant.RevertToNone,
+        PointerRoot = TonNurako.X11.Constant.RevertToPointerRoot,
+        Parent = TonNurako.X11.Constant.RevertToParent
+    }
+
+
+    /// <summary>
     /// MapState
     /// </summary>
     public enum MapState : int {

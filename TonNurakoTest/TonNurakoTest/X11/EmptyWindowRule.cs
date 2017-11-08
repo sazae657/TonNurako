@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,21 +7,16 @@ using TonNurako.X11;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
-    public class EmptyWindowRule : AbstractSingleWindowTest {
-        public EmptyWindowRule() : base() {
+    public class EmptyWindowRule : IClassFixture<WindowFixture>, IDisposable {
+        WindowFixture fix;
+        Unity unity;
+        public EmptyWindowRule(WindowFixture fixture) {
+            fix = fixture;
+            unity = new Unity();
         }
 
-        protected override void BeforeCreateWindow() {
-        }
-
-        protected override void BeforeMapWindow() {
-        }
-
-        protected override void AfterMapWindow() {
-        }
-
-        public override void Dispose() {
-            base.Dispose();
+        public void Dispose() {
+            unity.Asset();
         }
 
         [Fact]

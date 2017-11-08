@@ -13,7 +13,9 @@ iso = ISO()
 iso.Mount(sys.argv[1:])
 
 for p in iso.symbols:
-    if p.startswith("//"):
+    if p.startswith("///"):
+        print 'printf("\\n        /// <summary>\\n/// %s\\n        /// </summary>\\n");' % (p[3:].strip())
+    elif p.startswith("//"):
         print '\n// %s' % (p[2:].strip())
     else:
         print '%s = %s.%s.%s,' % (p, iso.ns, iso.cn, p)

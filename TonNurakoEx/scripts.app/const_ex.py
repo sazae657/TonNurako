@@ -34,12 +34,14 @@ else:
     print 'printf("    public %s %s {\\n");' % (iso.type, iso.cn)
 
 for p in iso.symbols:
-    if p.startswith("//"):
+    if p.startswith("///"):
+        print 'printf("\\n        ///<summary>\\n        /// %s\\n        ///</summary>\\n");' % (p[3:].strip())
+    elif p.startswith("//"):
         print 'printf("\\n        // %s\\n");' % (p[2:].strip())
     else:
         if iso.ifdef is True:
             print '#ifdef %s' % (p)
-        
+
         if iso.vt == 'string':
             print 'printf("       public const string %s\\t=\\"%%s\\";\\n",%s);' % (p, p)
         elif iso.vt == 'tko':

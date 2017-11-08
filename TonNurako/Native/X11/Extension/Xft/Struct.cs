@@ -8,9 +8,15 @@ namespace TonNurako.X11.Extension.Xft
 
     [StructLayout(LayoutKind.Sequential)]
     public struct XftCharSpec {
-        uint    Ucs4;//FcChar32
-        short       X;
-        short       Y;
+        public uint Ucs4;//FcChar32
+        public short X;
+        public short Y;
+
+        public XftCharSpec(uint ucs4, short x, short y) {
+            Ucs4 = ucs4;
+            X = x;
+            Y = y;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -19,6 +25,13 @@ namespace TonNurako.X11.Extension.Xft
         public uint Ucs4; //FcChar32
         public short X;
         public short Y;
+
+        public XftCharFontSpec(XftFont font, uint ucs4, short x, short y) {
+            Font = font.Handle;
+            Ucs4 = ucs4;
+            X = x;
+            Y = y;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -26,6 +39,12 @@ namespace TonNurako.X11.Extension.Xft
         public uint Glyph; //FT_UInt
         public short X;
         public short Y;
+
+        public XftGlyphSpec(uint glyph, short x, short y) {
+            Glyph = glyph;
+            X = x;
+            Y = y;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -34,13 +53,20 @@ namespace TonNurako.X11.Extension.Xft
         public uint Glyph; //FT_UInt
         public short X;
         public short Y;
+
+        public XftGlyphFontSpec(XftFont font, uint glyph, short x, short y) {
+            Font = font.Handle;
+            Glyph = glyph;
+            X = x;
+            Y = y;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct FcObjectSet {
         public int nobject;
         public int sobject;
-        public IntPtr objects; //const char**
+        internal IntPtr objects; //const char**
     }
 
     [StructLayout(LayoutKind.Sequential)]

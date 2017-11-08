@@ -190,6 +190,13 @@ namespace TonNurako.X11.Extension {
             }
         }
 
+        ~Picture() {
+            if (0 != handle && disposable) {
+                throw new ResourceLeakException(this.GetType());
+            }
+            Dispose(false);
+        }
+
         public void Dispose() {
             Dispose(true);
         }

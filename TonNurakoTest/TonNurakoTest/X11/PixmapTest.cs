@@ -6,24 +6,19 @@ using TonNurako.X11;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
-    public class PixmapTest : AbstractSingleWindowTest {
-        public PixmapTest() : base() {
-        }
-        protected override void BeforeMapWindow() {
-            var attr = new TonNurako.X11.XSetWindowAttributes();
-            attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
-            Assert.Equal(XStatus.True, window.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr));
-        }
+    public class PixmapTest : IClassFixture<WindowFixture> {
 
-        public override void Dispose() {
-            base.Dispose();
+        WindowFixture fix;
+
+        public PixmapTest(WindowFixture fixture) {
+            fix = fixture;
         }
 
         [Fact]
         public void StandardPixmap() {
-            using(var pm = new Pixmap(display, window, 100, 100, display.DefaultDepth)) {
+            using (var pm = new Pixmap(fix.Display, fix.Window, 100, 100, fix.Display.DefaultDepth)) {
             }
-            using(var pm = new Pixmap(window, 100, 100, display.DefaultDepth)) {
+            using (var pm = new Pixmap(fix.Window, 100, 100, fix.Display.DefaultDepth)) {
             }
         }
     }

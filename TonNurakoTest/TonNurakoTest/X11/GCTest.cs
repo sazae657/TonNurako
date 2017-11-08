@@ -6,35 +6,23 @@ using TonNurako.X11;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
-    public class GCTest : AbstractSingleWindowTest {
-        public GCTest() : base() {
+    public class GCTest : IClassFixture<WindowFixture> {
+        WindowFixture fix;
+
+        public GCTest(WindowFixture fixture) {
+            fix = fixture;
         }
 
-        public override void Dispose() {
-            base.Dispose();
-        }
-
-        protected override void BeforeCreateWindow() {
-        }
-
-        protected override void BeforeMapWindow() {
-            var attr = new TonNurako.X11.XSetWindowAttributes();
-            attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
-            Assert.Equal(XStatus.True, window.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr));
-        }
-
-        protected override void AfterMapWindow() {
-        }
 
         [Fact]
         public void GcTest() {
-            using (var gc = TonNurako.X11.GC.Create(window)) {
+            using (var gc = TonNurako.X11.GC.Create(fix.Window)) {
                 Assert.NotNull(gc);
             }
 
             var v = new XGCValues();
-            v.Background = Color.AllocNamedColor(display, display.DefaultColormap, "white").Pixel;
-            using (var gc = TonNurako.X11.GC.Create(window, GCMask.GCBackground, v)) {
+            v.Background = Color.AllocNamedColor(fix.Display, fix.Display.DefaultColormap, "white").Pixel;
+            using (var gc = TonNurako.X11.GC.Create(fix.Window, GCMask.GCBackground, v)) {
                 Assert.NotNull(gc);
                 Assert.NotNull(gc.GetGCValues(GCMask.GCBackground));
             }
@@ -42,7 +30,7 @@ namespace TonNurakoTest.X11 {
 
         [Fact]
         public void TextCallTest() {
-            using (var gc = TonNurako.X11.GC.Create(window)) {
+            using (var gc = TonNurako.X11.GC.Create(fix.Window)) {
                 Assert.NotNull(gc);
                 DrawText(gc);
             }
@@ -50,7 +38,7 @@ namespace TonNurakoTest.X11 {
 
         [Fact]
         public void DrawCallTest() {
-            using (var gc = TonNurako.X11.GC.Create(window)) {
+            using (var gc = TonNurako.X11.GC.Create(fix.Window)) {
                 Assert.NotNull(gc);
                 DrawText(gc);
 
@@ -65,7 +53,7 @@ namespace TonNurakoTest.X11 {
 
         [Fact]
         public void DrawOffscreenTest() {
-            using (var pixmap = new Pixmap(window, 100, 100, 24))
+            using (var pixmap = new Pixmap(fix.Window, 100, 100, 24))
             using (var gc = TonNurako.X11.GC.Create(pixmap)) 
             {
                 Assert.NotNull(gc);
@@ -80,8 +68,29 @@ namespace TonNurakoTest.X11 {
             }
         }
 
+        [Fact]
+        public void ColorTest() {
+                Assert.NotNull(Color.AllocNamedColor(fix.Display, fix.Display.DefaultColormap, "Green"));
+                Assert.Throws<System.ArgumentException>(
+                    () => Color.AllocNamedColor(fix.Display, fix.Display.DefaultColormap, "【神】俺様が考えた最強カラー【降臨】"));
+
+                Assert.NotNull(Color.AllocColor(fix.Display, fix.Display.DefaultColormap, 0xff, 0xff, 0xff));
+                Assert.NotNull(Color.LookupColor(fix.Display, fix.Display.DefaultColormap, "black"));
+                var xc = new XColor();
+                xc.Pixel = 0x00;
+                Assert.NotNull(Color.QueryColor(fix.Display, fix.Display.DefaultColormap, xc));
+
+                var arr = new[] { xc, xc, xc };
+                var cs = Color.QueryColors(fix.Display, fix.Display.DefaultColormap, arr);
+                Assert.NotNull(cs);
+                Assert.Equal(arr.Length, cs.Length);
+
+                Assert.NotNull(Color.ParseColor(fix.Display, fix.Display.DefaultColormap, "white"));
+
+        }
+
         void DrawText(TonNurako.X11.GC gc) {
-            using (var fs = FontSet.CreateFontSet(display, "*misc*")) {
+            using (var fs = FontSet.CreateFontSet(fix.Display, "*misc*")) {
                 Assert.NotNull(fs);
 
                 gc.DrawStringMultiByte(fs, 0, 0, "【神】俺様の文字列【降臨");
@@ -110,25 +119,7 @@ namespace TonNurakoTest.X11 {
             gc.FillArcs(new[] { new XArc(0, 0, 100, 100, 64, 90 * 64), new XArc(100, 100, 100, 100, 64, 90 * 64) });
         }
 
-        [Fact]
-        public void ColorTest() {
-            Assert.NotNull(Color.AllocNamedColor(display, display.DefaultColormap, "Green"));
-            Assert.Throws<System.ArgumentException>(
-                () => Color.AllocNamedColor(display, display.DefaultColormap, "【神】俺様が考えた最強カラー【降臨】"));
 
-            Assert.NotNull(Color.AllocColor(display, display.DefaultColormap, 0xff, 0xff, 0xff));
-            Assert.NotNull(Color.LookupColor(display, display.DefaultColormap, "black"));
-            var xc = new XColor();
-            xc.Pixel = 0x00;
-            Assert.NotNull(Color.QueryColor(display, display.DefaultColormap, xc));
-
-            var arr = new[] { xc, xc, xc };
-            var cs = Color.QueryColors(display, display.DefaultColormap, arr);
-            Assert.NotNull(cs);
-            Assert.Equal(arr.Length, cs.Length);
-
-            Assert.NotNull(Color.ParseColor(display, display.DefaultColormap, "white"));
-        }
     }
 }
 

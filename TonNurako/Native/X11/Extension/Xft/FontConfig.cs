@@ -41,14 +41,15 @@ namespace TonNurako.X11.Extension.Xft {
             // FcStrSet*: FcGetLangs 
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcGetLangs_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcGetLangs();
+
         }
 
         public static FcConfig LoadConfig() =>
-            FcConfig.WR(NativeMethods.FcInitLoadConfig());
+            FcConfig.WR(NativeMethods.FcInitLoadConfig(), true);
 
 
         public static FcConfig LoadConfigAndFonts() =>
-            FcConfig.WR(NativeMethods.FcInitLoadConfigAndFonts());
+            FcConfig.WR(NativeMethods.FcInitLoadConfigAndFonts(), true);
 
         public static int GetVersion() 
             => NativeMethods.FcGetVersion();

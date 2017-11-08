@@ -175,8 +175,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
+        ~FcCharSet() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
+
         public void Dispose() {
             Dispose(true);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
 

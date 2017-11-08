@@ -59,7 +59,7 @@ namespace TonNurako.X11.Extension.Xft {
 
             // Picture: XftDrawSrcPicture XftDraw*:draw  XftColor*:color  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftDrawSrcPicture_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XftDrawSrcPicture(IntPtr draw, ref XftColor color);
+            internal static extern int XftDrawSrcPicture(IntPtr draw, ref XftColorRec color);
 
 
 
@@ -80,8 +80,8 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern void XftDrawString32(IntPtr draw, ref XftColorRec color, IntPtr pub, int x, int y, [In] int[] str, int len);
 
             // void: XftDrawStringUtf8 XftDraw*:draw  XftColor*:color  XftFont*:pub  int:x  int:y  FcChar8*:string  int:len  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XftDrawStringUtf8_TNK", CharSet = CharSet.Auto)]
-            internal static extern void XftDrawStringUtf8(IntPtr draw, ref XftColorRec color, IntPtr pub, int x, int y, [MarshalAs(UnmanagedType.LPStr)]string str, int len);
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "XftDrawStringUtf8_TNK", CharSet = CharSet.Auto)]
+            //internal static extern void XftDrawStringUtf8(IntPtr draw, ref XftColorRec color, IntPtr pub, int x, int y, [MarshalAs(UnmanagedType.LPStr)]string str, int len);
 
             // void: XftDrawStringUtf16 XftDraw*:draw  XftColor*:color  XftFont*:pub  int:x  int:y  FcChar8*:string  FcEndian:endian  int:len  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftDrawStringUtf16_TNK", CharSet = CharSet.Auto)]
@@ -155,18 +155,17 @@ namespace TonNurako.X11.Extension.Xft {
 
         public void Destroy() {
             if (handle != IntPtr.Zero) {
-                Console.WriteLine("Deaw#Dispose");
                 NativeMethods.XftDrawDestroy(handle);
                 handle = IntPtr.Zero;
             }
         }
 
-        public TonNurako.X11.Extension.Picture SrcPicture(XftColor color) {
-            var p = NativeMethods.XftDrawSrcPicture(handle, ref color);
+        public Picture SrcPicture(XftColor color) {
+            var p = NativeMethods.XftDrawSrcPicture(handle, ref color.Record);
             if (0 == p) {
                 return null;
             }
-            return (new X11.Extension.Picture(null, p, false));
+            return (new Picture(null, p, false));
         }
 
         public void DrawString(XftColor color, XftFont pub, int x, int y, string str) => 
@@ -189,8 +188,8 @@ namespace TonNurako.X11.Extension.Xft {
             NativeMethods.XftDrawString32(handle, ref color.Record, pub.Handle, x, y, str, str.Length);
         
 
-        public  void DrawStringUtf8(XftColor color, XftFont pub, int x, int y, string str) =>
-            NativeMethods.XftDrawStringUtf8(handle, ref color.Record, pub.Handle, x, y, str, str.Length);
+        //public  void DrawStringUtf8(XftColor color, XftFont pub, int x, int y, string str) =>
+        //    NativeMethods.XftDrawStringUtf8(handle, ref color.Record, pub.Handle, x, y, str, str.Length);
         
 
         public  void DrawStringUtf16(XftColor color, XftFont pub, int x, int y, string str, FcEndian endian = FcEndian.FcEndianLittle) =>
@@ -227,12 +226,10 @@ namespace TonNurako.X11.Extension.Xft {
 
         public  void SetSubwindowMode(int mode) =>
             NativeMethods.XftDrawSetSubwindowMode(handle, mode);
-        
-
-
+    
 
         #region staticおじさん
-        public static XftDraw XftDrawCreate(Display dpy, IDrawable drawable, Visual visual, int colormap) {
+        public static XftDraw Create(Display dpy, IDrawable drawable, Visual visual, int colormap) {
             var p = NativeMethods.XftDrawCreate(dpy.Handle, drawable.Drawable, visual.Handle, colormap);
             if (IntPtr.Zero == p) {
                 return null;
@@ -240,7 +237,7 @@ namespace TonNurako.X11.Extension.Xft {
             return (new XftDraw(p));
         }
 
-        public static XftDraw XftDrawCreateBitmap(Display dpy, TonNurako.X11.Pixmap bitmap) {
+        public static XftDraw CreateBitmap(Display dpy, TonNurako.X11.Pixmap bitmap) {
             var p = NativeMethods.XftDrawCreateBitmap(dpy.Handle, bitmap.Handle);
             if (IntPtr.Zero == p) {
                 return null;
@@ -248,7 +245,7 @@ namespace TonNurako.X11.Extension.Xft {
             return (new XftDraw(p));
         }
 
-        public static XftDraw XftDrawCreateAlpha(Display dpy, TonNurako.X11.Pixmap pixmap, int depth) {
+        public static XftDraw CreateAlpha(Display dpy, TonNurako.X11.Pixmap pixmap, int depth) {
             var p = NativeMethods.XftDrawCreateAlpha(dpy.Handle, pixmap.Handle, depth);
             if (IntPtr.Zero == p) {
                 return null;
@@ -267,13 +264,16 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
-        // ~XftColor() {
-        //   Dispose(false);
-        // }
+        ~XftDraw() {
+            if (handle != IntPtr.Zero) {
+                throw new ResourceLeakException(this);
+            }
+            Dispose(false);
+        }
 
         public void Dispose() {
             Dispose(true);
-            // GC.SuppressFinalize(this);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TonNurako.X11;
+using TonNurako.X11.Event;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
@@ -28,8 +29,12 @@ namespace TonNurakoTest.X11 {
 
         public void Dispose() {
             if (display != null) {
+                display.SetCloseDownMode(TonNurako.X11.CloseDownMode.DestroyAll);
                 display.Close();
             }
+            TonNurako.X11.Xi.SetIOErrorHandler(null);
+            TonNurako.X11.Xi.SetErrorHandler(null);
+            TonNurako.Application.UnregisterGlobals();
         }
 
         [Fact]
@@ -40,7 +45,6 @@ namespace TonNurakoTest.X11 {
 
             var dpy = TonNurako.X11.Display.Open(null);
             Assert.NotNull(dpy);
-
             Assert.True(dpy.Close() >= 0);
         }
 
@@ -49,7 +53,6 @@ namespace TonNurakoTest.X11 {
             Open();
 
             var dpy = display;
-
 
             Assert.NotNull(dpy.GetDisplayName());
             Assert.NotNull(dpy.DefaultColormap);
@@ -106,5 +109,28 @@ namespace TonNurakoTest.X11 {
 
         }
 
+        [Fact]
+        public void StandardOperation() {
+            Open();
+            var dpy = display;
+            Assert.Equal(XStatus.True, dpy.GrabServer());
+            Assert.Equal(XStatus.True, dpy.UngrabServer());
+            using (var arg = new XEventArg()) {
+                Assert.False(dpy.CheckMaskEvent(EventMask.ExposureMask, arg));
+                Assert.False(dpy.CheckTypedEvent(XEventType.Expose, arg));
+            }
+            KeySym upper, lower;
+            dpy.ConvertCase(KeySym.XK_A, out lower, out upper);
+            Assert.Equal(KeySym.XK_A, upper);
+            Assert.Equal(KeySym.XK_a, lower);
+
+            int min, max;
+            Assert.Equal(XStatus.True, dpy.DisplayKeycodes(out min, out max));
+
+            using (var mod = dpy.GetModifierMapping()) {
+                Assert.NotNull(mod);
+            }
+
+        }
     }
 }

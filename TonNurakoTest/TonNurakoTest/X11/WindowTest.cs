@@ -7,22 +7,23 @@ using TonNurako.X11;
 using Xunit;
 
 namespace TonNurakoTest.X11 {
-    public class WindowTest : AbstractDisplayTest {
+    public class WindowTest : IClassFixture<DisplayFixture> {
 
+        DisplayFixture fix;
         Window window;
         delegate void NopDelegaty();
         Unity unity = new Unity();
 
-        public WindowTest() {
+        public WindowTest(DisplayFixture fixture) {
+            fix = fixture;
         }
 
-        public override void Dispose() {
+        void Close() {
             unity.Asset();
             if (null != window) {
                 window.DestroyWindow();
                 window = null;
             }
-            base.Dispose();
         }
 
         [Fact]
@@ -31,16 +32,13 @@ namespace TonNurakoTest.X11 {
                BeforeCreateWindow: ()=>{
                 },
                 BeforeMapWindow:()=>{
-                    var attr = new TonNurako.X11.XSetWindowAttributes();
-                    attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
-                    Assert.Equal(XStatus.True, window.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr));
                     Assert.Empty(window.GetWMProtocols());
                 },
                 AfterMapWindow: ()=>{}
             );
-            window.DestroyWindow();
-            window = null;
+            Close();
         }
+
         [Fact]
         void StdProps() {
             CreateWindow(
@@ -54,13 +52,13 @@ namespace TonNurakoTest.X11 {
                     Assert.Equal(XStatus.True, window.SetIconName("UNKO"));
                     Assert.Equal("UNKO", window.GetIconName());
 
-                    var color = Color.AllocNamedColor(display, display.DefaultColormap, "green");
+                    var color = Color.AllocNamedColor(fix.Display, fix.Display.DefaultColormap, "green");
                     Assert.NotNull(color);
 
                     Assert.Equal(XStatus.True, window.SetWindowBackground(color));
                     Assert.Equal(XStatus.True, window.SetWindowBorder(color));
 
-                    var pm = new Pixmap(display, window, 100, 100, display.DefaultDepth);
+                    var pm = new Pixmap(fix.Display, window, 100, 100, fix.Display.DefaultDepth);
                     Assert.Equal(XStatus.True, window.SetWindowBackgroundPixmap(pm));
                     Assert.Equal(XStatus.True, window.SetWindowBorderPixmap(pm));
                     unity.Store(pm);
@@ -73,26 +71,25 @@ namespace TonNurakoTest.X11 {
                     Assert.NotNull(window.GetGeometry());
                 }
             );
-            window.DestroyWindow();
-            window = null;
+            Close();
         }
 
         [Fact]
         void Protocols() {
-            var atom = TonNurako.X11.Atom.InternAtom(display, "WM_DELETE_WINDOW", false);
+            var atom = TonNurako.X11.Atom.InternAtom(fix.Display, "WM_DELETE_WINDOW", false);
             Assert.NotNull(atom);
             Assert.Equal("WM_DELETE_WINDOW", atom.Name);
 
-            var atom1 = TonNurako.X11.Atom.InternAtom(display, "WM_DELETE_WINDOW", false);
+            var atom1 = TonNurako.X11.Atom.InternAtom(fix.Display, "WM_DELETE_WINDOW", false);
             Assert.NotNull(atom1);
             Assert.True(atom.Equals(atom1));
 
-            var atom2 = TonNurako.X11.Atom.InternAtom(display, "俺様の考えた最強のﾌﾟﾛﾄｺﾙ", false);
+            var atom2 = TonNurako.X11.Atom.InternAtom(fix.Display, "俺様の考えた最強のﾌﾟﾛﾄｺﾙ", false);
             Assert.NotNull(atom2);
             Assert.False(atom.Equals(atom2));
             Assert.Equal("俺様の考えた最強のﾌﾟﾛﾄｺﾙ", atom2.Name);
 
-            var ass = TonNurako.X11.Atom.InternAtoms(display, new[]{"WM_DELETE_WINDOW", "WM_CLOSE", "WM_FOREACH"}, false);
+            var ass = TonNurako.X11.Atom.InternAtoms(fix.Display, new[]{"WM_DELETE_WINDOW", "WM_CLOSE", "WM_FOREACH"}, false);
             Assert.NotNull(ass);
 
             CreateWindow(
@@ -109,25 +106,25 @@ namespace TonNurakoTest.X11 {
                     Assert.NotEmpty(window.GetWMProtocols());
 
                     using(var rpr = TonNurako.X11.XTextProperty.TextListToTextProperty(
-                        display, new string[] { "たいとる" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle)) {
+                        fix.Display, new string[] { "たいとる" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle)) {
                         Assert.NotNull(rpr);
                         window.SetWMName(rpr);
                     }
                     using(var rpr = TonNurako.X11.XTextProperty.TextListToTextProperty(
-                        display, new string[] { "エイコン" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle)) {
+                        fix.Display, new string[] { "エイコン" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle)) {
                         Assert.NotNull(rpr);
                         window.SetWMIconName(rpr);
                     }
 
                     using(var prpr = window.GetWMName()) {
                         Assert.NotNull(prpr);
-                        var r = prpr.TextPropertyToTextList(display);
+                        var r = prpr.TextPropertyToTextList(fix.Display);
                         Assert.NotNull(r);
                         Assert.Single(r);
                     }
                     using(var prpr = window.GetWMIconName()) {
                         Assert.NotNull(prpr);
-                        var r = prpr.TextPropertyToTextList(display);
+                        var r = prpr.TextPropertyToTextList(fix.Display);
                         Assert.NotNull(r);
                         Assert.Single(r);
                     }
@@ -135,30 +132,29 @@ namespace TonNurakoTest.X11 {
                 },
                 AfterMapWindow: ()=>{}
             );
-            window.DestroyWindow();
-            window = null;
+            Close();
         }
 
         void CreateWindow(
             NopDelegaty BeforeCreateWindow, NopDelegaty BeforeMapWindow, NopDelegaty AfterMapWindow) {
-            var visual = this.display.DefaultVisual;
+            var visual = fix.Display.DefaultVisual;
             Assert.NotNull(visual);
 
             var wsa = new TonNurako.X11.XSetWindowAttributes();
-            wsa.background_pixel = this.display.WhitePixel;
+            wsa.background_pixel = fix.Display.WhitePixel;
             var wam = TonNurako.X11.ChangeWindowAttributes.CWBackPixel;
 
             BeforeCreateWindow();
 
-            this.window = this.display.CreateWindow(
-                this.display.DefaultRootWindow, 50, 50, 50, 50, 0,
-                this.display.DefaultDepth, TonNurako.X11.WindowClass.InputOutput, visual, wam, wsa);
+            this.window = fix.Display.CreateWindow(
+                fix.Display.DefaultRootWindow, 50, 50, 50, 50, 0,
+                fix.Display.DefaultDepth, TonNurako.X11.WindowClass.InputOutput, visual, wam, wsa);
             Assert.NotNull(this.window);
 
             BeforeMapWindow();
 
             Assert.Equal(XStatus.True, this.window.MapWindow());
-            Assert.Equal(XStatus.True, display.Flush());
+            Assert.Equal(XStatus.True, fix.Display.Flush());
 
             AfterMapWindow();
         }

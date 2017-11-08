@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TonNurako.Native;
+using TonNurako.X11.Event;
 
 namespace TonNurako.X11 {
 
@@ -73,12 +74,33 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XAllowEvents_TNK", CharSet = CharSet.Auto)]
             internal static extern int XAllowEvents(IntPtr display, Event.EventMode event_mode, uint time);
 
+            // int: XMaskEvent Display*:display  long:event_mask  XEvent*:event_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XMaskEvent_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XMaskEvent(IntPtr display, EventMask event_mask, [In, Out] IntPtr event_return);
+
+            // Bool: XCheckMaskEvent Display*:display  long:event_mask  XEvent*:event_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckMaskEvent_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XCheckMaskEvent(IntPtr display, EventMask event_mask, [In, Out] IntPtr event_return);
+
+            // Bool: XCheckTypedEvent Display*:display  int:event_type  XEvent*:event_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckTypedEvent_TNK", CharSet = CharSet.Auto)]
+            internal static extern bool XCheckTypedEvent(IntPtr display, Event.XEventType event_type, [In, Out] IntPtr event_return);
+
+            // Status: XSendEvent Display*:display  Window:w  Bool:propagate  long:event_mask  XEvent*:event_send  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSendEvent_TNK", CharSet = CharSet.Auto)]
+            internal static extern int XSendEvent(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.U1)] bool propagate, EventMask event_mask, [In, Out]IntPtr event_send);
+
+            // u_long: XDisplayMotionBufferSize Display*:display  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDisplayMotionBufferSize_TNK", CharSet = CharSet.Auto)]
+            internal static extern ulong XDisplayMotionBufferSize(IntPtr display);
+
+
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateSimpleWindow_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XCreateSimpleWindow(IntPtr display, IntPtr parent, int x, int y, uint width, uint height, uint border_width, ulong border, ulong background);
 
             // Window: XCreateWindow Display*:display Window:parent int:x int:y unsigned int:width unsigned int:height unsigned int:border_width int:depth unsigned int:class Visual*:visual unsigned long:valuemask XSetWindowAttributes*:attributes
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateWindow_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr XCreateWindow(IntPtr display, 
+            internal static extern IntPtr XCreateWindow(IntPtr display,
                 IntPtr parent, int x, int y, uint width, uint height, uint border_width, int depth, WindowClass qlass, [In]IntPtr visual, ChangeWindowAttributes valuemask, ref XSetWindowAttributesRec attributes);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "DefaultColormap_TNK", CharSet = CharSet.Auto)]
@@ -195,13 +217,30 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XKeysymToString_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XKeysymToString(KeySym keysym);
 
+            // void: XConvertCase KeySym:keysym  KeySym*:lower_return  KeySym*:upper_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XConvertCase_TNK", CharSet = CharSet.Auto)]
+            internal static extern void XConvertCase(KeySym keysym, out KeySym lower_return, out KeySym upper_return);
+
+            // int: XDisplayKeycodes Display*:display  int*:min_keycodes_return  int*:max_keycodes_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDisplayKeycodes_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XDisplayKeycodes(IntPtr display, out int min_keycodes_return, out int max_keycodes_return);
+
+            // int: XSetModifierMapping Display*:display  XModifierKeymap*:modmap  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetModifierMapping_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XSetModifierMapping(IntPtr display, IntPtr modmap);
+
+            // XModifierKeymap*: XGetModifierMapping Display*:display  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetModifierMapping_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XGetModifierMapping(IntPtr display);
+
+
             // int: XGrabServer [{'type': 'Display*', 'name': 'display'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGrabServer_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XGrabServer(IntPtr display);
+            internal static extern XStatus XGrabServer(IntPtr display);
 
             // int: XUngrabServer [{'type': 'Display*', 'name': 'display'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XUngrabServer_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XUngrabServer(IntPtr display);
+            internal static extern XStatus XUngrabServer(IntPtr display);
 
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGrabKey_TNK", CharSet = CharSet.Auto)]
@@ -211,12 +250,24 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XUngrabKey_TNK", CharSet = CharSet.Auto)]
             internal static extern int XUngrabKey(IntPtr display, int keycode, uint modifiers, IntPtr grab_window);
 
-
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGrabButton_TNK", CharSet = CharSet.Auto)]
             internal static extern int XGrabButton(IntPtr display, uint button, uint modifiers, IntPtr grab_window, [MarshalAs(UnmanagedType.U1)] bool owner_events, EventMask event_mask, GrabMode pointer_mode, GrabMode keyboard_mode, IntPtr confine_to, int cursor);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XUngrabButton_TNK", CharSet = CharSet.Auto)]
             internal static extern int XUngrabButton(IntPtr display, uint button, uint modifiers, IntPtr grab_window);
+
+            // int: XSetInputFocus Display*:display  Window:focus  int:revert_to  Time:time  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XSetInputFocus_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XSetInputFocus(IntPtr display, IntPtr focus, RevertTo revert_to, uint time);
+
+            // int: XGetInputFocus Display*:display  Window*:focus_return  int*:revert_to_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetInputFocus_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XGetInputFocus(IntPtr display, out IntPtr focus_return, out RevertTo revert_to_return);
+
+            // int: XWarpPointer Display*:display  Window:src_w  Window:dest_w  int:src_x  int:src_y  unsigned int:src_width  unsigned int:src_height  int:dest_x  int:dest_y  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XWarpPointer_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XWarpPointer(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, uint src_width, uint src_height, int dest_x, int dest_y);
+
 
 
             // int: XGetErrorText [{'type': 'Display*', 'name': 'display'}, {'type': 'int', 'name': 'code'}, {'type': 'char*', 'name': 'buffer_return'}, {'type': 'int', 'name': 'length'}]
@@ -316,13 +367,13 @@ namespace TonNurako.X11 {
             return NativeMethods.XPending(display);
         }
 
-        public int GrabServer() {
-            return NativeMethods.XGrabServer(display);
-        }
+        public XStatus GrabServer() =>
+            NativeMethods.XGrabServer(display);
 
-        public int UngrabServer() {
-            return NativeMethods.XUngrabServer(display);
-        }
+
+        public XStatus UngrabServer() =>
+            NativeMethods.XUngrabServer(display);
+
 
         public string GetDisplayName() {
             return GetDisplayName(null);
@@ -401,6 +452,23 @@ namespace TonNurako.X11 {
         public string KeysymToString(KeySym keysym)
             => Marshal.PtrToStringAnsi(NativeMethods.XKeysymToString(keysym));
 
+        public void ConvertCase(KeySym keysym, out KeySym lower_return, out KeySym upper_return) =>
+            NativeMethods.XConvertCase(keysym, out lower_return, out upper_return);
+
+        public XStatus DisplayKeycodes(out int min_keycodes_return, out int max_keycodes_return) =>
+            NativeMethods.XDisplayKeycodes(this.Handle, out min_keycodes_return, out max_keycodes_return);
+
+
+        // int: XSetModifierMapping Display*:display  XModifierKeymap*:modmap  
+        public XStatus SetModifierMapping(XModifierKeymap modmap) =>
+            NativeMethods.XSetModifierMapping(display, modmap.Handle);
+
+
+        // XModifierKeymap*: XGetModifierMapping Display*:display  
+        public XModifierKeymap GetModifierMapping() =>
+            XModifierKeymap.WR(NativeMethods.XGetModifierMapping(Handle));
+
+
         public int GrabKey(int keycode, uint modifiers, bool owner_events, GrabMode pointer_mode, GrabMode keyboard_mode) =>
             NativeMethods.XGrabKey(
                 this.Handle, keycode, modifiers, this.Handle, owner_events, pointer_mode, keyboard_mode);
@@ -416,6 +484,26 @@ namespace TonNurako.X11 {
         public int UngrabButton(uint button, uint modifiers) =>
             NativeMethods.XUngrabButton(this.Handle, button, modifiers, this.Handle);
 
+        public XStatus SetInputFocus(Window focus, RevertTo revert_to, uint time) =>
+            NativeMethods.XSetInputFocus(this.Handle, focus.Handle, revert_to, time);
+
+        public XStatus WarpPointer(Window src_w, Window dest_w, int src_x, int src_y, uint src_width, uint src_height, int dest_x, int dest_y) =>
+            NativeMethods.XWarpPointer(this.Handle, 
+                (null != src_w) ? src_w.Handle : IntPtr.Zero , dest_w.Handle, src_x, src_y, src_width, src_height, dest_x, dest_y);
+
+
+        public XFocusInfo GetInputFocus() {
+            IntPtr focus_return;
+            RevertTo revert_to_return;
+            if (XStatus.True != NativeMethods.XGetInputFocus(this.Handle, out focus_return, out revert_to_return)) {
+                return null;
+            }
+            return (new XFocusInfo(this, focus_return, revert_to_return));
+        }
+
+
+
+
         public int NextEvent(TonNurako.X11.Event.XEventArg ev) {
             IntPtr p = IntPtr.Zero;
             var r = NativeMethods.XNextEvent(Handle, ev.handle);
@@ -427,6 +515,37 @@ namespace TonNurako.X11 {
             ev.Assign();
             return r;
         }
+
+        public int MaskEvent(EventMask event_mask, TonNurako.X11.Event.XEventArg ev) {
+            var r = NativeMethods.XMaskEvent(Handle, event_mask, ev.Handle);
+            ev.Assign();
+            return r;
+        }
+
+        public bool CheckMaskEvent(EventMask event_mask, XEventArg ev) {
+            var r = NativeMethods.XCheckMaskEvent(Handle, event_mask, ev.Handle);
+            ev.Assign();
+            return r;
+        }
+        
+        public bool CheckTypedEvent(Event.XEventType event_type, XEventArg ev) {
+            var r = NativeMethods.XCheckTypedEvent(Handle, event_type, ev.Handle);
+            ev.Assign();
+            return r;
+        }
+
+        //TODO： どうすっか考え中
+        public int SendEvent(Window w, bool propagate, EventMask event_mask, XEventArg event_send) {
+            throw new NotImplementedException();
+            // NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, event_send);
+        }
+
+
+
+        public ulong DisplayMotionBufferSize() =>
+            NativeMethods.XDisplayMotionBufferSize(Handle);
+
+
 
         public int AllowEvents(Event.EventMode mode, uint time) => NativeMethods.XAllowEvents(Handle, mode, time);
 
@@ -473,6 +592,20 @@ namespace TonNurako.X11 {
             return (new Window(w, this));
         }
     }
+
+    public class XFocusInfo {
+        Window window;
+        public Window Window => window;
+
+        RevertTo revert;
+        RevertTo RevertTo => revert;
+
+        public XFocusInfo(Display dpy, IntPtr window, RevertTo revert) {
+            this.window = new Window(window, dpy);
+            this.revert = revert;
+        }
+    }
+
     public class XCoordinates : IDisposable {
         internal IntPtr child = IntPtr.Zero;
 
