@@ -115,6 +115,7 @@
     <Compile Include="TonNurako\Native\X11\Font.cs" />
     <Compile Include="TonNurako\Native\X11\GC.cs" />
     <Compile Include="TonNurako\Native\X11\Mask.cs" />
+    <Compile Include="TonNurako\Native\X11\ModifierKeymap.cs" />
     <Compile Include="TonNurako\Native\X11\Mui.cs" />
     <Compile Include="TonNurako\Native\X11\Pixmap.cs" />
     <Compile Include="TonNurako\Native\X11\Region.cs" />

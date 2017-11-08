@@ -66,6 +66,7 @@
     <Compile Include="X11\Ext\Ext.Xft.cs" />
     <Compile Include="X11\GCTest.cs" />
     <Compile Include="Fixture\WindowFixture.cs" />
+    <Compile Include="X11\WindowOperationTest.cs" />
     <Compile Include="X11\XFontTest.cs" />
     <Compile Include="X11\WindowTest.cs" />
     <Compile Include="X11\PixmapTest.cs" />

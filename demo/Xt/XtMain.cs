@@ -50,7 +50,7 @@ namespace Frogram {
 
         private void Program_RealizedEvent(object sender, TonNurako.Events.TnkEventArgs e) {
             var dpy = this.Handle.Display;
-            xftDraw = TonNurako.X11.Extension.Xft.XftDraw.XftDrawCreate(dpy, this.Handle, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
+            xftDraw = TonNurako.X11.Extension.Xft.XftDraw.Create(dpy, this.Handle, dpy.DefaultVisual, dpy.DefaultColormap.Handle);
             if (null == xftDraw) {
                 Console.WriteLine("XftDrawCreate Failed");
                 return;

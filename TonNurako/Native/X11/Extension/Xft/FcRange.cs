@@ -10,25 +10,25 @@ namespace TonNurako.X11.Extension.Xft {
 #if USE_FC22
     public class FcRange : IX11Interop, IDisposable {
         internal static class NativeMethods {
-            // FcRange*: FcRangeCreateDouble double:begin  double:end  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeCreateDouble_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr FcRangeCreateDouble(double begin, double end);
+            // FcRange*: FcRangeCreateDouble double:begin  double:end
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeCreateDouble_TNK", CharSet = CharSet.Auto)]
+            //internal static extern IntPtr FcRangeCreateDouble(double begin, double end);
 
-            // FcRange*: FcRangeCreateInteger FcChar32:begin  FcChar32:end  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeCreateInteger_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr FcRangeCreateInteger(uint begin, uint end);
+            // FcRange*: FcRangeCreateInteger FcChar32:begin  FcChar32:end
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeCreateInteger_TNK", CharSet = CharSet.Auto)]
+            //internal static extern IntPtr FcRangeCreateInteger(uint begin, uint end);
 
-            // void: FcRangeDestroy FcRange*:range  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeDestroy_TNK", CharSet = CharSet.Auto)]
-            internal static extern void FcRangeDestroy(IntPtr range);
+            // void: FcRangeDestroy FcRange*:range
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeDestroy_TNK", CharSet = CharSet.Auto)]
+            //internal static extern void FcRangeDestroy(IntPtr range);
 
-            // FcRange*: FcRangeCopy const FcRange*:r  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeCopy_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr FcRangeCopy(IntPtr r);
+            // FcRange*: FcRangeCopy const FcRange*:r
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeCopy_TNK", CharSet = CharSet.Auto)]
+            //internal static extern IntPtr FcRangeCopy(IntPtr r);
 
-            // FcBool: FcRangeGetDouble const FcRange*:range  double*:begin  double*:end  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeGetDouble_TNK", CharSet = CharSet.Auto)]
-            internal static extern bool FcRangeGetDouble(IntPtr range, out double begin, out double end);
+            // FcBool: FcRangeGetDouble const FcRange*:range  double*:begin  double*:end
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "FcRangeGetDouble_TNK", CharSet = CharSet.Auto)]
+            //internal static extern bool FcRangeGetDouble(IntPtr range, out double begin, out double end);
         }
 
         IntPtr handle = IntPtr.Zero;
@@ -41,7 +41,7 @@ namespace TonNurako.X11.Extension.Xft {
         }
         internal static FcRange WR(IntPtr ptr) => (IntPtr.Zero != ptr) ? (new FcRange(ptr)) : null;
 
-        public static FcRange CreateDouble(double begin, double end) 
+        public static FcRange CreateDouble(double begin, double end)
             => WR(NativeMethods.FcRangeCreateDouble(begin, end));
 
 
