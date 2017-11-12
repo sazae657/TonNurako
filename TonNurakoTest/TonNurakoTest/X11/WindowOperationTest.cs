@@ -34,8 +34,19 @@ namespace TonNurakoTest.X11 {
             }
 
             Assert.Equal(XStatus.True, fix.Display.WarpPointer(null, fix.Window, 0, 0, 0, 0, 100, 100));
-            
 
+            Assert.NotNull(fix.Window.GetMotionEvents(0, 0));
+        }
+
+        [Fact]
+        public void CursorTest() {
+            var window = fix.Window;
+            Assert.NotNull(window);
+            using (var c = Cursor.CreateFontCursor(fix.Display, XCursorShape.XC_arrow)) {
+                Assert.NotNull(c);
+                Assert.Equal(XStatus.True, window.DefineCursor(c));
+                Assert.Equal(XStatus.True, window.UndefineCursor());
+            }
         }
     }
 }

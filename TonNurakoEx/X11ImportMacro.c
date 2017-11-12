@@ -19,7 +19,6 @@ TNK_EXPORT void TNK_SetXModifierKeymap_Modifiermap(XModifierKeymap* p, const int
     p->modifiermap[index] = val;
 }
 
-
 TNK_EXPORT Status XStringListToTextProperty_TNK(char* *list, int count, XTextProperty* text_prop_return) {
     return XStringListToTextProperty(list,count,text_prop_return);
 }

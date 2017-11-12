@@ -200,6 +200,9 @@ namespace TonNurako.X11 {
             internal static extern bool XCheckTypedWindowEvent(IntPtr display, IntPtr w, Event.XEventType event_type, [In, Out] IntPtr event_return);
 
 
+            // XTimeCoord*: XGetMotionEvents Display*:display  Window:w  Time:start  Time:stop  int*:nevents_return  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XGetMotionEvents_TNK", CharSet = CharSet.Auto)]
+            internal static extern IntPtr XGetMotionEvents(IntPtr display, IntPtr w, uint start, uint stop, out int nevents_return);
 
             // int: XConfigureWindow [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'unsigned', 'name': 'value_mask'}, {'type': 'XWindowChanges*', 'name': 'changes'}]
             [DllImport(ExtremeSports.Lib, EntryPoint = "XConfigureWindow_TNK", CharSet = CharSet.Auto)]
@@ -221,6 +224,16 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryPointer_TNK", CharSet = CharSet.Auto)]
             internal static extern bool XQueryPointer(
                 IntPtr display, IntPtr w, out IntPtr root_return, out IntPtr child_return, out int root_x_return, out int root_y_return, out int win_x_return, out int win_y_return, out ModifierMask mask_return);
+
+
+            // Status: XDefineCursor Display*:display  Window:w  Cursor:cursor  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XDefineCursor_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XDefineCursor(IntPtr display, IntPtr w, int cursor);
+
+            // Status: XUndefineCursor Display*:display  Window:w  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XUndefineCursor_TNK", CharSet = CharSet.Auto)]
+            internal static extern XStatus XUndefineCursor(IntPtr display, IntPtr w);
+
 
             // int: XGetWindowProperty [{'type': 'Display*', 'name': 'display'}, {'type': 'Window', 'name': 'w'}, {'type': 'Atom', 'name': 'property'}, {'type': 'long', 'name': 'long_offset'}, {'type': 'long', 'name': 'long_length'}, {'type': 'Bool', 'name': 'delete'}, {'type': 'Atom', 'name': 'req_type'}, {'type': 'Atom*', 'name': 'actual_type_return'}, {'type': 'int*', 'name': 'actual_format_return'}, {'type': 'unsigned long*', 'name': 'nitems_return'}, {'type': 'unsigned long*', 'name': 'bytes_after_return'}, {'type': 'unsigned char*', 'name': '*prop_return'}]
             // [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWindowProperty_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
@@ -511,6 +524,17 @@ namespace TonNurako.X11 {
             return r;
         }
 
+        public XTimeCoord[] GetMotionEvents(uint start, uint stop) {
+            int n = 0;
+            var r = NativeMethods.XGetMotionEvents(display.Handle, Handle, start, stop, out n);
+            if (IntPtr.Zero == r || n <= 0) {
+                return null;
+            }
+            //TODO: Free‚·‚é•K—v‚Í–³‚¢‚ç‚µ‚¢‚ª‚Ÿ‚áƒÇ‚¡‚Ì‚Å’²¸’†
+            return Inutility.MarshalHelper.ToStructArray<XTimeCoord>(r, n);
+        }
+
+
         public XWindowAttributes GetWindowAttributes() {
             var rw = new XWindowAttributes(Display);
             var k = NativeMethods.XGetWindowAttributes(this.Display.Handle, Handle, out rw.record);
@@ -547,6 +571,12 @@ namespace TonNurako.X11 {
             return r;
         }
 
+        public XStatus DefineCursor(Cursor cursor) =>
+            NativeMethods.XDefineCursor(this.Display.Handle, this.Handle, cursor.Handle);
+
+
+        public XStatus UndefineCursor() =>
+            NativeMethods.XUndefineCursor(this.Display.Handle, this.Handle);
 
         public Geometry GetGeometry() {
             var g = new Geometry(Display);
@@ -739,3 +769,4 @@ namespace TonNurako.X11 {
         #endregion
     }
 }
+
