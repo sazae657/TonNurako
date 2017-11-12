@@ -92,6 +92,7 @@
     <Compile Include="TonNurako\Native\X11\Atom.cs" />
     <Compile Include="TonNurako\Native\X11\Color.cs" />
     <Compile Include="TonNurako\Native\X11\Colormap.cs" />
+    <Compile Include="TonNurako\Native\X11\Cursor.cs" />
     <Compile Include="TonNurako\Native\X11\Display.cs" />
     <Compile Include="TonNurako\Native\X11\Error.cs" />
     <Compile Include="TonNurako\Native\X11\Event.cs" />

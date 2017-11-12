@@ -108,13 +108,32 @@ TNK_EXPORT XTimeCoord* XGetMotionEvents_TNK(Display* display, Window w, Time sta
     return XGetMotionEvents(display,w,start,stop,nevents_return);
 }
 
-TNK_EXPORT int XDefineCursor_TNK(Display* display, Window w, Cursor cursor) {
+
+TNK_EXPORT Cursor XCreateFontCursor_TNK(Display* display, unsigned int shape) {
+    return XCreateFontCursor(display,shape);
+}
+TNK_EXPORT Cursor XCreatePixmapCursor_TNK(Display* display, Pixmap source, Pixmap mask, XColor* foreground_color, XColor* background_color, unsigned int x, unsigned int y) {
+    return XCreatePixmapCursor(display,source,mask,foreground_color,background_color,x,y);
+}
+TNK_EXPORT Cursor XCreateGlyphCursor_TNK(Display* display, Font source_font, Font mask_font, unsigned int source_char, unsigned int mask_char, XColor* foreground_color, XColor* background_color) {
+    return XCreateGlyphCursor(display,source_font,mask_font,source_char,mask_char,foreground_color,background_color);
+}
+TNK_EXPORT Status XDefineCursor_TNK(Display* display, Window w, Cursor cursor) {
     return XDefineCursor(display,w,cursor);
 }
-
-TNK_EXPORT int XUndefineCursor_TNK(Display* display, Window w) {
+TNK_EXPORT Status XUndefineCursor_TNK(Display* display, Window w) {
     return XUndefineCursor(display,w);
 }
+TNK_EXPORT Status XRecolorCursor_TNK(Display* display, Cursor cursor, XColor* foreground_color, XColor* background_color) {
+    return XRecolorCursor(display,cursor,foreground_color,background_color);
+}
+TNK_EXPORT Status XFreeCursor_TNK(Display* display, Cursor cursor) {
+    return XFreeCursor(display,cursor);
+}
+TNK_EXPORT Status XQueryBestCursor_TNK(Display* display, Drawable d, unsigned int width, unsigned int height, unsigned int* width_return, unsigned int* height_return) {
+    return XQueryBestCursor(display,d,width,height,width_return,height_return);
+}
+
 
 TNK_EXPORT int XChangeKeyboardMapping_TNK(Display* display, int first_keycode, int keysyms_per_keycode, KeySym* keysyms, int num_codes) {
     return XChangeKeyboardMapping(display,first_keycode,keysyms_per_keycode,keysyms,num_codes);
