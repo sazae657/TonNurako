@@ -88,7 +88,7 @@ namespace TonNurako.X11 {
 
             // Status: XSendEvent Display*:display  Window:w  Bool:propagate  long:event_mask  XEvent*:event_send  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSendEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSendEvent(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.U1)] bool propagate, EventMask event_mask, [In, Out]IntPtr event_send);
+            internal static extern int XSendEvent(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.U1)] bool propagate, EventMask event_mask, [In]IntPtr event_send);
 
             // u_long: XDisplayMotionBufferSize Display*:display  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XDisplayMotionBufferSize_TNK", CharSet = CharSet.Auto)]
@@ -535,9 +535,8 @@ namespace TonNurako.X11 {
         }
 
         //TODO： どうすっか考え中
-        public int SendEvent(Window w, bool propagate, EventMask event_mask, XEventArg event_send) {
-            throw new NotImplementedException();
-            // NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, event_send);
+        public int SendEvent(Window w, bool propagate, EventMask event_mask,XEventType type, XSendEventArg event_send) {
+            return NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, event_send.Parallelize(type));
         }
 
 

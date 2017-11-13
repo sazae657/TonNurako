@@ -12,41 +12,41 @@ namespace TonNurako.X11.Event {
     /// ｲﾍﾞﾝﾄ定数
     /// </summary>
     public enum XEventType : int {
-        KeyPress            = TonNurako.X11.Constant.KeyPress,
-        KeyRelease          = TonNurako.X11.Constant.KeyRelease,
-        ButtonPress         = TonNurako.X11.Constant.ButtonPress,
-        ButtonRelease       = TonNurako.X11.Constant.ButtonRelease,
-        MotionNotify        = TonNurako.X11.Constant.MotionNotify,
-        EnterNotify         = TonNurako.X11.Constant.EnterNotify,
-        LeaveNotify         = TonNurako.X11.Constant.LeaveNotify,
-        FocusIn             = TonNurako.X11.Constant.FocusIn,
-        FocusOut            = TonNurako.X11.Constant.FocusOut,
-        KeymapNotify        = TonNurako.X11.Constant.KeymapNotify,
-        Expose              = TonNurako.X11.Constant.Expose,
-        GraphicsExpose      = TonNurako.X11.Constant.GraphicsExpose,
-        NoExpose            = TonNurako.X11.Constant.NoExpose,
-        VisibilityNotify    = TonNurako.X11.Constant.VisibilityNotify,
-        CreateNotify        = TonNurako.X11.Constant.CreateNotify,
-        DestroyNotify       = TonNurako.X11.Constant.DestroyNotify,
-        UnmapNotify         = TonNurako.X11.Constant.UnmapNotify,
-        MapNotify           = TonNurako.X11.Constant.MapNotify,
-        MapRequest          = TonNurako.X11.Constant.MapRequest,
-        ReparentNotify      = TonNurako.X11.Constant.ReparentNotify,
-        ConfigureNotify     = TonNurako.X11.Constant.ConfigureNotify,
-        ConfigureRequest    = TonNurako.X11.Constant.ConfigureRequest,
-        GravityNotify       = TonNurako.X11.Constant.GravityNotify,
-        ResizeRequest       = TonNurako.X11.Constant.ResizeRequest,
-        CirculateNotify     = TonNurako.X11.Constant.CirculateNotify,
-        CirculateRequest    = TonNurako.X11.Constant.CirculateRequest,
-        PropertyNotify      = TonNurako.X11.Constant.PropertyNotify,
-        SelectionClear      = TonNurako.X11.Constant.SelectionClear,
-        SelectionRequest    = TonNurako.X11.Constant.SelectionRequest,
-        SelectionNotify     = TonNurako.X11.Constant.SelectionNotify,
-        ColormapNotify      = TonNurako.X11.Constant.ColormapNotify,
-        ClientMessage       = TonNurako.X11.Constant.ClientMessage,
-        MappingNotify       = TonNurako.X11.Constant.MappingNotify,
-        GenericEvent        = TonNurako.X11.Constant.GenericEvent,
-        LASTEvent           = TonNurako.X11.Constant.LASTEvent,
+        KeyPress = TonNurako.X11.Constant.KeyPress,
+        KeyRelease = TonNurako.X11.Constant.KeyRelease,
+        ButtonPress = TonNurako.X11.Constant.ButtonPress,
+        ButtonRelease = TonNurako.X11.Constant.ButtonRelease,
+        MotionNotify = TonNurako.X11.Constant.MotionNotify,
+        EnterNotify = TonNurako.X11.Constant.EnterNotify,
+        LeaveNotify = TonNurako.X11.Constant.LeaveNotify,
+        FocusIn = TonNurako.X11.Constant.FocusIn,
+        FocusOut = TonNurako.X11.Constant.FocusOut,
+        KeymapNotify = TonNurako.X11.Constant.KeymapNotify,
+        Expose = TonNurako.X11.Constant.Expose,
+        GraphicsExpose = TonNurako.X11.Constant.GraphicsExpose,
+        NoExpose = TonNurako.X11.Constant.NoExpose,
+        VisibilityNotify = TonNurako.X11.Constant.VisibilityNotify,
+        CreateNotify = TonNurako.X11.Constant.CreateNotify,
+        DestroyNotify = TonNurako.X11.Constant.DestroyNotify,
+        UnmapNotify = TonNurako.X11.Constant.UnmapNotify,
+        MapNotify = TonNurako.X11.Constant.MapNotify,
+        MapRequest = TonNurako.X11.Constant.MapRequest,
+        ReparentNotify = TonNurako.X11.Constant.ReparentNotify,
+        ConfigureNotify = TonNurako.X11.Constant.ConfigureNotify,
+        ConfigureRequest = TonNurako.X11.Constant.ConfigureRequest,
+        GravityNotify = TonNurako.X11.Constant.GravityNotify,
+        ResizeRequest = TonNurako.X11.Constant.ResizeRequest,
+        CirculateNotify = TonNurako.X11.Constant.CirculateNotify,
+        CirculateRequest = TonNurako.X11.Constant.CirculateRequest,
+        PropertyNotify = TonNurako.X11.Constant.PropertyNotify,
+        SelectionClear = TonNurako.X11.Constant.SelectionClear,
+        SelectionRequest = TonNurako.X11.Constant.SelectionRequest,
+        SelectionNotify = TonNurako.X11.Constant.SelectionNotify,
+        ColormapNotify = TonNurako.X11.Constant.ColormapNotify,
+        ClientMessage = TonNurako.X11.Constant.ClientMessage,
+        MappingNotify = TonNurako.X11.Constant.MappingNotify,
+        GenericEvent = TonNurako.X11.Constant.GenericEvent,
+        LASTEvent = TonNurako.X11.Constant.LASTEvent,
     }
 
     /// <summary>
@@ -63,24 +63,28 @@ namespace TonNurako.X11.Event {
         SyncBoth = TonNurako.X11.Constant.SyncBoth,
     }
 
+    public interface IXEvent {
+
+    }
+
     /// <summary>
     /// XAnyEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XAnyEvent {
+    public struct XAnyEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
-        public int serial;      //ulong?
+        public ulong serial;      //ulong?
         public int send_event;
         public ulong display;
-        public int window;      //ulong?
+        public ulong window;      //ulong?
     }
 
     /// <summary>
     /// XKeyEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XKeyEvent {
+    public struct XKeyEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -103,7 +107,7 @@ namespace TonNurako.X11.Event {
     /// XButtonEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XButtonEvent {
+    public struct XButtonEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -126,7 +130,7 @@ namespace TonNurako.X11.Event {
     /// XMotionEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XMotionEvent {
+    public struct XMotionEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -149,7 +153,7 @@ namespace TonNurako.X11.Event {
     /// XCrossingEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XCrossingEvent {
+    public struct XCrossingEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -174,7 +178,7 @@ namespace TonNurako.X11.Event {
     /// XFocusChangeEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XFocusChangeEvent {
+    public struct XFocusChangeEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -189,7 +193,7 @@ namespace TonNurako.X11.Event {
     /// XExposeEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XExposeEvent {
+    public struct XExposeEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -206,7 +210,7 @@ namespace TonNurako.X11.Event {
     /// XGraphicsExposeEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XGraphicsExposeEvent {
+    public struct XGraphicsExposeEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -226,7 +230,7 @@ namespace TonNurako.X11.Event {
     /// XNoExposeEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XNoExposeEvent {
+    public struct XNoExposeEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -241,7 +245,7 @@ namespace TonNurako.X11.Event {
     /// XVisibilityEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XVisibilityEvent {
+    public struct XVisibilityEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -255,7 +259,7 @@ namespace TonNurako.X11.Event {
     /// XCreateWindowEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XCreateWindowEvent {
+    public struct XCreateWindowEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -275,7 +279,7 @@ namespace TonNurako.X11.Event {
     /// XDestroyWindowEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XDestroyWindowEvent {
+    public struct XDestroyWindowEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -289,7 +293,7 @@ namespace TonNurako.X11.Event {
     /// XUnmapEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XUnmapEvent {
+    public struct XUnmapEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -304,7 +308,7 @@ namespace TonNurako.X11.Event {
     /// XMapEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XMapEvent {
+    public struct XMapEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -319,7 +323,7 @@ namespace TonNurako.X11.Event {
     /// XMapRequestEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XMapRequestEvent {
+    public struct XMapRequestEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -333,7 +337,7 @@ namespace TonNurako.X11.Event {
     /// XReparentEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XReparentEvent {
+    public struct XReparentEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -351,7 +355,7 @@ namespace TonNurako.X11.Event {
     /// XConfigureEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XConfigureEvent {
+    public struct XConfigureEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -372,7 +376,7 @@ namespace TonNurako.X11.Event {
     /// XGravityEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XGravityEvent {
+    public struct XGravityEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -388,7 +392,7 @@ namespace TonNurako.X11.Event {
     /// XResizeRequestEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XResizeRequestEvent {
+    public struct XResizeRequestEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -403,7 +407,7 @@ namespace TonNurako.X11.Event {
     /// XConfigureRequestEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XConfigureRequestEvent {
+    public struct XConfigureRequestEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -425,7 +429,7 @@ namespace TonNurako.X11.Event {
     /// XCirculateEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XCirculateEvent {
+    public struct XCirculateEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -440,7 +444,7 @@ namespace TonNurako.X11.Event {
     /// XCirculateRequestEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XCirculateRequestEvent {
+    public struct XCirculateRequestEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -455,7 +459,7 @@ namespace TonNurako.X11.Event {
     /// XPropertyEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XPropertyEvent {
+    public struct XPropertyEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -471,7 +475,7 @@ namespace TonNurako.X11.Event {
     /// XSelectionClearEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XSelectionClearEvent {
+    public struct XSelectionClearEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -486,7 +490,7 @@ namespace TonNurako.X11.Event {
     ///  XSelectionRequestEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XSelectionRequestEvent {
+    public struct XSelectionRequestEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -504,7 +508,7 @@ namespace TonNurako.X11.Event {
     ///  XSelectionEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XSelectionEvent {
+    public struct XSelectionEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -521,7 +525,7 @@ namespace TonNurako.X11.Event {
     /// XColormapEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XColormapEvent {
+    public struct XColormapEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -532,20 +536,23 @@ namespace TonNurako.X11.Event {
         public int xnew;
         public int state;
     }
-#region むり
+    #region むり
     /// <summary>
     /// XClientMessageEventData( XClientMessageEvent内のdata共用体)
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct _XClientMessageEventData {
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 20)]
-        [FieldOffset(0)] public byte[] b;
+        [FieldOffset(0)]
+        public byte[] b;
 
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 10)]
-        [FieldOffset(0)] public short[] s;
+        [FieldOffset(0)]
+        public short[] s;
 
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 5)]
-        [FieldOffset(0)] public int[] l;
+        [FieldOffset(0)]
+        public int[] l;
     }
 
     /// <summary>
@@ -565,7 +572,7 @@ namespace TonNurako.X11.Event {
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
         public long[] l;
     }
-#endregion
+    #endregion
 
     /// <summary>
     /// XClientMessageEventData( XClientMessageEvent内のdata共用体)
@@ -603,7 +610,7 @@ namespace TonNurako.X11.Event {
     /// XMappingEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XMappingEvent {
+    public struct XMappingEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -619,7 +626,7 @@ namespace TonNurako.X11.Event {
     ///  XErrorEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XErrorEvent {
+    public struct XErrorEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong display;
@@ -638,7 +645,7 @@ namespace TonNurako.X11.Event {
     /// XKeymapEvent
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct XKeymapEvent {
+    public struct XKeymapEvent : IXEvent {
         [MarshalAs(UnmanagedType.I4)]
         public XEventType type;
         public ulong serial;
@@ -746,46 +753,46 @@ namespace TonNurako.X11.Event {
 
         T CastReturn<T>() {
             Type t = typeof(T);
-            if (! even.ContainsKey(t)) {
+            if (!even.ContainsKey(t)) {
                 even[t] = Marshal.PtrToStructure(Handle, typeof(T));
             }
             return (T)even[t];
         }
 
-        public XAnyEvent            Any => CastReturn<XAnyEvent>();
-        public XKeyEvent            Key => CastReturn<XKeyEvent>();
-        public XButtonEvent         Button => CastReturn<XButtonEvent>();
-        public XMotionEvent         Motion => CastReturn<XMotionEvent>();
-        public XCrossingEvent       Crossing => CastReturn<XCrossingEvent>();
-        public XFocusChangeEvent    FocusChange => CastReturn<XFocusChangeEvent>();
-        public XExposeEvent         Expose => CastReturn<XExposeEvent>();
+        public XAnyEvent Any => CastReturn<XAnyEvent>();
+        public XKeyEvent Key => CastReturn<XKeyEvent>();
+        public XButtonEvent Button => CastReturn<XButtonEvent>();
+        public XMotionEvent Motion => CastReturn<XMotionEvent>();
+        public XCrossingEvent Crossing => CastReturn<XCrossingEvent>();
+        public XFocusChangeEvent FocusChange => CastReturn<XFocusChangeEvent>();
+        public XExposeEvent Expose => CastReturn<XExposeEvent>();
         public XGraphicsExposeEvent GraphicsExpose => CastReturn<XGraphicsExposeEvent>();
-        public XNoExposeEvent       NoExpose => CastReturn<XNoExposeEvent>();
-        public XVisibilityEvent     Visibility => CastReturn<XVisibilityEvent>();
-        public XCreateWindowEvent   CreateWindow => CastReturn<XCreateWindowEvent>();
-        public XDestroyWindowEvent  DestroyWindow => CastReturn<XDestroyWindowEvent>();
-        public XUnmapEvent          Unmap => CastReturn<XUnmapEvent>();
-        public XMapEvent            Map => CastReturn<XMapEvent>();
-        public XMapRequestEvent     MapRequest => CastReturn<XMapRequestEvent>();
-        public XReparentEvent       Reparent => CastReturn<XReparentEvent>();
-        public XConfigureEvent      Configure => CastReturn<XConfigureEvent>();
-        public XGravityEvent        Gravity => CastReturn<XGravityEvent>();
-        public XResizeRequestEvent  ResizeRequest => CastReturn<XResizeRequestEvent>();
+        public XNoExposeEvent NoExpose => CastReturn<XNoExposeEvent>();
+        public XVisibilityEvent Visibility => CastReturn<XVisibilityEvent>();
+        public XCreateWindowEvent CreateWindow => CastReturn<XCreateWindowEvent>();
+        public XDestroyWindowEvent DestroyWindow => CastReturn<XDestroyWindowEvent>();
+        public XUnmapEvent Unmap => CastReturn<XUnmapEvent>();
+        public XMapEvent Map => CastReturn<XMapEvent>();
+        public XMapRequestEvent MapRequest => CastReturn<XMapRequestEvent>();
+        public XReparentEvent Reparent => CastReturn<XReparentEvent>();
+        public XConfigureEvent Configure => CastReturn<XConfigureEvent>();
+        public XGravityEvent Gravity => CastReturn<XGravityEvent>();
+        public XResizeRequestEvent ResizeRequest => CastReturn<XResizeRequestEvent>();
         public XConfigureRequestEvent ConfigureRequest => CastReturn<XConfigureRequestEvent>();
-        public XCirculateEvent      Circulate => CastReturn<XCirculateEvent>();
+        public XCirculateEvent Circulate => CastReturn<XCirculateEvent>();
         public XCirculateRequestEvent CirculateRequest => CastReturn<XCirculateRequestEvent>();
-        public XPropertyEvent       Property => CastReturn<XPropertyEvent>();
+        public XPropertyEvent Property => CastReturn<XPropertyEvent>();
         public XSelectionClearEvent SelectionClear => CastReturn<XSelectionClearEvent>();
         public XSelectionRequestEvent SelectionRequest => CastReturn<XSelectionRequestEvent>();
-        public XSelectionEvent      Selection => CastReturn<XSelectionEvent>();
-        public XColormapEvent       Colormap => CastReturn<XColormapEvent>();
-        public XMappingEvent        Mapping => CastReturn<XMappingEvent>();
-        public XErrorEvent          Error => CastReturn<XErrorEvent>();
-        public XKeymapEvent         Keymap => CastReturn<XKeymapEvent>();
+        public XSelectionEvent Selection => CastReturn<XSelectionEvent>();
+        public XColormapEvent Colormap => CastReturn<XColormapEvent>();
+        public XMappingEvent Mapping => CastReturn<XMappingEvent>();
+        public XErrorEvent Error => CastReturn<XErrorEvent>();
+        public XKeymapEvent Keymap => CastReturn<XKeymapEvent>();
 
         public XClientMessageEvent ClientMessage {
             get {
-                if (! cmSplitted) {
+                if (!cmSplitted) {
                     clientMessageEvent = new XClientMessageEvent();
                     NativeMethods.TNK_IMP_SplitXClientMessageEventData(Handle, out clientMessageEvent);
                     cmSplitted = true;
@@ -824,6 +831,183 @@ namespace TonNurako.X11.Event {
             System.GC.SuppressFinalize(this);
         }
         #endregion
+    }
 
+    public class XSendEventArg : IX11Interop, IDisposable {
+        internal IntPtr handle;
+        public IntPtr Handle => handle;
+        bool handleAllocated = false;
+
+        public XSendEventArg() {
+            handle = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(XEvent)));
+            handleAllocated = true;
+        }
+
+        IntPtr CastReturn<T>(T t) {
+            Marshal.StructureToPtr<T>(t, handle, true);
+            return handle;
+        }
+
+        internal IntPtr Parallelize(XEventType type) {
+            switch (type) {
+                case XEventType.KeyPress:
+                    return CastReturn(Key);
+                case XEventType.KeyRelease:
+                    return CastReturn(Key);
+
+                case XEventType.ButtonPress:
+                    return CastReturn(Button);
+                case XEventType.ButtonRelease:
+                    return CastReturn(Button);
+
+                case XEventType.MotionNotify:
+                    return CastReturn(Motion);
+
+                case XEventType.EnterNotify:
+                    return CastReturn(Crossing);
+                case XEventType.LeaveNotify:
+                    return CastReturn(Crossing);
+
+                case XEventType.FocusIn:
+                    return CastReturn(FocusChange);
+                case XEventType.FocusOut:
+                    return CastReturn(FocusChange);
+
+                case XEventType.KeymapNotify:
+                    return CastReturn(Keymap);
+
+                case XEventType.Expose:
+                    return CastReturn(Expose);
+
+                case XEventType.GraphicsExpose:
+                    return CastReturn(GraphicsExpose);
+
+                case XEventType.NoExpose:
+                    return CastReturn(NoExpose);
+
+                case XEventType.VisibilityNotify:
+                    return CastReturn(Visibility);
+
+                case XEventType.CreateNotify:
+                    return CastReturn(CreateWindow);
+
+                case XEventType.DestroyNotify:
+                    return CastReturn(DestroyWindow);
+
+                case XEventType.UnmapNotify:
+                    return CastReturn(Unmap);
+
+                case XEventType.MapNotify:
+                    return CastReturn(Map);
+
+                case XEventType.MapRequest:
+                    throw new NotImplementedException("MapRequest");
+
+                case XEventType.ReparentNotify:
+                    return CastReturn(Reparent);
+
+                case XEventType.ConfigureNotify:
+                    return CastReturn(Configure);
+
+                case XEventType.ConfigureRequest:
+                    return CastReturn(ConfigureRequest);
+
+                case XEventType.GravityNotify:
+                    return CastReturn(Gravity);
+
+                case XEventType.ResizeRequest:
+                    return CastReturn(ResizeRequest);
+
+                case XEventType.CirculateNotify:
+                    return CastReturn(Circulate);
+
+                case XEventType.CirculateRequest:
+                    return CastReturn(CirculateRequest);
+
+                case XEventType.PropertyNotify:
+                    return CastReturn(Property);
+
+                case XEventType.SelectionClear:
+                    return CastReturn(SelectionClear);
+
+                case XEventType.SelectionRequest:
+                    return CastReturn(SelectionRequest);
+
+                case XEventType.SelectionNotify:
+                    return CastReturn(Selection);
+
+                case XEventType.ColormapNotify:
+                    return CastReturn(Colormap);
+
+                case XEventType.ClientMessage:
+                    throw new NotImplementedException("ClientMessage");
+
+                case XEventType.MappingNotify:
+                    return CastReturn(Mapping);
+
+                case XEventType.GenericEvent:
+                    return CastReturn(Any);
+                default:
+                    throw new ArgumentException($"UNKNOWN Event: {type}");
+            }
+        }
+
+
+        //TODO: XClientMessageEvent保留
+        public XAnyEvent Any;
+        public XKeyEvent Key;
+        public XButtonEvent Button;
+        public XMotionEvent Motion;
+        public XCrossingEvent Crossing;
+        public XFocusChangeEvent FocusChange;
+        public XExposeEvent Expose;
+        public XGraphicsExposeEvent GraphicsExpose;
+        public XNoExposeEvent NoExpose;
+        public XVisibilityEvent Visibility;
+        public XCreateWindowEvent CreateWindow;
+        public XDestroyWindowEvent DestroyWindow;
+        public XUnmapEvent Unmap;
+        public XMapEvent Map;
+        public XMapRequestEvent MapRequest;
+        public XReparentEvent Reparent;
+        public XConfigureEvent Configure;
+        public XGravityEvent Gravity;
+        public XResizeRequestEvent ResizeRequest;
+        public XConfigureRequestEvent ConfigureRequest;
+        public XCirculateEvent Circulate;
+        public XCirculateRequestEvent CirculateRequest;
+        public XPropertyEvent Property;
+        public XSelectionClearEvent SelectionClear;
+        public XSelectionRequestEvent SelectionRequest;
+        public XSelectionEvent Selection;
+        public XColormapEvent Colormap;
+        public XMappingEvent Mapping;
+        public XErrorEvent Error;
+        public XKeymapEvent Keymap;
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                if (handle != IntPtr.Zero) {
+                    if (handleAllocated) {
+                        Marshal.FreeHGlobal(handle);
+                    }
+                    handle = IntPtr.Zero;
+                }
+                disposedValue = true;
+            }
+        }
+
+        ~XSendEventArg() {
+            Dispose(false);
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            System.GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
