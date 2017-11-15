@@ -535,8 +535,22 @@ namespace TonNurako.X11 {
         }
 
         //TODO： どうすっか考え中
-        public int SendEvent(Window w, bool propagate, EventMask event_mask,XEventType type, XSendEventArg event_send) {
-            return NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, event_send.Parallelize(type));
+        public int SendEvent(Window w, bool propagate, EventMask event_mask, XSendEventArg event_send) {
+            return NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, event_send.Parallelize(event_send.Type));
+        }
+
+        public int SendEvent<T>(Window w, bool propagate, EventMask event_mask, T event_send) where T:struct {
+            if (Marshal.SizeOf(typeof(T))  < Marshal.SizeOf(typeof(XAnyEvent))) {
+                throw new ArgumentOutOfRangeException($"小さい杉: {event_send}({Marshal.SizeOf(typeof(T))}) < {Marshal.SizeOf(typeof(XAnyEvent))}");
+            }
+            if (Marshal.SizeOf(typeof(T)) > Marshal.SizeOf(typeof(XEvent))) {
+                throw new ArgumentOutOfRangeException($"大きい杉: {event_send}({Marshal.SizeOf(typeof(T))}) > {Marshal.SizeOf(typeof(XEvent))}");
+            }
+            var p = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(XEvent)));
+            Marshal.StructureToPtr(event_send, p, true);
+            var r = NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, p);
+            Marshal.FreeCoTaskMem(p);
+            return r;
         }
 
 

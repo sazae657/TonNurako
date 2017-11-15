@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TonNurako.Inutility;
@@ -47,6 +48,64 @@ namespace TonNurakoTest.X11 {
                 Assert.Equal(XStatus.True, window.DefineCursor(c));
                 Assert.Equal(XStatus.True, window.UndefineCursor());
             }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct SmallStruct {
+            byte b;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct LargeStrucy {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5800)]
+            byte b;
+        }
+
+        int ProcessEvent(XEventType check) {
+            var dpy = fix.Display;
+            int cn = 0;
+            using (var e = new XEventArg()) {
+                dpy.Sync(false);
+                while (dpy.Pending() > 0) {
+                    dpy.NextEvent(e);
+                    if (e.Type == check) {
+                        cn++;
+                    }
+                }
+            }
+            return cn;
+        }
+
+        [Fact]
+        public void EventTest() {
+            var window = fix.Window;
+            var dpy = fix.Display;
+            Assert.NotNull(window);
+            Assert.NotNull(dpy);
+
+            var ev = new XSendEventArg();
+            ev.Window = window;
+            ev.Display = dpy;
+            ev.Type = XEventType.KeyPress;
+
+            Assert.NotEqual(0, dpy.SendEvent(window, false, EventMask.NoEventMask, ev));
+            Assert.NotEqual(0, ProcessEvent(XEventType.KeyPress));
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => dpy.SendEvent(window, false, EventMask.NoEventMask, new SmallStruct()));
+            Assert.Throws<ArgumentOutOfRangeException>(() => dpy.SendEvent(window, false, EventMask.NoEventMask, new LargeStrucy()));
+
+            var atom = Atom.InternAtom(dpy, "トンヌラジェット", false);
+            Assert.NotNull(atom);
+
+            var ev2 = new XClientMessageEvent();
+            ev2.display = (ulong)dpy.Handle;
+            ev2.window = (ulong)window.Handle;
+            ev2.type = XEventType.ClientMessage;
+            ev2.format = 32;
+            ev2.message_type = atom.Integer;
+            Assert.NotEqual(0, dpy.SendEvent(window, false, EventMask.NoEventMask, ev2));
+            Assert.NotEqual(0, ProcessEvent(XEventType.ClientMessage));
+
         }
     }
 }

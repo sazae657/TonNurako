@@ -59,6 +59,7 @@
     <Compile Include="Ext\Ext.Render.cs" />
     <Compile Include="Ext\Ext.Shape.cs" />
     <Compile Include="Ext\Ext.Xft.cs" />
+    <Compile Include="Ext\Ext.FontConfigTest.cs" />
     <Compile Include="Fixture\DisplayFixture.cs" />
     <Compile Include="Fixture\WindowFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

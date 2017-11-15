@@ -540,17 +540,17 @@ namespace TonNurako.X11.Event {
     /// <summary>
     /// XClientMessageEventData( XClientMessageEvent内のdata共用体)
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit, Size = 40, Pack = 1)]
     public struct _XClientMessageEventData {
-        [MarshalAs(UnmanagedType.LPArray, SizeConst = 20)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
         [FieldOffset(0)]
         public byte[] b;
 
-        [MarshalAs(UnmanagedType.LPArray, SizeConst = 10)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         [FieldOffset(0)]
         public short[] s;
 
-        [MarshalAs(UnmanagedType.LPArray, SizeConst = 5)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
         [FieldOffset(0)]
         public int[] l;
     }
@@ -704,7 +704,7 @@ namespace TonNurako.X11.Event {
 
         internal static class NativeMethods {
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_IMP_SplitXClientMessageEventData", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-            internal static extern IntPtr TNK_IMP_SplitXClientMessageEventData(IntPtr src, [Out] out XClientMessageEvent ev);
+            internal static extern IntPtr TNK_IMP_SplitXClientMessageEventData(IntPtr src, ref XClientMessageEvent ev, [In,Out]IntPtr datum);
         }
 
         internal IntPtr handle;
@@ -794,7 +794,7 @@ namespace TonNurako.X11.Event {
             get {
                 if (!cmSplitted) {
                     clientMessageEvent = new XClientMessageEvent();
-                    NativeMethods.TNK_IMP_SplitXClientMessageEventData(Handle, out clientMessageEvent);
+                    NativeMethods.TNK_IMP_SplitXClientMessageEventData(Handle, ref clientMessageEvent, IntPtr.Zero);
                     cmSplitted = true;
                     //var k = Marshal.PtrToStructure<_XClientMessageEvent>(Handle);
                     //clientMessageEvent.data.b = new byte[20];
@@ -834,6 +834,13 @@ namespace TonNurako.X11.Event {
     }
 
     public class XSendEventArg : IX11Interop, IDisposable {
+
+        internal static class NativeMethods {
+            [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_AssembleEventArg", CharSet = CharSet.Auto)]
+            internal static extern void TNK_AssembleEventArg([In,Out] IntPtr e, XEventType type, IntPtr display, IntPtr window);
+        }
+
+
         internal IntPtr handle;
         public IntPtr Handle => handle;
         bool handleAllocated = false;
@@ -843,8 +850,13 @@ namespace TonNurako.X11.Event {
             handleAllocated = true;
         }
 
+        public Display Display { get; set; }
+        public Window Window { get; set; }
+        public XEventType Type { get; set; }
+
         IntPtr CastReturn<T>(T t) {
             Marshal.StructureToPtr<T>(t, handle, true);
+            NativeMethods.TNK_AssembleEventArg(handle, Type, Display.Handle, Window.Handle);
             return handle;
         }
 
@@ -939,9 +951,18 @@ namespace TonNurako.X11.Event {
                 case XEventType.ColormapNotify:
                     return CastReturn(Colormap);
 
-                case XEventType.ClientMessage:
-                    throw new NotImplementedException("ClientMessage");
-
+                case XEventType.ClientMessage:  {
+                        var x = new _XClientMessageEvent();
+                        x.type = ClientMessage.type;
+                        x.serial = ClientMessage.serial;
+                        x.send_event = ClientMessage.send_event;
+                        x.display = ClientMessage.display;
+                        x.window = ClientMessage.window;
+                        x.message_type = ClientMessage.message_type;
+                        x.format = ClientMessage.format;
+                        x.l = ClientMessage.data.l; // TODO:いやまじ無理
+                        return CastReturn(x);
+                    }
                 case XEventType.MappingNotify:
                     return CastReturn(Mapping);
 
@@ -984,6 +1005,7 @@ namespace TonNurako.X11.Event {
         public XMappingEvent Mapping;
         public XErrorEvent Error;
         public XKeymapEvent Keymap;
+        public XClientMessageEvent ClientMessage;
 
         #region IDisposable Support
         private bool disposedValue = false;

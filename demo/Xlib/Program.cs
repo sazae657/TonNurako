@@ -143,12 +143,12 @@ namespace Xlib {
             var rpr = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "たいとる" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
             DumpProperty(rpr);
             win.SetWMName(rpr);
-
+            rpr.Dispose();
             var rpr2 = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "エイコン" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
             win.SetWMIconName(rpr2);
             //win.SetWMProperties("なまえ", "ダイコン", args);
             win.StoreName("UNPO");
-
+            rpr2.Dispose();
 
             Console.WriteLine($"InputSelected(1): {TonNurako.X11.Extension.XShape.InputSelected(dpy, win)}");
 
@@ -162,9 +162,11 @@ namespace Xlib {
             win.MapWindow();
             dpy.Flush();
 
-            win.GetWMName();
-            foreach (var k in win.GetWMIconName().TextPropertyToTextList(dpy)) {
-                Console.WriteLine($"XGetWMIconName: {k}");
+            using (win.GetWMName()) { } ;
+            using(var wn = win.GetWMIconName()) {
+                foreach (var k in wn.TextPropertyToTextList(dpy)) {
+                    Console.WriteLine($"XGetWMIconName: {k}");
+                }
             }
 
             Console.WriteLine($"FetchName: {win.FetchName()}");
