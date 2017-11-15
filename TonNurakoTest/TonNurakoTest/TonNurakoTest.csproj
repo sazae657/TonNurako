@@ -62,7 +62,6 @@
     <Compile Include="Fixture\DisplayFixture.cs" />
     <Compile Include="X11\DisplayTest.cs" />
     <Compile Include="X11\DrawCallContainer.cs" />
-    <Compile Include="X11\Ext.FontConfigTest.cs" />
     <Compile Include="X11\GCTest.cs" />
     <Compile Include="Fixture\WindowFixture.cs" />
     <Compile Include="X11\WindowOperationTest.cs" />

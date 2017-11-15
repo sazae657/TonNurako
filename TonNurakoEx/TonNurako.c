@@ -192,10 +192,11 @@ void TNK_IMP_Flush(LPTNK_APP_CONTEXT app, Widget widget) {
     XFlush(XtDisplay(widget));
 }
 
-void TNK_IMP_SplitXClientMessageEventData(
-    const XClientMessageEvent* src, TNK_XClientMessageEventData* ev)
-{
+#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
+void TNK_IMP_SplitXClientMessageEventData(
+    const XClientMessageEvent* src, TNK_XClientMessageEventData* ev, TNK_XClientMessageEventStudio* studio)
+{
     memset(ev, 0xcc, sizeof(TNK_XClientMessageEventData));
 
     memcpy(&ev->event, src, sizeof(XClientMessageEvent));

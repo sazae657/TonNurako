@@ -156,6 +156,14 @@ _tagTNK_XClientMessageEventData
     } data;
 }TNK_XClientMessageEventData;
 
+typedef union
+_tagTNK_XClientMessageEventStudio
+{
+    char b[20];
+    short s[10];
+    long l[5];
+}TNK_XClientMessageEventStudio;
+
 
 #ifdef __cplusplus
 }

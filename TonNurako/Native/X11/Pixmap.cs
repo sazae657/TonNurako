@@ -168,12 +168,13 @@ namespace TonNurako.X11 {
             System.GC.SuppressFinalize(this);
         }
 
+        /*
         ~Pixmap() {
             if (drawable != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
-        }
+        }*/
 
         protected virtual void Dispose(bool disposing) {
             if (IntPtr.Zero != drawable) {
