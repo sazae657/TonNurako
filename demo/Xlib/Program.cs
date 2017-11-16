@@ -45,7 +45,6 @@ namespace Xlib {
                 return;
             }
             Console.WriteLine($"SetLocale=>{loc}");
-            TonNurako.X11.Xi.PrintWCS_TNK("PrintWCS_TNK");
 
             if (!TonNurako.X11.Xi.SupportsLocale()) {
                 Console.WriteLine("Current locale is not supported");

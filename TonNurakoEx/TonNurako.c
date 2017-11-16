@@ -10,9 +10,6 @@ unsigned int TNK_GetVersion()
     return (TONNURAKO_EX_MAJOR_VERSION * 1000 + TONNURAKO_EX_MINOR_VERSION);
 }
 
-TNK_EXPORT void PrintWCS_TNK(wchar_t *str) {
-    printf("%ls\n", str);
-}
 
 TNK_EXPORT
 unsigned int TNK_GetMotifVersion() {

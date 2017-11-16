@@ -204,16 +204,7 @@ namespace TonNurako.X11
             internal static extern void XFreeStringList([In]IntPtr list);
 
             */
-
-            [DllImport(ExtremeSports.Lib, EntryPoint = "PrintWCS_TNK", CharSet = CharSet.Auto)]
-            internal static extern void PrintWCS_TNK([MarshalAs(UnmanagedType.LPWStr)] string locale);
-        }
-
-
-
-        public static void PrintWCS_TNK(string data) {
-            NativeMethods.PrintWCS_TNK(data);
-        }
+       }
 
         public static void SetErrorHandler(XErrorHandler handler) {
             if (null == handler) {

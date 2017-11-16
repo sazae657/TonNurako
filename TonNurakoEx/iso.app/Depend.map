@@ -295,7 +295,6 @@ XGetGeometry_TNK
 XStringListToTextProperty_TNK
 XTextPropertyToStringList_TNK
 XFreeStringList_TNK
-PrintWCS_TNK
 XRenderQueryExtension_TNK
 XRenderQueryVersion_TNK
 XRenderFindVisualFormat_TNK
