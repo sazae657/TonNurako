@@ -228,8 +228,8 @@ namespace Xlib {
 
                     case TonNurako.X11.Event.XEventType.ClientMessage:
                         TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage,(s)=>Console.WriteLine(s));
-                        TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage.data,(s)=>Console.WriteLine(s));
-                        if (atom.Equals(ev.ClientMessage.data.l[0])) {
+                        TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage.Data,(s)=>Console.WriteLine(s));
+                        if (atom.Equals(ev.ClientMessage.Data.L[0])) {
                             xftDraw.Dispose();
                             win.DestroyWindow();
                             break;
@@ -255,11 +255,11 @@ namespace Xlib {
 
                     case TonNurako.X11.Event.XEventType.KeyPress:
                         DumpStruct(ev.Key);
-                        Console.WriteLine($"KS=     {dpy.KeycodeToKeysym(ev.Key.keycode,0,0)}");
-                        Console.WriteLine($"KS=>KC  {dpy.KeysymToKeycode(dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0))}");
-                        Console.WriteLine($"KS=>STR {dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0))}");
-                        Console.WriteLine($"STR=>KS {dpy.StringToKeysym(dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0)))}");
-                        var ks = dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0);
+                        Console.WriteLine($"KS=     {dpy.KeycodeToKeysym(ev.Key.KeyCode,0,0)}");
+                        Console.WriteLine($"KS=>KC  {dpy.KeysymToKeycode(dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0))}");
+                        Console.WriteLine($"KS=>STR {dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0))}");
+                        Console.WriteLine($"STR=>KS {dpy.StringToKeysym(dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0)))}");
+                        var ks = dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0);
                         if (ks == TonNurako.X11.KeySym.XK_Escape) {
                             win.DestroyWindow();
                         }

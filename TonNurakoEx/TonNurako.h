@@ -29,10 +29,6 @@
 #include <X11/XKBlib.h>
 #include <fontconfig/fontconfig.h>
 
-#if defined(TNK_USE_LIBXPM)
-#include <X11/xpm.h>
-#endif
-
 
 #define TONNURAKO_EX_MAJOR_VERSION 1
 #define TONNURAKO_EX_MINOR_VERSION 0
@@ -87,16 +83,6 @@ tagTNK_CODE {
 /*----------------------------------------------------------------------------
 "C"ｽﾀｲﾙのﾀﾞｻい関数群
 -----------------------------------------------------------------------------*/
-#if defined(TNK_USE_LIBXPM)
-typedef struct
-tagTNK_PIXMAX
-{
-    Display* dpy;
-    Pixmap pix;
-    Pixmap mask;
-    XpmAttributes* attr;
-}TNK_PIXMAX;
-#endif
 
 //AppContext周りの情報を格納する
 typedef struct

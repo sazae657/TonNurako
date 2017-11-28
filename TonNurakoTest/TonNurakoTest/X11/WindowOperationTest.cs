@@ -24,6 +24,7 @@ namespace TonNurakoTest.X11 {
 
         [Fact]
         public void InputFocus() {
+            Assert.Equal(XStatus.True, fix.Window.RaiseWindow());
             Assert.Equal(XStatus.True, fix.Display.SetInputFocus(fix.Window, RevertTo.Parent, 0));
             var f = fix.Display.GetInputFocus();
             Assert.NotNull(f);
@@ -98,11 +99,11 @@ namespace TonNurakoTest.X11 {
             Assert.NotNull(atom);
 
             var ev2 = new XClientMessageEvent();
-            ev2.display = (ulong)dpy.Handle;
-            ev2.window = (ulong)window.Handle;
-            ev2.type = XEventType.ClientMessage;
-            ev2.format = 32;
-            ev2.message_type = atom.Integer;
+            ev2.Display = (ulong)dpy.Handle;
+            ev2.Window = (ulong)window.Handle;
+            ev2.Type = XEventType.ClientMessage;
+            ev2.Format = 32;
+            ev2.MessageType = atom.Integer;
             Assert.NotEqual(0, dpy.SendEvent(window, false, EventMask.NoEventMask, ev2));
             Assert.NotEqual(0, ProcessEvent(XEventType.ClientMessage));
 

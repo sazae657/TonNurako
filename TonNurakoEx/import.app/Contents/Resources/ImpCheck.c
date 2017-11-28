@@ -1,7 +1,4 @@
 #include <Xm/Xm.h>
-#if defined(TNK_USE_LIBXPM)
-#include <X11/xpm.h>
-#endif
 #include <stdio.h>
 #include <AssertMacros.h>
 

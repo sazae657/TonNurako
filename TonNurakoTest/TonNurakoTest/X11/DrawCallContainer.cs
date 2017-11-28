@@ -65,7 +65,7 @@ namespace TonNurakoTest.X11 {
                         window.DestroyWindow();
                         return;
                     case XEventType.ClientMessage:
-                        if (atom.Equals(ev.ClientMessage.data.l[0])) {
+                        if (atom.Equals(ev.ClientMessage.Data.L[0])) {
                             window.DestroyWindow();
                             break;
                         }
