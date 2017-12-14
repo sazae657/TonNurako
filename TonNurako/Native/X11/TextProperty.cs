@@ -60,7 +60,7 @@ namespace TonNurako.X11 {
 
         }
 
-        TextPropEncode encode = TextPropEncode.Mb;
+        //TextPropEncode encode = TextPropEncode.Mb;
 
         internal XTextPropertyRec record;
 
@@ -120,7 +120,7 @@ namespace TonNurako.X11 {
 
         public static XTextProperty TextListToTextProperty(Display dpy, string [] list, XICCEncodingStyle style) {
             var r = new XTextProperty();
-            r.encode = TextPropEncode.Wchar;
+            //r.Encode = TextPropEncode.Wchar;
 
             var arr = new IntPtr[list.Length+1];
             for (int i = 0; i < list.Length; ++i) {

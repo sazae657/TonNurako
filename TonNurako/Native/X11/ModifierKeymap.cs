@@ -84,6 +84,15 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeModifiermap_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XFreeModifiermap(IntPtr modmap);
 
+            #region 保留
+            // int: XChangeKeyboardMapping Display*:display  int:first_keycode  int:keysyms_per_keycode  KeySym*:keysyms  int:num_codes  
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "XChangeKeyboardMapping_TNK", CharSet = CharSet.Auto)]
+            //internal static extern int XChangeKeyboardMapping(IntPtr display, int first_keycode, int keysyms_per_keycode, IntPtr keysyms, int num_codes);
+
+            // KeySym*: XGetKeyboardMapping Display*:display  KeyCode:first_keycode  int:keycode_count  int*:keysyms_per_keycode_return  
+            //[DllImport(ExtremeSports.Lib, EntryPoint = "XGetKeyboardMapping_TNK", CharSet = CharSet.Auto)]
+            //internal static extern IntPtr XGetKeyboardMapping(IntPtr display, int first_keycode, int keycode_count, out IntPtr keysyms_per_keycode_return);
+            #endregion
 
         }
 
@@ -120,6 +129,20 @@ namespace TonNurako.X11 {
             handle = IntPtr.Zero;
             return r;
         }
+
+        #region 保留
+        //
+        // TODO: 扱いが面倒臭いので保留
+        //
+        /*
+        public static int XChangeKeyboardMapping(IntPtr display, int first_keycode, int keysyms_per_keycode, IntPtr keysyms, int num_codes) =>
+            NativeMethods.XChangeKeyboardMapping(display, first_keycode, keysyms_per_keycode, keysyms, num_codes);
+
+
+        public static IntPtr XGetKeyboardMapping(IntPtr display, int first_keycode, int keycode_count, out IntPtr keysyms_per_keycode_return) =>
+            NativeMethods.XGetKeyboardMapping(display, first_keycode, keycode_count, keysyms_per_keycode_return);
+        */
+        #endregion
 
 
         #region IDisposable Support

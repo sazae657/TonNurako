@@ -1,7 +1,4 @@
 #include <Xm/Xm.h>
-#if defined(TNK_USE_LIBXPM)
-#include <X11/xpm.h>
-#endif
 #include <stdio.h>
 #include <AssertMacros.h>
 
@@ -9,6 +6,7 @@
 
 int main(int argc, char** argv)
 {
+    #ifndef __APPLE__
     int retVal;
 
     XtToolkitInitialize();
@@ -17,7 +15,8 @@ int main(int argc, char** argv)
         fprintf(stderr, "ImpCheck: XtTest FAILED(%d)\n", retVal);
         return retVal;
     }
-
     fprintf(stderr, "ImpCheck OK\n");
+
+    #endif
     return 0;
 }

@@ -139,14 +139,14 @@ namespace XShape {
                         if(null == gc) {
                             gc = unity.Store(new TonNurako.GC.GraphicsContext(win));
                         }
-                        if(ev.Expose.count ==0) {
+                        if(ev.Expose.Count ==0) {
                             gc.PutImage(bg, 0, 0, 8,8);
                         }
                         //dpy.Flush();
                         break;
 
                     case TonNurako.X11.Event.XEventType.ClientMessage:
-                        if (atom.Equals(ev.ClientMessage.data.l[0])) {
+                        if (atom.Equals(ev.ClientMessage.Data.L[0])) {
                             win.DestroyWindow();
                             break;
                         }
@@ -161,7 +161,7 @@ namespace XShape {
                         break;
 
                     case TonNurako.X11.Event.XEventType.KeyPress:
-                        var ks = dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0);
+                        var ks = dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0);
                         if (ks == TonNurako.X11.KeySym.XK_Escape) {
                             win.DestroyWindow();
                         }
