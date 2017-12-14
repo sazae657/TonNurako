@@ -13,6 +13,7 @@
 int
 main(int argc, char** argv)
 {
+    #ifndef __APPLE__
     int retVal;
     XtToolkitInitialize();
 
@@ -27,5 +28,6 @@ main(int argc, char** argv)
     }
 
     fprintf(stderr, "LibCheck OK\n");
+    #endif
     return 0;
 }

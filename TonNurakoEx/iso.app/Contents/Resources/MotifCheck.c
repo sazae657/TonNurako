@@ -10,6 +10,7 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    #ifndef __APPLE__
     XtToolkitInitialize();
 
     if (0 != (retVal = XtTest(argc, argv))) {
@@ -18,5 +19,7 @@ int main(int argc, char** argv)
     }
 
     fprintf(stderr, "Motif OK ver:%d\n", xmUseVersion);
+    #endif
+
     return 0;
 }
