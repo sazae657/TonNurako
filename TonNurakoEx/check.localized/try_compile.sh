@@ -44,9 +44,9 @@ FK="NO"
 for K in ${PREFIX[@]}
 do
 	#echo "PP $K"
-	PP="-I${K}/include"
+	PP="-I${K}/include ${AIPP}"
 	#echo "try ${PP}"
-	cc -c -o ${KWD}/o.o ${PP} ${TSRC} >/dev/null 2>&1  || continue
+	cc -c -o ${KWD}/o.o ${PP} ${TSRC}  || continue
 	FOUND_INC="-I${K}/include"
 	#echo "LD $K"
 	FK="NO"
@@ -57,7 +57,7 @@ do
 			LL="-L${K}/${W}"
 		fi
 		#echo "try ${LL}"
-		cc -o ${KWD}/a.out ${PP} ${TSRC} ${LL} ${TLIB} >/dev/null 2>&1 || continue
+		cc -o ${KWD}/a.out ${PP} ${TSRC} ${LL} ${TLIB}  || continue
 		if [ "x@" != "x${W}" ];then
 			FOUND_LIB="-L${K}/${W}"
 		fi
