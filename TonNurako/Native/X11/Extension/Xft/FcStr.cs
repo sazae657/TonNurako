@@ -96,7 +96,7 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern IntPtr FcStrSetCreate();
 
             // FcBool: FcStrSetMember FcStrSet*:set  const FcChar8*:s  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetMember_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetMember_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcStrSetMember(IntPtr set, [MarshalAs(UnmanagedType.LPStr)]string s);
 
             // FcBool: FcStrSetEqual FcStrSet*:sa  FcStrSet*:sb  
@@ -104,15 +104,15 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern bool FcStrSetEqual(IntPtr sa, IntPtr sb);
 
             // FcBool: FcStrSetAdd FcStrSet*:set  const FcChar8*:s  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetAdd_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetAdd_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcStrSetAdd(IntPtr set, [MarshalAs(UnmanagedType.LPStr)]string s);
 
             // FcBool: FcStrSetAddFilename FcStrSet*:set  const FcChar8*:s  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetAddFilename_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetAddFilename_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcStrSetAddFilename(IntPtr set, [MarshalAs(UnmanagedType.LPStr)]string s);
 
             // FcBool: FcStrSetDel FcStrSet*:set  const FcChar8*:s  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetDel_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcStrSetDel_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcStrSetDel(IntPtr set, [MarshalAs(UnmanagedType.LPStr)]string s);
 
             // void: FcStrSetDestroy FcStrSet*:set  

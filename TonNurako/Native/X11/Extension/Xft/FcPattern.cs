@@ -24,12 +24,12 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern void FcPatternDestroy(IntPtr p);
 
             // FcPattern*: XftXlfdParse char*:xlfd_orig  Bool:ignore_scalable  Bool:complete
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XftXlfdParse_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftXlfdParse_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XftXlfdParse(
                 [MarshalAs(UnmanagedType.LPStr)] string xlfd_orig, [MarshalAs(UnmanagedType.U1)] bool ignore_scalable, [MarshalAs(UnmanagedType.U1)] bool complete);
 
             // FcPattern*: FcNameParse FcChar8*:name
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcNameParse_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcNameParse_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr FcNameParse([MarshalAs(UnmanagedType.LPStr)]string name);
 
 
@@ -63,71 +63,71 @@ namespace TonNurako.X11.Extension.Xft {
 
 
             // FcBool: FcPatternDel FcPattern*:p  const char*:pbject
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternDel_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternDel_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternDel(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject);
 
             // FcBool: FcPatternRemove FcPattern*:p  const char*:pbject  int:id
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternRemove_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternRemove_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternRemove(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int id);
 
             // FcBool: FcPatternAddInteger FcPattern*:p  const char*:pbject  int:i
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddInteger_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddInteger_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternAddInteger(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int i);
 
             // FcBool: FcPatternAddDouble FcPattern*:p  const char*:pbject  double:d
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddDouble_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddDouble_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternAddDouble(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, double d);
 
             // FcBool: FcPatternAddString FcPattern*:p  const char*:pbject  const FcChar8*:s
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddString_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddString_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternAddString(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, [MarshalAs(UnmanagedType.LPStr)]string s);
 
             // FcBool: FcPatternAddMatrix FcPattern*:p  const char*:pbject  const FcMatrix*:s
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddMatrix_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddMatrix_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternAddMatrix(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, ref FcMatrixRec s);
 
             // FcBool: FcPatternAddCharSet FcPattern*:p  const char*:pbject  const FcCharSet*:c
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddCharSet_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddCharSet_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternAddCharSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, IntPtr c);
 
             // FcBool: FcPatternAddBool FcPattern*:p  const char*:pbject  FcBool:b
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddBool_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddBool_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternAddBool(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, bool b);
 
             // FcBool: FcPatternAddLangSet FcPattern*:p  const char*:pbject  const FcLangSet*:ls
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddLangSet_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternAddLangSet_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcPatternAddLangSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, IntPtr ls);
 
             // FcResult: FcPatternGetInteger const FcPattern*:p  const char*:pbject  int:n  int*:i
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetInteger_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetInteger_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcResult FcPatternGetInteger(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out int i);
 
             // FcResult: FcPatternGetDouble const FcPattern*:p  const char*:pbject  int:n  double*:d
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetDouble_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetDouble_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcResult FcPatternGetDouble(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out double d);
 
             // FcResult: FcPatternGetString const FcPattern*:p  const char*:pbject  int:n  FcChar8**:s
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetString_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetString_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcResult FcPatternGetString(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out IntPtr s);
 
             // FcResult: FcPatternGetMatrix const FcPattern*:p  const char*:pbject  int:n  FcMatrix**:s
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetMatrix_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetMatrix_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcResult FcPatternGetMatrix(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out IntPtr s);
 
             // FcResult: FcPatternGetCharSet const FcPattern*:p  const char*:pbject  int:n  FcCharSet**:c
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetCharSet_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetCharSet_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcResult FcPatternGetCharSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out IntPtr c);
 
             // FcResult: FcPatternGetBool const FcPattern*:p  const char*:pbject  int:n  FcBool*:b
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetBool_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetBool_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcResult FcPatternGetBool(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out bool b);
 
             // FcResult: FcPatternGetLangSet const FcPattern*:p  const char*:pbject  int:n  FcLangSet**:ls
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetLangSet_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternGetLangSet_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcResult FcPatternGetLangSet(IntPtr p, [MarshalAs(UnmanagedType.LPStr)] string pbject, int n, out IntPtr ls);
 
             // FcChar8*: FcPatternFormat FcPattern*:pat  const FcChar8*:format
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternFormat_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcPatternFormat_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern string FcPatternFormat(IntPtr pat, [MarshalAs(UnmanagedType.LPStr)]string format);
 
 #if USE_FC22

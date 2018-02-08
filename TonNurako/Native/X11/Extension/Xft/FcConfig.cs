@@ -18,7 +18,7 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern bool FcConfigEnableHome(bool enable);
 
             // FcChar8*: FcConfigFilename const FcChar8*:url  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigFilename_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigFilename_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr FcConfigFilename([MarshalAs(UnmanagedType.LPStr)]string url);
 
             // FcConfig*: FcConfigCreate 
@@ -86,11 +86,11 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern IntPtr FcConfigGetFonts(IntPtr config, FcSetName set);
 
             // FcBool: FcConfigAppFontAddFile FcConfig*:config  const FcChar8*:file  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigAppFontAddFile_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigAppFontAddFile_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcConfigAppFontAddFile(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string file);
 
             // FcBool: FcConfigAppFontAddDir FcConfig*:config  const FcChar8*:dir  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigAppFontAddDir_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigAppFontAddDir_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcConfigAppFontAddDir(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string dir);
 
             // void: FcConfigAppFontClear FcConfig*:config  
@@ -110,11 +110,11 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern IntPtr FcConfigGetSysRoot(IntPtr config);
 
             // void: FcConfigSetSysRoot FcConfig*:config  const FcChar8*:sysroot  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSetSysRoot_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSetSysRoot_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void FcConfigSetSysRoot(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string sysroot);
 
             // FcBool: FcConfigParseAndLoad FcConfig*:config  const FcChar8*:file  FcBool:complain  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigParseAndLoad_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigParseAndLoad_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcConfigParseAndLoad(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string file, bool complain);
 
         }

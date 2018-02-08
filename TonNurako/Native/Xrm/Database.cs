@@ -13,15 +13,15 @@ namespace TonNurako.Xrm {
         #region ｲﾝﾎﾟ
         internal static class NativeMethods {
             // XrmDatabase: XrmGetFileDatabase char*:filename  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmGetFileDatabase_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmGetFileDatabase_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XrmGetFileDatabase([MarshalAs(UnmanagedType.LPStr)] string filename);
 
             // void: XrmPutFileDatabase XrmDatabase:database  char*:stored_db  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmPutFileDatabase_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmPutFileDatabase_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XrmPutFileDatabase(IntPtr database, [MarshalAs(UnmanagedType.LPStr)] string stored_db);
 
             // XrmDatabase: XrmGetStringDatabase char*:data  char*:XrmLocaleOfDatabase  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmGetStringDatabase_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmGetStringDatabase_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XrmGetStringDatabase([MarshalAs(UnmanagedType.LPStr)] string data);
 
             // XrmDatabase: XrmGetDatabase Display*:display  
@@ -45,7 +45,7 @@ namespace TonNurako.Xrm {
             internal static extern void XrmCombineDatabase(IntPtr source_db, ref IntPtr target_db, [MarshalAs(UnmanagedType.U1)] bool pverride);
 
             // Status: XrmCombineFileDatabase char*:filename  XrmDatabase*:target_db  Bool:override  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmCombineFileDatabase_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XrmCombineFileDatabase_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern int XrmCombineFileDatabase([MarshalAs(UnmanagedType.LPStr)] string filename, ref IntPtr target_db, [MarshalAs(UnmanagedType.U1)] bool pverride);
 
         }

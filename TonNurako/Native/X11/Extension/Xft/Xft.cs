@@ -12,7 +12,7 @@ namespace TonNurako.X11.Extension.Xft {
     public class Xft {
         internal static class NativeMethods {
             // FcBool: XftInit _Xconst char*:config  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XftInit_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftInit_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool XftInit([MarshalAs(UnmanagedType.LPStr)] string config);
 
             // int: XftGetVersion 

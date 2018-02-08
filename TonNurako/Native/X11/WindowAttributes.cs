@@ -101,12 +101,12 @@ namespace TonNurako.X11 {
             record = new XSetWindowAttributesRec();
         }
 
-        public ulong background_pixel {
+        public ulong BackgroundPixel {
             get { return record.background_pixel; }
             set { record.background_pixel = value; }
         }
 
-        public TonNurako.X11.Pixmap background_pixmap {
+        public TonNurako.X11.Pixmap BackgroundPixmap {
             get {
                 return TonNurako.X11.Pixmap.FromPixmap(record.background_pixmap, null);
             }
@@ -115,7 +115,7 @@ namespace TonNurako.X11 {
             }
         }
 
-        public TonNurako.X11.Pixmap border_pixmap {
+        public TonNurako.X11.Pixmap BorderPixmap {
             get {
                 return TonNurako.X11.Pixmap.FromPixmap(record.border_pixmap, null);
             }
@@ -124,67 +124,67 @@ namespace TonNurako.X11 {
             }
         }
 
-        public ulong border_pixel {
+        public ulong BorderPixel {
             get { return record.border_pixel; }
             set { record.border_pixel = value; }
         }
 
-        public Gravity bit_gravity {
+        public Gravity BitGravity {
             get { return record.bit_gravity; }
             set { record.bit_gravity = value; }
         }
 
-        public UnmapGravity win_gravity {
+        public UnmapGravity WinGravity {
             get { return record.win_gravity; }
             set { record.win_gravity = value; }
         }
 
 
-        public BackingStoreHint backing_store {
+        public BackingStoreHint BackingStore {
             get { return record.backing_store; }
             set { record.backing_store = value; }
         }
 
-        public ulong backing_planes {
+        public ulong BackingPlanes {
             get { return record.backing_planes; }
             set { record.backing_planes = value; }
         }
 
 
-        public ulong backing_pixel {
+        public ulong BackingPixel {
             get { return record.backing_pixel; }
             set { record.backing_pixel = value; }
         }
 
-        public bool save_under {
+        public bool SaveUnder {
             get { return record.save_under; }
             set { record.save_under = value; }
         }
 
-        public EventMask event_mask {
+        public EventMask EventMask {
             get { return record.event_mask; }
             set { record.event_mask = value; }
         }
 
-        public bool override_redirect {
+        public bool OverrideRedirect {
             get { return record.override_redirect; }
             set { record.override_redirect = value; }
         }
 
-        public int colormap { // Colormap
+        public int Colormap { // Colormap
             get { return record.colormap; }
             set { record.colormap = value; }
         }
 
         //public int cursor; // Cursor
-        public int cursor {
+        public int Cursor {
             get { return record.cursor; }
             set { record.cursor = value; }
         }
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct XWindowAttributesRec {
+    internal struct XWindowAttributesRec {
         public int x; // int
         public int y; // int
         public int width; // int
@@ -223,118 +223,118 @@ namespace TonNurako.X11 {
             display = dpy;
         }
 
-        public int x {
+        public int X {
             get { return record.x; }
             set { record.y = value; }
         }
 
-        public int y {
+        public int Y {
             get { return record.y; }
             set { record.y = value; }
         }
 
-        public int width {
+        public int Width {
             get { return record.width; }
             set { record.width = value; }
         }
 
-        public int height {
+        public int Height {
             get { return record.height; }
             set { record.height = value; }
         }
 
-        public int border_width {
+        public int BorderWidth {
             get { return record.border_width; }
             set { record.border_width = value; }
         }
 
-        public int depth {
+        public int Depth {
             get { return record.depth; }
             set { record.depth = value; }
         }
 
-        public Visual visual {
+        public Visual Visual {
             get { return new Visual(record.visual); }
             set { record.visual = value.Handle; }
         }
 
-        public Window root {
+        public Window Root {
             get { return new Window(record.root, display); }
             set { record.root = value.Handle; }
         }
 
-        public int klass {
+        public int Glass {
             get { return record.klass; }
             set { record.klass = value; }
         }
 
-        public Gravity bit_gravity {
+        public Gravity BitGravity {
             get { return record.bit_gravity; }
             set { record.bit_gravity = value; }
         }
 
-        public UnmapGravity win_gravity {
+        public UnmapGravity WinGravity {
             get { return record.win_gravity; }
             set { record.win_gravity = value; }
         }
 
-        public BackingStoreHint backing_store {
+        public BackingStoreHint BackingStore {
             get { return record.backing_store; }
             set { record.backing_store = value; }
         }
 
-        public ulong backing_planes {
+        public ulong BackingPlanes {
             get { return record.backing_planes; }
             set { record.backing_planes = value; }
         }
 
-        public ulong backing_pixel {
+        public ulong BackingPixel {
             get { return record.backing_pixel; }
             set { record.backing_pixel = value; }
         }
 
-        public bool save_under {
+        public bool SaveUnder {
             get { return record.save_under; }
             set { record.save_under = value; }
         }
 
-        public Colormap colormap {
+        public Colormap Colormap {
             get { return new Colormap(record.colormap, display); }
             set { record.colormap = value.Handle; }
         }
 
-        public bool map_installed {
+        public bool MapInstalled {
             get { return record.map_installed; }
             set { record.map_installed = value; }
         }
 
-        public MapState map_state {
+        public MapState MapState {
             get { return record.map_state; }
             set { record.map_state = value; }
         }
 
-        public EventMask all_event_masks {
+        public EventMask AllEventMasks {
             get { return record.all_event_masks; }
             set { record.all_event_masks = value; }
         }
 
-        public EventMask your_event_mask {
+        public EventMask YourEventMask {
             get { return record.your_event_mask; }
             set { record.your_event_mask = value; }
         }
 
-        public EventMask do_not_propagate_mask {
+        public EventMask DoNotPropagateMask {
             get { return record.do_not_propagate_mask; }
             set { record.do_not_propagate_mask = value; }
         }
 
-        public bool override_redirect {
+        public bool OverrideRedirect {
             get { return record.override_redirect; }
             set { record.override_redirect = value; }
         }
 
 
-        public Screen screen {
+        public Screen Screen {
             get { return new Screen(record.screen, display); }
             set { record.screen = value.Handle; }
         }

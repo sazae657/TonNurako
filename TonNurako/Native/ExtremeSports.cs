@@ -122,7 +122,7 @@ namespace TonNurako.Native {
             [ DllImport(Lib, CharSet=CharSet.Auto) ]
             public static extern int TNK_IMP_Xt_XCreateColormap(IntPtr w);
 
-            [ DllImport(Lib, CharSet=CharSet.Auto) ]
+            [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true) ]
             public static extern void TNK_IMP_TnkAssignColorMap([In]TnkAppContextRec pCtx, int cmap);
 
             [DllImport(Lib, CharSet=CharSet.Auto) ]
