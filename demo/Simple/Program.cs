@@ -1,4 +1,5 @@
-﻿using TonNurako.Widgets;
+﻿using TonNurako.Inutility;
+using TonNurako.Widgets;
 using TonNurako.Widgets.Xm;
 
 namespace Simple

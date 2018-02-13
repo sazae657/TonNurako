@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,9 +14,12 @@ namespace TonNurako.X11 {
 
     public delegate int XErrorHandler(Display display, Event.XErrorEvent ev);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int XErrorHandlerInt(IntPtr display, IntPtr ev);
 
     public delegate int XIOErrorHandler(Display display);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int XIOErrorHandlerInt(IntPtr display);
 
     public enum ErrorCode : byte {

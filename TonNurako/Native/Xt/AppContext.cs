@@ -32,24 +32,30 @@ namespace TonNurako.Xt {
         }
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtTimerCallbackProc(
         XtTimerCallbackDelegate closure, //XtPointer
         IntPtr id //XtIntervalId*
     );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtTimerCallbackDelegate(ulong id);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtBlockHookProc(IntPtr client_data);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void  XtSignalCallbackProc(
         IntPtr closure,//XtPointer
         IntPtr id //XtSignalId*
       );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtErrorHandler(
         IntPtr msg //string
     );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtErrorMsgHandler(
           IntPtr name,//String
           IntPtr type,//String

@@ -279,7 +279,7 @@ namespace TonNurako.X11 {
             internal static extern int XGetErrorDatabaseText(IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string message, [MarshalAs(UnmanagedType.LPStr)] string default_string, [MarshalAs(UnmanagedType.LPStr)] string buffer_return, int length);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetAfterFunction_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr XSetAfterFunction(IntPtr display, [MarshalAs(UnmanagedType.FunctionPtr)] XSetAfterFunctionDelegaty proc);
+            internal static extern IntPtr XSetAfterFunction(IntPtr display, [MarshalAs(UnmanagedType.FunctionPtr)] XSetAfterFunctionDelegatyInt proc);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSynchronize_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XSynchronize(IntPtr display, bool onoff);
@@ -289,8 +289,14 @@ namespace TonNurako.X11 {
             internal static extern bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int dest_x_return, out int dest_y_return, out IntPtr child_return);
 
         }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int XSetAfterFunctionDelegatyInt();
+
         public delegate int XSetAfterFunctionDelegaty();
-        public delegate int XSynchronizeDelegaty(IntPtr ptr);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int XSynchronizeDelegaty(IntPtr ptr);
 
         public static Display Open(string display) {
             var dp = (null != display) ? NativeMethods.XOpenDisplay(display) : NativeMethods.XOpenDisplayP(IntPtr.Zero);
@@ -355,7 +361,7 @@ namespace TonNurako.X11 {
 
         // TODO: 元に戻す処理(スタック詰む？)
         public void SetAfterFunction(XSetAfterFunctionDelegaty proc) {
-            NativeMethods.XSetAfterFunction(Handle, proc);
+            NativeMethods.XSetAfterFunction(Handle, ()=> proc());
         }
 
         // TODO: 元に戻す処理

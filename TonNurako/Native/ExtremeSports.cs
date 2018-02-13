@@ -46,8 +46,8 @@ namespace TonNurako.Native {
                 CannotOpenDisplay
         }
 
-		#region ﾌﾟﾛｾｽ関連
-
+        #region ﾌﾟﾛｾｽ関連
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void AppMainLoopCalback();
 
         internal static class NativeMethods
@@ -335,9 +335,10 @@ namespace TonNurako.Native {
         public static void TnkFreeArg(IntPtr arg, int argc) {
             NativeMethods.TNK_IMP_TnkFreeArg(arg, argc);
         }
-		#endregion
+        #endregion
 
-        public delegate void TnkAppRefreshHandler();
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate void TnkAppRefreshHandler();
 
 		/// <summary>
 		/// ｱﾌﾟﾘｹーｼｮﾝの情報の保持
@@ -386,7 +387,7 @@ namespace TonNurako.Native {
                 set => Record.display_string = value;
             }
 
-            public TnkAppRefreshHandler Comm {
+            internal TnkAppRefreshHandler Comm {
                 get => Record.comm;
                 set => Record.comm = value;
             }

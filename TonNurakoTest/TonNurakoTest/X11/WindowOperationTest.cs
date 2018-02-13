@@ -25,7 +25,7 @@ namespace TonNurakoTest.X11 {
         [Fact]
         public void InputFocus() {
             Assert.Equal(XStatus.True, fix.Window.RaiseWindow());
-            Assert.Equal(XStatus.True, fix.Display.SetInputFocus(fix.Window, RevertTo.Parent, 0));
+            Assert.Equal(XStatus.True, fix.Display.SetInputFocus(fix.Window, RevertTo.None, 0));
             var f = fix.Display.GetInputFocus();
             Assert.NotNull(f);
             Assert.Equal(fix.Window.Handle, f.Window.Handle);

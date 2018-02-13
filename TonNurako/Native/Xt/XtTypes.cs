@@ -22,6 +22,7 @@ namespace TonNurako.Xt {
         /// <summary>
         /// List widgetの選択項目列挙用
         /// </summary>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void ListEnumCallback(int count, IntPtr list);
 
         /// <summary>
