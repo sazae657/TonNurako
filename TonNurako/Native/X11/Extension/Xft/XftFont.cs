@@ -14,7 +14,7 @@ namespace TonNurako.X11.Extension.Xft {
     public class XftFont : IX11Interop, IDisposable {
         internal static class NativeMethods {
             // XftFont*: XftFontOpenName Display*:dpy  int:screen  unsigned char*:name  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenName_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XftFontOpenName(IntPtr dpy, int screen, [In,MarshalAs(UnmanagedType.LPStr)] string name);
 
             // XftFont*: XftFontOpenPattern Display*:dpy  FcPattern*:fontpattern  
@@ -22,7 +22,7 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern IntPtr XftFontOpenPattern(IntPtr dpy, IntPtr fontpattern);
 
             // XftFont*: XftFontOpenXlfd Display*:dpy  int:screen  String:xlfd  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenXlfd_TNK", CharSet = CharSet.Ansi)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenXlfd_TNK", CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XftFontOpenXlfd(IntPtr dpy, int screen, [MarshalAs(UnmanagedType.LPStr)] string xlfd);
 
             // XftFont*: XftFontOpenInfo Display*:dpy  FcPattern*:pattern  XftFontInfo*:fi  

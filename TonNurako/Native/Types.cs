@@ -13,7 +13,7 @@ namespace TonNurako.Native {
     /// ﾈーﾁﾌﾞなﾊﾝﾄﾞﾙへのｱｸｾｯｻー
     /// </summary>
     public class NativeWidget :
-     TonNurako.X11.IDrawable {
+     TonNurako.X11.IDrawable, IEquatable<NativeWidget> {
         /// <summary>
         /// ｺﾝｽﾄﾗｸﾀー
         /// </summary>
@@ -88,7 +88,28 @@ namespace TonNurako.Native {
         /// </summary>
         /// <param name="with">比較元</param>
         /// <returns>比較結果</returns>
-        public bool Equals(NativeWidget with) => (this.Widget == with.Widget);
+        public bool Equals(NativeWidget with) => (this.Widget.Handle == with.Widget.Handle);
+
+
+        /// <summary>
+        /// 比較
+        /// </summary>
+        /// <param name="with">比較元</param>
+        /// <returns>比較結果</returns>
+        public override bool Equals(Object with) {
+            if (with == null)
+                return base.Equals(with);
+            if (with is NativeWidget)
+                return Equals(with as NativeWidget);
+            return false;
+        }
+
+        /// <summary>
+        /// ﾊｯｼｭ
+        /// </summary>
+        /// <param name="obj">WidgetHandle</param>
+        /// <returns>ﾊｯｼｭ</returns>
+        public override int GetHashCode() => Hash;
 
         /// <summary>
         /// ﾊｯｼｭ

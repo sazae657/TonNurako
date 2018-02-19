@@ -66,7 +66,7 @@ namespace XShape {
                 TonNurako.X11.EventMask.KeyPressMask);
 
             var attr = new TonNurako.X11.XSetWindowAttributes();
-            attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
+            attr.BackingStore = TonNurako.X11.BackingStoreHint.WhenMapped;
             win.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr);
 
             //win.StoreName("shapew");

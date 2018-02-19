@@ -12,11 +12,11 @@ namespace TonNurako.X11.Extension.Xft {
 
 
             // FcChar8*: FcLangNormalize const FcChar8*:lang  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangNormalize_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangNormalize_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern string FcLangNormalize([MarshalAs(UnmanagedType.LPStr)]string lang);
 
             // const FcCharSet*: FcLangGetCharSet const FcChar8*:lang  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangGetCharSet_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangGetCharSet_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr FcLangGetCharSet([MarshalAs(UnmanagedType.LPStr)]string lang);
 
             // FcLangSet*: FcLangSetCreate 
@@ -32,15 +32,15 @@ namespace TonNurako.X11.Extension.Xft {
             internal static extern IntPtr FcLangSetCopy(IntPtr ls);
 
             // FcBool: FcLangSetAdd FcLangSet*:ls  const FcChar8*:lang  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetAdd_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetAdd_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcLangSetAdd(IntPtr ls, [MarshalAs(UnmanagedType.LPStr)]string lang);
 
             // FcBool: FcLangSetDel FcLangSet*:ls  const FcChar8*:lang  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetDel_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetDel_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcLangSetDel(IntPtr ls, [MarshalAs(UnmanagedType.LPStr)]string lang);
 
             // FcLangResult: FcLangSetHasLang const FcLangSet*:ls  const FcChar8*:lang  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetHasLang_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetHasLang_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcLangResult FcLangSetHasLang(IntPtr ls, [MarshalAs(UnmanagedType.LPStr)]string lang);
 
             // FcLangResult: FcLangSetCompare const FcLangSet*:lsa  const FcLangSet*:lsb  

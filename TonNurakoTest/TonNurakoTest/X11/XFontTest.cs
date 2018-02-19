@@ -18,7 +18,9 @@ namespace TonNurakoTest.X11 {
             Assert.ThrowsAny<System.Exception>(() => FontSet.ListFonts(display.Display, "【神】俺様が考えたすごいフォント【降臨】", 100));
             Assert.NotNull(FontSet.ListFonts(display.Display, "*", 10));
 
-            Assert.ThrowsAny<System.Exception>(() => FontSet.CreateFontSet(display.Display, "【神】俺様が考えたすごいフォント【降臨】"));
+            Assert.ThrowsAny<System.Exception>(() => {
+                using (FontSet.CreateFontSet(display.Display, "【神】俺様が考えたすごいフォント【降臨】")) {};
+            });
             var fs = TonNurako.X11.FontSet.CreateFontSet(display.Display, "-*-fixed-medium-r-normal--*-*-*-*");
             Assert.NotNull(fs);
 

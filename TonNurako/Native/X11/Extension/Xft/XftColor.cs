@@ -19,7 +19,7 @@ namespace TonNurako.X11.Extension.Xft {
     public class XftColor : IDisposable {
         internal static class NativeMethods {
             // Bool: XftColorAllocName Display*:dpy  Visual*:visual  Colormap:cmap  char*:name  XftColor*:result  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XftColorAllocName_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XftColorAllocName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool XftColorAllocName(IntPtr dpy, IntPtr visual, int cmap, [MarshalAs(UnmanagedType.LPStr)] string name, ref XftColorRec result);
 
             // Bool: XftColorAllocValue Display*:dpy  Visual*:visual  Colormap:cmap  XRenderColor*:color  XftColor*:result  

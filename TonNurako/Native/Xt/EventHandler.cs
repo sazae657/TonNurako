@@ -14,12 +14,14 @@ namespace TonNurako.Xt {
         IntPtr closure;
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtCallbackProc(
           IntPtr widget,
           IntPtr closure,
           IntPtr call_data
       );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtEventHandler(
         IntPtr widget,
         IntPtr closure,
@@ -28,6 +30,7 @@ namespace TonNurako.Xt {
         );
 
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtActionProc(
           IntPtr widget,
           IntPtr xevent, //XEvent*
@@ -35,6 +38,7 @@ namespace TonNurako.Xt {
           IntPtr num_params //Cardinal*
     );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtActionHookProc(
           IntPtr w, // Widget 
           IntPtr client_data, //XtPointer
@@ -44,19 +48,21 @@ namespace TonNurako.Xt {
           IntPtr num_params //Cardinal*
     );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtActionDelegate(
         Widgets.IWidget widget,
         X11.Event.XEventArg xevent, // TODO: 別ｸﾗｽに分ける(?)
         string[] xparams
     );
 
-
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtInputCallbackProc (
           IntPtr  closure, //XtPointer
           IntPtr source , //int*
           IntPtr id     //XtInputId*
       );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate bool XtWorkProc(
        IntPtr closure //XtPointer
     );

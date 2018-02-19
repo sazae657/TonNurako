@@ -32,24 +32,30 @@ namespace TonNurako.Xt {
         }
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtTimerCallbackProc(
         XtTimerCallbackDelegate closure, //XtPointer
         IntPtr id //XtIntervalId*
     );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtTimerCallbackDelegate(ulong id);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtBlockHookProc(IntPtr client_data);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void  XtSignalCallbackProc(
         IntPtr closure,//XtPointer
         IntPtr id //XtSignalId*
       );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtErrorHandler(
         IntPtr msg //string
     );
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtErrorMsgHandler(
           IntPtr name,//String
           IntPtr type,//String
@@ -130,7 +136,7 @@ namespace TonNurako.Xt {
             internal static extern void XtNoticeSignal(ulong id);
 
             // void: XtAppError XtAppContext:app_context  String:message  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppError_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppError_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XtAppError(IntPtr app_context, [MarshalAs(UnmanagedType.LPStr)] string message);
 
             // void: XtAppSetErrorHandler XtAppContext:app_context  XtErrorHandler:handler  
@@ -142,11 +148,11 @@ namespace TonNurako.Xt {
             internal static extern void XtAppSetWarningHandler(IntPtr app_context, [MarshalAs(UnmanagedType.FunctionPtr)] XtErrorHandler handler);
 
             // void: XtAppWarning XtAppContext:app_context  String:message  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppWarning_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppWarning_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XtAppWarning(IntPtr app_context, [MarshalAs(UnmanagedType.LPStr)] string message);
 
             // void: XtAppErrorMsg XtAppContext:app_context  String:name  String:type  String:class  String:default  String*:params  Cardinal*:num_params  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppErrorMsg_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppErrorMsg_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XtAppErrorMsg(IntPtr app_context, 
                 [MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string type, 
                 [MarshalAs(UnmanagedType.LPStr)] string glass, [MarshalAs(UnmanagedType.LPStr)] string befault, out IntPtr qarams, out IntPtr num_params);
@@ -160,13 +166,13 @@ namespace TonNurako.Xt {
             internal static extern void XtAppSetWarningMsgHandler(IntPtr app_context, [MarshalAs(UnmanagedType.FunctionPtr)] XtErrorMsgHandler msg_handler);
 
             // void: XtAppWarningMsg XtAppContext:app_context  String:name  String:type  String:class  String:default  String*:params  Cardinal*:num_params  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppWarningMsg_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppWarningMsg_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XtAppWarningMsg(IntPtr app_context,
                 [MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string type, 
                 [MarshalAs(UnmanagedType.LPStr)] string qlass, [MarshalAs(UnmanagedType.LPStr)] string befault, out IntPtr qarams, out IntPtr num_params);
 
             // Widget: XtAppCreateShell String:application_name  String:application_class  WidgetClass:widget_class  Display*:display  ArgList:args  Cardinal:num_args  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppCreateShell_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppCreateShell_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XtAppCreateShell([MarshalAs(UnmanagedType.LPStr)] string application_name, 
                 [MarshalAs(UnmanagedType.LPStr)] string application_class, IntPtr widget_class, IntPtr display, IntPtr[] args, int num_args);
 
@@ -175,7 +181,7 @@ namespace TonNurako.Xt {
             internal static extern IntPtr XtAppGetErrorDatabase(IntPtr app_context);
 
             // void: XtAppGetErrorDatabaseText XtAppContext:app_context  char*:name  char*:type  char*:class  char*:default  char*:buffer_return  int:nbytes  XrmDatabase:database  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppGetErrorDatabaseText_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "XtAppGetErrorDatabaseText_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void XtAppGetErrorDatabaseText(IntPtr app_context, 
                 [MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string type, 
                 [MarshalAs(UnmanagedType.LPStr)] string glass, 

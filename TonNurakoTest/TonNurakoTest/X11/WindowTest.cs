@@ -97,7 +97,7 @@ namespace TonNurakoTest.X11 {
                 },
                 BeforeMapWindow:()=>{
                     var attr = new TonNurako.X11.XSetWindowAttributes();
-                    attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
+                    attr.BackingStore = TonNurako.X11.BackingStoreHint.WhenMapped;
                     Assert.Equal(XStatus.True, window.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr));
 
                     Assert.Empty(window.GetWMProtocols());
@@ -141,7 +141,7 @@ namespace TonNurakoTest.X11 {
             Assert.NotNull(visual);
 
             var wsa = new TonNurako.X11.XSetWindowAttributes();
-            wsa.background_pixel = fix.Display.WhitePixel;
+            wsa.BackgroundPixel = fix.Display.WhitePixel;
             var wam = TonNurako.X11.ChangeWindowAttributes.CWBackPixel;
 
             BeforeCreateWindow();

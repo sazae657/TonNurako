@@ -35,7 +35,8 @@ namespace TonNurako.Motif
 
         internal class Functions
         {
-            public delegate System.IntPtr XmCreateFunc(IntPtr parent,string name, TonNurako.Xt.XtArgRec[] arg, int argc );
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            internal delegate System.IntPtr XmCreateFunc(IntPtr parent,string name, TonNurako.Xt.XtArgRec[] arg, int argc );
         }
 
         internal static class NativeMethods

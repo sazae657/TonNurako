@@ -730,8 +730,8 @@ namespace TonNurako.X11 {
         IntPtr allocRoot = IntPtr.Zero;
         IntPtr raw = IntPtr.Zero;
         internal XClassHintRec classHint;
-        public string res_name => Marshal.PtrToStringAnsi(classHint.res_name);
-        public string res_class => Marshal.PtrToStringAnsi(classHint.res_class);
+        public string ResName => Marshal.PtrToStringAnsi(classHint.res_name);
+        public string ResClass => Marshal.PtrToStringAnsi(classHint.res_class);
 
         public IntPtr Handle => raw;
 

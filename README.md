@@ -17,8 +17,8 @@
 * 広い心
 * mono 5.x
 * OpenMotif 2.3+
-* Python2
-* GNUMake
+* Python2.7
+* GNU Make
 
 *Mac OSXで動かす場合は32bit版のﾗｲﾌﾞﾗﾘーを用意するかmono64のｲﾝｽﾄーﾙが必要な模様です
 
@@ -91,6 +91,12 @@
  bin/Debug/Widgets.exe
 %
 ```
+
+BSD系などで *make* がGNU Makeでない場合は環境変数 MAKE を設定して msbuild を実行してください
+```
+% env MAKE=gmake msbuild
+```
+
 
 ## ﾃﾞﾓの実行
 ```

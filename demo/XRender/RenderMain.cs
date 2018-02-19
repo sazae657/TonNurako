@@ -57,8 +57,8 @@ namespace XRender {
             var visual = dpy.DefaultVisual;
 
             var wsa = new TonNurako.X11.XSetWindowAttributes();
-            wsa.background_pixel = dpy.WhitePixel;
-            wsa.event_mask = TonNurako.X11.EventMask.KeyPressMask | TonNurako.X11.EventMask.ExposureMask;
+            wsa.BackgroundPixel = dpy.WhitePixel;
+            wsa.EventMask = TonNurako.X11.EventMask.KeyPressMask | TonNurako.X11.EventMask.ExposureMask;
             var wam = TonNurako.X11.ChangeWindowAttributes.CWEventMask | TonNurako.X11.ChangeWindowAttributes.CWBackPixel;
 
             var window = dpy.CreateWindow(dpy.DefaultRootWindow, 50, 50, 

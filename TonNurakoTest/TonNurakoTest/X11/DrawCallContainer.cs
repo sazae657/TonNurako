@@ -25,8 +25,8 @@ namespace TonNurakoTest.X11 {
             Assert.NotNull(visual);
 
             var wsa = new TonNurako.X11.XSetWindowAttributes();
-            wsa.background_pixel = display.WhitePixel;
-            wsa.event_mask = TonNurako.X11.EventMask.ExposureMask;
+            wsa.BackgroundPixel = display.WhitePixel;
+            wsa.EventMask = TonNurako.X11.EventMask.ExposureMask;
             var wam = TonNurako.X11.ChangeWindowAttributes.CWEventMask | TonNurako.X11.ChangeWindowAttributes.CWBackPixel;
 
             BeforeCreateWindow?.Invoke();
