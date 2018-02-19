@@ -271,8 +271,9 @@ namespace Widgets {
                              var mvy = (mv - mvx) / 1000;
                              str.Append($"Motif {mvy}.{mvx} ({TonNurako.Native.ExtremeSports.GetMotifVersionString()})\n");
                              str.Append($"\nRuntime: {asp.ImageRuntimeVersion}").Append("\n");
-                             str.Append($"Platform: {System.Environment.OSVersion.Platform} Version:{System.Environment.OSVersion.Version} ").Append("\n");
-
+                             using (var und = TonNurako.Native.Uname.Get()) {
+                                 str.Append($"Platform: {und.SysName} Release:{und.Release}({und.Machine})").Append("\n");
+                             }
                              break;
                          }
                      }

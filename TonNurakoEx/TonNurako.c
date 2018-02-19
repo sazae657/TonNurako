@@ -10,6 +10,89 @@ unsigned int TNK_GetVersion()
     return (TONNURAKO_EX_MAJOR_VERSION * 1000 + TONNURAKO_EX_MINOR_VERSION);
 }
 
+TNK_EXPORT
+void TNK_FreeUtsnameStudio(TNK_UtsnameStudio* p) {
+    if (NULL == p) {
+        return;
+    }
+    if (NULL != p->sysname) {
+        free(p->sysname);
+    }
+    if (NULL != p->nodename) {
+        free(p->nodename);
+    }
+    if (NULL != p->release) {
+        free(p->release);
+    }
+    if (NULL != p->version) {
+        free(p->version);
+    }
+    if (NULL != p->machine) {
+        free(p->machine);
+    }
+    free(p->_this);
+}
+
+TNK_EXPORT
+TNK_UtsnameStudio* TNK_GetUtsnameStudio() {
+    struct utsname uts;
+    TNK_UtsnameStudio* p;
+    Bool fuckOSSierra;
+
+    p = NULL;
+    fuckOSSierra = True;
+
+    memset(&uts, 0x00, sizeof(struct utsname));
+    if (uname(&uts) != 0) {
+        return NULL;
+    }
+
+    p = (TNK_UtsnameStudio*)malloc(sizeof(TNK_UtsnameStudio));
+    if (NULL == p) {
+        return NULL;
+    }
+    p->_this = p;
+    do {
+        p->sysname = (char*)malloc(NSString(uts.sysname) + 1);
+        if (NULL == p->sysname) {
+            break;
+        }
+        memcpy(p->sysname, uts.sysname, NSString(uts.sysname));
+
+        p->nodename = (char*)malloc(NSString(uts.nodename) + 1);
+        if (NULL == p->nodename) {
+            break;
+        }
+        memcpy(p->nodename, uts.nodename, NSString(uts.nodename));
+
+        p->release = (char*)malloc(NSString(uts.release) + 1);
+        if (NULL == p->release) {
+            break;
+        }
+        memcpy(p->release, uts.release, NSString(uts.release));
+
+        p->version = (char*)malloc(NSString(uts.version) + 1);
+        if (NULL == p->version) {
+            break;
+        }
+        memcpy(p->version, uts.version, NSString(uts.version));
+
+        p->machine = (char*)malloc(NSString(uts.machine) + 1);
+        if (NULL == p->machine) {
+            break;
+        }
+        memcpy(p->machine, uts.machine, NSString(uts.machine));
+
+        fuckOSSierra = False;
+    } while(0);
+
+    if (False != fuckOSSierra) {
+        TNK_FreeUtsnameStudio(p);
+        return NULL;
+    }
+
+    return p;
+}
 
 TNK_EXPORT
 unsigned int TNK_GetMotifVersion() {

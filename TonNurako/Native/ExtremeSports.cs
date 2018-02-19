@@ -36,6 +36,112 @@ namespace TonNurako.Native {
             return $"{Major}.{Minor}";
         }
     }
+
+    /// <summary>
+    /// uname
+    /// </summary>
+    public class Uname : IDisposable
+    {
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct UtsnameStudio
+        {
+            public IntPtr self;    // char*
+            public IntPtr sysname;    // char*
+            public IntPtr nodename;    // char*
+            public IntPtr release;    // char*
+            public IntPtr version;    // char*
+            public IntPtr machine;    // char*
+        }
+
+        internal static class NativeMethods {
+            // XftDraw*: TNK_GetUtsnameStudio 
+            [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_GetUtsnameStudio", CharSet = CharSet.Auto)]
+            internal static extern IntPtr TNK_GetUtsnameStudio();
+
+            // void: TNK_FreeUtsnameStudio XftDraw*:p  
+            [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_FreeUtsnameStudio", CharSet = CharSet.Auto)]
+            internal static extern void TNK_FreeUtsnameStudio(IntPtr p);
+        }
+        IntPtr Handle = IntPtr.Zero;
+        UtsnameStudio Record;
+
+        Uname() {
+        }
+
+        /// <summary>
+        /// げっと
+        /// </summary>
+        /// <returns></returns>
+        public static Uname Get() {
+            var u = new Uname();
+            u.ProcessRecord();
+            return u;
+        }
+
+        /// <summary>
+        /// Studioを処理する
+        /// </summary>
+        void ProcessRecord() {
+            Handle = NativeMethods.TNK_GetUtsnameStudio();
+            if (Handle == IntPtr.Zero) {
+                throw new Exception("TNK_GetUtsnameStudio FAILED");
+            }
+            Record = Marshal.PtrToStructure<UtsnameStudio>(Handle);
+        }
+
+        /// <summary>
+        /// OSの名前っぽいのが入る
+        /// </summary>
+        public string SysName =>
+            Marshal.PtrToStringAnsi(Record.sysname);
+
+        /// <summary>
+        /// ホスト名っぽいのが入る
+        /// </summary>
+        public string NodeName =>
+            Marshal.PtrToStringAnsi(Record.nodename);
+
+        /// <summary>
+        /// OSのマイナーバージョンっぽいのが入る
+        /// </summary>
+        public string Release =>
+            Marshal.PtrToStringAnsi(Record.release);
+
+        /// <summary>
+        /// OSのバージョンっぽいのが入る
+        /// </summary>
+        public string Version =>
+            Marshal.PtrToStringAnsi(Record.version);
+
+        /// <summary>
+        /// アーキテクチャーっぽいのが入る
+        /// </summary>
+        public string Machine =>
+            Marshal.PtrToStringAnsi(Record.machine);
+
+
+        #region IDisposable Support
+        private bool disposedValue = false; 
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposedValue) {
+                return;
+            }
+            disposedValue = true;
+            if (Handle != IntPtr.Zero) {
+                NativeMethods.TNK_FreeUtsnameStudio(Handle);
+                Handle = IntPtr.Zero;
+            }
+        }
+
+        public void Dispose() {
+            Dispose(true);
+        }
+        #endregion
+
+    }
+
+
     public class ExtremeSports {
         public const string Lib = "libTonNurako.extremesports";
 
