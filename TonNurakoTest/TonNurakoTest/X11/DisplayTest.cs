@@ -17,7 +17,7 @@ namespace TonNurakoTest.X11 {
 
             TonNurako.Application.RegisterGlobals();
             TonNurako.X11.Xi.SetIOErrorHandler((dpy) => throw new Exception("IOE"));
-            TonNurako.X11.Xi.SetErrorHandler((dpy, ev) => throw new Exception($"XError {ev.error_code}"));
+            TonNurako.X11.Xi.SetErrorHandler((dpy, ev) => throw new Exception($"XError {ev.ErrorCode}"));
         }
 
         void Open() {

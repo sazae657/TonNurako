@@ -9,7 +9,7 @@ using TonNurako.X11.Extension.Xft;
 using Xunit;
 
 
-namespace TonNurakoTest.X11.Ext {
+namespace TonNurakoTestEx {
     public class FontConfigTest : IClassFixture<DisplayFixture>, IDisposable {
 
         DisplayFixture fix;

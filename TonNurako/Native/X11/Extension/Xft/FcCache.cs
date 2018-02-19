@@ -71,15 +71,15 @@ namespace TonNurako.X11.Extension.Xft {
     public class FcDirCache  {
         internal static class NativeMethods {
             // FcBool: FcDirCacheUnlink const FcChar8*:dir  FcConfig*:config  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcDirCacheUnlink_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcDirCacheUnlink_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcDirCacheUnlink([MarshalAs(UnmanagedType.LPStr)]string dir, IntPtr config);
 
             // FcBool: FcDirCacheValid const FcChar8*:cache_file  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcDirCacheValid_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcDirCacheValid_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcDirCacheValid([MarshalAs(UnmanagedType.LPStr)]string cache_file);
 
             // FcBool: FcDirCacheClean const FcChar8*:cache_dir  FcBool:verbose  
-            [DllImport(ExtremeSports.Lib, EntryPoint = "FcDirCacheClean_TNK", CharSet = CharSet.Auto)]
+            [DllImport(ExtremeSports.Lib, EntryPoint = "FcDirCacheClean_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcDirCacheClean([MarshalAs(UnmanagedType.LPStr)]string cache_dir, bool verbose);
         }
 

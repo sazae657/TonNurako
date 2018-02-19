@@ -1,7 +1,4 @@
 #include <Xm/Xm.h>
-#if defined(TNK_USE_LIBXPM)
-#include <X11/xpm.h>
-#endif
 #include <X11/Xlib.h>
 #include <X11/Intrinsic.h>
 #include <stdio.h>
@@ -16,6 +13,7 @@
 int
 main(int argc, char** argv)
 {
+    #ifndef __APPLE__
     int retVal;
     XtToolkitInitialize();
 
@@ -30,5 +28,6 @@ main(int argc, char** argv)
     }
 
     fprintf(stderr, "LibCheck OK\n");
+    #endif
     return 0;
 }

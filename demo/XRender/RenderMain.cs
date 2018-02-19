@@ -57,8 +57,8 @@ namespace XRender {
             var visual = dpy.DefaultVisual;
 
             var wsa = new TonNurako.X11.XSetWindowAttributes();
-            wsa.background_pixel = dpy.WhitePixel;
-            wsa.event_mask = TonNurako.X11.EventMask.KeyPressMask | TonNurako.X11.EventMask.ExposureMask;
+            wsa.BackgroundPixel = dpy.WhitePixel;
+            wsa.EventMask = TonNurako.X11.EventMask.KeyPressMask | TonNurako.X11.EventMask.ExposureMask;
             var wam = TonNurako.X11.ChangeWindowAttributes.CWEventMask | TonNurako.X11.ChangeWindowAttributes.CWBackPixel;
 
             var window = dpy.CreateWindow(dpy.DefaultRootWindow, 50, 50, 
@@ -87,7 +87,7 @@ namespace XRender {
                 Console.WriteLine($"NextEvent ev={ev.Type}");
                 switch (ev.Type) {
                     case TonNurako.X11.Event.XEventType.KeyPress:
-                        var ks = dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0);
+                        var ks = dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0);
                         if (ks == TonNurako.X11.KeySym.XK_Escape) {
                             broke = true;
                         }
@@ -104,8 +104,8 @@ namespace XRender {
                     case TonNurako.X11.Event.XEventType.Expose:
                         var e = ev.Expose;
                         TonNurako.Inutility.Dumper.DumpStruct(e, (s)=>Console.WriteLine($"Expose: {s}"));
-                        if (e.count < 1) {
-                            Repaint(dpy, window, visual, e.width, e.height, (GradientToDraw)grad);
+                        if (e.Count < 1) {
+                            Repaint(dpy, window, visual, e.Width, e.Height, (GradientToDraw)grad);
                         }
                         break;
                 }

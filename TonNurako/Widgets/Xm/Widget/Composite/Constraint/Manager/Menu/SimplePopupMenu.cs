@@ -49,8 +49,8 @@ namespace TonNurako.Widgets.Xm
 
         public void  Popup(int x, int y) {
             TonNurako.X11.Event.XButtonEvent ev =new TonNurako.X11.Event.XButtonEvent();
-            ev.x_root = x;
-            ev.y_root = y;
+            ev.XRoot = x;
+            ev.YRoot = y;
             Popup(ev);
         }
 

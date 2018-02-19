@@ -10,8 +10,88 @@ unsigned int TNK_GetVersion()
     return (TONNURAKO_EX_MAJOR_VERSION * 1000 + TONNURAKO_EX_MINOR_VERSION);
 }
 
-TNK_EXPORT void PrintWCS_TNK(wchar_t *str) {
-    printf("%ls\n", str);
+TNK_EXPORT
+void TNK_FreeUtsnameStudio(TNK_UtsnameStudio* p) {
+    if (NULL == p) {
+        return;
+    }
+    if (NULL != p->sysname) {
+        free(p->sysname);
+    }
+    if (NULL != p->nodename) {
+        free(p->nodename);
+    }
+    if (NULL != p->release) {
+        free(p->release);
+    }
+    if (NULL != p->version) {
+        free(p->version);
+    }
+    if (NULL != p->machine) {
+        free(p->machine);
+    }
+    free(p->_this);
+}
+
+TNK_EXPORT
+TNK_UtsnameStudio* TNK_GetUtsnameStudio() {
+    struct utsname uts;
+    TNK_UtsnameStudio* p;
+    Bool fuckOSSierra;
+
+    p = NULL;
+    fuckOSSierra = True;
+
+    memset(&uts, 0x00, sizeof(struct utsname));
+    if (uname(&uts) != 0) {
+        return NULL;
+    }
+
+    p = (TNK_UtsnameStudio*)malloc(sizeof(TNK_UtsnameStudio));
+    if (NULL == p) {
+        return NULL;
+    }
+    p->_this = p;
+    do {
+        p->sysname = (char*)malloc(NSString(uts.sysname) + 1);
+        if (NULL == p->sysname) {
+            break;
+        }
+        memcpy(p->sysname, uts.sysname, NSString(uts.sysname));
+
+        p->nodename = (char*)malloc(NSString(uts.nodename) + 1);
+        if (NULL == p->nodename) {
+            break;
+        }
+        memcpy(p->nodename, uts.nodename, NSString(uts.nodename));
+
+        p->release = (char*)malloc(NSString(uts.release) + 1);
+        if (NULL == p->release) {
+            break;
+        }
+        memcpy(p->release, uts.release, NSString(uts.release));
+
+        p->version = (char*)malloc(NSString(uts.version) + 1);
+        if (NULL == p->version) {
+            break;
+        }
+        memcpy(p->version, uts.version, NSString(uts.version));
+
+        p->machine = (char*)malloc(NSString(uts.machine) + 1);
+        if (NULL == p->machine) {
+            break;
+        }
+        memcpy(p->machine, uts.machine, NSString(uts.machine));
+
+        fuckOSSierra = False;
+    } while(0);
+
+    if (False != fuckOSSierra) {
+        TNK_FreeUtsnameStudio(p);
+        return NULL;
+    }
+
+    return p;
 }
 
 TNK_EXPORT
@@ -192,10 +272,11 @@ void TNK_IMP_Flush(LPTNK_APP_CONTEXT app, Widget widget) {
     XFlush(XtDisplay(widget));
 }
 
-void TNK_IMP_SplitXClientMessageEventData(
-    const XClientMessageEvent* src, TNK_XClientMessageEventData* ev)
-{
+#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
+void TNK_IMP_SplitXClientMessageEventData(
+    const XClientMessageEvent* src, TNK_XClientMessageEventData* ev, TNK_XClientMessageEventStudio* studio)
+{
     memset(ev, 0xcc, sizeof(TNK_XClientMessageEventData));
 
     memcpy(&ev->event, src, sizeof(XClientMessageEvent));
@@ -212,44 +293,6 @@ dumpbin(const void* p, size_t len, const char* fs)
     fwrite(p, len, 1, fp);
     fclose(fp);
 }
-
-#if defined(TNK_USE_LIBXPM)
-//
-// Pixmap
-//
-TNK_EXPORT int
-TNK_LoadPixmapFromBuffer(Display* display, Widget widget, TNK_PIXMAX* pix, char* buffer) {
-	int ret = 0;
-    pix->dpy = display;
-    pix->pix = 0L;
-    pix->mask = 0L;
-    pix->attr = NULL;
-
-    if((ret = XpmCreatePixmapFromBuffer(display,
-				  RootWindowOfScreen(XtScreen(widget)),
-				  buffer, &pix->pix,
-				  &pix->mask, NULL)) != XpmSuccess)
-    {
-        return ret;
-    }
-    return ret;
-
-}
-
-TNK_EXPORT void
-TNK_FreePixmapBuffer(TNK_PIXMAX* pix) {
-    if (0L != pix->pix) {
-        CONS25W( stderr, "XFreePixmap<P>(pix->%p, pix->%ld)\n", pix->dpy, pix->pix);
-        XFreePixmap(pix->dpy, pix->pix);
-        pix->pix = 0L;
-    }
-    if (0L != pix->mask) {
-        CONS25W( stderr, "XFreePixmap<M>(pix->%p, pix->%ld)\n", pix->dpy, pix->pix);
-        XFreePixmap(pix->dpy, pix->mask);
-        pix->mask = 0L;
-    }
-}
-#endif
 
 TNK_EXPORT int
 TNK_CreateCompoundTextProperty(XTextProperty* tprop, Display* display, String text) {

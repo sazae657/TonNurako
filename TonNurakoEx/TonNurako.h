@@ -7,6 +7,7 @@
 #include <locale.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/utsname.h>
 
 #include <X11/XKBlib.h>
 #include <X11/Xlocale.h>
@@ -28,10 +29,6 @@
 #include <X11/Xft/Xft.h>
 #include <X11/XKBlib.h>
 #include <fontconfig/fontconfig.h>
-
-#if defined(TNK_USE_LIBXPM)
-#include <X11/xpm.h>
-#endif
 
 
 #define TONNURAKO_EX_MAJOR_VERSION 1
@@ -84,19 +81,12 @@ tagTNK_CODE {
 #define XM_CREATE_ARG parent, name, arg , argc
 #endif
 
+#define TNK_ARRAY_SIZE(X) (sizeof(X)/sizeof(X[0]))
+#define NSString(X) (sizeof(X))
+
 /*----------------------------------------------------------------------------
 "C"ｽﾀｲﾙのﾀﾞｻい関数群
 -----------------------------------------------------------------------------*/
-#if defined(TNK_USE_LIBXPM)
-typedef struct
-tagTNK_PIXMAX
-{
-    Display* dpy;
-    Pixmap pix;
-    Pixmap mask;
-    XpmAttributes* attr;
-}TNK_PIXMAX;
-#endif
 
 //AppContext周りの情報を格納する
 typedef struct
@@ -156,6 +146,24 @@ _tagTNK_XClientMessageEventData
     } data;
 }TNK_XClientMessageEventData;
 
+typedef union
+_tagTNK_XClientMessageEventStudio
+{
+    char b[20];
+    short s[10];
+    long l[5];
+}TNK_XClientMessageEventStudio;
+
+
+typedef struct
+_tagTNK_UtsnameStudio {
+    struct _tagTNK_UtsnameStudio* _this;
+    char* sysname;
+    char* nodename;
+    char* release;
+    char* version;
+    char* machine;
+}TNK_UtsnameStudio;
 
 #ifdef __cplusplus
 }

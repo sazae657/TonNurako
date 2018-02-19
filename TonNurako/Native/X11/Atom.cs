@@ -98,6 +98,7 @@ namespace TonNurako.X11 {
 
         IntPtr atom = IntPtr.Zero;
         public IntPtr Handle => atom;
+        public ulong Integer => (ulong)atom;
 
     }
 }

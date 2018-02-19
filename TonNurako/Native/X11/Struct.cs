@@ -26,11 +26,9 @@ namespace TonNurako.X11
     */
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct XTimeCoord{
-        uint time;
-        short x, y;
+    public struct XTimeCoord{
+        public uint Time;
+        public short X;
+        public short Y;
     }
-
-
-
 }

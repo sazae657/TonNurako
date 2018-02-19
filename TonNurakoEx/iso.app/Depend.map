@@ -44,6 +44,12 @@ XParseColor_TNK
 XCreateColormap_TNK
 XCopyColormapAndFree_TNK
 XFreeColormap_TNK
+XCreateFontCursor_TNK
+XCreatePixmapCursor_TNK
+XCreateGlyphCursor_TNK
+XRecolorCursor_TNK
+XFreeCursor_TNK
+XQueryBestCursor_TNK
 XOpenDisplay_TNK
 XOpenDisplay_TNK
 XCloseDisplay_TNK
@@ -66,6 +72,8 @@ XAllowEvents_TNK
 XMaskEvent_TNK
 XCheckMaskEvent_TNK
 XCheckTypedEvent_TNK
+XSendEvent_TNK
+XDisplayMotionBufferSize_TNK
 XCreateSimpleWindow_TNK
 XCreateWindow_TNK
 DefaultColormap_TNK
@@ -97,6 +105,10 @@ XkbKeycodeToKeysym_TNK
 XKeysymToKeycode_TNK
 XStringToKeysym_TNK
 XKeysymToString_TNK
+XConvertCase_TNK
+XDisplayKeycodes_TNK
+XSetModifierMapping_TNK
+XGetModifierMapping_TNK
 XGrabServer_TNK
 XUngrabServer_TNK
 XGrabKey_TNK
@@ -105,6 +117,7 @@ XGrabButton_TNK
 XUngrabButton_TNK
 XSetInputFocus_TNK
 XGetInputFocus_TNK
+XWarpPointer_TNK
 XGetErrorText_TNK
 XGetErrorDatabaseText_TNK
 XSetAfterFunction_TNK
@@ -128,6 +141,10 @@ XExtentsOfFontSet_TNK
 XmbDrawString_TNK
 XwcDrawString_TNK
 XwcDrawImageString_TNK
+XNewModifiermap_TNK
+XInsertModifiermapEntry_TNK
+XDeleteModifiermapEntry_TNK
+XFreeModifiermap_TNK
 XCreatePixmapFromBitmapData_TNK
 XCreateBitmapFromData_TNK
 XCreateRegion_TNK
@@ -206,11 +223,14 @@ XRestackWindows_TNK
 XWindowEvent_TNK
 XCheckWindowEvent_TNK
 XCheckTypedWindowEvent_TNK
+XGetMotionEvents_TNK
 XConfigureWindow_TNK
 XQueryTree_TNK
 XSetTransientForHint_TNK
 XGetTransientForHint_TNK
 XQueryPointer_TNK
+XDefineCursor_TNK
+XUndefineCursor_TNK
 XSetTextProperty_TNK
 XGetTextProperty_TNK
 XmbSetWMProperties_TNK
@@ -223,6 +243,10 @@ XSetWMIconName_TNK
 XGetWMIconName_TNK
 XSetIconName_TNK
 XGetIconName_TNK
+XSetWMNormalHints_TNK
+XGetWMNormalHints_TNK
+XSetWMSizeHints_TNK
+XGetWMSizeHints_TNK
 XAllocWMHints_TNK
 XAllocClassHint_TNK
 XStringToKeysym_TNK
@@ -271,7 +295,6 @@ XGetGeometry_TNK
 XStringListToTextProperty_TNK
 XTextPropertyToStringList_TNK
 XFreeStringList_TNK
-PrintWCS_TNK
 XRenderQueryExtension_TNK
 XRenderQueryVersion_TNK
 XRenderFindVisualFormat_TNK

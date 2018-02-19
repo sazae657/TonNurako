@@ -7,22 +7,23 @@ using System.Threading.Tasks;
 using TonNurako.Widgets;
 
 namespace TonNurako.Xt.Core {
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void XtProc();
-
-
-
 
     //
     // WidgetClass
     //
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtWidgetClassProc(IntPtr widgetClass); //WidgetClass
+
     public delegate void XtWidgetClassDelegate(CoreWidgetClass widgetClass);
 
     //
     // Init
     //
-
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtInitProc(
       IntPtr request, // Widget
       IntPtr xnew, // Widget
@@ -39,7 +40,7 @@ namespace TonNurako.Xt.Core {
     //
     // Args
     //
-
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtArgsProc(
       IntPtr widget, // Widget
       IntPtr argList, // ArgList
@@ -54,12 +55,13 @@ namespace TonNurako.Xt.Core {
     //
     // Realise
     //
-
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtRealizeProc(
           IntPtr widget,
           IntPtr mask, //XtValueMask*
           IntPtr attributes //XSetWindowAttributes
       );
+
     public delegate void XtRealizeDelegate(
           IWidget widget,
           X11.ChangeWindowAttributes mask, //XtValueMask*
@@ -70,7 +72,7 @@ namespace TonNurako.Xt.Core {
     //
     // Widget
     //
-
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtWidgetProc(
           IntPtr widget
       );
@@ -82,6 +84,7 @@ namespace TonNurako.Xt.Core {
     //
     // Expose
     //
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtExposeProc(
           IntPtr widget,
           IntPtr xevent, //XEvent
@@ -97,6 +100,7 @@ namespace TonNurako.Xt.Core {
     //
     // SetValuesFunc
     //
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate bool XtSetValuesFunc(
         IntPtr old, // Widget
         IntPtr request,// Widget
@@ -115,6 +119,7 @@ namespace TonNurako.Xt.Core {
     //
     // Almost
     //
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtAlmostProc(
           IntPtr old, //Widget
           IntPtr xnew, //Widget
@@ -131,7 +136,7 @@ namespace TonNurako.Xt.Core {
     //
     // AcceptFocus
     //
-
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate bool XtAcceptFocusProc(
        IntPtr widget, //Widget
        IntPtr time // Time*
@@ -145,6 +150,7 @@ namespace TonNurako.Xt.Core {
     //
     // Geometry
     //
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtGeometryHandler(
           IntPtr widget, //Widget
           IntPtr request, //XtWidgetGeometry*
@@ -158,6 +164,7 @@ namespace TonNurako.Xt.Core {
     //
     // String
     //
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate void XtStringProc(
           IntPtr widget,//Widget
           IntPtr str //String

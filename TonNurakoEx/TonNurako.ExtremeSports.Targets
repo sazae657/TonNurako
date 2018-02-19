@@ -2,6 +2,7 @@
 <Project DefaultTargets="BuildExtremeSports" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <WorkingFolder>$(MSBuildProjectDirectory)/TonNurakoEx</WorkingFolder>
+	<Make Condition="'$(MAKE)'==''">make</Make>
     </PropertyGroup>
     <Target Name="TonNuraConfig"
       Inputs="$(WorkingFolder)/Config.mp3"
@@ -13,13 +14,13 @@
             <HasSiteMP3 Condition="'$(HasSiteMP3)'==''">false</HasSiteMP3>
         </PropertyGroup>
         <Message Condition="'$(HasSiteMP3)' == 'false'"
-             Text="=== run make audio $(WorkingFolder) $(Configuration) ===" />
+             Text="=== run $(Make) audio $(WorkingFolder) $(Configuration) ===" />
         <Message Condition="'$(OS)' != 'Unix'"
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
         -->
-        <Message Text="=== run make audio $(WorkingFolder) $(Configuration) ===" />
+        <Message Text="=== run $(Make) audio $(WorkingFolder) $(Configuration) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)/"
-            Command="make audio"/>
+            Command="$(Make) audio"/>
     </Target>
 
     <Target Name="PrePareExtremeSports" DependsOnTargets="TonNuraConfig">
@@ -27,7 +28,7 @@
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)"
             Condition="'$(OS)' == 'Unix'"
-            Command="make BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` clean.lib check" />
+            Command="$(Make) BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` clean.lib check" />
     </Target>
 
     <Target Name="BuildExtremeSports" DependsOnTargets="PrePareExtremeSports">
@@ -35,6 +36,6 @@
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)"
             Condition="'$(OS)' == 'Unix'"
-            Command="make -j4 BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` all" />
+            Command="$(Make) -j4 BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` all" />
     </Target>
 </Project>

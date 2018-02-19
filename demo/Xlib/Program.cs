@@ -45,7 +45,6 @@ namespace Xlib {
                 return;
             }
             Console.WriteLine($"SetLocale=>{loc}");
-            TonNurako.X11.Xi.PrintWCS_TNK("PrintWCS_TNK");
 
             if (!TonNurako.X11.Xi.SupportsLocale()) {
                 Console.WriteLine("Current locale is not supported");
@@ -136,19 +135,19 @@ namespace Xlib {
                 TonNurako.X11.EventMask.KeyPressMask );
 
             var attr = new TonNurako.X11.XSetWindowAttributes();
-            attr.backing_store = TonNurako.X11.BackingStoreHint.WhenMapped;
+            attr.BackingStore = TonNurako.X11.BackingStoreHint.WhenMapped;
             win.ChangeWindowAttributes(TonNurako.X11.ChangeWindowAttributes.CWBackingStore, attr);
 
 
             var rpr = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "たいとる" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
             DumpProperty(rpr);
             win.SetWMName(rpr);
-
+            rpr.Dispose();
             var rpr2 = TonNurako.X11.XTextProperty.TextListToTextProperty(dpy, new string[] { "エイコン" }, TonNurako.X11.XICCEncodingStyle.XCompoundTextStyle);
             win.SetWMIconName(rpr2);
             //win.SetWMProperties("なまえ", "ダイコン", args);
             win.StoreName("UNPO");
-
+            rpr2.Dispose();
 
             Console.WriteLine($"InputSelected(1): {TonNurako.X11.Extension.XShape.InputSelected(dpy, win)}");
 
@@ -162,9 +161,11 @@ namespace Xlib {
             win.MapWindow();
             dpy.Flush();
 
-            win.GetWMName();
-            foreach (var k in win.GetWMIconName().TextPropertyToTextList(dpy)) {
-                Console.WriteLine($"XGetWMIconName: {k}");
+            using (win.GetWMName()) { } ;
+            using(var wn = win.GetWMIconName()) {
+                foreach (var k in wn.TextPropertyToTextList(dpy)) {
+                    Console.WriteLine($"XGetWMIconName: {k}");
+                }
             }
 
             Console.WriteLine($"FetchName: {win.FetchName()}");
@@ -227,8 +228,8 @@ namespace Xlib {
 
                     case TonNurako.X11.Event.XEventType.ClientMessage:
                         TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage,(s)=>Console.WriteLine(s));
-                        TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage.data,(s)=>Console.WriteLine(s));
-                        if (atom.Equals(ev.ClientMessage.data.l[0])) {
+                        TonNurako.Inutility.Dumper.DumpStruct(ev.ClientMessage.Data,(s)=>Console.WriteLine(s));
+                        if (atom.Equals(ev.ClientMessage.Data.L[0])) {
                             xftDraw.Dispose();
                             win.DestroyWindow();
                             break;
@@ -254,11 +255,11 @@ namespace Xlib {
 
                     case TonNurako.X11.Event.XEventType.KeyPress:
                         DumpStruct(ev.Key);
-                        Console.WriteLine($"KS=     {dpy.KeycodeToKeysym(ev.Key.keycode,0,0)}");
-                        Console.WriteLine($"KS=>KC  {dpy.KeysymToKeycode(dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0))}");
-                        Console.WriteLine($"KS=>STR {dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0))}");
-                        Console.WriteLine($"STR=>KS {dpy.StringToKeysym(dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0)))}");
-                        var ks = dpy.KeycodeToKeysym(ev.Key.keycode, 0, 0);
+                        Console.WriteLine($"KS=     {dpy.KeycodeToKeysym(ev.Key.KeyCode,0,0)}");
+                        Console.WriteLine($"KS=>KC  {dpy.KeysymToKeycode(dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0))}");
+                        Console.WriteLine($"KS=>STR {dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0))}");
+                        Console.WriteLine($"STR=>KS {dpy.StringToKeysym(dpy.KeysymToString(dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0)))}");
+                        var ks = dpy.KeycodeToKeysym(ev.Key.KeyCode, 0, 0);
                         if (ks == TonNurako.X11.KeySym.XK_Escape) {
                             win.DestroyWindow();
                         }

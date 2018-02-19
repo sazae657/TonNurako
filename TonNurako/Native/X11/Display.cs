@@ -88,7 +88,7 @@ namespace TonNurako.X11 {
 
             // Status: XSendEvent Display*:display  Window:w  Bool:propagate  long:event_mask  XEvent*:event_send  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSendEvent_TNK", CharSet = CharSet.Auto)]
-            internal static extern int XSendEvent(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.U1)] bool propagate, EventMask event_mask, [In, Out]IntPtr event_send);
+            internal static extern int XSendEvent(IntPtr display, IntPtr w, [MarshalAs(UnmanagedType.U1)] bool propagate, EventMask event_mask, [In]IntPtr event_send);
 
             // u_long: XDisplayMotionBufferSize Display*:display  
             [DllImport(ExtremeSports.Lib, EntryPoint = "XDisplayMotionBufferSize_TNK", CharSet = CharSet.Auto)]
@@ -279,7 +279,7 @@ namespace TonNurako.X11 {
             internal static extern int XGetErrorDatabaseText(IntPtr display, [MarshalAs(UnmanagedType.LPStr)] string name, [MarshalAs(UnmanagedType.LPStr)] string message, [MarshalAs(UnmanagedType.LPStr)] string default_string, [MarshalAs(UnmanagedType.LPStr)] string buffer_return, int length);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetAfterFunction_TNK", CharSet = CharSet.Auto)]
-            internal static extern IntPtr XSetAfterFunction(IntPtr display, [MarshalAs(UnmanagedType.FunctionPtr)] XSetAfterFunctionDelegaty proc);
+            internal static extern IntPtr XSetAfterFunction(IntPtr display, [MarshalAs(UnmanagedType.FunctionPtr)] XSetAfterFunctionDelegatyInt proc);
 
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSynchronize_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XSynchronize(IntPtr display, bool onoff);
@@ -289,8 +289,14 @@ namespace TonNurako.X11 {
             internal static extern bool XTranslateCoordinates(IntPtr display, IntPtr src_w, IntPtr dest_w, int src_x, int src_y, out int dest_x_return, out int dest_y_return, out IntPtr child_return);
 
         }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int XSetAfterFunctionDelegatyInt();
+
         public delegate int XSetAfterFunctionDelegaty();
-        public delegate int XSynchronizeDelegaty(IntPtr ptr);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate int XSynchronizeDelegaty(IntPtr ptr);
 
         public static Display Open(string display) {
             var dp = (null != display) ? NativeMethods.XOpenDisplay(display) : NativeMethods.XOpenDisplayP(IntPtr.Zero);
@@ -355,7 +361,7 @@ namespace TonNurako.X11 {
 
         // TODO: 元に戻す処理(スタック詰む？)
         public void SetAfterFunction(XSetAfterFunctionDelegaty proc) {
-            NativeMethods.XSetAfterFunction(Handle, proc);
+            NativeMethods.XSetAfterFunction(Handle, ()=> proc());
         }
 
         // TODO: 元に戻す処理
@@ -535,9 +541,22 @@ namespace TonNurako.X11 {
         }
 
         //TODO： どうすっか考え中
-        public int SendEvent(Window w, bool propagate, EventMask event_mask, XEventArg event_send) {
-            throw new NotImplementedException();
-            // NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, event_send);
+        public int SendEvent(Window w, bool propagate, EventMask event_mask, XSendEventArg event_send) {
+            return NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, event_send.Parallelize(event_send.Type));
+        }
+
+        public int SendEvent<T>(Window w, bool propagate, EventMask event_mask, T event_send) where T:struct {
+            if (Marshal.SizeOf(typeof(T))  < Marshal.SizeOf(typeof(XAnyEvent))) {
+                throw new ArgumentOutOfRangeException($"小さい杉: {event_send}({Marshal.SizeOf(typeof(T))}) < {Marshal.SizeOf(typeof(XAnyEvent))}");
+            }
+            if (Marshal.SizeOf(typeof(T)) > Marshal.SizeOf(typeof(XEvent))) {
+                throw new ArgumentOutOfRangeException($"大きい杉: {event_send}({Marshal.SizeOf(typeof(T))}) > {Marshal.SizeOf(typeof(XEvent))}");
+            }
+            var p = Marshal.AllocCoTaskMem(Marshal.SizeOf(typeof(XEvent)));
+            Marshal.StructureToPtr(event_send, p, true);
+            var r = NativeMethods.XSendEvent(Handle, w.Handle, propagate, event_mask, p);
+            Marshal.FreeCoTaskMem(p);
+            return r;
         }
 
 
