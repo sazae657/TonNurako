@@ -8,7 +8,7 @@
 ![VSS](https://raw.githubusercontent.com/sazae657/TonNurako/master/ScreenShot.png)
 
 [![Build Status](https://travis-ci.org/sazae657/TonNurako.svg?branch=master)](https://travis-ci.org/sazae657/TonNurako)
-
+[![Build Status](https://img.shields.io/coverity/scan/14167.svg)](https://scan.coverity.com/projects/sazae657-tonnurako)
 
 ## ﾋﾞﾙﾄﾞ
 
