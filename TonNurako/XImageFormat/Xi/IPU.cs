@@ -1,6 +1,4 @@
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
 namespace TonNurako.XImageFormat.Xi {
@@ -10,6 +8,7 @@ namespace TonNurako.XImageFormat.Xi {
     /// </summary>
     public class おやさい {
 
+#if WINDOWS_XP
         /// <summary>
         /// 原色画像をﾋﾞｯﾄﾏｯﾌﾟに変換する
         /// </summary>
@@ -31,9 +30,9 @@ namespace TonNurako.XImageFormat.Xi {
             var bitmap = new System.Drawing.Bitmap(width, height);
 
             var data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadWrite,
-                PixelFormat.Format32bppArgb);
+                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
             int k = 0;
             for (int i = 0; i < (width * height); i++, k += 4) {
@@ -67,6 +66,7 @@ namespace TonNurako.XImageFormat.Xi {
             }
             return ret;
         }
+#endif
 
         /// <summary>
         /// 指定画素順でbyte配列に詰め込む
@@ -130,7 +130,7 @@ namespace TonNurako.XImageFormat.Xi {
             return XbmWriter.ToBitmap(width, height, ch, 反転, arr);
         }
 
-
+#if WINDOWS_XP
         /// <summary>
         /// System.Drawing.Bitmapから変換
         /// </summary>
@@ -139,10 +139,10 @@ namespace TonNurako.XImageFormat.Xi {
         public static ぉ[] ぉに変換(System.Drawing.Bitmap bitmap) {
             var arr = new ぉ[bitmap.Width * bitmap.Height];
 
-            BitmapData data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadOnly,
-                PixelFormat.Format32bppArgb);
+            System.Drawing.Imaging.BitmapData data = bitmap.LockBits(
+                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             int bytes = bitmap.Width * bitmap.Height * 4;
             for (int i = 0, j = 0; i < bytes; i += 4, j++) {
                 Int32 value = Marshal.ReadInt32(data.Scan0, i);
@@ -161,5 +161,6 @@ namespace TonNurako.XImageFormat.Xi {
             bitmap.UnlockBits(data);
             return arr;
         }
+#endif
     }
 }

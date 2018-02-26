@@ -13,31 +13,31 @@ namespace TonNurako.X11.Extension.Xft {
 
     public class XftFont : IX11Interop, IDisposable {
         internal static class NativeMethods {
-            // XftFont*: XftFontOpenName Display*:dpy  int:screen  unsigned char*:name  
+            // XftFont*: XftFontOpenName Display*:dpy  int:screen  unsigned char*:name
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenName_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XftFontOpenName(IntPtr dpy, int screen, [In,MarshalAs(UnmanagedType.LPStr)] string name);
 
-            // XftFont*: XftFontOpenPattern Display*:dpy  FcPattern*:fontpattern  
+            // XftFont*: XftFontOpenPattern Display*:dpy  FcPattern*:fontpattern
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenPattern_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XftFontOpenPattern(IntPtr dpy, IntPtr fontpattern);
 
-            // XftFont*: XftFontOpenXlfd Display*:dpy  int:screen  String:xlfd  
+            // XftFont*: XftFontOpenXlfd Display*:dpy  int:screen  String:xlfd
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenXlfd_TNK", CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr XftFontOpenXlfd(IntPtr dpy, int screen, [MarshalAs(UnmanagedType.LPStr)] string xlfd);
 
-            // XftFont*: XftFontOpenInfo Display*:dpy  FcPattern*:pattern  XftFontInfo*:fi  
+            // XftFont*: XftFontOpenInfo Display*:dpy  FcPattern*:pattern  XftFontInfo*:fi
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontOpenInfo_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XftFontOpenInfo(IntPtr dpy, IntPtr pattern, IntPtr fi);
 
-            // void: XftFontClose Display*:dpy  XftFont*:font  
+            // void: XftFontClose Display*:dpy  XftFont*:font
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontClose_TNK", CharSet = CharSet.Auto)]
             internal static extern void XftFontClose(IntPtr dpy, IntPtr font);
 
-            // FcBool: XftCharExists Display*:dpy  XftFont*:pub  FcChar32:ucs4  
+            // FcBool: XftCharExists Display*:dpy  XftFont*:pub  FcChar32:ucs4
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftCharExists_TNK", CharSet = CharSet.Auto)]
             internal static extern bool XftCharExists(IntPtr dpy, IntPtr pub, uint ucs4);
 
-            // FT_UInt: XftCharIndex Display*:dpy  XftFont*:pub  FcChar32:ucs4  
+            // FT_UInt: XftCharIndex Display*:dpy  XftFont*:pub  FcChar32:ucs4
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftCharIndex_TNK", CharSet = CharSet.Auto)]
             internal static extern uint XftCharIndex(IntPtr dpy, IntPtr pub, uint ucs4);
 
@@ -207,16 +207,20 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
+        #if RLE
         ~XftFont() {
             if (handle != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }

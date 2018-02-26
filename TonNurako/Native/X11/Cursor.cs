@@ -11,28 +11,28 @@ namespace TonNurako.X11 {
     public class Cursor : IX11Interop<int>, IDisposable {
         #region ﾈ－ﾁﾌﾞ
         internal static class NativeMethods {
-            // Cursor: XCreateFontCursor Display*:display  unsigned int:shape  
+            // Cursor: XCreateFontCursor Display*:display  unsigned int:shape
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateFontCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern int XCreateFontCursor(IntPtr display, XCursorShape shape);
 
-            // Cursor: XCreatePixmapCursor Display*:display  Pixmap:source  Pixmap:mask  XColor*:foreground_color  XColor*:background_color  unsigned int:x  unsigned int:y  
+            // Cursor: XCreatePixmapCursor Display*:display  Pixmap:source  Pixmap:mask  XColor*:foreground_color  XColor*:background_color  unsigned int:x  unsigned int:y
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCreatePixmapCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern int XCreatePixmapCursor(IntPtr display, IntPtr source, IntPtr mask, ref XColor foreground_color, ref XColor background_color, uint x, uint y);
 
-            // Cursor: XCreateGlyphCursor Display*:display  Font:source_font  Font:mask_font  unsigned int:source_char  unsigned int:mask_char  XColor*:foreground_color  XColor*:background_color  
+            // Cursor: XCreateGlyphCursor Display*:display  Font:source_font  Font:mask_font  unsigned int:source_char  unsigned int:mask_char  XColor*:foreground_color  XColor*:background_color
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCreateGlyphCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern int XCreateGlyphCursor(IntPtr display, int source_font, int mask_font, uint source_char, uint mask_char, ref XColor foreground_color, ref XColor background_color);
 
 
-            // Status: XRecolorCursor Display*:display  Cursor:cursor  XColor*:foreground_color  XColor*:background_color  
+            // Status: XRecolorCursor Display*:display  Cursor:cursor  XColor*:foreground_color  XColor*:background_color
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRecolorCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XRecolorCursor(IntPtr display, int cursor, ref XColor foreground_color, ref XColor background_color);
 
-            // Status: XFreeCursor Display*:display  Cursor:cursor  
+            // Status: XFreeCursor Display*:display  Cursor:cursor
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XFreeCursor(IntPtr display, int cursor);
 
-            // Status: XQueryBestCursor Display*:display  Drawable:d  unsigned int:width  unsigned int:height  unsigned int*:width_return  unsigned int*:height_return  
+            // Status: XQueryBestCursor Display*:display  Drawable:d  unsigned int:width  unsigned int:height  unsigned int*:width_return  unsigned int*:height_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XQueryBestCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XQueryBestCursor(IntPtr display, IntPtr d, uint width, uint height, out uint width_return, out uint height_return);
 
@@ -62,7 +62,7 @@ namespace TonNurako.X11 {
         }
 
         public static Cursor CreatePixmapCursor(Display display, Pixmap source, Pixmap mask, Color foreground_color, Color background_color, uint x, uint y) =>
-            new Cursor(display, 
+            new Cursor(display,
                 NativeMethods.XCreatePixmapCursor(display.Handle, source.Handle, mask.Handle, ref foreground_color.Record, ref background_color.Record, x, y));
 
 
@@ -86,16 +86,8 @@ namespace TonNurako.X11 {
             }
         }
 
-        ~Cursor() {
-            if (handle > 0) {
-                throw new ResourceLeakException(this.GetType());
-            }
-            Dispose(false);
-        }
-
         public void Dispose() {
             Dispose(true);
-            System.GC.SuppressFinalize(this);
         }
         #endregion
     }
@@ -179,5 +171,5 @@ namespace TonNurako.X11 {
         XC_watch = TonNurako.X11.Constant.XC_watch,
         XC_xterm = TonNurako.X11.Constant.XC_xterm,
     }
-   
+
 }

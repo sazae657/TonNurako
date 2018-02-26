@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TonNurako</RootNamespace>
+    <AssemblyName>TonNurako</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <BaseIntermediateOutputPath>obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS_XP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <WarningsAsErrors>0114</WarningsAsErrors>
+    <LangVersion>default</LangVersion>
+    <!-- DocumentationFile>bin\Debug\TonNurako.XML</DocumentationFile -->
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS_XP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Core\Application.cs" />
+    <Compile Include="Core\ApplicationContext.cs" />
+    <Compile Include="Core\ConstraintResource.cs" />
+    <Compile Include="Core\Event.cs" />
+    <Compile Include="Core\EventId.cs" />
+    <Compile Include="Data\Color.cs" />
+    <Compile Include="Data\CompoundString.cs" />
+    <Compile Include="Data\ExtremeResourceAttribute.cs" />
+    <Compile Include="Data\ExtremeResourceSports.cs" />
+    <Compile Include="Data\KeySym.cs" />
+    <Compile Include="Data\RenderTable.cs" />
+    <Compile Include="Data\Rendition.cs" />
+    <Compile Include="Data\SportyFontList.cs" />
+    <Compile Include="Data\TabStop.cs" />
+    <Compile Include="Data\WidgetList.cs" />
+    <Compile Include="Data\XResource.cs" />
+    <Compile Include="GC\GraphicsContext.cs" />
+    <Compile Include="GC\PixmapFactory.cs" />
+    <Compile Include="GC\XImage.cs" />
+    <Compile Include="Inutility\Inutility.cs" />
+    <Compile Include="Inutility\MarshalHelper.cs" />
+    <Compile Include="Inutility\Unity.cs" />
+    <Compile Include="Native\Attribute.cs" />
+    <Compile Include="Native\CallbackQueue.cs" />
+    <Compile Include="Native\DlSym.cs" />
+    <Compile Include="Native\ExtremeSports.cs" />
+    <Compile Include="Native\GEN\Fc.ResourceId.cs" />
+    <Compile Include="Native\GEN\X.Atom.cs" />
+    <Compile Include="Native\GEN\X.Constant.cs" />
+    <Compile Include="Native\GEN\X.KeySym.cs" />
+    <Compile Include="Native\GEN\X.Proto.cs" />
+    <Compile Include="Native\GEN\X.StringConstant.cs" />
+    <Compile Include="Native\GEN\Xm.Constant.cs" />
+    <Compile Include="Native\GEN\Xm.ResourceId.cs" />
+    <Compile Include="Native\GEN\Xm.StringConstant.cs" />
+    <Compile Include="Native\GEN\Xt.Constant.cs" />
+    <Compile Include="Native\GEN\Xt.ResourceId.cs" />
+    <Compile Include="Native\GEN\Xt.StringConstant.cs" />
+    <Compile Include="Native\ResourceLeakException.cs" />
+    <Compile Include="Native\Types.cs" />
+    <Compile Include="Native\X11\Atom.cs" />
+    <Compile Include="Native\X11\Color.cs" />
+    <Compile Include="Native\X11\Colormap.cs" />
+    <Compile Include="Native\X11\Cursor.cs" />
+    <Compile Include="Native\X11\Display.cs" />
+    <Compile Include="Native\X11\Error.cs" />
+    <Compile Include="Native\X11\Event.cs" />
+    <Compile Include="Native\X11\Extension\ExtCommon.cs" />
+    <Compile Include="Native\X11\Extension\Render\Render.cs" />
+    <Compile Include="Native\X11\Extension\Render\RenderStruct.cs" />
+    <Compile Include="Native\X11\Extension\Shape\Shape.cs" />
+    <Compile Include="Native\X11\Extension\Xft\Const.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcBlanks.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcCache.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcCharSet.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcConfig.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcDefault.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcFontSet.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcLangSet.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcRange.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcStr.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcStructs.cs" />
+    <Compile Include="Native\X11\Extension\Xft\Xft.cs" />
+    <Compile Include="Native\X11\Extension\Xft\XftFontInfo.cs" />
+    <Compile Include="Native\X11\Font.cs" />
+    <Compile Include="Native\X11\GC.cs" />
+    <Compile Include="Native\X11\Mask.cs" />
+    <Compile Include="Native\X11\ModifierKeymap.cs" />
+    <Compile Include="Native\X11\Mui.cs" />
+    <Compile Include="Native\X11\Pixmap.cs" />
+    <Compile Include="Native\X11\Region.cs" />
+    <Compile Include="Native\X11\Screen.cs" />
+    <Compile Include="Native\X11\Struct.cs" />
+    <Compile Include="Native\X11\Visual.cs" />
+    <Compile Include="Native\X11\Window.cs" />
+    <Compile Include="Native\X11\WindowAttributes.cs" />
+    <Compile Include="Native\X11\X11Call.cs" />
+    <Compile Include="Native\X11\TextProperty.cs" />
+    <Compile Include="Native\XEventQueue.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FcPattern.cs" />
+    <Compile Include="Native\X11\Extension\Xft\FontConfig.cs" />
+    <Compile Include="Native\X11\Extension\Xft\Struct.cs" />
+    <Compile Include="Native\X11\Extension\Xft\XftColor.cs" />
+    <Compile Include="Native\X11\Extension\Xft\XftDraw.cs" />
+    <Compile Include="Native\X11\Extension\Xft\XftFont.cs" />
+    <Compile Include="Native\Xm\EventId.cs" />
+    <Compile Include="Native\Xm\Symbol.cs" />
+    <Compile Include="Native\Xm\Types.cs" />
+    <Compile Include="Native\Xm\WidgetClass.cs" />
+    <Compile Include="Native\Xm\Xm.cs" />
+    <Compile Include="Native\Xm\XmCall.cs" />
+    <Compile Include="Native\Xm\XmCall.gen.cs" />
+    <Compile Include="Native\Xrm\Database.cs" />
+    <Compile Include="Native\Xt\AppContext.cs" />
+    <Compile Include="Native\Xt\Core\Callback.cs" />
+    <Compile Include="Native\Xt\Core\Structure.cs" />
+    <Compile Include="Native\Xt\Core\WidgetRec.cs" />
+    <Compile Include="Native\Xt\EventHandler.cs" />
+    <Compile Include="Native\Xt\Masks.cs" />
+    <Compile Include="Native\Xt\Symbol.cs" />
+    <Compile Include="Native\Xt\Translation.cs" />
+    <Compile Include="Native\Xt\Widget.cs" />
+    <Compile Include="Native\Xt\Core\WidgetClassRec.cs" />
+    <Compile Include="Native\Xt\Xt.cs" />
+    <Compile Include="Native\Xt\XtCall.cs" />
+    <Compile Include="Native\Xt\XtTypes.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Widgets\Shell\TopLevel.cs" />
+    <Compile Include="XImageFormat\PNM\PNM.cs" />
+    <Compile Include="XImageFormat\PNM\PNMLoader.cs" />
+    <Compile Include="XImageFormat\PNM\PNMWriter.cs" />
+    <Compile Include="XImageFormat\Xbm\Xbm.cs" />
+    <Compile Include="XImageFormat\Xbm\XbmLoader.cs" />
+    <Compile Include="XImageFormat\Xbm\XbmWriter.cs" />
+    <Compile Include="XImageFormat\Xi\GIF.cs" />
+    <Compile Include="XImageFormat\Xi\GS.cs" />
+    <Compile Include="XImageFormat\Xi\IPU.cs" />
+    <Compile Include="XImageFormat\Xi\VU0.cs" />
+    <Compile Include="XImageFormat\Xi\VU1.cs" />
+    <Compile Include="XImageFormat\Xpm\Color.cs" />
+    <Compile Include="XImageFormat\Xpm\Xpm.cs" />
+    <Compile Include="XImageFormat\Xpm\XpmLoader.cs" />
+    <Compile Include="XImageFormat\Xpm\XpmWriter.cs" />
+    <Compile Include="Types\Constant.cs" />
+    <Compile Include="Types\EventArgs.cs" />
+    <Compile Include="Widgets\IWidget.cs" />
+    <Compile Include="Widgets\Shell\ApplicationShell.Properties.cs" />
+    <Compile Include="Widgets\Shell\ApplicationShell.cs" />
+    <Compile Include="Widgets\Shell\LayoutForm.cs" />
+    <Compile Include="Widgets\Shell\ShellBase.cs" />
+    <Compile Include="Widgets\Shell\Window.cs" />
+    <Compile Include="Widgets\WidgetBase.cs" />
+    <Compile Include="Widgets\Xm\Gadget\Gadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\GadgetEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Gadget\IconGadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\Label\ArrowButtonGadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\Label\CascadeButtonGadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\Label\LabelGadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\Label\PushButtonGadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\Label\ToggleButtonGadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\SeparatorGadget.cs" />
+    <Compile Include="Widgets\Xm\Gadget\TNKGadget.cs" />
+    <Compile Include="Widgets\Xm\WidgetConstants.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Composite.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Constraint.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\BulletinBoard.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\BulletinBoardDialog.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\Form.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\MessageBox\MessageBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\MessageBox\MessageDialog.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\FileSelectionBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\FileSelectionBoxEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\FileSelectionDialog.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\SelectionBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\SelectionBox\SelectionDialog.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\TabStack.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\BulletinBoard\TabStackEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\ButtonBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\ComboBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Container.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\DrawingArea.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\DropDown.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Events\SimpleSpinBoxEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Frame.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\Hierarchy.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\HierarchyEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Hierarchy\Outline.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Manager.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\ManagerEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\MenuBar\MenuBar.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\MenuBar\SimpleMenuBar.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\Menu.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\MenuEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\OptionMenu.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\PopupMenu.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\PulldownMenu.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimpleMenuBase.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimpleOptionMenu.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimplePopupMenu.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Menu\SimplePulldownMenu.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Notebook.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\NotebookEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Paned.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\PanedWindow.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumnBase.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\RadioBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\SimpleCheckBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\SimpleRadioBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\RowColumn\WorkArea.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\Scale.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\ScrolledWindow.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\ScrolledWindow\MainWindow.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\SimpleSpinBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Constraint\Manager\SpinBox.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Shell\MenuShell.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Shell\Shell.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Shell\WMShell\VendorShell\TransientShell\DialogShell.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Shell\WMShell\VendorShell\TransientShell\TransientShell.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Shell\WMShell\VendorShell\VendorShell.cs" />
+    <Compile Include="Widgets\Xm\Widget\Composite\Shell\WMShell\WMShell.cs" />
+    <Compile Include="Widgets\Xm\Widget\Core.cs" />
+    <Compile Include="Widgets\Xm\Widget\Event\CallReason.cs" />
+    <Compile Include="Widgets\Xm\Widget\Event\EventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Event\ServerEvent.cs" />
+    <Compile Include="Widgets\Xm\Widget\Event\ServerEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Label\ButtonEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Label\CascadeButton.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Label\DrawnButton.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Label\Label.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Label\LabelBase.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Label\PushButton.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Label\ToggleButton.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Misc\ArrowButton.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Misc\List.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Misc\ListEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Misc\ScrollBar.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Misc\ScrollBarEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Misc\Separator.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Primitive.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Text\ScrolledText.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Text\Text.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Text\TextBase.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Text\TextEventArgs.cs" />
+    <Compile Include="Widgets\Xm\Widget\Primitive\Text\TextField.cs" />
+    <Compile Include="Widgets\Xm\Widget\Widget.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\TonNurakoEx\iso.app\Depend.map" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildProjectDirectory)\..\TonNurakoEx\TonNurako.ExtremeSports.Targets" />
+  <PropertyGroup>
+    <BuildDependsOn>
+          BuildExtremeSports;
+          $(BuildDependsOn);
+      </BuildDependsOn>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

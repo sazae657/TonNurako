@@ -5,7 +5,6 @@
 //
 using System;
 using System.Runtime.InteropServices;
-using System.Drawing;
 using TonNurako.X11;
 using TonNurako.Xt;
 
@@ -91,6 +90,7 @@ namespace TonNurako.GC
         public XImage() {
         }
 
+#if WINDOWS_XP
         /// <summary>
         /// System.Drawing.Bitmapから生成
         /// </summary>
@@ -101,7 +101,7 @@ namespace TonNurako.GC
             var im = new XImage();
 
             var data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 System.Drawing.Imaging.ImageLockMode.ReadWrite,
                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             int bytes = bitmap.Width * bitmap.Height * 4;
@@ -131,7 +131,7 @@ namespace TonNurako.GC
             var im = new XImage();
 
             var data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 System.Drawing.Imaging.ImageLockMode.ReadWrite,
                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             int bytes = bitmap.Width * bitmap.Height * 4;
@@ -150,6 +150,7 @@ namespace TonNurako.GC
             im.Depth = 24;
             return im;
         }
+#endif
 
         /// <summary>
         /// ﾊﾞｯﾌｧーから生成
@@ -178,7 +179,7 @@ namespace TonNurako.GC
             NativeMethods.XPutImage(dpy.Handle, d, gc, image, sx, sy, dx, dy, (uint)w, (uint)h);
         }
 
-		#region IDisposable ﾒﾝﾊﾞー
+#region IDisposable ﾒﾝﾊﾞー
         private bool disposed = false;
 
 
@@ -212,6 +213,6 @@ namespace TonNurako.GC
             disposed = true;
         }
 
-        #endregion
+#endregion
     }
 }

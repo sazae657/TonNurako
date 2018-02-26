@@ -362,16 +362,20 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
+        #if RLE
         ~FcPattern() {
             if (handle != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }

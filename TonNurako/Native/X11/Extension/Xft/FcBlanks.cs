@@ -9,19 +9,19 @@ using TonNurako.Native;
 namespace TonNurako.X11.Extension.Xft {
     public class FcBlanks :IX11Interop, IDisposable {
         internal static class NativeMethods {
-            // FcBlanks*: FcBlanksCreate 
+            // FcBlanks*: FcBlanksCreate
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcBlanksCreate_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcBlanksCreate();
 
-            // void: FcBlanksDestroy FcBlanks*:b  
+            // void: FcBlanksDestroy FcBlanks*:b
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcBlanksDestroy_TNK", CharSet = CharSet.Auto)]
             internal static extern void FcBlanksDestroy(IntPtr b);
 
-            // FcBool: FcBlanksAdd FcBlanks*:b  FcChar32:ucs4  
+            // FcBool: FcBlanksAdd FcBlanks*:b  FcChar32:ucs4
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcBlanksAdd_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcBlanksAdd(IntPtr b, uint ucs4);
 
-            // FcBool: FcBlanksIsMember FcBlanks*:b  FcChar32:ucs4  
+            // FcBool: FcBlanksIsMember FcBlanks*:b  FcChar32:ucs4
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcBlanksIsMember_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcBlanksIsMember(IntPtr b, uint ucs4);
         }
@@ -37,7 +37,7 @@ namespace TonNurako.X11.Extension.Xft {
 
         public static FcBlanks Create() =>
             new FcBlanks(NativeMethods.FcBlanksCreate());
-        
+
 
         public void Destroy() {
             if (handle != IntPtr.Zero) {
@@ -48,11 +48,11 @@ namespace TonNurako.X11.Extension.Xft {
 
         public bool Add(uint ucs4) =>
             NativeMethods.FcBlanksAdd(Handle, ucs4);
-        
+
 
         public bool IsMember(uint ucs4) =>
             NativeMethods.FcBlanksIsMember(Handle, ucs4);
-        
+
 
         #region IDisposable Support
         private bool disposedValue = false;
@@ -64,12 +64,14 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
+        #if RLE
         ~FcBlanks() {
             if (handle != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);

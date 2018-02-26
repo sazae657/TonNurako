@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using TonNurako.XImageFormat.Xi;
 
@@ -249,6 +247,7 @@ namespace TonNurako.XImageFormat {
             return ret;
         }
 
+#if WINDOWS_XP
         /// <summary>
         /// System.Drawing.Bitmapに変換
         /// </summary>
@@ -257,9 +256,9 @@ namespace TonNurako.XImageFormat {
             var bitmap = new System.Drawing.Bitmap(Columns, Rows);
 
             var data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadWrite,
-                PixelFormat.Format32bppArgb);
+                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             var svc = this.Toぉ();
             int k = 0;
             for (int i = 0; i < (Columns * Rows); i++, k += 4) {
@@ -284,10 +283,10 @@ namespace TonNurako.XImageFormat {
         public static Xpm FromBitmap(System.Drawing.Bitmap bitmap) {
             var arr = new ぉ[bitmap.Width * bitmap.Height];
 
-            BitmapData data = bitmap.LockBits(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                ImageLockMode.ReadOnly,
-                PixelFormat.Format32bppArgb);
+            System.Drawing.Imaging.BitmapData data = bitmap.LockBits(
+                new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             int bytes = bitmap.Width * bitmap.Height * 4;
             for (int i = 0, j = 0; i < bytes; i += 4, j++) {
                 Int32 value = Marshal.ReadInt32(data.Scan0, i);
@@ -306,6 +305,7 @@ namespace TonNurako.XImageFormat {
             bitmap.UnlockBits(data);
             return Fromぉ(bitmap.Width, bitmap.Height, arr);
         }
+#endif
 
         /// <summary>
         /// ぉからXPMを生成

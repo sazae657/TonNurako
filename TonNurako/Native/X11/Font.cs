@@ -253,7 +253,7 @@ namespace TonNurako.X11 {
             return r;
         }
 
-        
+
         public ErrorCode TextExtents(string str, TextExtents extents) {
             var gs = Encoding.Convert(Encoding.Default, Encoding.UTF32, Encoding.Default.GetBytes(str));
             var r = NativeMethods.XwcTextExtents(this.Handle, gs, str.Length, ref extents.overall_ink, ref extents.overall_logical);
@@ -312,16 +312,20 @@ namespace TonNurako.X11 {
             }
         }
 
+        #if RLE
         ~FontSet() {
             if (handle != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
 

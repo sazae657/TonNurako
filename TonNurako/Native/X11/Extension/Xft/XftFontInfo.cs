@@ -11,19 +11,19 @@ using TonNurako.X11;
 namespace TonNurako.X11.Extension.Xft {
     public class XftFontInfo : IX11Interop, IDisposable {
         internal static class NativeMethods {
-            // XftFontInfo*: XftFontInfoCreate Display*:dpy  _Xconst FcPattern*:pattern  
+            // XftFontInfo*: XftFontInfoCreate Display*:dpy  _Xconst FcPattern*:pattern
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontInfoCreate_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XftFontInfoCreate(IntPtr dpy, IntPtr pattern);
 
-            // void: XftFontInfoDestroy Display*:dpy  XftFontInfo*:fi  
+            // void: XftFontInfoDestroy Display*:dpy  XftFontInfo*:fi
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontInfoDestroy_TNK", CharSet = CharSet.Auto)]
             internal static extern void XftFontInfoDestroy(IntPtr dpy, IntPtr fi);
 
-            // FcChar32: XftFontInfoHash XftFontInfo*:fi  
+            // FcChar32: XftFontInfoHash XftFontInfo*:fi
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontInfoHash_TNK", CharSet = CharSet.Auto)]
             internal static extern uint XftFontInfoHash(IntPtr fi);
 
-            // FcBool: XftFontInfoEqual XftFontInfo*:a  _Xconst XftFontInfo*:b  
+            // FcBool: XftFontInfoEqual XftFontInfo*:a  _Xconst XftFontInfo*:b
             [DllImport(ExtremeSports.Lib, EntryPoint = "XftFontInfoEqual_TNK", CharSet = CharSet.Auto)]
             internal static extern bool XftFontInfoEqual(IntPtr a, IntPtr b);
         }
@@ -69,16 +69,20 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
+        #if RLE
         ~XftFontInfo() {
             if (handle != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }

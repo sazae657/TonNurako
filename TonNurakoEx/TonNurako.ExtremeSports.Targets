@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="BuildExtremeSports" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <WorkingFolder>$(MSBuildProjectDirectory)/TonNurakoEx</WorkingFolder>
-	<Make Condition="'$(MAKE)'==''">make</Make>
+        <WorkingFolder>$(MSBuildProjectDirectory)/../TonNurakoEx</WorkingFolder>
+	    <Make Condition="'$(MAKE)'==''">make</Make>
     </PropertyGroup>
     <Target Name="TonNuraConfig"
       Inputs="$(WorkingFolder)/Config.mp3"
