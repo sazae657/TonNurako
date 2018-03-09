@@ -231,7 +231,7 @@ namespace TonNurako.X11
     /// <summary>
     /// FillStyle
     /// </summary>
-    public enum FillStyle : int 
+    public enum FillStyle : int
     {
         FillSolid = TonNurako.X11.Constant.FillSolid,
         FillTiled = TonNurako.X11.Constant.FillTiled,
@@ -268,7 +268,7 @@ namespace TonNurako.X11
     /// </summary>
     public interface IDrawable {
         IntPtr Drawable { get; }
-        Display Display { get; } 
+        Display Display { get; }
     }
 
     /// <summary>
@@ -337,7 +337,7 @@ namespace TonNurako.X11
 
         public void DrawString(FontSet fontSet, int x, int y, string str) {
             NativeMethods.XwcDrawString(
-                Display.Handle, drawable.Drawable, fontSet.Handle, this.Handle, x, y, 
+                Display.Handle, drawable.Drawable, fontSet.Handle, this.Handle, x, y,
                 Encoding.Convert(Encoding.Default, Encoding.UTF32, Encoding.Default.GetBytes(str)), str.Length);
         }
 
@@ -397,7 +397,7 @@ namespace TonNurako.X11
 
         #endregion
 
- 
+
 
         #region 図形描画
 
@@ -606,7 +606,7 @@ namespace TonNurako.X11
 
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
@@ -623,16 +623,20 @@ namespace TonNurako.X11
             }
         }
 
+        #if RLE
         ~GC() {
             if (handle != IntPtr.Zero && autoDispose == true) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }

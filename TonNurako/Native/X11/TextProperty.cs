@@ -169,15 +169,19 @@ namespace TonNurako.X11 {
         public void Dispose()
         {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
 
+        #if RLE
         ~XTextProperty() {
             if (IntPtr.Zero != record.value) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
         #endregion
 
     }

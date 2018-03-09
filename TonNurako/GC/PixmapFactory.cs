@@ -195,6 +195,7 @@ namespace TonNurako.GC
             return pm;
         }
 
+#if WINDOWS_XP
 
         /// <summary>
         /// Bitmapから生成
@@ -211,6 +212,7 @@ namespace TonNurako.GC
             return pm;
         }
 
+
         /// <summary>
         /// Bitmapから生成
         /// </summary>
@@ -225,6 +227,7 @@ namespace TonNurako.GC
             }
             return pm;
         }
+#endif
 
     }
 

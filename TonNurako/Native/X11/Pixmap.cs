@@ -165,24 +165,34 @@ namespace TonNurako.X11 {
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
 
-        /*
+        #if RLE
         ~Pixmap() {
             if (drawable != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
-        }*/
+        }
+        #endif
+
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
+            if (disposedValue) {
+                return;
+            }
+
+            disposedValue = true;
             if (IntPtr.Zero != drawable) {
                 DestroyPixmapFunc?.Invoke();
                 display = null;
                 drawable = IntPtr.Zero;
-                //drawable.Screen = null;
             }
+
         }
         #endregion
 

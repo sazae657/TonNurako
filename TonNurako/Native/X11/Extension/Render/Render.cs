@@ -189,16 +189,20 @@ namespace TonNurako.X11.Extension {
                 disposedValue = true;
             }
         }
-
+        #if RLE
         ~Picture() {
             if (0 != handle && disposable) {
                 throw new ResourceLeakException(this.GetType());
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
+            System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
 

@@ -134,8 +134,13 @@ namespace TonNurako.Native {
             }
         }
 
+        ~Uname() {
+            Dispose(false);
+        }
+
         public void Dispose() {
             Dispose(true);
+            System.GC.SuppressFinalize(this);
         }
         #endregion
 

@@ -11,19 +11,19 @@ namespace TonNurako.X11 {
     public class ModifierMap {
         internal static class NativeMethods {
             #region ｱｸｾｯｻー
-            // int: TNK_GetXModifierKeymap_MaxKeypermod const XModifierKeymap*:p  
+            // int: TNK_GetXModifierKeymap_MaxKeypermod const XModifierKeymap*:p
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_GetXModifierKeymap_MaxKeypermod", CharSet = CharSet.Auto)]
             internal static extern int TNK_GetXModifierKeymap_MaxKeypermod(IntPtr p);
 
-            // void: TNK_SetXModifierKeymap_MaxKeypermod XModifierKeymap*:p  const KeyCode:val  
+            // void: TNK_SetXModifierKeymap_MaxKeypermod XModifierKeymap*:p  const KeyCode:val
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_SetXModifierKeymap_MaxKeypermod", CharSet = CharSet.Auto)]
             internal static extern void TNK_SetXModifierKeymap_MaxKeypermod(IntPtr p, int val);
 
-            // KeyCode: TNK_GetXModifierKeymap_Modifiermap const XModifierKeymap*:p  const int:index  
+            // KeyCode: TNK_GetXModifierKeymap_Modifiermap const XModifierKeymap*:p  const int:index
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_GetXModifierKeymap_Modifiermap", CharSet = CharSet.Auto)]
             internal static extern byte TNK_GetXModifierKeymap_Modifiermap(IntPtr p, int index);
 
-            // void: TNK_SetXModifierKeymap_Modifiermap XModifierKeymap*:p  const int:index  const KeyCode:val  
+            // void: TNK_SetXModifierKeymap_Modifiermap XModifierKeymap*:p  const int:index  const KeyCode:val
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_SetXModifierKeymap_Modifiermap", CharSet = CharSet.Auto)]
             internal static extern void TNK_SetXModifierKeymap_Modifiermap(IntPtr p, int index, byte val);
             #endregion
@@ -68,28 +68,28 @@ namespace TonNurako.X11 {
 
     public class XModifierKeymap :IX11Interop, IDisposable {
         internal static class NativeMethods {
-            // XModifierKeymap*: XNewModifiermap int:max_keys_per_mod  
+            // XModifierKeymap*: XNewModifiermap int:max_keys_per_mod
             [DllImport(ExtremeSports.Lib, EntryPoint = "XNewModifiermap_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XNewModifiermap(int max_keys_per_mod);
 
-            // XModifierKeymap*: XInsertModifiermapEntry XModifierKeymap*:modmap  KeyCode:keycode_entry  int:modifier  
+            // XModifierKeymap*: XInsertModifiermapEntry XModifierKeymap*:modmap  KeyCode:keycode_entry  int:modifier
             [DllImport(ExtremeSports.Lib, EntryPoint = "XInsertModifiermapEntry_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XInsertModifiermapEntry(IntPtr modmap, int keycode_entry, int modifier);
 
-            // XModifierKeymap*: XDeleteModifiermapEntry XModifierKeymap*:modmap  KeyCode:keycode_entry  int:modifier  
+            // XModifierKeymap*: XDeleteModifiermapEntry XModifierKeymap*:modmap  KeyCode:keycode_entry  int:modifier
             [DllImport(ExtremeSports.Lib, EntryPoint = "XDeleteModifiermapEntry_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XDeleteModifiermapEntry(IntPtr modmap, int keycode_entry, int modifier);
 
-            // int: XFreeModifiermap XModifierKeymap*:modmap  
+            // int: XFreeModifiermap XModifierKeymap*:modmap
             [DllImport(ExtremeSports.Lib, EntryPoint = "XFreeModifiermap_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XFreeModifiermap(IntPtr modmap);
 
             #region 保留
-            // int: XChangeKeyboardMapping Display*:display  int:first_keycode  int:keysyms_per_keycode  KeySym*:keysyms  int:num_codes  
+            // int: XChangeKeyboardMapping Display*:display  int:first_keycode  int:keysyms_per_keycode  KeySym*:keysyms  int:num_codes
             //[DllImport(ExtremeSports.Lib, EntryPoint = "XChangeKeyboardMapping_TNK", CharSet = CharSet.Auto)]
             //internal static extern int XChangeKeyboardMapping(IntPtr display, int first_keycode, int keysyms_per_keycode, IntPtr keysyms, int num_codes);
 
-            // KeySym*: XGetKeyboardMapping Display*:display  KeyCode:first_keycode  int:keycode_count  int*:keysyms_per_keycode_return  
+            // KeySym*: XGetKeyboardMapping Display*:display  KeyCode:first_keycode  int:keycode_count  int*:keysyms_per_keycode_return
             //[DllImport(ExtremeSports.Lib, EntryPoint = "XGetKeyboardMapping_TNK", CharSet = CharSet.Auto)]
             //internal static extern IntPtr XGetKeyboardMapping(IntPtr display, int first_keycode, int keycode_count, out IntPtr keysyms_per_keycode_return);
             #endregion
@@ -156,16 +156,21 @@ namespace TonNurako.X11 {
             }
         }
 
+        #if RLE
         ~XModifierKeymap() {
             if (handle != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
+
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }

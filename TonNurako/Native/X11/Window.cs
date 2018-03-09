@@ -187,20 +187,20 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XRestackWindows_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XRestackWindows(IntPtr display, IntPtr[] windows, int nwindows);
 
-            // int: XWindowEvent Display*:display  Window:w  long:event_mask  XEvent*:event_return  
+            // int: XWindowEvent Display*:display  Window:w  long:event_mask  XEvent*:event_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XWindowEvent_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XWindowEvent(IntPtr display, IntPtr w, EventMask event_mask, [In,Out] IntPtr event_return);
 
-            // Bool: XCheckWindowEvent Display*:display  Window:w  long:event_mask  XEvent*:event_return  
+            // Bool: XCheckWindowEvent Display*:display  Window:w  long:event_mask  XEvent*:event_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckWindowEvent_TNK", CharSet = CharSet.Auto)]
             internal static extern bool XCheckWindowEvent(IntPtr display, IntPtr w, EventMask event_mask, [In,Out] IntPtr event_return);
 
-            // Bool: XCheckTypedWindowEvent Display*:display  Window:w  int:event_type  XEvent*:event_return  
+            // Bool: XCheckTypedWindowEvent Display*:display  Window:w  int:event_type  XEvent*:event_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XCheckTypedWindowEvent_TNK", CharSet = CharSet.Auto)]
             internal static extern bool XCheckTypedWindowEvent(IntPtr display, IntPtr w, Event.XEventType event_type, [In, Out] IntPtr event_return);
 
 
-            // XTimeCoord*: XGetMotionEvents Display*:display  Window:w  Time:start  Time:stop  int*:nevents_return  
+            // XTimeCoord*: XGetMotionEvents Display*:display  Window:w  Time:start  Time:stop  int*:nevents_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetMotionEvents_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr XGetMotionEvents(IntPtr display, IntPtr w, uint start, uint stop, out int nevents_return);
 
@@ -226,11 +226,11 @@ namespace TonNurako.X11 {
                 IntPtr display, IntPtr w, out IntPtr root_return, out IntPtr child_return, out int root_x_return, out int root_y_return, out int win_x_return, out int win_y_return, out ModifierMask mask_return);
 
 
-            // Status: XDefineCursor Display*:display  Window:w  Cursor:cursor  
+            // Status: XDefineCursor Display*:display  Window:w  Cursor:cursor
             [DllImport(ExtremeSports.Lib, EntryPoint = "XDefineCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XDefineCursor(IntPtr display, IntPtr w, int cursor);
 
-            // Status: XUndefineCursor Display*:display  Window:w  
+            // Status: XUndefineCursor Display*:display  Window:w
             [DllImport(ExtremeSports.Lib, EntryPoint = "XUndefineCursor_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XUndefineCursor(IntPtr display, IntPtr w);
 
@@ -294,23 +294,23 @@ namespace TonNurako.X11 {
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetIconName_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XGetIconName(IntPtr display, IntPtr w, out IntPtr icon_name_return);
 
-            // XSizeHints*: XAllocSizeHints 
+            // XSizeHints*: XAllocSizeHints
             //[DllImport(ExtremeSports.Lib, EntryPoint = "XAllocSizeHints_TNK", CharSet = CharSet.Auto)]
             //internal static extern IntPtr XAllocSizeHints();
 
-            // void: XSetWMNormalHints Display*:display  Window:w  XSizeHints*:hints  
+            // void: XSetWMNormalHints Display*:display  Window:w  XSizeHints*:hints
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMNormalHints_TNK", CharSet = CharSet.Auto)]
             internal static extern void XSetWMNormalHints(IntPtr display, IntPtr w, ref XSizeHints hints);
 
-            // Status: XGetWMNormalHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  
+            // Status: XGetWMNormalHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMNormalHints_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XGetWMNormalHints(IntPtr display, IntPtr w, ref XSizeHints hints_return, out long supplied_return);
 
-            // void: XSetWMSizeHints Display*:display  Window:w  XSizeHints*:hints  Atom:property  
+            // void: XSetWMSizeHints Display*:display  Window:w  XSizeHints*:hints  Atom:property
             [DllImport(ExtremeSports.Lib, EntryPoint = "XSetWMSizeHints_TNK", CharSet = CharSet.Auto)]
             internal static extern void XSetWMSizeHints(IntPtr display, IntPtr w, ref XSizeHints hints, ulong property);
 
-            // Status: XGetWMSizeHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  Atom:property  
+            // Status: XGetWMSizeHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  Atom:property
             [DllImport(ExtremeSports.Lib, EntryPoint = "XGetWMSizeHints_TNK", CharSet = CharSet.Auto)]
             internal static extern XStatus XGetWMSizeHints(IntPtr display, IntPtr w, ref XSizeHints hints_return, out long supplied_return, ulong property);
 
@@ -485,22 +485,22 @@ namespace TonNurako.X11 {
         //    NativeMethods.XAllocSizeHints();
 
 
-        // void: XSetWMNormalHints Display*:display  Window:w  XSizeHints*:hints  
+        // void: XSetWMNormalHints Display*:display  Window:w  XSizeHints*:hints
         public void SetWMNormalHints(ref XSizeHints hints) =>
             NativeMethods.XSetWMNormalHints(display.Handle, Handle, ref hints);
 
 
-        // Status: XGetWMNormalHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  
+        // Status: XGetWMNormalHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return
         public XStatus GetWMNormalHints(ref XSizeHints hints_return, out long supplied_return) =>
             NativeMethods.XGetWMNormalHints(display.Handle, Handle, ref hints_return, out supplied_return);
 
 
-        // void: XSetWMSizeHints Display*:display  Window:w  XSizeHints*:hints  Atom:property  
+        // void: XSetWMSizeHints Display*:display  Window:w  XSizeHints*:hints  Atom:property
         public void SetWMSizeHints(ref XSizeHints hints, ulong property) =>
             NativeMethods.XSetWMSizeHints(display.Handle, Handle, ref hints, property);
 
 
-        // Status: XGetWMSizeHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  Atom:property  
+        // Status: XGetWMSizeHints Display*:display  Window:w  XSizeHints*:hints_return  long*:supplied_return  Atom:property
         public XStatus GetWMSizeHints(ref XSizeHints hints_return, out long supplied_return, Atom property) =>
             NativeMethods.XGetWMSizeHints(display.Handle, Handle, ref hints_return, out supplied_return, (ulong)property.Handle);
 
@@ -530,7 +530,7 @@ namespace TonNurako.X11 {
             if (IntPtr.Zero == r || n <= 0) {
                 return null;
             }
-            //TODO: Free‚·‚é•K—v‚Í–³‚¢‚ç‚µ‚¢‚ª‚Ÿ‚áƒÇ‚¡‚Ì‚Å’²¸’†
+            //TODO: Freeï¿½ï¿½ï¿½ï¿½Kï¿½vï¿½Í–ï¿½ï¿½ï¿½ï¿½ç‚µï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½Ì‚Å’ï¿½ï¿½ï¿½ï¿½ï¿½
             return Inutility.MarshalHelper.ToStructArray<XTimeCoord>(r, n);
         }
 
@@ -685,16 +685,20 @@ namespace TonNurako.X11 {
             }
         }
 
+        #if RLE
         ~XWMHints() {
             if (IntPtr.Zero != handle) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
-           System.GC.SuppressFinalize(this);
+            #if RLE
+            System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }

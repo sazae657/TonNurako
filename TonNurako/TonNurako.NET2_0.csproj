@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Configurations>Debug.NET2_0;Release.NET2_0</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug.NET2_0|AnyCPU'">
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release.NET2_0|AnyCPU'">
+    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <Import Project="$(MSBuildProjectDirectory)\..\TonNurakoEx\TonNurako.ExtremeSports.Targets" />
+  <PropertyGroup>
+    <BuildDependsOn>
+          BuildExtremeSports;
+          $(BuildDependsOn);
+      </BuildDependsOn>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+</Project>

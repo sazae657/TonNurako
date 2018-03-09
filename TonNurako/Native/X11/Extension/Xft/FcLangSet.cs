@@ -11,63 +11,63 @@ namespace TonNurako.X11.Extension.Xft {
         internal static class NativeMethods {
 
 
-            // FcChar8*: FcLangNormalize const FcChar8*:lang  
+            // FcChar8*: FcLangNormalize const FcChar8*:lang
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangNormalize_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern string FcLangNormalize([MarshalAs(UnmanagedType.LPStr)]string lang);
 
-            // const FcCharSet*: FcLangGetCharSet const FcChar8*:lang  
+            // const FcCharSet*: FcLangGetCharSet const FcChar8*:lang
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangGetCharSet_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr FcLangGetCharSet([MarshalAs(UnmanagedType.LPStr)]string lang);
 
-            // FcLangSet*: FcLangSetCreate 
+            // FcLangSet*: FcLangSetCreate
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetCreate_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcLangSetCreate();
 
-            // void: FcLangSetDestroy FcLangSet*:ls  
+            // void: FcLangSetDestroy FcLangSet*:ls
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetDestroy_TNK", CharSet = CharSet.Auto)]
             internal static extern void FcLangSetDestroy(IntPtr ls);
 
-            // FcLangSet*: FcLangSetCopy const FcLangSet*:ls  
+            // FcLangSet*: FcLangSetCopy const FcLangSet*:ls
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetCopy_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcLangSetCopy(IntPtr ls);
 
-            // FcBool: FcLangSetAdd FcLangSet*:ls  const FcChar8*:lang  
+            // FcBool: FcLangSetAdd FcLangSet*:ls  const FcChar8*:lang
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetAdd_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcLangSetAdd(IntPtr ls, [MarshalAs(UnmanagedType.LPStr)]string lang);
 
-            // FcBool: FcLangSetDel FcLangSet*:ls  const FcChar8*:lang  
+            // FcBool: FcLangSetDel FcLangSet*:ls  const FcChar8*:lang
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetDel_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcLangSetDel(IntPtr ls, [MarshalAs(UnmanagedType.LPStr)]string lang);
 
-            // FcLangResult: FcLangSetHasLang const FcLangSet*:ls  const FcChar8*:lang  
+            // FcLangResult: FcLangSetHasLang const FcLangSet*:ls  const FcChar8*:lang
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetHasLang_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern FcLangResult FcLangSetHasLang(IntPtr ls, [MarshalAs(UnmanagedType.LPStr)]string lang);
 
-            // FcLangResult: FcLangSetCompare const FcLangSet*:lsa  const FcLangSet*:lsb  
+            // FcLangResult: FcLangSetCompare const FcLangSet*:lsa  const FcLangSet*:lsb
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetCompare_TNK", CharSet = CharSet.Auto)]
             internal static extern FcLangResult FcLangSetCompare(IntPtr lsa, IntPtr lsb);
 
-            // FcBool: FcLangSetContains const FcLangSet*:lsa  const FcLangSet*:lsb  
+            // FcBool: FcLangSetContains const FcLangSet*:lsa  const FcLangSet*:lsb
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetContains_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcLangSetContains(IntPtr lsa, IntPtr lsb);
 
-            // FcBool: FcLangSetEqual const FcLangSet*:lsa  const FcLangSet*:lsb  
+            // FcBool: FcLangSetEqual const FcLangSet*:lsa  const FcLangSet*:lsb
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetEqual_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcLangSetEqual(IntPtr lsa, IntPtr lsb);
 
-            // FcChar32: FcLangSetHash const FcLangSet*:ls  
+            // FcChar32: FcLangSetHash const FcLangSet*:ls
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetHash_TNK", CharSet = CharSet.Auto)]
             internal static extern uint FcLangSetHash(IntPtr ls);
 
-            // FcStrSet*: FcLangSetGetLangs const FcLangSet*:ls  
+            // FcStrSet*: FcLangSetGetLangs const FcLangSet*:ls
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetGetLangs_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcLangSetGetLangs(IntPtr ls);
 
-            // FcLangSet*: FcLangSetUnion const FcLangSet*:a  const FcLangSet*:b  
+            // FcLangSet*: FcLangSetUnion const FcLangSet*:a  const FcLangSet*:b
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetUnion_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcLangSetUnion(IntPtr a, IntPtr b);
 
-            // FcLangSet*: FcLangSetSubtract const FcLangSet*:a  const FcLangSet*:b  
+            // FcLangSet*: FcLangSetSubtract const FcLangSet*:a  const FcLangSet*:b
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcLangSetSubtract_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcLangSetSubtract(IntPtr a, IntPtr b);
         }
@@ -157,17 +157,20 @@ namespace TonNurako.X11.Extension.Xft {
                 this.Destroy();
             }
         }
-
+        #if RLE
         ~FcLangSet() {
             if (handle != IntPtr.Zero) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }

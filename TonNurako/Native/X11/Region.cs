@@ -190,7 +190,7 @@ namespace TonNurako.X11 {
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
@@ -202,16 +202,20 @@ namespace TonNurako.X11 {
             }
         }
 
+        #if RLE
         ~Region() {
             if (!isReference && IntPtr.Zero != handle) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
 

@@ -6,6 +6,8 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
+#if !NETSTANDARD2_0
+
 // ｱｾﾝﾌﾞﾘに関する一般情報は以下の属性ｾｯﾄをとおして制御されます。
 // ｱｾﾝﾌﾞﾘに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
@@ -39,3 +41,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+#endif

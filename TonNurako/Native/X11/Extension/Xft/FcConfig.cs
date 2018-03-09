@@ -9,111 +9,111 @@ using TonNurako.Native;
 namespace TonNurako.X11.Extension.Xft {
     public class FcConfig : IX11Interop, IDisposable {
         internal static class NativeMethods {
-            // FcChar8*: FcConfigHome 
+            // FcChar8*: FcConfigHome
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigHome_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigHome();
 
-            // FcBool: FcConfigEnableHome FcBool:enable  
+            // FcBool: FcConfigEnableHome FcBool:enable
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigEnableHome_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcConfigEnableHome(bool enable);
 
-            // FcChar8*: FcConfigFilename const FcChar8*:url  
+            // FcChar8*: FcConfigFilename const FcChar8*:url
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigFilename_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern IntPtr FcConfigFilename([MarshalAs(UnmanagedType.LPStr)]string url);
 
-            // FcConfig*: FcConfigCreate 
+            // FcConfig*: FcConfigCreate
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigCreate_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigCreate();
 
-            // FcConfig*: FcConfigReference FcConfig*:config  
+            // FcConfig*: FcConfigReference FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigReference_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigReference(IntPtr config);
 
-            // void: FcConfigDestroy FcConfig*:config  
+            // void: FcConfigDestroy FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigDestroy_TNK", CharSet = CharSet.Auto)]
             internal static extern void FcConfigDestroy(IntPtr config);
 
-            // FcBool: FcConfigSetCurrent FcConfig*:config  
+            // FcBool: FcConfigSetCurrent FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSetCurrent_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcConfigSetCurrent(IntPtr config);
 
-            // FcConfig*: FcConfigGetCurrent 
+            // FcConfig*: FcConfigGetCurrent
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetCurrent_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetCurrent();
 
-            // FcBool: FcConfigUptoDate FcConfig*:config  
+            // FcBool: FcConfigUptoDate FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigUptoDate_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcConfigUptoDate(IntPtr config);
 
-            // FcBool: FcConfigBuildFonts FcConfig*:config  
+            // FcBool: FcConfigBuildFonts FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigBuildFonts_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcConfigBuildFonts(IntPtr config);
 
-            // FcStrList*: FcConfigGetFontDirs FcConfig*:config  
+            // FcStrList*: FcConfigGetFontDirs FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetFontDirs_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetFontDirs(IntPtr config);
 
-            // FcStrList*: FcConfigGetConfigDirs FcConfig*:config  
+            // FcStrList*: FcConfigGetConfigDirs FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetConfigDirs_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetConfigDirs(IntPtr config);
 
-            // FcStrList*: FcConfigGetConfigFiles FcConfig*:config  
+            // FcStrList*: FcConfigGetConfigFiles FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetConfigFiles_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetConfigFiles(IntPtr config);
 
-            // FcChar8*: FcConfigGetCache FcConfig*:config  
+            // FcChar8*: FcConfigGetCache FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetCache_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetCache(IntPtr config);
 
-            // FcBlanks*: FcConfigGetBlanks FcConfig*:config  
+            // FcBlanks*: FcConfigGetBlanks FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetBlanks_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetBlanks(IntPtr config);
 
-            // FcStrList*: FcConfigGetCacheDirs const FcConfig*:config  
+            // FcStrList*: FcConfigGetCacheDirs const FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetCacheDirs_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetCacheDirs(IntPtr config);
 
-            // int: FcConfigGetRescanInterval FcConfig*:config  
+            // int: FcConfigGetRescanInterval FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetRescanInterval_TNK", CharSet = CharSet.Auto)]
             internal static extern int FcConfigGetRescanInterval(IntPtr config);
 
-            // FcBool: FcConfigSetRescanInterval FcConfig*:config  int:rescanInterval  
+            // FcBool: FcConfigSetRescanInterval FcConfig*:config  int:rescanInterval
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSetRescanInterval_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcConfigSetRescanInterval(IntPtr config, int rescanInterval);
 
-            // FcFontSet*: FcConfigGetFonts FcConfig*:config  FcSetName:set  
+            // FcFontSet*: FcConfigGetFonts FcConfig*:config  FcSetName:set
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetFonts_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetFonts(IntPtr config, FcSetName set);
 
-            // FcBool: FcConfigAppFontAddFile FcConfig*:config  const FcChar8*:file  
+            // FcBool: FcConfigAppFontAddFile FcConfig*:config  const FcChar8*:file
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigAppFontAddFile_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcConfigAppFontAddFile(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string file);
 
-            // FcBool: FcConfigAppFontAddDir FcConfig*:config  const FcChar8*:dir  
+            // FcBool: FcConfigAppFontAddDir FcConfig*:config  const FcChar8*:dir
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigAppFontAddDir_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcConfigAppFontAddDir(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string dir);
 
-            // void: FcConfigAppFontClear FcConfig*:config  
+            // void: FcConfigAppFontClear FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigAppFontClear_TNK", CharSet = CharSet.Auto)]
             internal static extern void FcConfigAppFontClear(IntPtr config);
 
-            // FcBool: FcConfigSubstituteWithPat FcConfig*:config  FcPattern*:p  FcPattern*:p_pat  FcMatchKind:kind  
+            // FcBool: FcConfigSubstituteWithPat FcConfig*:config  FcPattern*:p  FcPattern*:p_pat  FcMatchKind:kind
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSubstituteWithPat_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcConfigSubstituteWithPat(IntPtr config, IntPtr p, IntPtr p_pat, FcMatchKind kind);
 
-            // FcBool: FcConfigSubstitute FcConfig*:config  FcPattern*:p  FcMatchKind:kind  
+            // FcBool: FcConfigSubstitute FcConfig*:config  FcPattern*:p  FcMatchKind:kind
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSubstitute_TNK", CharSet = CharSet.Auto)]
             internal static extern bool FcConfigSubstitute(IntPtr config, IntPtr p, FcMatchKind kind);
 
-            // const FcChar8*: FcConfigGetSysRoot const FcConfig*:config  
+            // const FcChar8*: FcConfigGetSysRoot const FcConfig*:config
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigGetSysRoot_TNK", CharSet = CharSet.Auto)]
             internal static extern IntPtr FcConfigGetSysRoot(IntPtr config);
 
-            // void: FcConfigSetSysRoot FcConfig*:config  const FcChar8*:sysroot  
+            // void: FcConfigSetSysRoot FcConfig*:config  const FcChar8*:sysroot
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigSetSysRoot_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern void FcConfigSetSysRoot(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string sysroot);
 
-            // FcBool: FcConfigParseAndLoad FcConfig*:config  const FcChar8*:file  FcBool:complain  
+            // FcBool: FcConfigParseAndLoad FcConfig*:config  const FcChar8*:file  FcBool:complain
             [DllImport(ExtremeSports.Lib, EntryPoint = "FcConfigParseAndLoad_TNK", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             internal static extern bool FcConfigParseAndLoad(IntPtr config, [MarshalAs(UnmanagedType.LPStr)]string file, bool complain);
 
@@ -139,9 +139,9 @@ namespace TonNurako.X11.Extension.Xft {
             return (new FcConfig(p, boo));
         }
 
-        #region static        
+        #region static
         public static string Home() => Marshal.PtrToStringAnsi(NativeMethods.FcConfigHome());
-        
+
         public static bool EnableHome(bool enable) => NativeMethods.FcConfigEnableHome(enable);
 
         public static string Filename(string url) => Marshal.PtrToStringAnsi(NativeMethods.FcConfigFilename(url));
@@ -173,10 +173,10 @@ namespace TonNurako.X11.Extension.Xft {
 
         public bool UptoDate() =>
             NativeMethods.FcConfigUptoDate(Handle);
-        
+
         public bool BuildFonts() =>
             NativeMethods.FcConfigBuildFonts(Handle);
-        
+
 
         public FcStrList GetFontDirs() =>
             FcStrList.WR(NativeMethods.FcConfigGetFontDirs(Handle));
@@ -188,58 +188,58 @@ namespace TonNurako.X11.Extension.Xft {
 
         public FcStrList GetConfigFiles()
             => FcStrList.WR(NativeMethods.FcConfigGetConfigFiles(Handle));
-        
 
-        public string GetCache() 
+
+        public string GetCache()
             => Marshal.PtrToStringAnsi(NativeMethods.FcConfigGetCache(Handle));
-        
 
-        public FcBlanks GetBlanks() 
+
+        public FcBlanks GetBlanks()
             => (new FcBlanks(NativeMethods.FcConfigGetBlanks(Handle)));
 
 
-        public FcStrList GetCacheDirs() 
+        public FcStrList GetCacheDirs()
             => FcStrList.WR(NativeMethods.FcConfigGetCacheDirs(Handle));
-        
 
-        public int GetRescanInterval() 
+
+        public int GetRescanInterval()
             => NativeMethods.FcConfigGetRescanInterval(Handle);
-        
 
-        public bool SetRescanInterval(int rescanInterval) 
+
+        public bool SetRescanInterval(int rescanInterval)
             => NativeMethods.FcConfigSetRescanInterval(Handle, rescanInterval);
-        
-        public FcFontSet GetFonts(FcSetName set) 
+
+        public FcFontSet GetFonts(FcSetName set)
             => new FcFontSet(NativeMethods.FcConfigGetFonts(Handle, set));
-        
 
-        public bool AppFontAddFile(string file) 
+
+        public bool AppFontAddFile(string file)
             => NativeMethods.FcConfigAppFontAddFile(Handle, file);
-        
 
-        public bool AppFontAddDir(string dir) 
+
+        public bool AppFontAddDir(string dir)
             => NativeMethods.FcConfigAppFontAddDir(Handle, dir);
-        
 
-        public void AppFontClear() 
+
+        public void AppFontClear()
             => NativeMethods.FcConfigAppFontClear(Handle);
-        
 
-        public bool SubstituteWithPat(FcPattern p, FcPattern p_pat, FcMatchKind kind) 
+
+        public bool SubstituteWithPat(FcPattern p, FcPattern p_pat, FcMatchKind kind)
             => NativeMethods.FcConfigSubstituteWithPat(Handle, p.Handle, p_pat.Handle, kind);
-        
-        public bool Substitute(FcPattern p, FcMatchKind kind) 
+
+        public bool Substitute(FcPattern p, FcMatchKind kind)
             => NativeMethods.FcConfigSubstitute(Handle, p.Handle, kind);
 
         public static bool Substitute(FcConfig c, FcPattern p, FcMatchKind kind)
             => NativeMethods.FcConfigSubstitute((null!=c) ? c.handle : IntPtr.Zero, p.Handle, kind);
 
-        public string GetSysRoot() 
+        public string GetSysRoot()
             => Marshal.PtrToStringAnsi(NativeMethods.FcConfigGetSysRoot(Handle));
-        
-        public void SetSysRoot(string sysroot) 
+
+        public void SetSysRoot(string sysroot)
             => NativeMethods.FcConfigSetSysRoot(Handle, sysroot);
-        
+
         #region IDisposable Support
         private bool disposedValue = false;
 
@@ -250,16 +250,20 @@ namespace TonNurako.X11.Extension.Xft {
             }
         }
 
+        #if RLE
         ~FcConfig() {
             if (handle != IntPtr.Zero && disposable) {
                 throw new ResourceLeakException(this);
             }
             Dispose(false);
         }
+        #endif
 
         public void Dispose() {
             Dispose(true);
+            #if RLE
             System.GC.SuppressFinalize(this);
+            #endif
         }
         #endregion
     }
