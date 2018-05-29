@@ -1,4 +1,4 @@
-//
+﻿//
 // ﾄﾝﾇﾗｺ
 //
 // ｴｸｽﾄﾘーﾑｽﾎﾟーﾂ
@@ -11,6 +11,9 @@ using TonNurako.Widgets;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using static TonNurako.Native.ExtremeSportsLoader;
+using System.Reflection;
+using System.Linq;
+using System.IO;
 
 namespace TonNurako.Native {
 
@@ -378,8 +381,21 @@ namespace TonNurako.Native {
             int count = 0;
             int lineno = 0;
             using (var ex = new ExtremeSportsLoader(oppai.Location, "CheckLinkage")) {
+
+                var assembly = typeof(TonNurakoExVersion).GetTypeInfo().Assembly;
+                var map = from k in assembly.GetManifestResourceNames() where k.EndsWith("Depend.map") select k;
+                if (map.Count() == 0) {
+                    return false;
+                }
+                string rs = "";
+                using (var stream = assembly.GetManifestResourceStream(map.First())) {
+                    using (var reader = new StreamReader(stream, System.Text.Encoding.UTF8)) {
+                        rs = reader.ReadToEnd();
+                    }
+                }
+
                 var r = new Regex(@"[\r\n]");
-                foreach (var s in r.Split(TonNurako.Properties.Resources.DependMap)) {
+                foreach (var s in r.Split(rs)) {
                     lineno++;
                     var e = s.Trim();
                     if (! e.Contains("TNK")) {
