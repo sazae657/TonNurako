@@ -13,20 +13,16 @@
   </PropertyGroup>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
+  <PropertyGroup>
+      <OutputPath>bin\$(Configuration)\$(TargetFramework)</OutputPath>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
@@ -274,7 +270,7 @@
 
   <Import Project="$(MSBuildProjectDirectory)\..\TonNurakoEx\TonNurako.ExtremeSports.Targets" />
   <Target Name="BeforeBuild">
-    <CallTarget Targets="BuildExtremeSports" />
+    <CallTarget Targets="BuildExtremeSports"/>
   </Target>
 
 </Project>

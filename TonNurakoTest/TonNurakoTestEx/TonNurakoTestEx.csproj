@@ -1,10 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project>
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
@@ -17,4 +20,8 @@
     <ProjectReference Include="..\..\TonNurako\TonNurako.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\.DS_Store\.DS_Store" />
+  <Target Name="AfterBuild">
+    <CallTarget Targets="CopyExtremeSports" />
+  </Target>
 </Project>
