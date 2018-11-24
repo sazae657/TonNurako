@@ -20,12 +20,13 @@
         -->
         <Message Text="=== run $(Make) audio $(WorkingFolder) $(Configuration) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)/"
-            Command="$(Make) audio"/>
+            Command="$(Make)  audio"/>
     </Target>
 
     <Target Name="PrePareExtremeSports" DependsOnTargets="TonNuraConfig">
         <Message Condition="'$(OS)' != 'Unix'"
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
+        <Message Text="=== run $(Make) clean $(WorkingFolder) $(Configuration) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)"
             Condition="'$(OS)' == 'Unix'"
             Command="$(Make) BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` clean.lib check" />
@@ -34,8 +35,9 @@
     <Target Name="BuildExtremeSports" DependsOnTargets="PrePareExtremeSports">
         <Message Condition="'$(OS)' != 'Unix'"
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
+        <Message Text="=== run $(Make) all $(WorkingFolder) $(Configuration) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)"
             Condition="'$(OS)' == 'Unix'"
-            Command="$(Make) -j4 BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` all" />
+            Command="$(Make) BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` all" />
     </Target>
 </Project>

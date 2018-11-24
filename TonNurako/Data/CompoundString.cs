@@ -1,4 +1,4 @@
-//
+﻿//
 // ﾄﾝﾇﾗｺ
 //
 // 文字列
@@ -281,7 +281,6 @@ namespace TonNurako.Data {
         #endregion
     }
 
-#if WINDOWS_XP
     /// <summary>
 	/// ｺﾝﾊﾟｳﾝﾄﾞｽﾄﾘﾝｸﾞ
 	/// </summary>
@@ -357,5 +356,4 @@ namespace TonNurako.Data {
         }
         #endregion
     }
-#endif
 }

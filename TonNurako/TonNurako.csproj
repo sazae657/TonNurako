@@ -1,13 +1,15 @@
 ﻿<Project>
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
     <Configurations>Debug;Release</Configurations>
     <PackageId>TonNurako</PackageId>
     <Description>ﾄﾝﾇﾗｺ</Description>
     <Authors>sazae657</Authors>
     <Product>TonNurako</Product>
     <Company />
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
@@ -26,10 +28,6 @@
     <Optimize>true</Optimize>
     <OutputPath>$(SolutionDir)\bin\$(Configuration)\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Framework)' == 'NET46'">
-    <DefineConstants>$(DefineConstants);WINDOWS_XP</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -267,6 +265,11 @@
 
   <ItemGroup>
       <EmbeddedResource Include="..\TonNurakoEx\iso.app\Depend.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
   </ItemGroup>
 
   <Import Project="$(MSBuildProjectDirectory)\..\TonNurakoEx\TonNurako.ExtremeSports.Targets" />
