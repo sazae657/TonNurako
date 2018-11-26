@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using TonNurako.XImageFormat.Xi;
@@ -247,7 +247,6 @@ namespace TonNurako.XImageFormat {
             return ret;
         }
 
-#if WINDOWS_XP
         /// <summary>
         /// System.Drawing.Bitmapに変換
         /// </summary>
@@ -305,7 +304,6 @@ namespace TonNurako.XImageFormat {
             bitmap.UnlockBits(data);
             return Fromぉ(bitmap.Width, bitmap.Height, arr);
         }
-#endif
 
         /// <summary>
         /// ぉからXPMを生成

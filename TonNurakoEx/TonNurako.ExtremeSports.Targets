@@ -4,6 +4,11 @@
         <WorkingFolder>$(MSBuildProjectDirectory)/../TonNurakoEx</WorkingFolder>
 	    <Make Condition="'$(MAKE)'==''">make</Make>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <OutputLibPath>$(MSBuildProjectDirectory)/bin/$(Configuration)/$(TargetFramework)/</OutputLibPath>
+    </PropertyGroup>
+
     <Target Name="TonNuraConfig"
       Inputs="$(WorkingFolder)/Config.mp3"
       Outputs="$(WorkingFolder)/Site.mp3"
@@ -18,24 +23,26 @@
         <Message Condition="'$(OS)' != 'Unix'"
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
         -->
-        <Message Text="=== run $(Make) audio $(WorkingFolder) $(Configuration) ===" />
+        <Message Text="=== run $(Make) audio $(WorkingFolder) $(Configuration) => $(OutputLibPath) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)/"
-            Command="$(Make) audio"/>
+            Command="$(Make)  audio"/>
     </Target>
 
-    <Target Name="PrePareExtremeSports" DependsOnTargets="TonNuraConfig">
+    <Target Name="PrepareExtremeSports" DependsOnTargets="TonNuraConfig">
         <Message Condition="'$(OS)' != 'Unix'"
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
+        <Message Text="=== run $(Make) clean $(WorkingFolder) $(Configuration)  => $(OutputLibPath) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)"
             Condition="'$(OS)' == 'Unix'"
-            Command="$(Make) BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` clean.lib check" />
+            Command="$(Make) BUILD=$(ConfigurationName) BINDIR=$(OutputLibPath) PLATFORM=`uname -s` clean.lib check" />
     </Target>
 
-    <Target Name="BuildExtremeSports" DependsOnTargets="PrePareExtremeSports">
+    <Target Name="BuildExtremeSports" DependsOnTargets="PrepareExtremeSports">
         <Message Condition="'$(OS)' != 'Unix'"
              Text="=== SKIP TonNuraConfig ($(OS)) ===" />
+        <Message Text="=== run $(Make) all $(WorkingFolder) $(Configuration) => $(OutputLibPath) ===" />
         <Exec WorkingDirectory="$(WorkingFolder)"
             Condition="'$(OS)' == 'Unix'"
-            Command="$(Make) -j4 BUILD=$(ConfigurationName) BINDIR=$(OutputPath) PLATFORM=`uname -s` all" />
+            Command="$(Make) BUILD=$(ConfigurationName) BINDIR=$(OutputLibPath) PLATFORM=`uname -s` all" />
     </Target>
 </Project>

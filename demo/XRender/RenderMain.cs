@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using TonNurako.X11.Extension;
 
 namespace XRender {
     class RenderMain {
         static void Main(string[] args) {
-            System.Diagnostics.Debug.Listeners.Add(new System.Diagnostics.TextWriterTraceListener(Console.Out));
+            //System.Diagnostics.Debug.Listeners.Add(new System.Diagnostics.TextWriterTraceListener(Console.Out));
             TonNurako.Application.RegisterGlobals();
             // ごみボックス
             var unity = new TonNurako.Inutility.Unity();

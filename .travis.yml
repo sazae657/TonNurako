@@ -1,6 +1,5 @@
 language: csharp
-solution: TonNurako.sln
-
+dotnet: 2.1
 env:
   global:
    - secure: "obePwfHkruSsNJMU0kmPRvjZyhUfpub4qU4M+83ycdXfVwG0/GDX868FFbm6tsOyXbe9SmkYBVSjBiiX2goz47WQZqdseAKa0iW6WWUyewL4bj048HqvzBbpu0iRou493Uae+FWIhnneBiwCu965imMBgmeXM25c6Jiqjwc+FzuQrdfw9n7lv4kW4v/Qu0XJwgymemgaGO6KQtK5CUNohpIXbe5Fzyejb3XqGRqC1Yqd4eFB1B6az3OYvShDUtMIYOeJOiAFGWozp/S/ib2Qb+frfNw6J3+oSiskrmf+kHnMWmyDJOzqu6VIr5LUGVbf5hFfz9U9EzmNWmyWgl2GIzBAsVHPM0YgotPPCEB5S3dET0PScmTvjk5QYm1CcsQm0Y3RxI616pCGVlA327FbftT3zB5c0Fgp5WWoPniU/JQ/TO9l46zYieIjXIb1YeSPGjWDOpHGbI4iKFr/hE/c1XzOq45s4kmWBHCuK4qZxWQJ2pomwsmSsE05wCFi7h3HugMhMEigCgnfi68AOQ2z5r6HK9lQPwfCRvhWQ3e8YLHkkYRC4J6UWnGNeH4Ny/ZD4wldjSZxZXc6EvaLVKoUaQDJ4Gtp8YdV++ZAf1QlIYjgD4WMqYCb7fCw2akMMFTGwIknpYrdLmoC/UI6sKt+dU2RwoX1siuezV3jL/nw5i4="
@@ -15,8 +14,8 @@ install:
 script:
     - sudo fc-cache -v
     - cd TonNurakoTest
-    - nuget restore
-    - msbuild /p:Configuration=Debug TonNurakoTest.sln
+    - dotnet restore
+    - dotnet build -f netcoreapp2.1
     - ./headless.sh
 
 addons:

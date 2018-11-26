@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": false,
+    "files.exclude": {
+        "**/.DS_Store": false
+    }
+}

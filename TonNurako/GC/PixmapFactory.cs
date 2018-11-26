@@ -1,4 +1,4 @@
-//
+﻿//
 // ﾄﾝﾇﾗｺ
 //
 // GC
@@ -195,8 +195,6 @@ namespace TonNurako.GC
             return pm;
         }
 
-#if WINDOWS_XP
-
         /// <summary>
         /// Bitmapから生成
         /// </summary>
@@ -227,7 +225,6 @@ namespace TonNurako.GC
             }
             return pm;
         }
-#endif
 
     }
 

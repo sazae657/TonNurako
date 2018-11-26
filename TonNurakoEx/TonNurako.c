@@ -134,6 +134,7 @@ TNK_XtAppCreateShell(
 {
 	Widget w;
     //XColor color;
+    CONS25_ENTER;
 
 	CONS25W( stderr, "XtAppCreateShell a=%p d=%p n=%s cm=%ld\n"
 			, pContext->context, pContext->display
@@ -157,6 +158,7 @@ TNK_XtAppCreateShell(
 			, w ,strAppTitle, pContext->colormap );
 	#endif
 
+    CONS25_LEAVE;
 	return w;
 }
 
@@ -172,8 +174,7 @@ TNK_XtInitialize(
     int copyArgc;
 	int i;
     size_t len;
-
-    CONS25W(stderr, "TNK_XtInitialize call\n");
+    CONS25_ENTER;
 
     XInitThreads();
 
@@ -247,10 +248,13 @@ TNK_XtInitialize(
 
     XmRepTypeInstallTearOffModelConverter();
 
+    CONS25_LEAVE;
 	return 0;
 }
 
 void TNK_IMP_TriggerPrivateEvent(LPTNK_APP_CONTEXT app, Widget widget) {
+    CONS25_ENTER;
+
     XtAppLock(app->context);
     XFlush(XtDisplay(widget));
 
@@ -265,6 +269,8 @@ void TNK_IMP_TriggerPrivateEvent(LPTNK_APP_CONTEXT app, Widget widget) {
     XSendEvent(ev.display, ev.window, False, NoEventMask, (XEvent *)&ev);
     XFlush(XtDisplay(widget));
     XtAppUnlock(app->context);
+
+    CONS25_LEAVE;
 }
 
 

@@ -1,4 +1,4 @@
-//
+﻿//
 // ﾄﾝﾇﾗｺ
 //
 // ｴｸｽﾄﾘーﾑｽﾎﾟーﾂ
@@ -11,6 +11,9 @@ using TonNurako.Widgets;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using static TonNurako.Native.ExtremeSportsLoader;
+using System.Reflection;
+using System.Linq;
+using System.IO;
 
 namespace TonNurako.Native {
 
@@ -54,11 +57,11 @@ namespace TonNurako.Native {
         }
 
         internal static class NativeMethods {
-            // XftDraw*: TNK_GetUtsnameStudio 
+            // XftDraw*: TNK_GetUtsnameStudio
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_GetUtsnameStudio", CharSet = CharSet.Auto)]
             internal static extern IntPtr TNK_GetUtsnameStudio();
 
-            // void: TNK_FreeUtsnameStudio XftDraw*:p  
+            // void: TNK_FreeUtsnameStudio XftDraw*:p
             [DllImport(ExtremeSports.Lib, EntryPoint = "TNK_FreeUtsnameStudio", CharSet = CharSet.Auto)]
             internal static extern void TNK_FreeUtsnameStudio(IntPtr p);
         }
@@ -121,7 +124,7 @@ namespace TonNurako.Native {
 
 
         #region IDisposable Support
-        private bool disposedValue = false; 
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
             if (disposedValue) {
@@ -221,6 +224,12 @@ namespace TonNurako.Native {
 		    public static extern IntPtr TNK_XtAppCreateShell(
 			[In]ref TnkAppContextRec context,
             [MarshalAs(UnmanagedType.LPStr)] string title,  ref string[] argv, int argc , TonNurako.Xt.XtArgRec[] res, int resc);
+
+		    //最上位ｳｲｼﾞｪｯﾄ作成
+		    [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
+		    public static extern IntPtr TNK_XtAppCreateShell(
+			[In]ref TnkAppContextRec context,
+            [MarshalAs(UnmanagedType.LPStr)] string title,  IntPtr argv, int argc , TonNurako.Xt.XtArgRec[] res, int resc);
 
             [ DllImport(Lib, CharSet=CharSet.Auto, BestFitMapping=false, ThrowOnUnmappableChar=true) ]
             public static extern void TNK_IMP_TriggerPrivateEvent([In]ref TnkAppContextRec context,[In] IntPtr widget);
@@ -378,8 +387,21 @@ namespace TonNurako.Native {
             int count = 0;
             int lineno = 0;
             using (var ex = new ExtremeSportsLoader(oppai.Location, "CheckLinkage")) {
+
+                var assembly = typeof(TonNurakoExVersion).GetTypeInfo().Assembly;
+                var map = from k in assembly.GetManifestResourceNames() where k.EndsWith("Depend.map") select k;
+                if (map.Count() == 0) {
+                    return false;
+                }
+                string rs = "";
+                using (var stream = assembly.GetManifestResourceStream(map.First())) {
+                    using (var reader = new StreamReader(stream, System.Text.Encoding.UTF8)) {
+                        rs = reader.ReadToEnd();
+                    }
+                }
+
                 var r = new Regex(@"[\r\n]");
-                foreach (var s in r.Split(TonNurako.Properties.Resources.DependMap)) {
+                foreach (var s in r.Split(rs)) {
                     lineno++;
                     var e = s.Trim();
                     if (! e.Contains("TNK")) {
@@ -397,7 +419,7 @@ namespace TonNurako.Native {
                 }
             }
             if (ur.Count != 0) {
-                
+
                 throw new SymbolNotFoundException(ur, $"CheckLinkage failed<{ur.Count}/{count}>");
             }
             return true;
@@ -519,14 +541,14 @@ namespace TonNurako.Native {
 		public static IntPtr XtAppCreateShell(TnkAppContext context,string title, ref string[] argv, TonNurako.Xt.Arg[] res)
 		{
             if (null == res || 0 == res.Length) {
-                return NativeMethods.TNK_XtAppCreateShell(ref context.Record, title, ref argv, argv.Length, null, 0);
+                return NativeMethods.TNK_XtAppCreateShell(ref context.Record, title, IntPtr.Zero,  0, null, 0);
             }
 
             TonNurako.Xt.XtArgRec[] au = new TonNurako.Xt.XtArgRec[res.Length];
             int argc = ExtremeSports.TnkConvertResourceEx(res, au, true);
             System.Diagnostics.Debug.WriteLine($"XM_CVT {au.Length} -> {argc}");
 
-            var result = NativeMethods.TNK_XtAppCreateShell(ref context.Record, title, ref argv, argv.Length, au, argc);
+            var result = NativeMethods.TNK_XtAppCreateShell(ref context.Record, title, IntPtr.Zero, 0, au, argc);
 
             ExtremeSports.TnkFreeDeepCopyArg(au);
 

@@ -1,4 +1,4 @@
-//
+﻿//
 // ﾄﾝﾇﾗｺ
 //
 //　ﾄﾝﾇﾗｹーｼｮﾝ
@@ -107,6 +107,7 @@ namespace TonNurako {
             foreach(var v in _Ctx.FallbackResource) {
                 rs.Add($"{v.Key}: {v.Value}");
             }
+            rs.Add(null);
 
             ExtremeSports.TnkCode code =
                 (ExtremeSports.TnkCode)ExtremeSports.XtInitialize(_Ctx.Handle, _Ctx.Name, _Args, rs.ToArray());

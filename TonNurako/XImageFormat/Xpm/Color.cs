@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using TonNurako.XImageFormat.Xi;
 
@@ -142,7 +142,6 @@ namespace TonNurako.XImageFormat {
             throw new およよ($"色解決失敗: {colors[0].Color}");
         }
 
-#if WINDOWS_XP
         /// <summary>
         /// System.Drawing.Colorに変換
         /// </summary>
@@ -157,7 +156,6 @@ namespace TonNurako.XImageFormat {
                 throw new およよ($"色解決失敗: {e.Message}", e);
             }
         }
-#endif
         
         /// <summary>
         /// XPMの色定義に変換

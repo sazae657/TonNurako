@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace TonNurako.XImageFormat.Xi {
@@ -8,7 +8,6 @@ namespace TonNurako.XImageFormat.Xi {
     /// </summary>
     public class おやさい {
 
-#if WINDOWS_XP
         /// <summary>
         /// 原色画像をﾋﾞｯﾄﾏｯﾌﾟに変換する
         /// </summary>
@@ -66,7 +65,6 @@ namespace TonNurako.XImageFormat.Xi {
             }
             return ret;
         }
-#endif
 
         /// <summary>
         /// 指定画素順でbyte配列に詰め込む
@@ -130,7 +128,7 @@ namespace TonNurako.XImageFormat.Xi {
             return XbmWriter.ToBitmap(width, height, ch, 反転, arr);
         }
 
-#if WINDOWS_XP
+
         /// <summary>
         /// System.Drawing.Bitmapから変換
         /// </summary>
@@ -161,6 +159,6 @@ namespace TonNurako.XImageFormat.Xi {
             bitmap.UnlockBits(data);
             return arr;
         }
-#endif
+
     }
 }

@@ -1,4 +1,4 @@
-//
+﻿//
 // ﾄﾝﾇﾗｺ
 //
 // GC
@@ -90,7 +90,6 @@ namespace TonNurako.GC
         public XImage() {
         }
 
-#if WINDOWS_XP
         /// <summary>
         /// System.Drawing.Bitmapから生成
         /// </summary>
@@ -150,7 +149,6 @@ namespace TonNurako.GC
             im.Depth = 24;
             return im;
         }
-#endif
 
         /// <summary>
         /// ﾊﾞｯﾌｧーから生成

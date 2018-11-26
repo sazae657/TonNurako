@@ -6,7 +6,10 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-#if !NETSTANDARD2_0
+[assembly: ComVisible(false)]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("TonNurakoTest")]
+
+#if NETSTANDARD6_0
 
 // ｱｾﾝﾌﾞﾘに関する一般情報は以下の属性ｾｯﾄをとおして制御されます。
 // ｱｾﾝﾌﾞﾘに関連付けられている情報を変更するには、

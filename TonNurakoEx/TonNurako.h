@@ -54,8 +54,12 @@ extern "C"{
 #else
 #   if (defined(TRADITIONAL_PRINTF_DEBUG))
 #       define CONS25W fprintf
+#       define CONS25_ENTER fprintf(stderr, "Enter %s\n", __func__)
+#       define CONS25_LEAVE fprintf(stderr, "Leave %s\n", __func__)
 #   else
 #       define CONS25W(...)
+#       define CONS25_ENTER
+#       define CONS25_LEAVE
 #   endif
 #endif
 #ifndef TNK_EXPORT

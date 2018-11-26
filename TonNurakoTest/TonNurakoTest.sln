@@ -3,14 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonNurakoTest", "TonNurakoTest\TonNurakoTest.csproj", "{52F1B124-700F-46F3-9AEF-08CA9A8C9ED6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TonNurakoTest", "TonNurakoTest\TonNurakoTest.csproj", "{52F1B124-700F-46F3-9AEF-08CA9A8C9ED6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{936E32EA-D5CB-41B5-B75A-A282DB26CC1C} = {936E32EA-D5CB-41B5-B75A-A282DB26CC1C}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonNurako", "..\TonNurako\TonNurako.csproj", "{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TonNurako", "..\TonNurako\TonNurako.csproj", "{936E32EA-D5CB-41B5-B75A-A282DB26CC1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TonNurakoTestEx", "TonNurakoTestEx\TonNurakoTestEx.csproj", "{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TonNurakoTestEx", "TonNurakoTestEx\TonNurakoTestEx.csproj", "{BFAEB0AB-3AC1-43D2-B59E-8DEE41A7C8ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
