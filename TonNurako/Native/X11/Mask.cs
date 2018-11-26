@@ -128,7 +128,7 @@ namespace TonNurako.X11
     /// ｲﾍﾞﾝﾄﾏｽｸ
     /// </summary>
     [Flags]
-    public enum EventMask : int {
+    public enum EventMask : long {
         NoEventMask             = TonNurako.X11.Constant.NoEventMask,
         KeyPressMask            = TonNurako.X11.Constant.KeyPressMask,
         KeyReleaseMask          = TonNurako.X11.Constant.KeyReleaseMask,
