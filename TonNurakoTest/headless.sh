@@ -22,8 +22,10 @@ function bailout {
 
 run_server
 
-mono ${CONSOLE_EXE}  \
-  bin/Debug/TonNurakoTest.dll -verbose -maxthreads 1 -parallel none $@ || bailout
+#mono ${CONSOLE_EXE}  \
+#  bin/Debug/TonNurakoTest.dll -verbose -maxthreads 1 -parallel none $@ || bailout
+
+dotnet test -f netcoreapp2.1 TonNurakoTest/TonNurakoTest.csproj
 
 kill_server
 
