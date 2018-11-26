@@ -16,7 +16,7 @@ script:
     - cd TonNurakoTest
     - dotnet restore
     - dotnet build -f netcoreapp2.1
-      #    - ./headless.sh
+    - ./headless.sh
 
 addons:
   coverity_scan:
